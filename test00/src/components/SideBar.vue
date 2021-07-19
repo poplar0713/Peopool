@@ -2,21 +2,7 @@
   <el-container>
     <el-aside width="200px">
       <router-link to="/home"><img src="@/assets/PeoPool.png" alt="" style="width:70%"></router-link>
-      <el-select
-        v-model="value"
-        multiple
-        filterable
-        allow-create
-        default-first-option
-        placeholder="검색어를 입력해주세요."
-        @keyup.enter="search">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
+      <div><el-button type="danger" plain style="width:98%">Logout</el-button></div>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"

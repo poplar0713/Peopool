@@ -2,7 +2,7 @@
 <!-- Form -->
   <div>
     <div class="loginbutton">
-        <img src="@/assets/PeoPool.png" alt="" style="width:10%" @click="dialogFormVisible = true" >
+        <img src="@/assets/PeoPool.png" alt="" style="width:30%" @click="dialogFormVisible = true" >
     </div>
     <br>
     <el-dialog title="Login" v-model="dialogFormVisible">
