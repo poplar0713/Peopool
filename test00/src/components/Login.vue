@@ -2,7 +2,8 @@
 <!-- Form -->
   <div>
     <div class="loginbutton">
-        <img src="@/assets/PeoPool.png" alt="" style="width:30%" @click="dialogFormVisible = true" >
+        <img src="@/assets/PeoPool.png" alt="" style="width:30%">
+        <el-button type="warning" plain @click="dialogFormVisible = true">시작하기</el-button>
     </div>
     <br>
     <el-dialog title="Login" v-model="dialogFormVisible">
@@ -127,6 +128,7 @@
         dialogVisible1: false,
         dialogVisible2: false,
         fullscreenLoading: false,
+        activeName: 'first',
         form: {
           signupindividualId:'',
           signupindividualPw:'',
@@ -148,7 +150,6 @@
           type: [],
           resource: '',
           desc: '',
-          activeName: 'first',
         },
         formLabelWidth: '120px'
       };
@@ -185,6 +186,6 @@
   margin: 0 auto;
   top: 20%; 
   left: 40%; */
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 </style>
