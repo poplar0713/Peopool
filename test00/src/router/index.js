@@ -4,6 +4,8 @@ import About from '../views/About.vue'
 import SearchDetail from '../views/SearchDetail.vue'
 import Start from '../views/Start.vue'
 import CompanyStart from '../views/CompanyStart.vue'
+import UserMain from '../views/UserMain.vue'
+
 const routes = [
   {
     path: '/home',
@@ -35,6 +37,11 @@ const routes = [
     name:'CompanyStart',
     component: CompanyStart
 
+  },
+  {
+    path: '/usermain',
+    name: 'UserMain',
+    component: UserMain
   }
 ]
 
