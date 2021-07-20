@@ -64,7 +64,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert("submit!");
-          this.$router.push("home");
+          this.$router.push("company");
           this.$store.state.LoginDialog = false;
           this.openFullScreen2();
         } else {

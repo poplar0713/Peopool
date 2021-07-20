@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true"
+  <el-button type="text" @click="dialogVisible = true" style="color:#939597"
     >DragFail...</el-button
   >
 

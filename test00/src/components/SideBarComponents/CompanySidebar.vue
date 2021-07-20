@@ -4,14 +4,12 @@
       <router-link to="/home"
         ><img src="@/assets/PeoPool.png" alt="" style="width:70%"
       /></router-link>
-      <div>
-        <el-button type="danger" plain style="width:98%">Logout</el-button>
-      </div>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
+        background-color="#F5dF4D"
       >
         <!--  -->
         <el-menu-item index="1">
@@ -44,6 +42,11 @@
         <el-menu-item index="7">
           <i class="el-icon-setting"></i>
           <span>settings</span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="7">
+          <i class="el-icon-turn-off"></i>
+          <span>Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>
@@ -96,7 +99,7 @@ export default {
 
 <style>
 img {
-  display: block;
-  margin: 0px auto;
+  /* display: block;
+  margin: 0px auto; */
 }
 </style>
