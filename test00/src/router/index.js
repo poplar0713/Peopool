@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import SearchDetail from '../views/SearchDetail.vue'
 import Start from '../views/Start.vue'
+import Cra from '../views/Cra.vue'
 
 const routes = [
   {
@@ -21,9 +22,14 @@ const routes = [
     component: SearchDetail
   },
   {
-    path: '/start',
+    path: '/',
     name: 'Start',
     component: Start
+  },
+  {
+    path: '/cra',
+    name: 'Cra',
+    component: Cra
   },
 ]
 
