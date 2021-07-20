@@ -1,7 +1,7 @@
 package com.ssafy.peopool.dto;
 
 // 면접제얀
-public class InterviewSuggestion {
+public class Suggestion {
 	int	sug_index;	// 면접제안 인덱스
 	String sug_send;	// 전송시간
 	String sug_timeone;	// 첫번재 제안시간
@@ -11,7 +11,7 @@ public class InterviewSuggestion {
 	int ent_index;	// 기업 인덱스
 	String sug_decision;	// 결정시간
 	
-	public InterviewSuggestion() {
+	public Suggestion() {
 	}
 
 	public int getSug_index() {
