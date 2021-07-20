@@ -11,7 +11,10 @@
     <!-- 생성 및 취소 버튼 -->
     <el-form-item>
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
-      <el-button type="warning" @click="submitForm('ruleForm')"
+      <el-button
+        type="warning"
+        @click="submitForm('ruleForm')"
+        v-loading.fullscreen.lock="fullscreenLoading"
         >Login</el-button
       >
     </el-form-item>
@@ -60,7 +63,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          // alert("submit!");
+          this.$router.push("home");
+          this.$store.state.LoginDialog = false;
+          this.openFullScreen2();
         } else {
           console.log("error submit!!");
           return false;
@@ -69,6 +75,17 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    openFullScreen2() {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
     },
   },
 };

@@ -45,7 +45,10 @@
     <!-- 생성 및 취소 버튼 -->
     <el-form-item>
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
-      <el-button type="warning" @click="submitForm('ruleForm')"
+      <el-button
+        type="warning"
+        @click="submitForm('ruleForm')"
+        v-loading.fullscreen.lock="fullscreenLoading"
         >Create</el-button
       >
     </el-form-item>
@@ -139,6 +142,7 @@ export default {
           },
         ],
       },
+      fullscreenLoading: false,
     };
   },
   methods: {
@@ -146,15 +150,38 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
+          this.openFullScreen2();
           this.$store.state.SignupDialogIndiv = false;
+          this.successmessage();
         } else {
           console.log("error submit!!");
+          this.failed();
           return false;
         }
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    openFullScreen2() {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
+    successmessage() {
+      this.$message({
+        message: "Welcome to PeoPool channel",
+        type: "success",
+      });
+    },
+    failed() {
+      this.$message.error("Oops, check your identification info");
     },
   },
 };

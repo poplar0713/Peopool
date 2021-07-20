@@ -56,12 +56,6 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      <!-- <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="warning" @click="dialogFormVisible = false, openFullScreen1(), onSubmit()">Login</el-button>
-        </span>
-      </template> -->
     </el-dialog>
   </div>
 </template>
