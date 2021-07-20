@@ -1,25 +1,23 @@
 <template>
-<div style="text-align: center; align-items: center; margin-top: 10px;">
-  <Login/>
-  <br>
-  <NotLoginMain/>
-</div>
+  <div style="text-align: center; align-items: center; margin-top: 10px;">
+    <Login />
+    <br />
+    <NotLoginMain />
+  </div>
 </template>
 
 <script>
-import Login from '@/components/Account/Login.vue'
-import NotLoginMain from '@/components/NotLoginMain.vue'
+import Login from "@/components/Account/Login.vue";
+import NotLoginMain from "@/components/NotLoginMain.vue";
 export default {
-  components:{
+  components: {
     Login,
     NotLoginMain,
-  }
-
-}
+  },
+};
 </script>
 
 <style>
 div {
-  
 }
 </style>

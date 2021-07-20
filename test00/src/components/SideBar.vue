@@ -1,13 +1,18 @@
 <template>
   <el-container>
     <el-aside width="200px">
-      <router-link to="/home"><img src="@/assets/PeoPool.png" alt="" style="width:70%"></router-link>
-      <div><el-button type="danger" plain style="width:98%">Logout</el-button></div>
+      <router-link to="/home"
+        ><img src="@/assets/PeoPool.png" alt="" style="width:70%"
+      /></router-link>
+      <div>
+        <el-button type="danger" plain style="width:98%">Logout</el-button>
+      </div>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
         @open="handleOpen"
-        @close="handleClose">
+        @close="handleClose"
+      >
         <!--  -->
         <el-submenu index="1">
           <template #title>
@@ -49,40 +54,44 @@
 </template>
 
 <script>
-  export default {
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      search(data) {
-        console.log(data)
-        this.$router.push('searchDetail')
-      }
+export default {
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
     },
-    data() {
-      return {
-        options: [{
-          value: 'HTML',
-          label: 'HTML'
-        }, {
-          value: 'CSS',
-          label: 'CSS'
-        }, {
-          value: 'JavaScript',
-          label: 'JavaScript'
-        }],
-        value: []
-      }
-    }
-  }
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    search(data) {
+      console.log(data);
+      this.$router.push("searchDetail");
+    },
+  },
+  data() {
+    return {
+      options: [
+        {
+          value: "HTML",
+          label: "HTML",
+        },
+        {
+          value: "CSS",
+          label: "CSS",
+        },
+        {
+          value: "JavaScript",
+          label: "JavaScript",
+        },
+      ],
+      value: [],
+    };
+  },
+};
 </script>
 
 <style>
-img { 
-  display: block; 
-  margin: 0px auto; 
-  }
+img {
+  display: block;
+  margin: 0px auto;
+}
 </style>

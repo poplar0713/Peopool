@@ -1,14 +1,14 @@
 <template>
   <el-container>
-    <el-aside width="200px"><SideBar/></el-aside>
+    <el-aside width="200px"><SideBar /></el-aside>
     <el-main>
       <div>
         <p><router-link to="/searchdetail">#태그</router-link></p>
         <el-carousel :interval="4000" type="card" height="200px">
-        <el-carousel-item v-for="item in 20" :key="item">
-          <h3 class="medium">{{ item }}</h3>
-        </el-carousel-item>
-      </el-carousel>
+          <el-carousel-item v-for="item in 20" :key="item">
+            <h3 class="medium">{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
       </div>
       <el-row>
         <el-col :span="12">
@@ -16,9 +16,9 @@
             <div>
               <p>#Java</p>
               <el-carousel :interval="4000" type="card" height="200px">
-              <el-carousel-item v-for="item in 20" :key="item">
-                <h3 class="medium">{{ item }}</h3>
-              </el-carousel-item>
+                <el-carousel-item v-for="item in 20" :key="item">
+                  <h3 class="medium">{{ item }}</h3>
+                </el-carousel-item>
               </el-carousel>
             </div>
           </div>
@@ -28,9 +28,9 @@
             <div>
               <p>#Python</p>
               <el-carousel :interval="4000" type="card" height="200px">
-              <el-carousel-item v-for="item in 20" :key="item">
-                <h3 class="medium">{{ item }}</h3>
-              </el-carousel-item>
+                <el-carousel-item v-for="item in 20" :key="item">
+                  <h3 class="medium">{{ item }}</h3>
+                </el-carousel-item>
               </el-carousel>
             </div>
           </div>
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import SideBar from '@/components/SideBar.vue'
+import SideBar from "@/components/SideBar.vue";
 
 export default {
-  components:{
-    SideBar
+  components: {
+    SideBar,
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -53,11 +53,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
   },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
