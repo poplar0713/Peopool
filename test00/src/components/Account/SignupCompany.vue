@@ -19,6 +19,14 @@
         v-model="ruleForm.SignupCompanyPWConfirm"
       ></el-input>
     </el-form-item>
+    <!-- 연락처 -->
+    <el-form-item label="Tel" prop="CompanyTel">
+      <el-input type="tel" v-model="ruleForm.CompanyTel"></el-input>
+    </el-form-item>
+    <!-- 이메일 -->
+    <el-form-item label="Email" prop="CompanyEmail">
+      <el-input type="email" v-model="ruleForm.CompanyEmail"></el-input>
+    </el-form-item>
     <!-- 공개여부 -->
     <el-form-item label="Open to the public" prop="open">
       <el-switch v-model="ruleForm.open"></el-switch>
@@ -42,6 +50,8 @@ export default {
         SignupCompanyID: "",
         SignupCompanyPW: "",
         SignupCompanyPWConfirm: "",
+        CompanyTel: "",
+        CompanyEmail: "",
         open: false,
       },
       rules: {
@@ -91,6 +101,20 @@ export default {
             required: "this.SignupCompanyPW==this.SignupCompanyPWConfirm",
             message: "Please Check your PW or PW confirmation",
             trigger: "blur",
+          },
+        ],
+        CompanyTel: [
+          {
+            required: true,
+            message: "Please input your Phone number",
+            trigger: "change",
+          },
+        ],
+        CompanyEmail: [
+          {
+            required: true,
+            message: "Please input your Email",
+            trigger: "change",
           },
         ],
       },

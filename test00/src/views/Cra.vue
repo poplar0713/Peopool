@@ -1,28 +1,19 @@
 <template>
-  <carousel :items-to-show="8">
-    <slide v-for="slide in 50" :key="slide">
-      {{ slide }}
-    </slide>
-
-    <template #addons>
-      <navigation />
-      <pagination />
-    </template>
-  </carousel>
+  <div id="app">
+    <split-carousel>
+      <split-carousel-item v-for="item in 8" :key="item">
+        {{ item }}
+      </split-carousel-item>
+    </split-carousel>
+  </div>
 </template>
 
 <script>
-// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
-export default {
-  name: "App",
-  components: {
-    Carousel,
-    Slide,
-    Pagination,
-    Navigation,
-  },
-};
+  import { SplitCarousel, SplitCarouselItem } from "vue-split-carousel";
+  export default {
+    components: {
+      SplitCarousel,
+      SplitCarouselItem
+    }
+  };
 </script>

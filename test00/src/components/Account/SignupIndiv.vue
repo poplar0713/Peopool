@@ -15,6 +15,14 @@
         v-model="ruleForm.SignupIndivPWConfirm"
       ></el-input>
     </el-form-item>
+    <!-- 개인회원이름 -->
+    <el-form-item label="Name" prop="UserName">
+      <el-input v-model="ruleForm.UserName"></el-input>
+    </el-form-item>
+    <!-- 개인회원 생년월일 -->
+    <el-form-item label="Birth" prop="UserBirth">
+      <el-input type="date" v-model="ruleForm.UserBirth"></el-input>
+    </el-form-item>
     <!-- 공개여부 -->
     <el-form-item label="Open to the public" prop="open">
       <el-switch v-model="ruleForm.open"></el-switch>
@@ -25,6 +33,14 @@
         <el-radio label="male"></el-radio>
         <el-radio label="female"></el-radio>
       </el-radio-group>
+    </el-form-item>
+    <!-- 연락처 -->
+    <el-form-item label="Tel" prop="UserTel">
+      <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
+    </el-form-item>
+    <!-- 이메일 -->
+    <el-form-item label="Email" prop="UserEmail">
+      <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
     </el-form-item>
     <!-- 생성 및 취소 버튼 -->
     <el-form-item>
@@ -44,8 +60,12 @@ export default {
         SignupIndivID: "",
         SignupIndivPW: "",
         SignupIndivPWConfirm: "",
+        UserName: "",
+        UserBirth: "",
         open: false,
         Gender: "",
+        UserTel: "",
+        UserEmail: "",
       },
       rules: {
         SignupIndivID: [
@@ -83,10 +103,38 @@ export default {
             trigger: "blur",
           },
         ],
+        UserName: [
+          {
+            required: true,
+            message: "Please input your Name",
+            trigger: "blur",
+          },
+        ],
+        UserBirth: [
+          {
+            required: true,
+            message: "Please input your Birth",
+            trigger: "blur",
+          },
+        ],
         Gender: [
           {
             required: true,
             message: "Please select your Gender",
+            trigger: "change",
+          },
+        ],
+        UserTel: [
+          {
+            required: true,
+            message: "Please input your Phone number",
+            trigger: "change",
+          },
+        ],
+        UserEmail: [
+          {
+            required: true,
+            message: "Please input your Email",
             trigger: "change",
           },
         ],
