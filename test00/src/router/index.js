@@ -4,7 +4,7 @@ import About from '../views/About.vue'
 import SearchDetail from '../views/SearchDetail.vue'
 import Start from '../views/Start.vue'
 import CompanyStart from '../views/CompanyStart.vue'
-import Cra from '../views/Cra.vue'
+import TestPage from '../views/TestPage.vue'
 
 const routes = [
   {
@@ -33,9 +33,9 @@ const routes = [
     component: CompanyStart
   },
   {
-    path:'/cra',
-    name:'Cra',
-    component: Cra
+    path:'/testpage',
+    name:'TestPage',
+    component: TestPage
   }
 ]
 
