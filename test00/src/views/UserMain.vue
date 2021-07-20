@@ -210,9 +210,6 @@ export default {
     },
   },
   methods: {
-    onclickUploadBtn() {
-      console.log("uploadbtn");
-    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);
