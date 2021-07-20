@@ -12,6 +12,7 @@
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
+        background-color="#dfd880"
       >
         <!--  -->
         <el-menu-item index="1">
