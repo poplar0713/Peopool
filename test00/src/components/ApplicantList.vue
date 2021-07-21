@@ -22,7 +22,9 @@
               <br />
             </div>
           </template>
-          <h1>{{ fd.title }}</h1>
+          <!-- <h1>{{ fd.title }}</h1> -->
+          <UserDetail :user="fd" />
+          <h4>{{ fd.name }}</h4>
           <div v-for="tag in fd.tag" :key="tag" class="text item">
             {{ tag }}
           </div>

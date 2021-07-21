@@ -1,12 +1,7 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true">user정보</el-button>
+  <el-button type="text" @click="dialogVisible = true">{{ user }} </el-button>
   <div>
-    <el-dialog
-      title="Tips"
-      v-model="dialogVisible"
-      width="50%"
-      :before-close="handleClose"
-    >
+    <el-dialog :title="user" v-model="dialogVisible" width="50%">
       <div>
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="Consistency" name="1">
@@ -86,12 +81,6 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button
-            type="primary"
-            @click="(dialogVisible = false), successmessage()"
-            :plain="true"
-            >require</el-button
-          >
         </span>
       </template>
     </el-dialog>
@@ -101,6 +90,10 @@
 <script>
 export default {
   name: "userdetail",
+  setup() {},
+  created() {
+    console.log(this.user);
+  },
   data() {
     return {
       dialogVisible: false,
@@ -108,9 +101,12 @@ export default {
       activeName: "1",
       value1: "",
       value: "",
+      testdata: "test",
     };
   },
-  props: {},
+  props: {
+    user: Object,
+  },
   methods: {
     handleClose(done) {
       this.$confirm("Are you sure to close this dialog?")

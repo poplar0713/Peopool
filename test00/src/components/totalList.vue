@@ -1,26 +1,28 @@
 <template>
-  <div>
-    <el-main>
-      <el-card
-        class="box-card"
-        style="width: 250px"
-        v-for="fd in followData"
-        :key="fd"
-      >
-        <template #header>
-          <div class="card-header">
-            <img src="a.jpg" style="width: 150px" />
-            <br />
+  <el-scrollbar height="600px">
+    <div>
+      <el-main>
+        <el-card
+          class="box-card"
+          style="width: 250px"
+          v-for="fd in followData"
+          :key="fd"
+        >
+          <template #header>
+            <div class="card-header">
+              <img src="a.jpg" style="width: 150px" />
+              <br />
+            </div>
+          </template>
+          <h1>{{ fd.title }}</h1>
+          <div v-for="tag in fd.tag" :key="tag" class="text item">
+            {{ tag }}
           </div>
-        </template>
-        <h1>{{ fd.title }}</h1>
-        <div v-for="tag in fd.tag" :key="tag" class="text item">
-          {{ tag }}
-        </div>
-        <UserDetail />
-      </el-card>
-    </el-main>
-  </div>
+          <UserDetail />
+        </el-card>
+      </el-main>
+    </div>
+  </el-scrollbar>
 </template>
 
 <script>
