@@ -1,14 +1,14 @@
 package com.ssafy.peopool.dto;
 
 public class ProfileOfEnterprise {
-	int ent_index;	// 기업 인덱스
-	String ent_image;	// 기업 프로필 사진
-	String ent_ceo;	// 기업 대표
-	String ent_history;	// 기업 연혁
-	String ent_address;		// 기업 주소
-	String ent_website;	// 기업 사이트
-	String ent_introduce;	// 기업 소개
-	
+	int ent_index; // 기업 인덱스
+	String ent_image; // 기업 프로필 사진
+	String ent_ceo; // 기업 대표
+	String ent_history; // 기업 연혁
+	String ent_address; // 기업 주소
+	String ent_website; // 기업 사이트
+	String ent_introduce; // 기업 소개
+
 	public ProfileOfEnterprise() {
 	}
 

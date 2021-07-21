@@ -2,15 +2,16 @@ package com.ssafy.peopool.dto;
 
 // 면접제얀
 public class Suggestion {
-	int	sug_index;	// 면접제안 인덱스
-	String sug_send;	// 전송시간
-	String sug_timeone;	// 첫번재 제안시간
-	String sug_timetwo;	// 두번재 제안시간
-	String sug_timethree;	// 세번재 제안시간
-	int ind_index;	// 회원 인덱스
-	int ent_index;	// 기업 인덱스
-	String sug_decision;	// 결정시간
-	
+	int sug_index; // 면접제안 인덱스
+	String sug_send; // 전송시간
+	String sug_timeone; // 첫번재 제안시간
+	String sug_timetwo; // 두번재 제안시간
+	String sug_timethree; // 세번재 제안시간
+	int ind_index; // 회원 인덱스
+	int ent_index; // 기업 인덱스
+	String sug_decision; // 결정시간
+	String sug_state; // 요청 상태
+
 	public Suggestion() {
 	}
 
@@ -78,13 +79,22 @@ public class Suggestion {
 		this.sug_decision = sug_decision;
 	}
 
+	public String getSug_state() {
+		return sug_state;
+	}
+
+	public void setSug_state(String sug_state) {
+		this.sug_state = sug_state;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("InterviewSuggestion [sug_index=").append(sug_index).append(", sug_send=").append(sug_send)
+		builder.append("Suggestion [sug_index=").append(sug_index).append(", sug_send=").append(sug_send)
 				.append(", sug_timeone=").append(sug_timeone).append(", sug_timetwo=").append(sug_timetwo)
 				.append(", sug_timethree=").append(sug_timethree).append(", ind_index=").append(ind_index)
-				.append(", ent_index=").append(ent_index).append(", sug_decision=").append(sug_decision).append("]");
+				.append(", ent_index=").append(ent_index).append(", sug_decision=").append(sug_decision)
+				.append(", sug_state=").append(sug_state).append("]");
 		return builder.toString();
 	}
 }
