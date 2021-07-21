@@ -36,12 +36,12 @@ export default {};
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 
 .sidebar {
-  position: fixed;
+  /* position: fixed;
   height: 100%;
-  overflow: auto;
+  overflow: auto; */
 }
 .el-menu {
-  height: 100%;
+  /* height: 100%; */
 }
 
 span {
