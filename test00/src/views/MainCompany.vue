@@ -114,9 +114,4 @@ export default {
 };
 </script>
 
-<style>
-.el-main {
-  /* justify-content: center;
-  text-align: left; */
-}
-</style>
+<style></style>
