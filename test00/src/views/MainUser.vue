@@ -29,86 +29,9 @@
   </el-container>
 
 
-<<<<<<< HEAD
 
         </el-main>
       </el-container>
-=======
-          <el-col :span="11" class="section">
-            <el-tabs type="border-card" class="panel-tabs">
-              <el-tab-pane label="팔로우 중인 기업">
-                <div v-if="hasfollowing">
-                  <el-card
-                    shadow="hover"
-                    v-for="(company, i) in followList"
-                    v-bind:key="i"
-                    align="center"
-                  >
-                    {{ company.company_name }}
-                  </el-card>
-                </div>
-                <div v-else><h4>현재 팔로우 중인 기업이 없습니다</h4></div>
-              </el-tab-pane>
-              <el-tab-pane label="면접 요청">
-                <div v-if="hasInterviewReq">
-                  <el-card
-                    shadow="hover"
-                    v-for="(req, i) in InterviewReq"
-                    v-bind:key="i"
-                    align="center"
-                    >{{ req.company_name }}
-                  </el-card>
-                </div>
-                <div v-else>면접을 요청한 기업이 없습니다.</div>
-              </el-tab-pane>
-              <el-tab-pane label="일정" class="panel">
-                <div>
-                 <el-scrollbar height="400px">
-                <el-timeline>
-                  <el-timeline-item
-                    v-for="(event, i) in events"
-                    v-bind:key="i"
-                    :timestamp="event.time"
-                  >
-                    <el-card>
-                      <h4>{{ event.title }}</h4>
-                      <p>{{ event.content }}</p>
-                    </el-card>
-                  </el-timeline-item>
-                </el-timeline>
-                </el-scrollbar>
-                </div>
-              </el-tab-pane>
-            </el-tabs>
-          </el-col>
-        </el-row>
-
-        <div class="section">
-          <div class="section">
-             <el-row>
-              <el-col :span="3">
-                <h2>이력서 관리</h2>
-              </el-col>
-              <el-col :span="2">
-                
-              <el-upload
-                limit="1"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :file-list="fileList"
-                accept=".pdf"
-              >
-                <el-button size="small">이력서 업로드</el-button>
-              </el-upload>
-              </el-col>
-            </el-row>
-          </div>
-           
-            <div class="section">
-                <WebViewer initialDoc="파이팅 프런트.docx" />
-            </div>
-        </div>
-      </el-main>
->>>>>>> 0dce4f06edd5e70c2248e8cb4eff36b420bf13a2
     </el-container>
   </div>
 </template>
@@ -117,9 +40,9 @@
 /* .main {
   border-radius: 20px 20px 20px 20px;
   margin-top: 2%;
-  margin-left: 5%;
+  margin-left: 2%;
   margin-right: 2%;
-  background-color: #FEF9E7;
+  background-color: #f4f6f6;
   position: relative;
 }
 .videoNotFound {
@@ -148,22 +71,17 @@ video {
 .panel-tabs {
   height: 500px;
 }
-<<<<<<< HEAD
 .panel {
   overflow: scroll;
 } */
-=======
->>>>>>> 0dce4f06edd5e70c2248e8cb4eff36b420bf13a2
 </style>
 
 <script>
 import UserSidebar from "@/components/SideBarComponents/UserSidebar.vue";
-import WebViewer from "@/components/MainCompany/WebViewer.vue";
 
 export default {
   components: {
     UserSidebar,
-   WebViewer
   },
   data() {
     return {
@@ -208,7 +126,11 @@ export default {
           title: "면접 3",
           content: "C사 면접",
         },
-        
+        {
+          time: "2021/07/21 16:00",
+          title: "면접 4",
+          content: "D사 면접",
+        },
       ],
     };
   },
