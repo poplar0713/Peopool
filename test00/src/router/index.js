@@ -4,8 +4,14 @@ import About from '../views/About.vue'
 import SearchDetail from '../views/SearchDetail.vue'
 import Start from '../views/Start.vue'
 import MainCompany from '../views/MainCompany.vue'
+import InterviewRoom from '../views/InterviewRoom.vue'
 
 const routes = [
+  {
+    path: '/',
+    name: 'Start',
+    component: Start
+  },
   {
     path: '/user',
     name: 'MainUser',
@@ -28,9 +34,9 @@ const routes = [
     component: SearchDetail
   },
   {
-    path: '/',
-    name: 'Start',
-    component: Start
+    path: '/interviewroom',
+    name: 'InterviewRoom',
+    component: InterviewRoom
   },
 ]
 
