@@ -12,24 +12,25 @@ import com.ssafy.peopool.dto.ProfileOfIndividual;
 
 import io.swagger.annotations.ApiOperation;
 
+
 @RestController
-@RequestMapping("/pho")
-public class PhotoController {
+@RequestMapping("/intro")
+public class IntroduceController {
+
 	
 	@Autowired
-	PhotoService photoService;
+	IntroduceService introduceService;
 	
-	@ApiOperation(value = "index에 해당하는 사진을 수정한다.", response = String.class)
+	@ApiOperation(value = "index에 해당하는 자기소개를 수정한다.", response = String.class)
 	@PutMapping("{index}")
-	public ResponseEntity<String> modifyPhoto(@RequestBody ProfileOfIndividual profileOfIndividual){
+	public ResponseEntity<String> modifyIntroduce(@RequestBody ProfileOfIndividual profileOfIndividual){
 		
 	}
 	
 	
-	@ApiOperation(value = "index에 해당하는 사진을 수정한다.", response = String.class)
+	@ApiOperation(value = "index에 해당하는 자기소개를 수정한다.", response = String.class)
 	@DeleteMapping("{index}")
-	public ResponseEntity<String> deletePhoto(@RequestBody ProfileOfIndividual profileOfIndividual){
+	public ResponseEntity<String> deleteIntroduce(@RequestBody ProfileOfIndividual profileOfIndividual){
 		
 	}
-
 }
