@@ -28,7 +28,9 @@ CREATE TABLE `ind_profile` (
 	`ind_index`	INT	NOT NULL,
 	`ind_resume`	VARCHAR(200)	NULL,
 	`ind_video`	VARCHAR(200)	NULL,
-	`ind_photo`	VARCHAR(200)	NULL
+	`ind_photo`	VARCHAR(200)	NULL,
+	`ind_switch`	BOOLEAN	NULL,
+	`ind_introduce`	VARCHAR(200)	NULL
 );
 
 DROP TABLE IF EXISTS `ent_profile`;
@@ -47,21 +49,20 @@ DROP TABLE IF EXISTS `follow`;
 
 CREATE TABLE `follow` (
 	`fol_index`	INT	NOT NULL,
-	`target`	INT	NULL,
-	`ent_index`	INT	NOT NULL,
-	`ind_index`	INT	NOT NULL
+	`follower`	INT	NULL,
+	`following`	INT	NULL
 );
 
-DROP TABLE IF EXISTS `history`;
+DROP TABLE IF EXISTS `interview`;
 
-CREATE TABLE `history` (
-	`his_index`	INT	NOT NULL,
+CREATE TABLE `interview` (
+	`int_index`	INT	NOT NULL,
 	`ind_index`	INT	NOT NULL,
 	`ent_index`	INT	NOT NULL,
-	`his_start`	DATETIME	NULL,
-	`his_end`	DATETIME	NULL,
-	`his_url`	VARCHAR(255)	NULL,
-	`his_show`	VARCHAR(20)	NULL
+	`int_start`	DATETIME	NULL,
+	`int_end`	DATETIME	NULL,
+	`int_url`	VARCHAR(255)	NULL,
+	`int_show`	BOOLEAN	NULL
 );
 
 DROP TABLE IF EXISTS `recruit`;
@@ -78,26 +79,32 @@ CREATE TABLE `recruit` (
 	`rec_deadline`	CHAR(1)	NULL
 );
 
-DROP TABLE IF EXISTS `turning`;
+DROP TABLE IF EXISTS `suggestion`;
 
-CREATE TABLE `turning` (
-	`tur_index`	int	NOT NULL,
-	`tur_send`	DATETIME	NULL,
-	`tur_one`	DATETIME	NULL,
-	`tur_two`	DATETIME	NULL,
-	`tur_three`	DATETIME	NULL,
+CREATE TABLE `suggestion` (
+	`sug_index`	int	NOT NULL,
+	`sug_send`	DATETIME	NULL,
+	`sug_timeone`	DATETIME	NULL,
+	`sug_timetwo`	DATETIME	NULL,
+	`sug_timethree`	DATETIME	NULL,
 	`ind_index`	INT	NOT NULL,
 	`ent_index`	INT	NOT NULL,
-	`tur_decision`	DATETIME	NULL
+	`sug_decision`	DATETIME	NULL
 );
 
-DROP TABLE IF EXISTS `document`;
+DROP TABLE IF EXISTS `hashtag`;
 
-CREATE TABLE `document` (
-	`doc_index`	INT	NOT NULL,
-	`ind_index`	INT	NOT NULL,
-	`rec_index`	INT	NOT NULL,
-	`doc_filepath`	VARCHAR(255)	NULL
+CREATE TABLE `hashtag` (
+	`tag_index`	INT	NOT NULL,
+	`taglist_index`	INT	NOT NULL,
+	`ind_index`	INT	NOT NULL
+);
+
+DROP TABLE IF EXISTS `taglist`;
+
+CREATE TABLE `taglist` (
+	`taglist_index`	INT	NOT NULL,
+	`taglist_name`	VARHCAR(20)	NULL
 );
 
 ALTER TABLE `individual` ADD CONSTRAINT `PK_INDIVIDUAL` PRIMARY KEY (
@@ -120,20 +127,24 @@ ALTER TABLE `follow` ADD CONSTRAINT `PK_FOLLOW` PRIMARY KEY (
 	`fol_index`
 );
 
-ALTER TABLE `history` ADD CONSTRAINT `PK_HISTORY` PRIMARY KEY (
-	`his_index`
+ALTER TABLE `interview` ADD CONSTRAINT `PK_INTERVIEW` PRIMARY KEY (
+	`int_index`
 );
 
 ALTER TABLE `recruit` ADD CONSTRAINT `PK_RECRUIT` PRIMARY KEY (
 	`rec_index`
 );
 
-ALTER TABLE `turning` ADD CONSTRAINT `PK_TURNING` PRIMARY KEY (
-	`tur_index`
+ALTER TABLE `suggestion` ADD CONSTRAINT `PK_SUGGESTION` PRIMARY KEY (
+	`sug_index`
 );
 
-ALTER TABLE `document` ADD CONSTRAINT `PK_DOCUMENT` PRIMARY KEY (
-	`doc_index`
+ALTER TABLE `hashtag` ADD CONSTRAINT `PK_HASHTAG` PRIMARY KEY (
+	`tag_index`
+);
+
+ALTER TABLE `taglist` ADD CONSTRAINT `PK_TAGLIST` PRIMARY KEY (
+	`taglist_index`
 );
 
 ALTER TABLE `ind_profile` ADD CONSTRAINT `FK_individual_TO_ind_profile_1` FOREIGN KEY (
@@ -150,28 +161,14 @@ REFERENCES `enterprise` (
 	`ent_index`
 );
 
-ALTER TABLE `follow` ADD CONSTRAINT `FK_enterprise_TO_follow_1` FOREIGN KEY (
-	`ent_index`
-)
-REFERENCES `enterprise` (
-	`ent_index`
-);
-
-ALTER TABLE `follow` ADD CONSTRAINT `FK_individual_TO_follow_1` FOREIGN KEY (
+ALTER TABLE `interview` ADD CONSTRAINT `FK_individual_TO_interview_1` FOREIGN KEY (
 	`ind_index`
 )
 REFERENCES `individual` (
 	`ind_index`
 );
 
-ALTER TABLE `history` ADD CONSTRAINT `FK_individual_TO_history_1` FOREIGN KEY (
-	`ind_index`
-)
-REFERENCES `individual` (
-	`ind_index`
-);
-
-ALTER TABLE `history` ADD CONSTRAINT `FK_enterprise_TO_history_1` FOREIGN KEY (
+ALTER TABLE `interview` ADD CONSTRAINT `FK_enterprise_TO_interview_1` FOREIGN KEY (
 	`ent_index`
 )
 REFERENCES `enterprise` (
@@ -185,31 +182,31 @@ REFERENCES `enterprise` (
 	`ent_index`
 );
 
-ALTER TABLE `turning` ADD CONSTRAINT `FK_individual_TO_turning_1` FOREIGN KEY (
+ALTER TABLE `suggestion` ADD CONSTRAINT `FK_individual_TO_suggestion_1` FOREIGN KEY (
 	`ind_index`
 )
 REFERENCES `individual` (
 	`ind_index`
 );
 
-ALTER TABLE `turning` ADD CONSTRAINT `FK_enterprise_TO_turning_1` FOREIGN KEY (
+ALTER TABLE `suggestion` ADD CONSTRAINT `FK_enterprise_TO_suggestion_1` FOREIGN KEY (
 	`ent_index`
 )
 REFERENCES `enterprise` (
 	`ent_index`
 );
 
-ALTER TABLE `document` ADD CONSTRAINT `FK_individual_TO_document_1` FOREIGN KEY (
+ALTER TABLE `hashtag` ADD CONSTRAINT `FK_taglist_TO_hashtag_1` FOREIGN KEY (
+	`taglist_index`
+)
+REFERENCES `taglist` (
+	`taglist_index`
+);
+
+ALTER TABLE `hashtag` ADD CONSTRAINT `FK_individual_TO_hashtag_1` FOREIGN KEY (
 	`ind_index`
 )
 REFERENCES `individual` (
 	`ind_index`
-);
-
-ALTER TABLE `document` ADD CONSTRAINT `FK_recruit_TO_document_1` FOREIGN KEY (
-	`rec_index`
-)
-REFERENCES `recruit` (
-	`rec_index`
 );
 
