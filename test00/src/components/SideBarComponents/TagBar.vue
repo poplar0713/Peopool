@@ -2,7 +2,6 @@
   <el-button type="text" @click="dialogVisible = true" style="color:#939597"
     >TagBar</el-button
   >
-
   <el-dialog
     title="Tags"
     v-model="dialogVisible"
@@ -12,7 +11,7 @@
   >
     <div class="block">
       <el-cascader
-        v-model="inputbox"
+        :v-model="inputbox"
         :options="options"
         :props="props"
         clearable
@@ -34,6 +33,7 @@
 export default {
   data() {
     return {
+      inputbox: [],
       dialogVisible: false,
       inputbox: [],
       props: { multiple: true },

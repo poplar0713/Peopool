@@ -45,7 +45,7 @@
               <el-col :span="5">
                 <div v-if="hasVideo">
                   <video src="@/assets/samplevideo.mp4" controls>
-                    동영상을 재상할 수 없습니다
+                    동영상을 재생할 수 없습니다
                   </video>
                 </div>
                 <div v-else class="videoNotFound">
@@ -56,8 +56,8 @@
             </el-row>
           </el-col>
 
-          <el-col :span="10" class="section">
-            <el-tabs type="border-card">
+          <el-col :span="11" class="section">
+            <el-tabs type="border-card" class="panel-tabs">
               <el-tab-pane label="팔로우 중인 기업">
                 <div v-if="hasfollowing">
                   <el-card
@@ -72,7 +72,7 @@
                 <div v-else><h4>현재 팔로우 중인 기업이 없습니다</h4></div>
               </el-tab-pane>
               <el-tab-pane label="면접 요청">
-                <div v-if="hasInterviewReq">
+                <div v-if="hasInterviewReq" class="panel">
                   <el-card
                     shadow="hover"
                     v-for="(req, i) in InterviewReq"
@@ -83,7 +83,7 @@
                 </div>
                 <div v-else>면접을 요청한 기업이 없습니다.</div>
               </el-tab-pane>
-              <el-tab-pane label="일정">
+              <el-tab-pane label="일정" class="panel">
                 <el-timeline>
                   <el-timeline-item
                     v-for="(event, i) in events"
@@ -145,6 +145,11 @@
   text-align: center;
   background-color: white;
 }
+video{
+  margin: 1%;
+  height: auto;
+  max-width: 1280px;
+}
 .section {
   border-radius: 20px 20px 20px 20px;
   width: auto;
@@ -152,6 +157,12 @@
   margin: 1%;
   padding: 1%;
   background-color: white;
+}
+.panel-tabs{
+  height: 500px;
+}
+.panel{
+  overflow: scroll;
 }
 </style>
 
@@ -204,6 +215,11 @@ export default {
           time: "2021/07/21 13:00",
           title: "면접 3",
           content: "C사 면접",
+        },
+        {
+          time: "2021/07/21 16:00",
+          title: "면접 4",
+          content: "D사 면접",
         },
       ],
     };
