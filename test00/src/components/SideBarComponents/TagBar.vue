@@ -21,7 +21,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
+        <el-button type="primary" @click="(dialogVisible = false), tagok()"
           >Confirm</el-button
         >
       </span>
@@ -35,6 +35,7 @@ export default {
     return {
       inputbox: [],
       dialogVisible: false,
+      inputbox: [],
       props: { multiple: true },
       options: [
         {
@@ -129,6 +130,10 @@ export default {
           this.dialogVisible = false;
         })
         .catch(() => {});
+    },
+    tagok() {
+      console.log("dddd");
+      console.log(this.inputbox);
     },
   },
 };
