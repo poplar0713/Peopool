@@ -4,63 +4,64 @@
       <router-link to="/home"
         ><img src="@/assets/PeoPool.png" alt="" style="width:70%"
       /></router-link>
-      <div>
-        <el-button type="danger" plain style="width:98%">Logout</el-button>
-      </div>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
+        background-color="#dfd880"
       >
         <!--  -->
-        <el-submenu index="1">
-          <template #title>
-            <i class="el-icon-location"></i>
-            <span>Menu</span>
-          </template>
-          <el-menu-item-group title="Account">
-            <el-menu-item index="1-1">계정 관리</el-menu-item>
-            <el-menu-item index="1-2">이력서 관리</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="#소제목">
-            <el-menu-item index="1-3"><TagBar/></el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template #title><DragSetting/></template>
-            <el-menu-item index="1-4-1">#소제목, #내용</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <!--  -->
+        <el-menu-item index="1">
+          <i class="el-icon-user"></i>
+          <span>Profile</span>
+        </el-menu-item>
         <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-          <span>Navigator Two</span>
+          <i class="el-icon-circle-plus-outline"></i>
+          <span><TagBar /></span>
         </el-menu-item>
-        <!--  -->
-        <el-menu-item index="3" disabled>
-          <i class="el-icon-document"></i>
-          <span>공고관리</span>
+        <el-menu-item index="3">
+          <i class="el-icon-setting"></i>
+          <span><DragSetting /></span>
         </el-menu-item>
-        <!--  -->
         <el-menu-item index="4">
+          <i class="el-icon-document"></i>
+          <span>CV</span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="5">
+          <i class="el-icon-video-camera"></i>
+          <span>Interview</span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="6" disabled>
+          <i class="el-icon-document"></i>
+          <span>혹시나</span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="7">
           <i class="el-icon-setting"></i>
           <span>settings</span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="7">
+          <i class="el-icon-turn-off"></i>
+          <span>Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>
     </el-aside>
     <router-view></router-view>
   </el-container>
-  
 </template>
 
 <script>
 import DragSetting from "@/components/Recruitment/DragSetting.vue";
 import TagBar from "@/components/SideBarComponents/TagBar.vue";
 export default {
-  components:{
+  components: {
     DragSetting,
-    TagBar
+    TagBar,
   },
   methods: {
     handleOpen(key, keyPath) {

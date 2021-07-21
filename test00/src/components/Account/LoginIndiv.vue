@@ -13,7 +13,8 @@
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
       <el-button
         type="warning"
-        @click="submitForm('ruleForm'), openFullScreen1()"
+        @click="submitForm('ruleForm')"
+        v-loading.fullscreen.lock="fullscreenLoading"
         >Login</el-button
       >
     </el-form-item>
@@ -24,6 +25,7 @@
 export default {
   data() {
     return {
+      loading: true,
       fullscreenLoading: false,
       ruleForm: {
         LoginIndivID: "",
@@ -64,6 +66,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
+          this.openFullScreen2();
           this.$router.push("home");
           this.$store.state.LoginDialog = false;
         } else {
@@ -75,11 +78,16 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    openFullScreen1() {
-      this.fullscreenLoading = true;
+    openFullScreen2() {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
       setTimeout(() => {
-        this.fullscreenLoading = false;
-      }, 1000);
+        loading.close();
+      }, 3000);
     },
   },
 };
