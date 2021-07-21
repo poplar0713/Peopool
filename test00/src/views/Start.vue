@@ -8,7 +8,7 @@
 
 <script>
 import Login from "@/components/Account/Login.vue";
-import NotLoginMain from "@/components/NotLoginMain.vue";
+import NotLoginMain from "@/components/MainBasic/NotLoginMain.vue";
 export default {
   components: {
     Login,

@@ -37,7 +37,7 @@
 
 <script>
 import UserDetail from "@/components/UserDetail.vue";
-import FollowAppc from "@/components/FollowAppc.vue";
+import FollowAppc from "@/components/Follow/FollowAppc.vue";
 
 export default {
   components: {

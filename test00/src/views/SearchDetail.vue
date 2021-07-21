@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px"><SideBar /></el-aside>
+    <el-aside width="200px"><CompanySidebarHwa /></el-aside>
     <el-main>
       <div>
         <el-header>#선택태그</el-header>
@@ -56,11 +56,11 @@
 
 <script>
 import UserDetail from "@/components/UserDetail.vue";
-import SideBar from "@/components/SideBar.vue";
+import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
 export default {
   components: {
     UserDetail,
-    SideBar,
+    CompanySidebarHwa,
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <SideBar />
+    <CompanySidebarHwa />
     <el-container>
       <el-header>
         <div style="margin-top: 15px; width:100%">
@@ -32,14 +32,14 @@
 </template>
 
 <script>
-import SideBar from "@/components/CompanySidebar.vue";
-import ApplicantList from "@/components/ApplicantList.vue";
-import CheckAnnc from "@/components/CheckAnnc.vue";
-import Pdf from "@/components/webviewer.vue";
-// import test from '@/components/test.vue'
+import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
+import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
+import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
+import Pdf from "@/components/MainCompany/webviewer.vue";
+
 export default {
   components: {
-    SideBar,
+    CompanySidebarHwa,
     CheckAnnc,
     ApplicantList,
     Pdf,
