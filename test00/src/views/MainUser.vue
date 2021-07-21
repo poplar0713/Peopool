@@ -1,10 +1,10 @@
 <template>
-  <el-container>
-    <el-aside width="200px"><UserSidebar /></el-aside>
-
-    <el-container class="main">
-      <el-header>
-        <div style="margin-top: 15px; width:100%">
+  <div>
+    <el-container>
+      <el-aside><UserSidebar /></el-aside>
+      <el-container>
+        <!-- 검색창 -->
+        <el-header>
           <el-input
             placeholder="Please input"
             v-model="input3"
@@ -14,120 +14,30 @@
               <el-button icon="el-icon-search"></el-button>
             </template>
           </el-input>
-        </div>
-      </el-header>
+        </el-header>
+        <!-- 메인 -->
+        <el-main> 
+  <el-container>
+    <el-header>이력서관리</el-header>
+    <el-container>
+      <el-aside width="30%">
+        <h4>나의 영상</h4>
 
-      <el-main>
-        <h2>{{ username }}님의 이력관리</h2>
-        <el-row>
-          <el-col :span="12" class="section">
-            <el-row>
-              <el-col :span="12">
-                <h2>나의 PR 영상</h2>
-              </el-col>
-              <el-col :span="12">
-                <el-upload
-                  limit="1"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :file-list="fileList"
-                  accept="video/*"
-                >
-                  <el-button size="small">PR영상 업로드</el-button>
-                  <template #tip>
-                    <div class="el-upload__tip">
-                      20mb 이하 파일만 업로드 가능
-                    </div>
-                  </template>
-                </el-upload>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="5">
-                <div v-if="hasVideo">
-                  <video src="@/assets/samplevideo.mp4" controls>
-                    동영상을 재생할 수 없습니다
-                  </video>
-                </div>
-                <div v-else class="videoNotFound">
-                  <h4>PR 동영상을 아직 업로드 하지 않았습니다</h4>
-                  <h4>오른쪽 상단의 버튼을 눌러 영상을 업로드 해보세요</h4>
-                </div>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="11" class="section">
-            <el-tabs type="border-card" class="panel-tabs">
-              <el-tab-pane label="팔로우 중인 기업">
-                <div v-if="hasfollowing">
-                  <el-card
-                    shadow="hover"
-                    v-for="(company, i) in followList"
-                    v-bind:key="i"
-                    align="center"
-                  >
-                    {{ company.company_name }}
-                  </el-card>
-                </div>
-                <div v-else><h4>현재 팔로우 중인 기업이 없습니다</h4></div>
-              </el-tab-pane>
-              <el-tab-pane label="면접 요청">
-                <div v-if="hasInterviewReq" class="panel">
-                  <el-card
-                    shadow="hover"
-                    v-for="(req, i) in InterviewReq"
-                    v-bind:key="i"
-                    align="center"
-                    >{{ req.company_name }}
-                  </el-card>
-                </div>
-                <div v-else>면접을 요청한 기업이 없습니다.</div>
-              </el-tab-pane>
-              <el-tab-pane label="일정" class="panel">
-                <el-timeline>
-                  <el-timeline-item
-                    v-for="(event, i) in events"
-                    v-bind:key="i"
-                    :timestamp="event.time"
-                  >
-                    <el-card>
-                      <h4>{{ event.title }}</h4>
-                      <p>{{ event.content }}</p>
-                    </el-card>
-                  </el-timeline-item>
-                </el-timeline>
-              </el-tab-pane>
-            </el-tabs>
-          </el-col>
-        </el-row>
-
-        <el-row class="section">
-          <el-row>
-            <el-col :span="18">
-              <h2>이력서 관리</h2>
-            </el-col>
-            <el-col :span="4">
-              <el-upload
-                limit="1"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :file-list="fileList"
-                accept=".pdf"
-              >
-                <el-button size="small">이력서 업로드</el-button>
-                <template #tip>
-                  <div class="el-upload__tip">20mb 이하 파일만 업로드 가능</div>
-                </template>
-              </el-upload>
-            </el-col>
-          </el-row>
-        </el-row>
-      </el-main>
+      </el-aside>
+      <el-main>Main</el-main>
     </el-container>
   </el-container>
+
+
+
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <style>
-.main {
+/* .main {
   border-radius: 20px 20px 20px 20px;
   margin-top: 2%;
   margin-left: 2%;
@@ -145,7 +55,7 @@
   text-align: center;
   background-color: white;
 }
-video{
+video {
   margin: 1%;
   height: auto;
   max-width: 1280px;
@@ -158,12 +68,12 @@ video{
   padding: 1%;
   background-color: white;
 }
-.panel-tabs{
+.panel-tabs {
   height: 500px;
 }
-.panel{
+.panel {
   overflow: scroll;
-}
+} */
 </style>
 
 <script>

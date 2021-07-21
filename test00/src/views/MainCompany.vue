@@ -42,7 +42,7 @@ export default {
     CompanySidebarHwa,
     CheckAnnc,
     ApplicantList,
-    WebViewer
+    WebViewer,
   },
 
   data() {
