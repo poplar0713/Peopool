@@ -2,7 +2,6 @@
   <el-button type="text" @click="dialogVisible = true" style="color:#939597"
     >TagBar</el-button
   >
-
   <el-dialog
     title="Tags"
     v-model="dialogVisible"
@@ -11,7 +10,13 @@
     :before-close="handleClose"
   >
     <div class="block">
-      <el-cascader :options="options" :props="props" clearable style="width:100%"></el-cascader>
+      <el-cascader
+        :v-model="inputbox"
+        :options="options"
+        :props="props"
+        clearable
+        style="width:100%"
+      ></el-cascader>
     </div>
     <template #footer>
       <span class="dialog-footer">
@@ -28,6 +33,7 @@
 export default {
   data() {
     return {
+      inputbox: [],
       dialogVisible: false,
       props: { multiple: true },
       options: [

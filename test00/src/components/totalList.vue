@@ -18,7 +18,7 @@
           <div v-for="tag in fd.tag" :key="tag" class="text item">
             {{ tag }}
           </div>
-          <UserDetail />
+          <UserDetail :user="fd"/>
         </el-card>
       </el-main>
     </div>
