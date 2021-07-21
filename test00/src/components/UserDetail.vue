@@ -1,7 +1,7 @@
 <template>
   <el-button type="text" @click="dialogVisible = true">{{ user }} </el-button>
   <div>
-    <el-dialog :title="user.name" v-model="dialogVisible" width="50%">
+    <el-dialog :title="user" v-model="dialogVisible" width="50%">
       <div>
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="Consistency" name="1">

@@ -25,6 +25,7 @@
           title="Today 눈여겨보는 관심 피풀인"
           :followData="followData"
         />
+        <pdf initDoc="test.pdf" />
       </el-main>
     </el-container>
   </el-container>
@@ -34,13 +35,14 @@
 import SideBar from "@/components/CompanySidebar.vue";
 import ApplicantList from "@/components/ApplicantList.vue";
 import CheckAnnc from "@/components/CheckAnnc.vue";
+import Pdf from "@/components/webviewer.vue";
 // import test from '@/components/test.vue'
 export default {
   components: {
     SideBar,
     CheckAnnc,
     ApplicantList,
-    // test
+    Pdf,
   },
 
   data() {
