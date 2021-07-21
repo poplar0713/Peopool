@@ -51,10 +51,10 @@ $--font-path: "~element-plus/lib/theme-chalk/fonts";
   border-radius: 30px;
 }
 // aside
-// .el-aside { background-color: white; opacity: 0.9; border-radius: 30px;}
-// .el-aside__header { background-color: white; border-radius: 30px;}
-// .el-aside__body { background-color: white; border-radius: 30px;}
-// .el-aside__footer { background-color: white; border-radius: 30px; }
+.el-aside { background-color: white; border-radius: 30px; margin: auto;}
+.el-aside__header { background-color: white; border-radius: 30px;}
+.el-aside__body { background-color: white; border-radius: 30px;}
+.el-aside__footer { background-color: white; border-radius: 30px; }
 
 // menu-item
 .el-menu-item {

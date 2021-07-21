@@ -4,7 +4,7 @@
       <el-aside><UserSidebar /></el-aside>
       <el-container>
         <!-- 검색창 -->
-        <el-header>
+        <el-header style="text-align; padding-top:10px">
           <el-input
             placeholder="Please input"
             v-model="mainsearch"
