@@ -112,6 +112,14 @@
               </el-upload>
             </el-col>
           </el-row>
+          <el-row>
+            <div v-if="hasDoc">
+              <PDFJSViewer :path="docPath" />
+            </div>
+            <div v-else>
+              <h3>아직 업로드 된 이력서가 없습니다</h3>
+            </div>
+          </el-row>
         </el-row>
       </el-main>
     </el-container>
@@ -149,9 +157,11 @@
 
 <script>
 import SideBar from "@/components/SideBar.vue";
+import PDFJSViewer from "@/components/PDFJSViewer";
 export default {
   components: {
     SideBar,
+    PDFJSViewer,
   },
   data() {
     return {
@@ -160,6 +170,7 @@ export default {
       hasDoc: true,
       videosrc: "@/assets/samplevideo.mp4",
       fileList: [],
+      docPath: "@/asset/samplepdf.pdf",
       followList: [
         {
           company_id: 0,
