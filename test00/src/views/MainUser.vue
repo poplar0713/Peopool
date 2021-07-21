@@ -72,7 +72,7 @@
                 <div v-else><h4>현재 팔로우 중인 기업이 없습니다</h4></div>
               </el-tab-pane>
               <el-tab-pane label="면접 요청">
-                <div v-if="hasInterviewReq" class="panel">
+                <div v-if="hasInterviewReq">
                   <el-card
                     shadow="hover"
                     v-for="(req, i) in InterviewReq"
@@ -84,6 +84,8 @@
                 <div v-else>면접을 요청한 기업이 없습니다.</div>
               </el-tab-pane>
               <el-tab-pane label="일정" class="panel">
+                <div>
+                 <el-scrollbar height="400px">
                 <el-timeline>
                   <el-timeline-item
                     v-for="(event, i) in events"
@@ -96,17 +98,21 @@
                     </el-card>
                   </el-timeline-item>
                 </el-timeline>
+                </el-scrollbar>
+                </div>
               </el-tab-pane>
             </el-tabs>
           </el-col>
         </el-row>
 
-        <el-row class="section">
-          <el-row>
-            <el-col :span="18">
-              <h2>이력서 관리</h2>
-            </el-col>
-            <el-col :span="4">
+        <div class="section">
+          <div class="section">
+             <el-row>
+              <el-col :span="3">
+                <h2>이력서 관리</h2>
+              </el-col>
+              <el-col :span="2">
+                
               <el-upload
                 limit="1"
                 action="https://jsonplaceholder.typicode.com/posts/"
@@ -114,13 +120,15 @@
                 accept=".pdf"
               >
                 <el-button size="small">이력서 업로드</el-button>
-                <template #tip>
-                  <div class="el-upload__tip">20mb 이하 파일만 업로드 가능</div>
-                </template>
               </el-upload>
-            </el-col>
-          </el-row>
-        </el-row>
+              </el-col>
+            </el-row>
+          </div>
+           
+            <div class="section">
+                <WebViewer initialDoc="파이팅 프런트.docx" />
+            </div>
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -130,9 +138,9 @@
 .main {
   border-radius: 20px 20px 20px 20px;
   margin-top: 2%;
-  margin-left: 2%;
+  margin-left: 5%;
   margin-right: 2%;
-  background-color: #f4f6f6;
+  background-color: #FEF9E7;
   position: relative;
 }
 .videoNotFound {
@@ -161,17 +169,16 @@ video{
 .panel-tabs{
   height: 500px;
 }
-.panel{
-  overflow: scroll;
-}
 </style>
 
 <script>
 import UserSidebar from "@/components/SideBarComponents/UserSidebar.vue";
+import WebViewer from "@/components/MainCompany/WebViewer.vue";
 
 export default {
   components: {
     UserSidebar,
+   WebViewer
   },
   data() {
     return {
@@ -216,11 +223,7 @@ export default {
           title: "면접 3",
           content: "C사 면접",
         },
-        {
-          time: "2021/07/21 16:00",
-          title: "면접 4",
-          content: "D사 면접",
-        },
+        
       ],
     };
   },
