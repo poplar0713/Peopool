@@ -11,12 +11,18 @@
     :before-close="handleClose"
   >
     <div class="block">
-      <el-cascader :options="options" :props="props" clearable style="width:100%"></el-cascader>
+      <el-cascader
+        v-model="inputbox"
+        :options="options"
+        :props="props"
+        clearable
+        style="width:100%"
+      ></el-cascader>
     </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
+        <el-button type="primary" @click="(dialogVisible = false), tagok()"
           >Confirm</el-button
         >
       </span>
@@ -29,6 +35,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      inputbox: [],
       props: { multiple: true },
       options: [
         {
@@ -123,6 +130,10 @@ export default {
           this.dialogVisible = false;
         })
         .catch(() => {});
+    },
+    tagok() {
+      console.log("dddd");
+      console.log(this.inputbox);
     },
   },
 };
