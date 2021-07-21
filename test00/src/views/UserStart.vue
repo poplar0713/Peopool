@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px"><SideBar /></el-aside>
+    <el-aside width="200px"><CompanySidebar/></el-aside>
     <el-main>
       <div>
         <p><router-link to="/searchdetail">#태그</router-link></p>
@@ -41,11 +41,13 @@
 </template>
 
 <script>
-import SideBar from "@/components/SideBar.vue";
+import CompanySidebar from '@/components/SideBarComponents/CompanySidebar.vue'
+// import UserSidebar from "@/components/SideBarComponents/UserSidebar.vue";
 
 export default {
   components: {
-    SideBar,
+    CompanySidebar,
+    // UserSidebar
   },
   methods: {
     handleOpen(key, keyPath) {
