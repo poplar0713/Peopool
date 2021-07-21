@@ -35,6 +35,7 @@ export default {
     return {
       inputbox: [],
       dialogVisible: false,
+      inputbox: [],
       props: { multiple: true },
       options: [
         {
