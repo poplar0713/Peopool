@@ -18,7 +18,7 @@
         <!-- 메인 -->
         <el-main>
           <el-container>
-            <el-header>이력서관리</el-header>
+            <el-header style="text-align:center;"><h2>{{$store.state.temp.UserName}}</h2></el-header>
             <el-container>
               <el-aside width="30%">
                 <el-row>
@@ -32,9 +32,8 @@
                   >
                     <el-button size="small">PR영상 업로드</el-button>
                     <template #tip>
-                      <div class="el-upload__tip">
-                        20mb 이하 파일만 업로드 가능
-                      </div>
+                      <!-- <div class="el-upload__tip">
+                      </div> -->
                     </template>
                   </el-upload>
                 </el-row>
@@ -42,9 +41,10 @@
                   <div v-if="hasVideo">
                     <video
                       src="@/assets/samplevideo.mp4"
-                      height="250"
-                      width="300"
+                      height="360"
+                      width="640"
                       controls
+                      style="width:100%; height:100%"
                     ></video>
                   </div>
                   <div v-else class="videoNotFound">
@@ -55,6 +55,9 @@
               </el-aside>
               <el-main>
                 <el-tabs :tab-position="tabPosition" style="height: 250;">
+                  <el-tab-pane label="Profile">
+                    <TabProfile />
+                  </el-tab-pane>
                   <el-tab-pane label="Following Enterprise">
                     <TabFollowings />
                   </el-tab-pane>
@@ -62,10 +65,10 @@
                     ><TabRequiredInterview
                   /></el-tab-pane>
                   <el-tab-pane label="Schedule">
-                    <TabSchedule/>
+                    <TabSchedule />
                   </el-tab-pane>
                   <el-tab-pane label="Documents">
-                    <TabDocuments/>
+                    <TabDocuments />
                   </el-tab-pane>
                 </el-tabs>
               </el-main>
@@ -75,7 +78,7 @@
       </el-container>
     </el-container>
   </div>
-<!-- TabSchedule -->
+  <!-- TabSchedule -->
 </template>
 <script>
 import UserSidebar from "@/components/SideBarComponents/UserSidebar.vue";
@@ -83,6 +86,7 @@ import TabFollowings from "@/components/MainUser/TabFollowings.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import TabDocuments from "@/components/MainUser/TabDocuments.vue";
+import TabProfile from "@/components/MainUser/TabProfile.vue";
 
 export default {
   components: {
@@ -90,13 +94,14 @@ export default {
     TabFollowings,
     TabRequiredInterview,
     TabSchedule,
-    TabDocuments
+    TabDocuments,
+    TabProfile,
   },
   data() {
     return {
-      mainsearch:"",
+      mainsearch: "",
       search: "",
-      username: "싸피 김",
+      username: this.$store.state.temp.UserName,
       hasVideo: true,
       hasDoc: true,
       videosrc: "@/assets/samplevideo.mp4",

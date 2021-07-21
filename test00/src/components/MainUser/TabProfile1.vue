@@ -1,58 +1,48 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-    <!-- 개인회원 ID -->
-    <el-form-item label="ID" prop="SignupIndivID">
-      <el-input v-model="ruleForm.SignupIndivID"></el-input>
-    </el-form-item>
-    <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="SignupIndivPW">
-      <el-input type="password" v-model="ruleForm.SignupIndivPW"></el-input>
-    </el-form-item>
-    <!-- 개인회원 PW 확인 -->
-    <el-form-item label="Password Confirmation" prop="SignupIndivPWConfirm">
-      <el-input
-        type="password"
-        v-model="ruleForm.SignupIndivPWConfirm"
-      ></el-input>
-    </el-form-item>
-    <!-- 개인회원이름 -->
-    <el-form-item label="Name" prop="UserName">
-      <el-input v-model="ruleForm.UserName"></el-input>
-    </el-form-item>
-    <!-- 개인회원 생년월일 -->
-    <el-form-item label="Birth" prop="UserBirth">
-      <el-input type="date" v-model="ruleForm.UserBirth"></el-input>
-    </el-form-item>
-    <!-- 공개여부 -->
-    <el-form-item label="Open to the public" prop="open">
-      <el-switch v-model="ruleForm.open"></el-switch>
-    </el-form-item>
-    <!-- 성별 -->
-    <el-form-item label="Gender" prop="Gender">
-      <el-radio-group v-model="ruleForm.Gender">
-        <el-radio label="male"></el-radio>
-        <el-radio label="female"></el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <!-- 연락처 -->
-    <el-form-item label="Tel" prop="UserTel">
-      <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
-    </el-form-item>
-    <!-- 이메일 -->
-    <el-form-item label="Email" prop="UserEmail">
-      <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
-    </el-form-item>
-    <!-- 생성 및 취소 버튼 -->
-    <el-form-item>
-      <el-button @click="resetForm('ruleForm')">Reset</el-button>
-      <el-button
-        type="warning"
-        @click="submitForm('ruleForm')"
-        v-loading.fullscreen.lock="fullscreenLoading"
-        >Create</el-button
-      >
-    </el-form-item>
-  </el-form>
+  <el-scrollbar height="400px">
+    <div style="width:90%; margin:auto;">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+        <!-- 개인회원이름 -->
+        <el-form-item label="Name" prop="UserName">
+          <el-input v-model="ruleForm.UserName"></el-input>
+        </el-form-item>
+        <!-- 개인회원 생년월일 -->
+        <el-form-item label="Birth" prop="UserBirth">
+          <el-input type="date" v-model="ruleForm.UserBirth"></el-input>
+        </el-form-item>
+        <!-- 개인회원 PW -->
+        <el-form-item label="Password" prop="SignupIndivPW">
+          <el-input type="password" v-model="ruleForm.SignupIndivPW"></el-input>
+        </el-form-item>
+        <!-- 개인회원 PW 확인 -->
+        <el-form-item label="Password Confirmation" prop="SignupIndivPWConfirm">
+          <el-input
+            type="password"
+            v-model="ruleForm.SignupIndivPWConfirm"
+          ></el-input>
+        </el-form-item>
+        <!-- 공개여부 -->
+        <el-form-item label="Open to the public" prop="open">
+          <el-switch v-model="ruleForm.open"></el-switch>
+        </el-form-item>
+        <!-- 성별 -->
+        <el-form-item label="Gender" prop="Gender">
+          <el-radio-group v-model="ruleForm.Gender">
+            <el-radio label="male"></el-radio>
+            <el-radio label="female"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <!-- 연락처 -->
+        <el-form-item label="Tel" prop="UserTel">
+          <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
+        </el-form-item>
+        <!-- 이메일 -->
+        <el-form-item label="Email" prop="UserEmail">
+          <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-scrollbar>
 </template>
 
 <script>
@@ -60,7 +50,6 @@ export default {
   data() {
     return {
       ruleForm: {
-        SignupIndivID: "",
         SignupIndivPW: "",
         SignupIndivPWConfirm: "",
         UserName: "",
@@ -150,7 +139,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
-          this.$store.dispatch('getsignupdata',this.ruleForm);
           this.openFullScreen2();
           this.$store.state.SignupDialogIndiv = false;
           this.successmessage();

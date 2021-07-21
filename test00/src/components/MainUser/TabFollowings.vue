@@ -25,7 +25,7 @@
           size="mini"
           type="danger"
           @click="handleDelete(scope.$index, scope.row)"
-          >Delete</el-button
+          >unFollow</el-button
         >
       </template>
     </el-table-column>
@@ -125,6 +125,7 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+       this.rows.splice(index, 1);
     },
   },
 };
