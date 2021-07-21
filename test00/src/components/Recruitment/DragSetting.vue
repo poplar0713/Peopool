@@ -1,6 +1,6 @@
 <template>
   <el-button type="text" @click="dialogVisible = true" style="color:#939597"
-    >DragFail...</el-button
+    >채용관리</el-button
   >
 
   <el-dialog
