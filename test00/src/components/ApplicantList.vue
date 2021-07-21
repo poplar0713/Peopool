@@ -1,51 +1,56 @@
 <template>
+  <div>
     <div>
-      <div>
-        <el-row :gutter="24">
-          <el-col :span="6"> <h1><i class="el-icon-s-grid"></i> {{title}}</h1></el-col>
-         <el-col :span="6" :offset="12"><follow-appc/></el-col>
-        </el-row>
-
-      </div>
-      <el-main>
+      <el-row :gutter="24">
+        <el-col :span="6">
+          <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
+        >
+        <el-col :span="6" :offset="12"><follow-appc /></el-col>
+      </el-row>
+    </div>
+    <el-main>
       <el-space>
-        <el-card class="box-card" style="width: 250px" v-for="fd in followData" :key="fd">
+        <el-card
+          class="box-card"
+          style="width: 250px"
+          v-for="fd in followData"
+          :key="fd"
+        >
           <template #header>
             <div class="card-header">
-              
-              <img src="a.jpg" style="width: 150px"/>
-              <br>
-              
+              <img src="a.jpg" style="width: 150px" />
+              <br />
             </div>
           </template>
-          <h1>{{fd.title}}</h1>
+          <!-- <h1>{{ fd.title }}</h1> -->
+          <UserDetail :user="fd" />
+          <h4>{{ fd.name }}</h4>
           <div v-for="tag in fd.tag" :key="tag" class="text item">
-            {{tag}}
+            {{ tag }}
           </div>
-          <UserDetail/>
+          <UserDetail />
         </el-card>
       </el-space>
-      </el-main>
-   </div>
+    </el-main>
+  </div>
 </template>
 
 <script>
-import UserDetail from '@/components/UserDetail.vue'
-import FollowAppc from '@/components/FollowAppc.vue'
+import UserDetail from "@/components/UserDetail.vue";
+import FollowAppc from "@/components/FollowAppc.vue";
 
 export default {
-    components:{
-        UserDetail,
-       FollowAppc
-        
-     },
-  name: 'HelloWorld',
+  components: {
+    UserDetail,
+    FollowAppc,
+  },
+  name: "HelloWorld",
   props: {
     msg: String,
     title: String,
     followData: Array,
-  }
-}
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
