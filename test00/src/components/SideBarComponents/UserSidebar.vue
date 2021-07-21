@@ -1,15 +1,15 @@
 <template>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean" rel="stylesheet">
   <el-container>
-    <el-aside width="200px">
-      <router-link to="/home"
+    <el-aside class="sidebar" width="250px">
+      <router-link to="/user"
         ><img src="@/assets/PeoPool.png" alt="" style="width:70%"
       /></router-link>
       <el-menu
         default-active="2"
-        class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
-        background-color="#dfd880"
+        background-color="#f1c40f"
       >
         <!--  -->
         <el-menu-item index="1">
@@ -77,20 +77,6 @@ export default {
   },
   data() {
     return {
-      options: [
-        {
-          value: "HTML",
-          label: "HTML",
-        },
-        {
-          value: "CSS",
-          label: "CSS",
-        },
-        {
-          value: "JavaScript",
-          label: "JavaScript",
-        },
-      ],
       value: [],
     };
   },
@@ -101,5 +87,19 @@ export default {
 img {
   display: block;
   margin: 0px auto;
+}
+.sidebar {
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  font-size: 30px;
+}
+.el-menu {
+  height: 90%;
+}
+span {
+  color: black;
+  font-size: 15px;
+  font-family: Helvetica;
 }
 </style>
