@@ -7,7 +7,7 @@
         <el-header>
           <el-input
             placeholder="Please input"
-            v-model="input3"
+            v-model="mainsearch"
             class="input-with-select"
           >
             <template #append>
@@ -94,6 +94,7 @@ export default {
   },
   data() {
     return {
+      mainsearch:"",
       search: "",
       username: "싸피 김",
       hasVideo: true,
