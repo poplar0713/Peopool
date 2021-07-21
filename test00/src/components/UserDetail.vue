@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true">ssss </el-button>
+  <el-button type="text" @click="dialogVisible = true">{{ user }} </el-button>
   <div>
     <el-dialog :title="user.name" v-model="dialogVisible" width="50%">
       <div>
