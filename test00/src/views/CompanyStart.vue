@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px"><SideBar/></el-aside>
+    <el-aside width="200px"><CompanySidebar/></el-aside>
     <el-container>
       
         <el-header>
@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import SideBar from '@/components/CompanySidebar.vue'
+import CompanySidebar from '@/components/SideBarComponents/CompanySidebar.vue'
 import ApplicantList from '@/components/ApplicantList.vue'
 import CheckAnnc from '@/components/CheckAnnc.vue'
 // import test from '@/components/test.vue'
 export default {
   components:{
-    SideBar,
+    CompanySidebar,
     CheckAnnc,
     ApplicantList,
     // test
