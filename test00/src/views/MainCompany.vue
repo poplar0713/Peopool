@@ -1,20 +1,30 @@
 <template>
-  <el-container>
-    <CompanySidebarHwa />
+  <!-- <el-container>
+    <Header />
     <el-container>
-      <el-header>
-        <div style="margin-top: 15px; width:100%">
-          <el-input
-            placeholder="Please input"
-            v-model="input3"
-            class="input-with-select"
-          >
-            <template #append>
-              <el-button icon="el-icon-search"></el-button>
-            </template>
-          </el-input>
-        </div>
-      </el-header>
+      <CompanySidebarHwa />
+      <el-container>
+        <el-main>
+          <check-annc />
+          <applicant-list
+            title="Today 우리회사 관심 피풀인"
+            :followData="followData"
+          />
+          <applicant-list
+            title="Today 눈여겨보는 관심 피풀인"
+            :followData="followData"
+          />
+          <WebViewer initialDoc="파이팅 프런트.docx" />
+        </el-main>
+      </el-container>
+    </el-container>
+  </el-container> -->
+  <el-container>
+    <el-header><Header /></el-header>
+    <el-container>
+      <el-aside class="sidebar" width="250px">
+        <CompanySidebarHwa />
+      </el-aside>
       <el-main>
         <check-annc />
         <applicant-list
@@ -25,7 +35,6 @@
           title="Today 눈여겨보는 관심 피풀인"
           :followData="followData"
         />
-        <WebViewer initialDoc="파이팅 프런트.docx" />
       </el-main>
     </el-container>
   </el-container>
@@ -35,14 +44,16 @@
 import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
-import WebViewer from "@/components/MainCompany/WebViewer.vue";
+// import WebViewer from "@/components/MainCompany/WebViewer.vue";
+import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
   components: {
     CompanySidebarHwa,
     CheckAnnc,
     ApplicantList,
-    WebViewer,
+    // WebViewer,
+    Header,
   },
 
   data() {
@@ -114,4 +125,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.el-header {
+  /* padding-top: 75px; */
+  /* position: fixed; */
+  /* top: 0;
+  width: 100%;
+  left: 0;
+  right: 0; */
+}
+</style>

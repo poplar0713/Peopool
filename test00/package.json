@@ -6,16 +6,14 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build mybuildscript && npm run move-static",
     "lint": "vue-cli-service lint",
-    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer"
+    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer",
+    "postinstall": "node tools/copy-webviewer-files.js"
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.0.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.55",
-    "kalendar-vue": "^2.1.1",
     "vue": "^3.1.4",
-    "vue-pdf": "^4.3.0",
-    "vue-pdf-app": "^2.1.0",
     "vue-router": "^4.0.0-0",
     "vue3-carousel": "^0.1.23",
     "vuedraggable": "^4.0.3",
