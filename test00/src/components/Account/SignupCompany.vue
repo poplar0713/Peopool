@@ -109,7 +109,7 @@ export default {
         CompanyTel: [
           {
             required: true,
-            message: "Please input your Phone number",
+            message: "Please input your Phone Number",
             trigger: "change",
           },
         ],

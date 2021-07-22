@@ -20,7 +20,7 @@
         <!--  -->
         <el-menu-item index="1">
           <i class="el-icon-user"></i>
-          <span><UserProfileBar/></span>
+          <span><ProfileUser/></span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-setting"></i>
@@ -59,11 +59,11 @@
 
 <script>
 import DragSetting from "@/components/Recruitment/DragSetting.vue";
-import UserProfileBar from "@/components/SideBarComponents/UserProfileBar.vue";
+import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
 export default {
   components: {
     DragSetting,
-    UserProfileBar,
+    ProfileUser,
   },
   methods: {
     ch(data) {
