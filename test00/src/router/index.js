@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { createRouter, createWebHistory } from 'vue-router'
 import MainUser from '../views/MainUser.vue'
 
@@ -6,7 +7,16 @@ import Start from '../views/Start.vue'
 import MainCompany from '../views/MainCompany.vue'
 import InterviewRoom from '../views/InterviewRoom.vue'
 import SearchCompany from "../views/SearchCompany.vue";
+=======
+import { createRouter, createWebHistory } from "vue-router";
+import MainUser from "../views/MainUser.vue";
+>>>>>>> 06c599964b2529e2381e7b27d26e4717310c44ce
 
+import SearchDetail from "../views/SearchDetail.vue";
+import Start from "../views/Start.vue";
+import MainCompany from "../views/MainCompany.vue";
+import InterviewRoom from "../views/InterviewRoom.vue";
+import SearchUser from "../views/SearchUser.vue";
 const routes = [
   {
     path: "/",
@@ -42,6 +52,11 @@ const routes = [
     path: "/interview",
     name: "InterviewRoom",
     component: InterviewRoom,
+  },
+  {
+    path: "/searchuser",
+    name: "searchuser",
+    component: SearchUser,
   },
 ];
 
