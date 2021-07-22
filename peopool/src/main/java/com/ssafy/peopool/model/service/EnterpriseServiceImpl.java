@@ -3,9 +3,17 @@ package com.ssafy.peopool.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ssafy.peopool.dto.Enterprise;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.dto.Enterprise;
+import com.ssafy.peopool.model.repo.EnterpriseRepo;
+
+@Service
 public class EnterpriseServiceImpl implements EnterpriseService{
+	
+	@Autowired
+	EnterpriseRepo enterpriseRepo;
 
 	@Override
 	public List<Enterprise> getEnterprise() throws SQLException {

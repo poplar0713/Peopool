@@ -2,10 +2,19 @@ package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
 
-import com.ssafy.peopool.dto.ProfileOfEnterprise;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.dto.ProfileOfEnterprise;
+import com.ssafy.peopool.model.repo.ProfileOfEnterpriseRepo;
+
+@Service
 public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseService {
 
+	@Autowired
+	ProfileOfEnterpriseRepo profileOfEnterpriseRepo;
+	
+	
 	@Override
 	public void modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException {
 		// TODO Auto-generated method stub
