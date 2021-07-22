@@ -1,10 +1,10 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true" style="color:#939597"
+  <el-button type="text" @click="dialogVisibleTag = true" style="color:#939597"
     >TagBar</el-button
   >
   <el-dialog
     title="Tags"
-    v-model="dialogVisible"
+    v-model="dialogVisibleTag"
     width="30%"
     height="10%"
     :before-close="handleClose"
@@ -20,8 +20,8 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="(dialogVisible = false), tagok()"
+        <el-button @click="dialogVisibleTag = false">Cancel</el-button>
+        <el-button type="primary" @click="(dialogVisibleTag = false), tagok()"
           >Confirm</el-button
         >
       </span>
@@ -33,7 +33,8 @@
 export default {
   data() {
     return {
-      dialogVisible: false,
+      inputbox: [],
+      dialogVisibleTag: false,
       props: { multiple: true },
       options: [
         {
@@ -125,7 +126,7 @@ export default {
       this.$confirm("Are you sure to close this dialog?")
         .then(() => {
           done();
-          this.dialogVisible = false;
+          this.dialogVisibleTag = false;
         })
         .catch(() => {});
     },

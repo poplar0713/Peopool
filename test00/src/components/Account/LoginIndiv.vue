@@ -67,7 +67,7 @@ export default {
         if (valid) {
           // alert('submit!');
           this.openFullScreen2();
-          this.$router.push("home");
+          this.$router.push("/user/"+this.ruleForm.LoginIndivID);
           this.$store.state.LoginDialog = false;
         } else {
           console.log("error submit!!");

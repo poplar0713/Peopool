@@ -1,13 +1,19 @@
-import { createRouter, createWebHistory } from "vue-router";
-import MainUser from "../views/MainUser.vue";
-import About from "../views/About.vue";
-import SearchDetail from "../views/SearchDetail.vue";
-import Start from "../views/Start.vue";
-import MainCompany from "../views/MainCompany.vue";
-import Search from "../components/search/SearchList.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import MainUser from '../views/MainUser.vue'
+
+import SearchDetail from '../views/SearchDetail.vue'
+import Start from '../views/Start.vue'
+import MainCompany from '../views/MainCompany.vue'
+import InterviewRoom from '../views/InterviewRoom.vue'
+
 const routes = [
   {
-    path: "/user",
+    path: "/",
+    name: "Start",
+    component: Start,
+  },
+  {
+    path: "/user/:userid",
     name: "MainUser",
     component: MainUser,
   },
@@ -15,11 +21,6 @@ const routes = [
     path: "/company",
     name: "MainCompany",
     component: MainCompany,
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About,
   },
   {
     path: "/searchDetail",
@@ -32,9 +33,9 @@ const routes = [
     component: Start,
   },
   {
-    path: "/search",
-    name: "Search",
-    component: Search,
+    path: "/interview",
+    name: "InterviewRoom",
+    component: InterviewRoom,
   },
 ];
 

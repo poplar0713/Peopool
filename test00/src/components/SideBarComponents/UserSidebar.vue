@@ -97,9 +97,5 @@ img {
 .el-menu {
   height: 90%;
 }
-span {
-  color: black;
-  font-size: 15px;
-  font-family: Helvetica;
-}
+
 </style>
