@@ -46,27 +46,17 @@
 import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
-<<<<<<< HEAD
-import Webviewer from "@/components/MainCompany/Webviewer.vue";
-=======
 import WebViewer from "@/components/MainCompany/WebViewer.vue";
 
-// import WebViewer from "@/components/MainCompany/WebViewer.vue";
-
 import Header from "@/components/SideBarComponents/header.vue";
->>>>>>> front
 
 export default {
   components: {
     CompanySidebarHwa,
     CheckAnnc,
     ApplicantList,
-<<<<<<< HEAD
-    Webviewer,
-=======
     WebViewer,
     Header,
->>>>>>> front
   },
 
   data() {
