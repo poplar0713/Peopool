@@ -1,6 +1,6 @@
 <template>
   <el-container class="mainLayout">
-    <el-aside width="250px"><company-sidebar-hwa /></el-aside>
+    <el-aside width="250px"><CompanySidebarHwa /></el-aside>
 
     <el-container>
       <el-header><Header /></el-header>
@@ -37,18 +37,17 @@ export default {
   height: 100%;
   width: 100%;
 }
+
 .el-container {
   background-color: cornsilk;
 }
 .el-aside {
   background-color: yellow;
   height: 100%;
-
   position: sticky;
-  z-index: 1;
   top: 0;
   left: 0;
-  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .el-main {
   background-color: yellowgreen;

@@ -87,4 +87,7 @@ span {
 .f {
   color: #ffc000;
 }
+.el-menu {
+  height: 100%;
+}
 </style>
