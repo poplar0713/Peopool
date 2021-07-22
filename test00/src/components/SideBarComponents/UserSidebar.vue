@@ -1,7 +1,7 @@
 <template>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean" rel="stylesheet">
   <el-container>
-    <el-aside class="sidebar" width="250px">
+    <el-aside class="sidebar" width="10%">
       <router-link to="/user"
         ><img src="@/assets/PeoPool.png" alt="" style="width:70%"
       /></router-link>
@@ -15,10 +15,6 @@
         <el-menu-item index="1">
           <i class="el-icon-user"></i>
           <span><UserProfileBar/></span>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-circle-plus-outline"></i>
-          <span><TagBar /></span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-setting"></i>
@@ -57,12 +53,10 @@
 
 <script>
 import DragSetting from "@/components/Recruitment/DragSetting.vue";
-import TagBar from "@/components/SideBarComponents/TagBar.vue";
 import UserProfileBar from "@/components/SideBarComponents/UserProfileBar.vue";
 export default {
   components: {
     DragSetting,
-    TagBar,
     UserProfileBar,
   },
   methods: {

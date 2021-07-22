@@ -5,7 +5,7 @@
       ><TabProfileEducation
     /></el-tab-pane>
     <el-tab-pane label="Introduction"><TabProfileIntroduction /></el-tab-pane>
-    <el-tab-pane label="Task">Task</el-tab-pane>
+    <el-tab-pane label="Tags"><TabProfileTags/></el-tab-pane>
   </el-tabs>
 </template>
 
@@ -13,11 +13,13 @@
 import TabProfileBasicInfo from "./TabProfileBasicInfo.vue";
 import TabProfileEducation from "./TabProfileEducation.vue";
 import TabProfileIntroduction from "./TabProfileIntroduction.vue";
+import TabProfileTags from "./TabProfileTags.vue";
 export default {
   components: {
     TabProfileBasicInfo,
     TabProfileEducation,
     TabProfileIntroduction,
+    TabProfileTags,
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside><UserSidebar /></el-aside>
+    <el-aside style="width:10%"><UserSidebar /></el-aside>
     <el-container>
       <!-- 검색창 -->
       <el-header style="text-align; padding-top:10px">
@@ -8,6 +8,7 @@
           placeholder="Please input"
           v-model="mainsearch"
           class="input-with-select"
+          style="text-align:center; margin: 0 auto;"
         >
           <template #append>
             <el-button icon="el-icon-search"></el-button>
