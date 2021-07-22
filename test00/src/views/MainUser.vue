@@ -1,83 +1,81 @@
 <template>
-  <el-container>
-    <el-aside><UserSidebar /></el-aside>
     <el-container>
-      <!-- 검색창 -->
-      <el-header style="text-align; padding-top:10px">
-        <el-input
-          placeholder="Please input"
-          v-model="mainsearch"
-          class="input-with-select"
-        >
-          <template #append>
-            <el-button icon="el-icon-search"></el-button>
-          </template>
-        </el-input>
-      </el-header>
-      <!-- 메인 -->
-      <el-main>
-        <el-container>
-          <el-header style="text-align:center;"
-            ><h2>{{ $store.state.temp.UserName }}</h2></el-header
+      <el-aside><UserSidebar /></el-aside>
+      <el-container>
+        <!-- 검색창 -->
+        <el-header style="text-align; padding-top:10px">
+          <el-input
+            placeholder="Please input"
+            v-model="mainsearch"
+            class="input-with-select"
           >
+            <template #append>
+              <el-button icon="el-icon-search"></el-button>
+            </template>
+          </el-input>
+        </el-header>
+        <!-- 메인 -->
+        <el-main>
           <el-container>
-            <el-aside width="30%">
-              <el-row>
-                <h4>나의 영상</h4>
-                <el-upload
-                  limit="1"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :file-list="fileList"
-                  accept="video/*"
-                  style="margin-left:10%"
-                >
-                  <el-button size="small">PR영상 업로드</el-button>
-                  <template #tip>
-                    <!-- <div class="el-upload__tip">
+            <el-header style="text-align:center;"><h2>{{$store.state.temp.UserName}}</h2></el-header>
+            <el-container>
+              <el-aside width="30%">
+                <el-row>
+                  <h4>나의 영상</h4>
+                  <el-upload
+                    limit="1"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :file-list="fileList"
+                    accept="video/*"
+                    style="margin-left:10%"
+                  >
+                    <el-button size="small">PR영상 업로드</el-button>
+                    <template #tip>
+                      <!-- <div class="el-upload__tip">
                       </div> -->
-                  </template>
-                </el-upload>
-              </el-row>
-              <el-row>
-                <div v-if="hasVideo">
-                  <video
-                    src="@/assets/samplevideo.mp4"
-                    height="360"
-                    width="640"
-                    controls
-                    style="width:100%; height:100%"
-                  ></video>
-                </div>
-                <div v-else class="videoNotFound">
-                  <h4>PR 동영상을 아직 업로드 하지 않았습니다</h4>
-                  <h4>오른쪽 상단의 버튼을 눌러 영상을 업로드 해보세요</h4>
-                </div>
-              </el-row>
-            </el-aside>
-            <div>
-              <el-tabs :tab-position="tabPosition" style="height: 250;">
-                <el-tab-pane label="Profile">
-                  <TabProfile />
-                </el-tab-pane>
-                <el-tab-pane label="Following Enterprise">
-                  <TabFollowings />
-                </el-tab-pane>
-                <el-tab-pane label="Required Interview"
-                  ><TabRequiredInterview
-                /></el-tab-pane>
-                <el-tab-pane label="Schedule">
-                  <TabSchedule />
-                </el-tab-pane>
-                <el-tab-pane label="Documents">
-                  <TabDocuments />
-                </el-tab-pane>
-              </el-tabs>
-            </div>
+                    </template>
+                  </el-upload>
+                </el-row>
+                <el-row>
+                  <div v-if="hasVideo">
+                    <video
+                      src="@/assets/samplevideo.mp4"
+                      height="360"
+                      width="640"
+                      controls
+                      style="width:100%; height:100%"
+                    ></video>
+                  </div>
+                  <div v-else class="videoNotFound">
+                    <h4>PR 동영상을 아직 업로드 하지 않았습니다</h4>
+                    <h4>오른쪽 상단의 버튼을 눌러 영상을 업로드 해보세요</h4>
+                  </div>
+                </el-row>
+              </el-aside>
+              <el-main>
+                <el-tabs :tab-position="tabPosition" style="height: 250;">
+                  <el-tab-pane label="Profile">
+                    <TabProfile />
+                  </el-tab-pane>
+                  <el-tab-pane label="Following Enterprise">
+                    <TabFollowings />
+                  </el-tab-pane>
+                  <el-tab-pane label="Required Interview"
+                    ><TabRequiredInterview
+                  /></el-tab-pane>
+                  <el-tab-pane label="Schedule">
+                    <TabSchedule />
+                  </el-tab-pane>
+                  <el-tab-pane label="Documents">
+                    <TabDocuments />
+                  </el-tab-pane>
+                </el-tabs>
+              </el-main>
+            </el-container>
           </el-container>
-        </el-container>
-      </el-main>
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
 
   <!-- TabSchedule -->
 </template>

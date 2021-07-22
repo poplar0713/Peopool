@@ -19,27 +19,6 @@
       </el-container>
     </el-container>
   </el-container>
-
-  <!-- <el-container>
-    <el-header><Header /></el-header>
-    <el-container>
-      <el-aside class="sidebar" width="250px">
-        <CompanySidebarHwa />
-      </el-aside>
-      <el-main>
-        <check-annc />
-        <applicant-list
-          title="Today 우리회사 관심 피풀인"
-          :followData="followData"
-        />
-        <applicant-list
-          title="Today 눈여겨보는 관심 피풀인"
-          :followData="followData"
-        />
-        <Webviewer initialDoc="파이팅 프런트.docx" />
-      </el-main>
-    </el-container>
-  </el-container> -->
 </template>
 
 <script>
