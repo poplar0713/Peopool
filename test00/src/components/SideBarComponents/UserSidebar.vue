@@ -14,7 +14,7 @@
         <!--  -->
         <el-menu-item index="1">
           <i class="el-icon-user"></i>
-          <span>Profile</span>
+          <span><UserProfileBar/></span>
         </el-menu-item>
         <el-menu-item index="2">
           <i class="el-icon-circle-plus-outline"></i>
@@ -58,10 +58,12 @@
 <script>
 import DragSetting from "@/components/Recruitment/DragSetting.vue";
 import TagBar from "@/components/SideBarComponents/TagBar.vue";
+import UserProfileBar from "@/components/SideBarComponents/UserProfileBar.vue";
 export default {
   components: {
     DragSetting,
     TagBar,
+    UserProfileBar,
   },
   methods: {
     handleOpen(key, keyPath) {

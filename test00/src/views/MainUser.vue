@@ -56,9 +56,6 @@
             </el-aside>
             <el-main>
               <el-tabs :tab-position="tabPosition" style="height: 250;">
-                <el-tab-pane label="Profile">
-                  <TabProfile />
-                </el-tab-pane>
                 <el-tab-pane label="Following Enterprise">
                   <TabFollowings />
                 </el-tab-pane>
@@ -87,7 +84,7 @@ import TabFollowings from "@/components/MainUser/TabFollowings.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import TabDocuments from "@/components/MainUser/TabDocuments.vue";
-import TabProfile from "@/components/MainUser/TabProfile.vue";
+
 
 export default {
   components: {
@@ -96,7 +93,7 @@ export default {
     TabRequiredInterview,
     TabSchedule,
     TabDocuments,
-    TabProfile,
+
   },
   data() {
     return {

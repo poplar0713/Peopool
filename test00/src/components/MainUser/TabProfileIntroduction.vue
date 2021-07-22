@@ -1,7 +1,6 @@
 <template>
-  <el-scrollbar height="400px">
+  <el-scrollbar height="100%">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-      <!-- 학교이름 -->
       <el-form-item label="" prop="Introduction">
         <el-input type="textarea" v-model="Introduction" :rows="8"></el-input>
       </el-form-item>
