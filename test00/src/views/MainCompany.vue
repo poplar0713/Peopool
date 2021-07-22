@@ -1,31 +1,9 @@
 <template>
   <el-container>
-    <CompanySidebarHwa />
+    <el-aside width="250px"><CompanySidebarHwa /></el-aside>
     <el-container>
       <el-header><Header /></el-header>
-      <el-container>
-        <el-main>
-          <check-annc />
-          <applicant-list
-            title="Today 우리회사 관심 피풀인"
-            :followData="followData"
-          />
-          <applicant-list
-            title="Today 눈여겨보는 관심 피풀인"
-            :followData="followData"
-          />
-          <WebViewer initialDoc="파이팅 프런트.docx" />
-        </el-main>
-      </el-container>
-    </el-container>
-  </el-container>
 
-  <!-- <el-container>
-    <el-header><Header /></el-header>
-    <el-container>
-      <el-aside class="sidebar" width="250px">
-        <CompanySidebarHwa />
-      </el-aside>
       <el-main>
         <check-annc />
         <applicant-list
@@ -36,10 +14,10 @@
           title="Today 눈여겨보는 관심 피풀인"
           :followData="followData"
         />
-        <Webviewer initialDoc="파이팅 프런트.docx" />
+        <WebViewer initialDoc="파이팅 프런트.docx" />
       </el-main>
     </el-container>
-  </el-container> -->
+  </el-container>
 </template>
 
 <script>
@@ -48,7 +26,6 @@ import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 import WebViewer from "@/components/MainCompany/WebViewer.vue";
 import Header from "@/components/SideBarComponents/header.vue";
-
 export default {
   components: {
     CompanySidebarHwa,
