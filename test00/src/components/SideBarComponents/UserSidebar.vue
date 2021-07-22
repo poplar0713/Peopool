@@ -1,8 +1,5 @@
 <template>
-  <link
-    href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean"
-    rel="stylesheet"
-  />
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean" rel="stylesheet">
   <el-container>
     <el-aside class="sidebar" width="250px">
       <router-link to="/user"
@@ -91,8 +88,14 @@ img {
   display: block;
   margin: 0px auto;
 }
-span {
-  font-size: 15px;
-  font-family: Helvetica;
+.sidebar {
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  font-size: 30px;
 }
+.el-menu {
+  height: 90%;
+}
+
 </style>

@@ -13,7 +13,6 @@ $--font-path: "~element-plus/lib/theme-chalk/fonts";
 // dialog
 .el-dialog {
   background-color: white;
-
   border-radius: 30px;
 }
 .el-dialog__header {
@@ -51,17 +50,21 @@ $--font-path: "~element-plus/lib/theme-chalk/fonts";
   border-radius: 30px;
 }
 // aside
-.el-aside { background-color: white; margin: auto;}
-.el-aside__header { background-color: white; border-radius: 30px;}
-.el-aside__body { background-color: white; border-radius: 30px;}
-.el-aside__footer { background-color: white; border-radius: 30px; }
+// .el-aside { background-color: white; margin: auto;}
+// .el-aside__header { background-color: white; border-radius: 30px;}
+// .el-aside__body { background-color: white; border-radius: 30px;}
+// .el-aside__footer { background-color: white; border-radius: 30px; }
 
 // menu-item
+.el-menu {
+
+}
 .el-menu-item {
-  color: #939597;
+
 }
 //input
 .el-input {
+
 }
 .el-input__inner {
   width: 100%;
