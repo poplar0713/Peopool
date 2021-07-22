@@ -13,7 +13,7 @@
       </router-link>
       <el-menu background-color="#f1c40f">
         <!--  -->
-        <el-menu-item index="1">
+        <el-menu-item index="1" @click="dialogVisible = true">
           <i class="el-icon-menu"></i>
           <span>공고관리</span>
         </el-menu-item>
@@ -32,10 +32,33 @@
       </el-menu>
     </el-aside>
   </el-container>
+
+  <el-dialog
+    title="Tips"
+    v-model="dialogVisible"
+    width="30%"
+    :before-close="handleClose"
+  >
+    <span>This is a message</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >Confirm</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      dialogVisible: false,
+    };
+  },
+};
 </script>
 
 <style scoped>
