@@ -93,7 +93,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 img {
   display: block;
   margin: 0px auto;
@@ -111,15 +111,15 @@ img {
 .f {
   color: #ffc000;
 }
-i {
-  color: #424949 !important;
-}
 span {
   color: black;
 }
 .title {
   margin: 10px;
   text-align: center;
+}
+i {
+  color: black !important;
 }
 .title span {
   font-family: "Work Sans", sans-serif;

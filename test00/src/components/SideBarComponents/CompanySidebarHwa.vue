@@ -66,8 +66,9 @@ export default {
   height: 90%;
 }
 .title {
-  margin: 10px;
+  margin: 2%;
   text-align: center;
+  height: 6%;
 }
 .title span {
   font-family: "Work Sans", sans-serif;
@@ -77,7 +78,7 @@ export default {
   color: #ffc000;
 }
 i {
-  color: #424949 !important;
+  color: black !important;
 }
 span {
   color: black;
