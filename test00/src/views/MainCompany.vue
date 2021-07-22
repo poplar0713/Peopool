@@ -19,8 +19,8 @@
       </el-container>
     </el-container>
   </el-container>
-  -->
-  <el-container>
+
+  <!-- <el-container>
     <el-header><Header /></el-header>
     <el-container>
       <el-aside class="sidebar" width="250px">
@@ -39,7 +39,7 @@
         <Webviewer initialDoc="파이팅 프런트.docx" />
       </el-main>
     </el-container>
-  </el-container>
+  </el-container> -->
 </template>
 
 <script>
