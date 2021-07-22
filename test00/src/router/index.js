@@ -13,12 +13,12 @@ const routes = [
     component: Start
   },
   {
-    path: '/user',
+    path: '/user/:userid',
     name: 'MainUser',
     component: MainUser
   },
   {
-    path:'/company',
+    path:'/company/:companyid',
     name:'MainCompany',
     component: MainCompany
 
