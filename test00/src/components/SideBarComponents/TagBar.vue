@@ -33,8 +33,12 @@
 export default {
   data() {
     return {
+<<<<<<< HEAD
       inputbox: [],
       dialogVisibleTag: false,
+=======
+      dialogVisible: false,
+>>>>>>> front
       props: { multiple: true },
       options: [
         {

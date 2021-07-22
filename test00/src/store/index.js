@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+<<<<<<< HEAD
 // import axios from 'axios'
 
 export default createStore({
@@ -45,5 +46,21 @@ export default createStore({
       this.commit("Signupdata", data);
     },
   },
+=======
+
+export default createStore({
+  state: {
+    LoginDialog: false,
+    SignupDialogIndiv: false,
+    SignupDialogCompany: false,
+    keyword: "",
+  },
+  mutations: {
+    serachkeyword(state, str) {
+      state.keyword = str;
+    },
+  },
+  actions: {},
+>>>>>>> front
   modules: {},
 });
