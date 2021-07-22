@@ -1,61 +1,53 @@
 <template>
-  <!-- <el-container>
-    <el-aside class="sidebar" width="200px"> -->
-  <router-link to="/company" style="text-decoration: none;">
-    <div class="title">
-      <div>
-        <span class="f">P</span>
-        <span class="s">eo</span>
-        <span class="s">P</span>
-        <span class="f">ool</span>
-      </div>
-    </div>
-  </router-link>
-  <el-menu background-color="#f1c40f">
-    <!--  -->
-    <el-menu-item index="1" @click="dialogVisible = true">
-      <i class="el-icon-menu"></i>
-      <span>공고관리</span>
-    </el-menu-item>
-    <el-menu-item index="2">
-      <i class="el-icon-menu"></i>
-      <span>면접관리</span>
-    </el-menu-item>
-    <el-menu-item index="3">
-      <i class="el-icon-document"></i>
-      <span>관심피플인</span>
-    </el-menu-item>
-    <el-menu-item index="4" disabled>
-      <i class="el-icon-setting"></i>
-      <span>setting</span>
-    </el-menu-item>
-  </el-menu>
-  <!-- </el-aside>
-  </el-container> -->
-
-  <el-dialog
-    title="Tips"
-    v-model="dialogVisible"
-    width="30%"
-    :before-close="handleClose"
-  >
-    <span>This is a message</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >Confirm</el-button
-        >
-      </span>
-    </template>
-  </el-dialog>
+  <el-container>
+    <el-aside class="sidebar" width="250px">
+      <router-link to="/company" style="text-decoration: none;">
+        <div class="title">
+          <div>
+            <span class="f">P</span>
+            <span class="s">eo</span>
+            <span class="s">P</span>
+            <span class="f">ool</span>
+          </div>
+        </div>
+      </router-link>
+      <el-menu background-color="#f1c40f">
+        <!--  -->
+        <el-menu-item index="1" @click="dialogVisible = true">
+          <i class="el-icon-menu"></i>
+          <span>공고관리</span>
+        </el-menu-item>
+        <el-menu-item index="2">
+          <i class="el-icon-menu"></i>
+          <span>면접관리</span>
+        </el-menu-item>
+        <el-menu-item index="3">
+          <i class="el-icon-document"></i>
+          <span>관심피플인</span>
+        </el-menu-item>
+        <el-menu-item index="4" disabled>
+          <i class="el-icon-setting"></i>
+          <span>setting</span>
+        </el-menu-item>
+        <!--  -->
+      </el-menu>
+    </el-aside>
+    <router-view></router-view>
+  </el-container>
 </template>
 
 <script>
 export default {
+  components: {},
+  methods: {
+    ch(data) {
+      console.log(data);
+      this.$router.push("searchDetail");
+    },
+  },
   data() {
     return {
-      dialogVisible: false,
+      value: [],
     };
   },
 };
@@ -63,18 +55,15 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
-
 .sidebar {
   position: fixed;
   height: 100%;
   overflow: auto;
   font-size: 30px;
+  z-index: 1000;
 }
-i {
-  color: #424949 !important;
-}
-span {
-  color: black;
+.el-menu {
+  height: 90%;
 }
 .title {
   margin: 10px;
@@ -87,7 +76,10 @@ span {
 .f {
   color: #ffc000;
 }
-.el-menu {
-  height: 100%;
+i {
+  color: #424949 !important;
+}
+span {
+  color: black;
 }
 </style>

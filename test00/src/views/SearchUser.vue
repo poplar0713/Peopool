@@ -31,28 +31,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.mainLayout {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-.el-container {
-  background-color: cornsilk;
-}
-.el-aside {
-  background-color: yellow;
-  height: 100%;
-  position: sticky;
-  top: 0;
-  left: 0;
-  overflow-y: hidden;
-}
-.el-main {
-  background-color: yellowgreen;
-}
-.el-header {
-  background-color: tomato;
-}
-</style>
+<style></style>
