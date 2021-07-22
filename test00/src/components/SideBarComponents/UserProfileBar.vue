@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="dialogVisibleTag = true" style="color:#939597"
+  <el-button type="text" @click="dialogVisibleTag = true" style="color:black"
     >Profile</el-button
   >
   <el-container>

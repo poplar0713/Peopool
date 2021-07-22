@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside class="sidebar" width="250px">
+    <el-aside class="sidebar" width="200px">
       <router-link to="/company" style="text-decoration: none;">
         <div class="title">
           <div>
@@ -15,15 +15,15 @@
         <!--  -->
         <el-menu-item index="1" @click="dialogVisible = true">
           <i class="el-icon-menu"></i>
-          <span>공고관리</span>
+          <span>Profile</span>
         </el-menu-item>
         <el-menu-item index="2">
           <i class="el-icon-menu"></i>
-          <span>면접관리</span>
+          <span>Interview List</span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-document"></i>
-          <span>관심피플인</span>
+          <span>Following Applicants</span>
         </el-menu-item>
         <el-menu-item index="4" disabled>
           <i class="el-icon-setting"></i>
@@ -66,12 +66,12 @@ export default {
   height: 90%;
 }
 .title {
-  margin: 10px;
+  margin: 8px;
   text-align: center;
 }
 .title span {
   font-family: "Work Sans", sans-serif;
-  font-size: 50px;
+  font-size: 40px;
 }
 .f {
   color: #ffc000;

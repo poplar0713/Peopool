@@ -1,20 +1,9 @@
 <template>
   <el-container>
-    <el-aside style="width:10%"><UserSidebar /></el-aside>
+    <el-aside style="width:200px"><SideBarUser /></el-aside>
     <el-container>
       <!-- 검색창 -->
-      <el-header style="text-align; padding-top:10px">
-        <el-input
-          placeholder="Please input"
-          v-model="mainsearch"
-          class="input-with-select"
-          style="text-align:center; margin: 0 auto;"
-        >
-          <template #append>
-            <el-button icon="el-icon-search"></el-button>
-          </template>
-        </el-input>
-      </el-header>
+      <el-header><Header /></el-header>
       <!-- 메인 -->
       <el-main>
         <el-container>
@@ -80,21 +69,22 @@
   <!-- TabSchedule -->
 </template>
 <script>
-import UserSidebar from "@/components/SideBarComponents/UserSidebar.vue";
+import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import TabFollowings from "@/components/MainUser/TabFollowings.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import TabDocuments from "@/components/MainUser/TabDocuments.vue";
+import Header from "@/components/SideBarComponents/header.vue";
 
 
 export default {
   components: {
-    UserSidebar,
+    SideBarUser,
     TabFollowings,
     TabRequiredInterview,
     TabSchedule,
     TabDocuments,
-
+    Header,
   },
   data() {
     return {
@@ -128,9 +118,8 @@ export default {
 <style>
 .el-main {
   margin: 10px 10px 10px 10px;
-  background-color:white;
+  background-color: white;
   border-radius: 20px;
-  
 }
 /* .main {
   border-radius: 20px 20px 20px 20px;

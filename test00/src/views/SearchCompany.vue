@@ -1,6 +1,6 @@
 <template>
   <el-container class="mainLayout">
-    <el-aside width="250px"><CompanySidebarHwa /></el-aside>
+    <el-aside width="250px"><SideBarUser /></el-aside>
 
     <el-container>
       <el-header><Header /></el-header>
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
+import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
   components: {
-    CompanySidebarHwa,
+    SideBarUser,
     Header,
   },
 };

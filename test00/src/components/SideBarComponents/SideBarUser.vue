@@ -1,11 +1,7 @@
 <template>
-  <link
-    href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean"
-    rel="stylesheet"
-  />
   <el-container>
-    <el-aside class="sidebar" width="250px">
-      <router-link to="/user/1" style="text-decoration: none;">
+    <el-aside class="sidebar" width="200px">
+      <router-link to="/company" style="text-decoration: none;">
         <div class="title">
           <div>
             <span class="f">P</span>
@@ -15,7 +11,7 @@
           </div>
         </div>
       </router-link>
-      <el-menu
+<el-menu
         default-active="2"
         @open="handleOpen"
         @close="handleClose"
@@ -70,6 +66,10 @@ export default {
     UserProfileBar,
   },
   methods: {
+    ch(data) {
+      console.log(data);
+      this.$router.push("searchDetail");
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -89,23 +89,25 @@ export default {
 };
 </script>
 
-<style>
-img {
-  display: block;
-  margin: 0px auto;
-}
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 .sidebar {
   position: fixed;
   height: 100%;
+  overflow: auto;
   font-size: 30px;
   z-index: 1000;
 }
 .el-menu {
   height: 90%;
-  
 }
-.el-main {
-  background-color: azure;
+.title {
+  margin: 8px;
+  text-align: center;
+}
+.title span {
+  font-family: "Work Sans", sans-serif;
+  font-size: 40px;
 }
 .f {
   color: #ffc000;
@@ -115,13 +117,5 @@ i {
 }
 span {
   color: black;
-}
-.title {
-  margin: 10px;
-  text-align: center;
-}
-.title span {
-  font-family: "Work Sans", sans-serif;
-  font-size: 50px;
 }
 </style>
