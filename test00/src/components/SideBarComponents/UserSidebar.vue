@@ -91,11 +91,12 @@ img {
 .sidebar {
   position: fixed;
   height: 100%;
-  overflow: auto;
   font-size: 30px;
+  z-index: 1000;
 }
 .el-menu {
   height: 90%;
+  
 }
 
 </style>
