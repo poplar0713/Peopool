@@ -1,10 +1,20 @@
 <template>
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean"
+    rel="stylesheet"
+  />
   <el-container>
-    <el-aside class="sidebar" width="10%">
-      <router-link to="/user"
-        ><img src="@/assets/PeoPool.png" alt="" style="width:70%"
-      /></router-link>
+    <el-aside class="sidebar" width="250px">
+      <router-link to="/user/1" style="text-decoration: none;">
+        <div class="title">
+          <div>
+            <span class="f">P</span>
+            <span class="s">eo</span>
+            <span class="s">P</span>
+            <span class="f">ool</span>
+          </div>
+        </div>
+      </router-link>
       <el-menu
         default-active="2"
         @open="handleOpen"
@@ -96,5 +106,22 @@ img {
 }
 .el-main {
   background-color: azure;
+}
+.f {
+  color: #ffc000;
+}
+i {
+  color: #424949 !important;
+}
+span {
+  color: black;
+}
+.title {
+  margin: 10px;
+  text-align: center;
+}
+.title span {
+  font-family: "Work Sans", sans-serif;
+  font-size: 50px;
 }
 </style>

@@ -29,33 +29,25 @@
           <i class="el-icon-setting"></i>
           <span>setting</span>
         </el-menu-item>
+        <!--  -->
       </el-menu>
     </el-aside>
+    <router-view></router-view>
   </el-container>
-
-  <el-dialog
-    title="Tips"
-    v-model="dialogVisible"
-    width="30%"
-    :before-close="handleClose"
-  >
-    <span>This is a message</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >Confirm</el-button
-        >
-      </span>
-    </template>
-  </el-dialog>
 </template>
 
 <script>
 export default {
+  components: {},
+  methods: {
+    ch(data) {
+      console.log(data);
+      this.$router.push("searchDetail");
+    },
+  },
   data() {
     return {
-      dialogVisible: false,
+      value: [],
     };
   },
 };
@@ -63,18 +55,15 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
-
 .sidebar {
   position: fixed;
   height: 100%;
   overflow: auto;
   font-size: 30px;
+  z-index: 1000;
 }
-i {
-  color: #424949 !important;
-}
-span {
-  color: black;
+.el-menu {
+  height: 90%;
 }
 .title {
   margin: 10px;
@@ -86,5 +75,11 @@ span {
 }
 .f {
   color: #ffc000;
+}
+i {
+  color: #424949 !important;
+}
+span {
+  color: black;
 }
 </style>

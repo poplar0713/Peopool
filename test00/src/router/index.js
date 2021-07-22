@@ -7,6 +7,8 @@ import MainCompany from "../views/MainCompany.vue";
 import InterviewRoom from "../views/InterviewRoom.vue";
 import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
+import SearchCompany from "../views/SearchCompany.vue";
+
 const routes = [
   {
     path: "/",
@@ -47,6 +49,11 @@ const routes = [
     path: "/searchuser",
     name: "searchuser",
     component: SearchUser,
+  },
+  {
+    path: "/searchcompany",
+    name: "searchcompany",
+    component: SearchCompany,
   },
 ];
 
