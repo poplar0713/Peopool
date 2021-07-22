@@ -125,7 +125,7 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
-       this.rows.splice(index, 1);
+      this.rows.splice(index, 1);
     },
   },
 };

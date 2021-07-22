@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="250px"><CompanySidebarHwa /></el-aside>
+    <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><Header /></el-header>
 
@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
+import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 import webviewer from "@/components/MainCompany/webviewer.vue";
 import Header from "@/components/SideBarComponents/header.vue";
 export default {
   components: {
-    CompanySidebarHwa,
+    SideBarCompany,
     CheckAnnc,
     ApplicantList,
     webviewer,

@@ -11,10 +11,9 @@
     :file-list="$store.state.fileList"
   >
     <el-button size="small">Upload</el-button>
-        jpg/png files with a size less than 500kb
+    jpg/png files with a size less than 500kb
     <template #tip>
-      <div class="el-upload__tip">
-      </div>
+      <div class="el-upload__tip"></div>
     </template>
   </el-upload>
 </template>
@@ -22,9 +21,7 @@
 <script>
 export default {
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
     handleRemove(file, fileList) {

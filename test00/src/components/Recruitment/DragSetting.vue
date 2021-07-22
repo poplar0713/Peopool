@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true" style="color:#939597"
+  <el-button type="text" @click="dialogVisible = true" style="color:black"
     >채용관리</el-button
   >
 

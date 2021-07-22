@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px"><CompanySidebarHwa /></el-aside>
+    <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-main>
       <div>
         <p>#노예</p>
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
+import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 
 export default {
   components: {
-    CompanySidebarHwa,
+    SideBarCompany,
   },
   methods: {
     handleOpen(key, keyPath) {
