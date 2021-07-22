@@ -14,20 +14,25 @@
       <el-menu background-color="#f1c40f">
         <!--  -->
         <el-menu-item index="1" @click="dialogVisible = true">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-office-building
+"></i>
           <span>Profile</span>
         </el-menu-item>
         <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-camera"></i>
           <span>Interview List</span>
         </el-menu-item>
         <el-menu-item index="3">
-          <i class="el-icon-document"></i>
+          <i class="el-icon-star-on"></i>
           <span>Following Applicants</span>
         </el-menu-item>
-        <el-menu-item index="4" disabled>
+        <el-menu-item index="4">
           <i class="el-icon-setting"></i>
           <span>setting</span>
+        </el-menu-item>
+                <el-menu-item index="7">
+          <i class="el-icon-turn-off"></i>
+          <span>Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>

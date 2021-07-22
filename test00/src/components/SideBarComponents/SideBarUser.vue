@@ -26,10 +26,6 @@
           <i class="el-icon-setting"></i>
           <span><DragSetting /></span>
         </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-document"></i>
-          <span>CV</span>
-        </el-menu-item>
         <!--  -->
         <el-menu-item index="5">
           <i class="el-icon-video-camera"></i>
