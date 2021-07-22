@@ -31,15 +31,15 @@ public class ProfileOfIndividualController {
 	
 	
 	@ApiOperation(value = "index에 해당하는 프로필을 수정한다.", response = String.class)
-	@PutMapping("/{index}")
+	@PutMapping("{index}")
 	public ResponseEntity<String> modifyProfile(@RequestBody ProfileOfIndividual profileOfIndividual){
 		return null;
 		
 	}
 	
 	
-	@ApiOperation(value = "index에 해당하는 프로필을 수정한다.", response = String.class)
-	@DeleteMapping("/{index}")
+	@ApiOperation(value = "index에 해당하는 프로필을 삭제한다.", response = String.class)
+	@DeleteMapping("{index}")
 	public ResponseEntity<String> deleteProfile(@RequestBody ProfileOfIndividual profileOfIndividual){
 		return null;
 		
