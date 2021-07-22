@@ -16,35 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `interview`
+-- Table structure for table `follow`
 --
 
-DROP TABLE IF EXISTS `interview`;
+DROP TABLE IF EXISTS `follow`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `interview` (
-  `int_index` int(11) NOT NULL AUTO_INCREMENT,
-  `ind_index` int(11) NOT NULL,
-  `ent_index` int(11) NOT NULL,
-  `int_start` datetime DEFAULT NULL,
-  `int_end` datetime DEFAULT NULL,
-  `int_url` varchar(255) DEFAULT NULL,
-  `int_show` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`int_index`),
-  KEY `FK_individual_TO_interview_1` (`ind_index`),
-  KEY `FK_enterprise_TO_interview_1` (`ent_index`),
-  CONSTRAINT `FK_enterprise_TO_interview_1` FOREIGN KEY (`ent_index`) REFERENCES `enterprise` (`ent_index`),
-  CONSTRAINT `FK_individual_TO_interview_1` FOREIGN KEY (`ind_index`) REFERENCES `individual` (`ind_index`)
+CREATE TABLE `follow` (
+  `fol_index` int(11) NOT NULL AUTO_INCREMENT,
+  `fol_type` tinyint(1) DEFAULT NULL,
+  `follower` int(11) DEFAULT NULL,
+  `following` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fol_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `interview`
+-- Dumping data for table `follow`
 --
 
-LOCK TABLES `interview` WRITE;
-/*!40000 ALTER TABLE `interview` DISABLE KEYS */;
-/*!40000 ALTER TABLE `interview` ENABLE KEYS */;
+LOCK TABLES `follow` WRITE;
+/*!40000 ALTER TABLE `follow` DISABLE KEYS */;
+/*!40000 ALTER TABLE `follow` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 17:38:09
+-- Dump completed on 2021-07-22 15:51:09

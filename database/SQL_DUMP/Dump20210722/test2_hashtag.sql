@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `follow`
+-- Table structure for table `hashtag`
 --
 
-DROP TABLE IF EXISTS `follow`;
+DROP TABLE IF EXISTS `hashtag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `follow` (
-  `fol_index` int(11) NOT NULL AUTO_INCREMENT,
-  `follower` int(11) DEFAULT NULL,
-  `following` int(11) DEFAULT NULL,
-  `fol_type` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`fol_index`)
+CREATE TABLE `hashtag` (
+  `tag_index` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_type` int(11) NOT NULL,
+  `tag_target` int(11) NOT NULL,
+  `taglist_index` int(11) NOT NULL,
+  PRIMARY KEY (`tag_index`),
+  KEY `FK_taglist_TO_hashtag_1` (`taglist_index`),
+  CONSTRAINT `FK_taglist_TO_hashtag_1` FOREIGN KEY (`taglist_index`) REFERENCES `taglist` (`taglist_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `follow`
+-- Dumping data for table `hashtag`
 --
 
-LOCK TABLES `follow` WRITE;
-/*!40000 ALTER TABLE `follow` DISABLE KEYS */;
-/*!40000 ALTER TABLE `follow` ENABLE KEYS */;
+LOCK TABLES `hashtag` WRITE;
+/*!40000 ALTER TABLE `hashtag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hashtag` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 17:38:09
+-- Dump completed on 2021-07-22 15:51:09
