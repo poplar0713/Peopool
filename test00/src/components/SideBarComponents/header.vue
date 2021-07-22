@@ -4,11 +4,11 @@
       <div style="margin-top: 15px; width:100%">
         <el-input
           placeholder="Please input"
-          v-model="input3"
+          v-model="keyword"
           class="input-with-select"
         >
           <template #append>
-            <el-button icon="el-icon-search"></el-button>
+            <el-button @click="search" icon="el-icon-search"></el-button>
           </template>
         </el-input>
       </div>
@@ -17,7 +17,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+
+  methods: {
+    search() {
+      console.log(this.keyword);
+    },
+  },
+};
 </script>
 
 <style></style>

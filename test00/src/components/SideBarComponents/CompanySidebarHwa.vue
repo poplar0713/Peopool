@@ -25,7 +25,7 @@
           <i class="el-icon-document"></i>
           <span>관심피플인</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="4" disabled>
           <i class="el-icon-setting"></i>
           <span>setting</span>
         </el-menu-item>
@@ -38,7 +38,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 
 .sidebar {
@@ -47,7 +47,9 @@ export default {};
   overflow: auto;
   font-size: 30px;
 }
-
+i {
+  color: #424949 !important;
+}
 span {
   color: black;
 }
