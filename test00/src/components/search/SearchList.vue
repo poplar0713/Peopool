@@ -1,8 +1,8 @@
 <template>
-  <div>#{{ testinput }}</div>
+  <div class="keywordBox">#{{ testinput }}</div>
   <div>
     <p>해당 태그에 다음 피풀인이 기업의 많은 관심을 받고 있어요!</p>
-    <el-carousel :interval="4000" type="card" height="200px">
+    <el-carousel :interval="4000" type="card" height="200px" style="width: 80%">
       <el-carousel-item v-for="item in 5" :key="item">
         <h3 class="medium">{{ item }}</h3>
       </el-carousel-item>
@@ -59,5 +59,8 @@ export default {
   border-radius: 100px;
   padding: 5px 15px;
   margin: 5px;
+}
+.keywordBox {
+  width: 100%;
 }
 </style>

@@ -1,37 +1,37 @@
 <template>
-  <el-container>
-    <el-aside class="sidebar" width="250px">
-      <router-link to="/company" style="text-decoration: none;">
-        <div class="title">
-          <div>
-            <span class="f">P</span>
-            <span class="s">eo</span>
-            <span class="s">P</span>
-            <span class="f">ool</span>
-          </div>
-        </div>
-      </router-link>
-      <el-menu background-color="#f1c40f">
-        <!--  -->
-        <el-menu-item index="1" @click="dialogVisible = true">
-          <i class="el-icon-menu"></i>
-          <span>공고관리</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-          <span>면접관리</span>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <i class="el-icon-document"></i>
-          <span>관심피플인</span>
-        </el-menu-item>
-        <el-menu-item index="4" disabled>
-          <i class="el-icon-setting"></i>
-          <span>setting</span>
-        </el-menu-item>
-      </el-menu>
-    </el-aside>
-  </el-container>
+  <!-- <el-container>
+    <el-aside class="sidebar" width="200px"> -->
+  <router-link to="/company" style="text-decoration: none;">
+    <div class="title">
+      <div>
+        <span class="f">P</span>
+        <span class="s">eo</span>
+        <span class="s">P</span>
+        <span class="f">ool</span>
+      </div>
+    </div>
+  </router-link>
+  <el-menu background-color="#f1c40f">
+    <!--  -->
+    <el-menu-item index="1" @click="dialogVisible = true">
+      <i class="el-icon-menu"></i>
+      <span>공고관리</span>
+    </el-menu-item>
+    <el-menu-item index="2">
+      <i class="el-icon-menu"></i>
+      <span>면접관리</span>
+    </el-menu-item>
+    <el-menu-item index="3">
+      <i class="el-icon-document"></i>
+      <span>관심피플인</span>
+    </el-menu-item>
+    <el-menu-item index="4" disabled>
+      <i class="el-icon-setting"></i>
+      <span>setting</span>
+    </el-menu-item>
+  </el-menu>
+  <!-- </el-aside>
+  </el-container> -->
 
   <el-dialog
     title="Tips"

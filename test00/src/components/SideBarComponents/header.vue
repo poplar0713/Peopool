@@ -1,6 +1,6 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :span="12" :offset="12">
+  <el-row :gutter="10">
+    <el-col :span="10" :offset="12">
       <div style="margin-top: 15px; width:100%">
         <el-input
           placeholder="Please input"
