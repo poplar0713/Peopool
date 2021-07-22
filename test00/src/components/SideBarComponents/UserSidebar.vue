@@ -98,5 +98,7 @@ img {
   height: 90%;
   
 }
-
+.el-main {
+  background-color: azure;
+}
 </style>
