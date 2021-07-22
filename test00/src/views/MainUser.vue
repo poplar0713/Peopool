@@ -134,6 +134,7 @@
   margin-right: 2%;
   background-color: #f4f6f6;
   position: relative;
+  z-index: -1;
 }
 .videoNotFound {
   border-radius: 20px 20px 20px 20px;
@@ -145,7 +146,7 @@
   text-align: center;
   background-color: white;
 }
-video{
+video {
   margin: 1%;
   height: auto;
   max-width: 1280px;
@@ -158,12 +159,12 @@ video{
   padding: 1%;
   background-color: white;
 }
-.panel-tabs{
+.panel-tabs {
   height: 500px;
 }
-.panel{
+/* .panel{
   overflow: scroll;
-}
+} */
 </style>
 
 <script>
