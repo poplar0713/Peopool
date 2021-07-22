@@ -47,7 +47,6 @@ import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 import WebViewer from "@/components/MainCompany/WebViewer.vue";
-
 import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
