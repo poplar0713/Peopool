@@ -1,8 +1,8 @@
 <template>
-  <!-- <el-container>
-    <Header />
+  <el-container>
+    <CompanySidebarHwa />
     <el-container>
-      <CompanySidebarHwa />
+      <el-header><Header /></el-header>
       <el-container>
         <el-main>
           <check-annc />
@@ -18,8 +18,9 @@
         </el-main>
       </el-container>
     </el-container>
-  </el-container> -->
-  <el-container>
+  </el-container>
+
+  <!-- <el-container>
     <el-header><Header /></el-header>
     <el-container>
       <el-aside class="sidebar" width="250px">
@@ -35,37 +36,29 @@
           title="Today 눈여겨보는 관심 피풀인"
           :followData="followData"
         />
-<<<<<<< HEAD
         <Webviewer initialDoc="파이팅 프런트.docx" />
-=======
->>>>>>> 0dce4f06edd5e70c2248e8cb4eff36b420bf13a2
       </el-main>
     </el-container>
-  </el-container>
+  </el-container> -->
 </template>
 
 <script>
 import CompanySidebarHwa from "@/components/SideBarComponents/CompanySidebarHwa.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
-<<<<<<< HEAD
-import Webviewer from "@/components/MainCompany/Webviewer.vue";
-=======
+import WebViewer from "@/components/MainCompany/WebViewer.vue";
+
 // import WebViewer from "@/components/MainCompany/WebViewer.vue";
+
 import Header from "@/components/SideBarComponents/header.vue";
->>>>>>> 0dce4f06edd5e70c2248e8cb4eff36b420bf13a2
 
 export default {
   components: {
     CompanySidebarHwa,
     CheckAnnc,
     ApplicantList,
-<<<<<<< HEAD
-    Webviewer,
-=======
-    // WebViewer,
+    WebViewer,
     Header,
->>>>>>> 0dce4f06edd5e70c2248e8cb4eff36b420bf13a2
   },
 
   data() {
@@ -137,13 +130,4 @@ export default {
 };
 </script>
 
-<style>
-.el-header {
-  /* padding-top: 75px; */
-  /* position: fixed; */
-  /* top: 0;
-  width: 100%;
-  left: 0;
-  right: 0; */
-}
-</style>
+<style></style>

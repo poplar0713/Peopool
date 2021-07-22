@@ -85,20 +85,20 @@
               </el-tab-pane>
               <el-tab-pane label="일정" class="panel">
                 <div>
-                 <el-scrollbar height="400px">
-                <el-timeline>
-                  <el-timeline-item
-                    v-for="(event, i) in events"
-                    v-bind:key="i"
-                    :timestamp="event.time"
-                  >
-                    <el-card>
-                      <h4>{{ event.title }}</h4>
-                      <p>{{ event.content }}</p>
-                    </el-card>
-                  </el-timeline-item>
-                </el-timeline>
-                </el-scrollbar>
+                  <el-scrollbar height="400px">
+                    <el-timeline>
+                      <el-timeline-item
+                        v-for="(event, i) in events"
+                        v-bind:key="i"
+                        :timestamp="event.time"
+                      >
+                        <el-card>
+                          <h4>{{ event.title }}</h4>
+                          <p>{{ event.content }}</p>
+                        </el-card>
+                      </el-timeline-item>
+                    </el-timeline>
+                  </el-scrollbar>
                 </div>
               </el-tab-pane>
             </el-tabs>
@@ -107,27 +107,26 @@
 
         <div class="section">
           <div class="section">
-             <el-row>
+            <el-row>
               <el-col :span="3">
                 <h2>이력서 관리</h2>
               </el-col>
               <el-col :span="2">
-                
-              <el-upload
-                limit="1"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :file-list="fileList"
-                accept=".pdf"
-              >
-                <el-button size="small">이력서 업로드</el-button>
-              </el-upload>
+                <el-upload
+                  limit="1"
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :file-list="fileList"
+                  accept=".pdf"
+                >
+                  <el-button size="small">이력서 업로드</el-button>
+                </el-upload>
               </el-col>
             </el-row>
           </div>
-           
-            <div class="section">
-                <WebViewer initialDoc="파이팅 프런트.docx" />
-            </div>
+
+          <div class="section">
+            <WebViewer initialDoc="파이팅 프런트.docx" />
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -140,8 +139,9 @@
   margin-top: 2%;
   margin-left: 5%;
   margin-right: 2%;
-  background-color: #FEF9E7;
+  background-color: #fef9e7;
   position: relative;
+  z-index: -1;
 }
 .videoNotFound {
   border-radius: 20px 20px 20px 20px;
@@ -153,7 +153,7 @@
   text-align: center;
   background-color: white;
 }
-video{
+video {
   margin: 1%;
   height: auto;
   max-width: 1280px;
@@ -166,9 +166,12 @@ video{
   padding: 1%;
   background-color: white;
 }
-.panel-tabs{
+.panel-tabs {
   height: 500px;
 }
+/* .panel{
+  overflow: scroll;
+} */
 </style>
 
 <script>
@@ -178,7 +181,7 @@ import WebViewer from "@/components/MainCompany/WebViewer.vue";
 export default {
   components: {
     UserSidebar,
-   WebViewer
+    WebViewer,
   },
   data() {
     return {
@@ -223,7 +226,6 @@ export default {
           title: "면접 3",
           content: "C사 면접",
         },
-        
       ],
     };
   },

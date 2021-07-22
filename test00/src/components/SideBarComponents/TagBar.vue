@@ -33,7 +33,6 @@
 export default {
   data() {
     return {
-      inputbox: [],
       dialogVisible: false,
       props: { multiple: true },
       options: [
