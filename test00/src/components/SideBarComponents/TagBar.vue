@@ -2,6 +2,7 @@
   <el-button type="text" @click="dialogVisibleTag = true" style="color:#939597"
     >TagBar</el-button
   >
+<el-container>
   <el-dialog
     title="Tags"
     v-model="dialogVisibleTag"
@@ -27,6 +28,7 @@
       </span>
     </template>
   </el-dialog>
+  </el-container>
 </template>
 
 <script>

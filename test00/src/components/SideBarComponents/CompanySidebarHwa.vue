@@ -15,11 +15,11 @@
         <!--  -->
         <el-menu-item index="1">
           <i class="el-icon-menu"></i>
-          <span>공고관리</span>
+          <span><TagBar/></span>
         </el-menu-item>
         <el-menu-item index="2">
           <i class="el-icon-menu"></i>
-          <span>면접관리</span>
+          <span><DragSetting/></span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-document"></i>
@@ -35,7 +35,15 @@
 </template>
 
 <script>
-export default {};
+import DragSetting from "@/components/Recruitment/DragSetting.vue";
+import TagBar from "@/components/SideBarComponents/TagBar.vue";
+
+export default {
+  components:{
+    DragSetting,
+    TagBar
+  }
+};
 </script>
 
 <style scoped>
