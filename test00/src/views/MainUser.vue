@@ -8,7 +8,7 @@
       <el-main>
         <el-container>
           <el-header style="text-align:center;"
-            ><h2>{{ $store.state.temp.UserName }}</h2></el-header
+            ><h2>XXX님, 오늘도 취업소식이</h2></el-header
           >
           <el-container>
             <el-aside width="30%">

@@ -5,7 +5,7 @@
       ><TabProfileEducation
     /></el-tab-pane>
     <el-tab-pane label="Introduction"><TabProfileIntroduction /></el-tab-pane>
-    <el-tab-pane label="Tags"><TabProfileTags/></el-tab-pane>
+    <el-tab-pane label="Tags"><TabProfileTags /></el-tab-pane>
   </el-tabs>
 </template>
 
