@@ -1,10 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router";
-import MainUser from "../views/MainUser.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import MainUser from '../views/MainUser.vue'
 
 import SearchDetail from "../views/SearchDetail.vue";
 import Start from "../views/Start.vue";
 import MainCompany from "../views/MainCompany.vue";
 import InterviewRoom from "../views/InterviewRoom.vue";
+import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import SearchCompany from "../views/SearchCompany.vue";
 
@@ -28,6 +29,11 @@ const routes = [
     path: "/searchDetail",
     name: "SearchDetail",
     component: SearchDetail,
+  },
+  {
+    path: "/searchcompany",
+    name: "SearchCompany",
+    component: SearchCompany,
   },
   {
     path: "/",

@@ -24,11 +24,7 @@
         <!--  -->
         <el-menu-item index="1">
           <i class="el-icon-user"></i>
-          <span>Profile</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-circle-plus-outline"></i>
-          <span><TagBar /></span>
+          <span><UserProfileBar/></span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-setting"></i>
@@ -67,11 +63,11 @@
 
 <script>
 import DragSetting from "@/components/Recruitment/DragSetting.vue";
-import TagBar from "@/components/SideBarComponents/TagBar.vue";
+import UserProfileBar from "@/components/SideBarComponents/UserProfileBar.vue";
 export default {
   components: {
     DragSetting,
-    TagBar,
+    UserProfileBar,
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -101,12 +97,15 @@ img {
 .sidebar {
   position: fixed;
   height: 100%;
-  overflow: auto;
   font-size: 30px;
   z-index: 1000;
 }
 .el-menu {
   height: 90%;
+  
+}
+.el-main {
+  background-color: azure;
 }
 .f {
   color: #ffc000;

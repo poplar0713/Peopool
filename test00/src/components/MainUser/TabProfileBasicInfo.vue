@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar height="400px">
+  <el-scrollbar height="100%">
     <div style="width:90%; margin:auto;">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <!-- 개인회원이름 -->

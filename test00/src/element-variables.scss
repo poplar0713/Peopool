@@ -18,17 +18,16 @@ body {
 
 // dialog
 .el-dialog {
-  background-color: white;
   border-radius: 30px;
 }
 .el-dialog__header {
-  background-color: white;
+
   border-radius: 30px;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-bottom: 10px;
 }
 .el-dialog__body {
-  background-color: white;
+
   border-radius: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -69,10 +68,15 @@ body {
 //input
 .el-input {
 }
+.el-input__header {
+  text-align: center;
+  margin: 0 auto;
+}
 .el-input__inner {
   width: 100%;
   border-radius: 10px;
   border-color: #939597;
+  
 }
 //
 .el-tag {
@@ -80,6 +84,4 @@ body {
   border-color: #939597;
 }
 
-.el-main {
-  margin: 10px 10px 10px 10px;
-}
+

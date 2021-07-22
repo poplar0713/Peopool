@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar height="400px">
+  <el-scrollbar height="100%">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 학력 -->
       <el-form-item label="School" prop="School">
