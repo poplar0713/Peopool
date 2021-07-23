@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class EnterpriseController {
 	
 	@ApiOperation(value = "기업회원 회원 정보 조회", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<String> getEnterprise(@RequestBody Enterprise enterprise){
+	public ResponseEntity<String> getEnterprise(@PathVariable("index")String index){
 		return null;
 		
 	}
@@ -53,14 +54,14 @@ public class EnterpriseController {
 	
 	@ApiOperation(value = "기업회원 회원 정보 수정", response = String.class)
 	@PutMapping("{index}")
-	public ResponseEntity<String> modifyEnterprise(@RequestBody Enterprise enterprise){
+	public ResponseEntity<String> modifyEnterprise(@PathVariable("index")String index){
 		return null;
 		
 	}
 	
 	@ApiOperation(value = "기업회원 회원 탈퇴", response = String.class)
 	@DeleteMapping("{index}")
-	public ResponseEntity<String> deleteEnterprise(@RequestBody Enterprise enterprise){
+	public ResponseEntity<String> deleteEnterprise(@PathVariable("index")String index){
 		return null;
 		
 	}

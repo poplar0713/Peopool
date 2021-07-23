@@ -14,6 +14,7 @@ public class EnterpriseServiceImpl implements EnterpriseService{
 	
 	@Autowired
 	EnterpriseRepo enterpriseRepo;
+	
 
 	@Override
 	public List<Enterprise> getEnterprise() throws SQLException {

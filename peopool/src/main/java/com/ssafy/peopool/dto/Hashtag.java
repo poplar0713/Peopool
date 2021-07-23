@@ -1,10 +1,10 @@
 package com.ssafy.peopool.dto;
 
-public class Tag {
+public class Hashtag {
 	int taglist_index;
 	String taglist_name;
 
-	public Tag() {
+	public Hashtag() {
 	}
 
 	public int getTaglist_index() {
