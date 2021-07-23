@@ -14,16 +14,19 @@
           >
           <el-main>
             <el-row :gutter="20">
-              <company-card
-                v-for="(item, i) in listData"
-                :key="i"
-                :ent_id="item.ent_id"
-                :ent_img="item.ent_img"
-                :ent_name="item.ent_name"
-                :ent_info="item.ent_info"
-                :ent_ceo="item.ent_ceo"
-                :follow="item.follow"
-              ></company-card>
+              <el-space wrap>
+                <company-card
+                  v-for="(item, i) in listData"
+                  :key="i"
+                  :ent_id="item.ent_id"
+                  :ent_img="item.ent_img"
+                  :ent_name="item.ent_name"
+                  :ent_info="item.ent_info"
+                  :ent_ceo="item.ent_ceo"
+                  :follow="item.follow"
+                  style="width:100px"
+                ></company-card>
+              </el-space>
             </el-row>
             <br />
             <pagination
@@ -179,7 +182,7 @@ export default {
         },
       ],
       page: 1,
-      limit: 6,
+      limit: 5,
       block: 5,
     };
   },
@@ -223,12 +226,11 @@ export default {
 </script>
 
 <style>
+el-main {
+  background-color: wheat;
+}
 .contents {
   text-align: center;
   align-content: center;
-  width: 100%;
-}
-.card {
-  justify-content: center;
 }
 </style>
