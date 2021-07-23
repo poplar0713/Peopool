@@ -15,6 +15,7 @@
         type="warning"
         @click="submitForm('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
+        :plain="true"
         >Login</el-button
       >
     </el-form-item>
@@ -64,9 +65,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert("submit!");
-          this.$router.push("company");
-          this.$store.state.LoginDialog = false;
-          this.openFullScreen2();
+          this.Loging();
         } else {
           console.log("error submit!!");
           return false;
@@ -76,7 +75,7 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    openFullScreen2() {
+    Loging() {
       const loading = this.$loading({
         lock: true,
         text: "Loading",
@@ -85,8 +84,18 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.$store.state.LoginDialog = false;
+        this.$router.push("company");
+        this.Hello();
       }, 3000);
     },
+  },
+  Hello() {
+    this.$message({
+      showClose: true,
+      message: "Hello, Nojobman",
+      type: "success",
+    });
   },
 };
 </script>

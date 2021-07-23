@@ -69,6 +69,7 @@ export default {
           this.openFullScreen2();
           this.$router.push("/user/"+this.ruleForm.LoginIndivID);
           this.$store.state.LoginDialog = false;
+          
         } else {
           console.log("error submit!!");
           return false;
