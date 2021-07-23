@@ -179,7 +179,7 @@ export default {
         },
       ],
       page: 1,
-      limit: 6,
+      limit: 5,
       block: 5,
     };
   },
@@ -223,12 +223,11 @@ export default {
 </script>
 
 <style>
+el-main {
+  background-color: wheat;
+}
 .contents {
   text-align: center;
   align-content: center;
-  width: 100%;
-}
-.card {
-  justify-content: center;
 }
 </style>
