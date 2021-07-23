@@ -3,6 +3,7 @@ package com.ssafy.peopool.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.ssafy.peopool.dto.Enterprise;
 import com.ssafy.peopool.model.repo.EnterpriseRepo;
 
 @Service
+@MapperScan(basePackages = {"com.ssafy.peopool.model.repo"})
 public class EnterpriseServiceImpl implements EnterpriseService{
 	
 	@Autowired
