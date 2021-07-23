@@ -83,6 +83,10 @@ export default {
 </script>
 
 <style scoped>
+img {
+  display: block;
+  margin: 0px auto;
+}
 #resultBox {
   width: 100%;
 }
