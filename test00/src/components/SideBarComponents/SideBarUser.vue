@@ -29,7 +29,7 @@
         <!--  -->
         <el-menu-item index="5">
           <i class="el-icon-video-camera"></i>
-          <span>Interview</span>
+          <span><UserInterviewCal/></span>
         </el-menu-item>
         <!--  -->
         <el-menu-item index="6" disabled>
@@ -56,10 +56,12 @@
 <script>
 import DragSetting from "@/components/Recruitment/DragSetting.vue";
 import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
+import UserInterviewCal from "@/components/SideBarComponents/UserOfInterview/UserInterviewCal.vue";
 export default {
   components: {
     DragSetting,
     ProfileUser,
+    UserInterviewCal,
   },
   methods: {
     ch(data) {
