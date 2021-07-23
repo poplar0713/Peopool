@@ -1,12 +1,12 @@
 <template>
-  <el-dialog v-model="dialogVisible" class="info" width="70%">
+  <el-dialog v-model="dialogVisible" class="info">
     <el-container>
       <el-header
         ><h2>{{ ent_name }}</h2></el-header
       >
       <el-container>
         <el-aside width="300px"
-          ><el-image style="max-width: 30%; height: 300px" :src="ent_img"></el-image
+          ><el-image style="width: 300px; height: 300px" :src="ent_img"></el-image
         ></el-aside>
         <el-main>
           <h4>기업 대표 : {{ ent_ceo }}</h4>
@@ -20,7 +20,7 @@
     </el-container>
   </el-dialog>
 
-  <el-card width="100%" shadow="hover" body-style="margin='1%'">
+  <el-card width="40%">
     <el-row>
       <el-col :span="8" @click="dialogVisible = true">
         <el-image style="width: 100px; height: 100px" :src="ent_img" :fit="fit"></el-image>
