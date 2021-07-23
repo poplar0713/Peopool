@@ -1,5 +1,7 @@
 package com.ssafy.peopool.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,10 +42,40 @@ public class FollowController {
 	
 	@ApiOperation(value = "팔로워, 팔로잉 숫자 조회", response = String.class)
 	@GetMapping("{index}")
-	public ResponseEntity<String> getCount(@RequestBody Follow follow){
+	public ResponseEntity<Follow> getCount(@RequestBody Follow follow){
 		return null;
 		
 	}
+	
+	@ApiOperation(value = "기업의 팔로잉 조회", response = String.class)
+	@GetMapping("/enting/{index}")
+	public ResponseEntity<List<Follow>> getEFollowing(@RequestBody Follow follow){
+		return null;
+		
+	}
+	
+	@ApiOperation(value = "기업의 팔로잉 조회", response = String.class)
+	@GetMapping("/enter/{index}")
+	public ResponseEntity<List<Follow>> getEFollower(@RequestBody Follow follow){
+		return null;
+		
+	}
+	
+
+	@ApiOperation(value = "개인의 팔로잉 조회", response = String.class)
+	@GetMapping("/inding/{index}")
+	public ResponseEntity<List<Follow>> getIFollowing(@RequestBody Follow follow){
+		return null;
+		
+	}
+	
+	@ApiOperation(value = "기업의 팔로잉 조회", response = String.class)
+	@GetMapping("/indter/{index}")
+	public ResponseEntity<List<Follow>> getIFollower(@RequestBody Follow follow){
+		return null;
+		
+	}
+
 
 
 }
