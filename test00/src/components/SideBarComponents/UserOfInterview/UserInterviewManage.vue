@@ -10,9 +10,9 @@
     :before-close="handleClose"
   >
     <!--  -->
-    <el-tabs :tab-position="tabPosition" style="height: 200px;">
-      <el-tab-pane label="받은요청">User</el-tab-pane>
-      <el-tab-pane label="수락한면접">Config</el-tab-pane>
+    <el-tabs :tab-position="tabPosition" style="height: 100%;">
+      <el-tab-pane label="받은요청"><RequestedInterviews /></el-tab-pane>
+      <el-tab-pane label="수락한면접"><MyInterviews /></el-tab-pane>
       <el-tab-pane label="결과대기">Role</el-tab-pane>
       <el-tab-pane label="결과">Task</el-tab-pane>
     </el-tabs>
@@ -20,8 +20,13 @@
 </template>
 
 <script>
+import RequestedInterviews from "./RequestedInterviews.vue";
+import MyInterviews from "./MyInterviews.vue";
 export default {
-  components: {},
+  components: {
+    RequestedInterviews,
+    MyInterviews,
+  },
   data() {
     return {
       dialogVisible: false,
