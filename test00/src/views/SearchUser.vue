@@ -5,10 +5,7 @@
     <el-container>
       <el-header><Header /></el-header>
       <el-main>
-        <SearchList />
-        <SearchList />
-        <SearchList />
-        <SearchList />
+        <SearchList :followData="followData" inputdata="Java" />
       </el-main>
     </el-container>
   </el-container>
@@ -27,6 +24,101 @@ export default {
     SearchList,
     //   WebViewer,
     Header,
+  },
+  data() {
+    return {
+      followData: [
+        {
+          following: 26,
+          img: "d.jfif",
+          title: "항상 열정있는 자세",
+          name: "문영화",
+          tag: ["#java", "#javascript"],
+        },
+        {
+          following: 10,
+          img: "b.jpg",
+          title: "항상 열정있는 자세",
+          name: "여정동",
+          tag: ["#java", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "a.jpg",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 15,
+          img: "c.png",
+          title: "항상 열정있는 자세",
+          name: "하이이",
+          tag: [
+            "#java",
+            "#javascript",
+            "#mysql",
+            "#SpringBoot",
+            "#대한민국",
+            "#만세",
+            "#Docker",
+            "#배포경험",
+            "#python",
+            "#경력",
+            "#React",
+          ],
+        },
+        {
+          following: 33,
+          img: "a.jpg",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "b.jpg",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "c.png",
+          title: "항상 열정있는 자세",
+          name: "문영화",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "a.jpg",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "b.jpg",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "c.png",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+        {
+          following: 33,
+          img: "a.jpg",
+          title: "항상 열정있는 자세",
+          name: "조영우",
+          tag: ["#python", "#vue.js", "#javascript"],
+        },
+      ],
+    };
   },
 };
 </script>

@@ -24,7 +24,7 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
-import webviewer from "@/components/MainCompany/webviewer.vue";
+import webviewer from "@/components/MainCompany/WebViewer.vue";
 import Header from "@/components/SideBarComponents/header.vue";
 export default {
   components: {

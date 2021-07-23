@@ -14,8 +14,10 @@
       <el-menu background-color="#f1c40f">
         <!--  -->
         <el-menu-item index="1" @click="dialogVisible = true">
-          <i class="el-icon-office-building
-"></i>
+          <i
+            class="el-icon-office-building
+"
+          ></i>
           <span>Profile</span>
         </el-menu-item>
         <el-menu-item index="2">
@@ -30,7 +32,7 @@
           <i class="el-icon-setting"></i>
           <span>setting</span>
         </el-menu-item>
-                <el-menu-item index="7">
+        <el-menu-item index="7">
           <i class="el-icon-turn-off"></i>
           <span>Logout</span>
         </el-menu-item>
@@ -71,8 +73,9 @@ export default {
   height: 90%;
 }
 .title {
-  margin: 8px;
+  margin: 2%;
   text-align: center;
+  height: 6%;
 }
 .title span {
   font-family: "Work Sans", sans-serif;
@@ -82,7 +85,7 @@ export default {
   color: #ffc000;
 }
 i {
-  color: #424949 !important;
+  color: black !important;
 }
 span {
   color: black;

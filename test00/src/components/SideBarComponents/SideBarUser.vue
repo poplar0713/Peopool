@@ -11,7 +11,7 @@
           </div>
         </div>
       </router-link>
-<el-menu
+      <el-menu
         default-active="2"
         @open="handleOpen"
         @close="handleClose"
@@ -20,7 +20,7 @@
         <!--  -->
         <el-menu-item index="1">
           <i class="el-icon-user"></i>
-          <span><ProfileUser/></span>
+          <span><ProfileUser /></span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-setting"></i>
@@ -87,6 +87,10 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
+img {
+  display: block;
+  margin: 0px auto;
+}
 .sidebar {
   position: fixed;
   height: 100%;
@@ -97,10 +101,6 @@ export default {
 .el-menu {
   height: 90%;
 }
-.title {
-  margin: 8px;
-  text-align: center;
-}
 .title span {
   font-family: "Work Sans", sans-serif;
   font-size: 40px;
@@ -108,10 +108,14 @@ export default {
 .f {
   color: #ffc000;
 }
-i {
-  color: #424949 !important;
-}
 span {
   color: black;
+}
+.title {
+  margin: 10px;
+  text-align: center;
+}
+i {
+  color: black !important;
 }
 </style>
