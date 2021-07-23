@@ -8,7 +8,7 @@
     <el-form-item label="Password" prop="LoginIndivPW">
       <el-input type="password" v-model="ruleForm.LoginIndivPW"></el-input>
     </el-form-item>
-    <!-- 생성 및 취소 버튼 -->
+    <div><KakaoLogin/></div>
     <el-form-item>
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
       <el-button
@@ -22,7 +22,9 @@
 </template>
 
 <script>
+import KakaoLogin from './KakaoLogin.vue';
 export default {
+  components: { KakaoLogin },
   data() {
     return {
       loading: true,
