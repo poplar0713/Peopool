@@ -8,7 +8,7 @@ $--color-primary: #ffc000;
 
 /* icon font path, required */
 $--font-path: "~element-plus/lib/theme-chalk/fonts";
-
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 @import "~element-plus/packages/theme-chalk/src/index";
 
 html,
@@ -17,6 +17,8 @@ body {
   width: 100%;
   font-family: "Nanum Gothic", sans-serif;
   font-family: "Noto Sans KR", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 // dialog
@@ -24,13 +26,11 @@ body {
   border-radius: 30px;
 }
 .el-dialog__header {
-
   border-radius: 30px;
   padding-top: 15px;
   padding-bottom: 10px;
 }
 .el-dialog__body {
-
   border-radius: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -79,7 +79,6 @@ body {
   width: 100%;
   border-radius: 10px;
   border-color: #939597;
-  
 }
 //
 .el-tag {
@@ -87,4 +86,54 @@ body {
   border-color: #939597;
 }
 
+#mainlightBox {
+  background-color: #5f2d9a;
+  padding: 2rem;
+}
+#lighth2 {
+  font-family: "Nanum Gothic", sans-serif;
+  color: #ffc000;
+  // text-transform: uppercase;
+  font-weight: bold;
+  font-size: 3rem;
+  line-height: 0.75;
+  margin-left: 50px;
+}
 
+.nonlight {
+  display: block;
+}
+.nonlight:not(.light) {
+  opacity: 1;
+  animation: flashText 0.5s ease-out alternate infinite;
+}
+.light {
+  position: relative;
+  display: inline-block;
+  font-family: "Work Sans", sans-serif;
+  font-style: italic;
+  &:before {
+    position: absolute;
+    left: 0;
+    top: -10%;
+    width: 100%;
+    height: 120%;
+    background: #fff;
+    filter: blur(10px);
+    content: "";
+    opacity: 0;
+    animation: flash 0.5s ease-out alternate infinite;
+  }
+}
+
+@keyframes flash {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes flashText {
+  to {
+    opacity: 0.9;
+  }
+}
