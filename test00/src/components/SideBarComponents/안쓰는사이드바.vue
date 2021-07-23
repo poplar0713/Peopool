@@ -97,9 +97,4 @@ export default {
 };
 </script>
 
-<style>
-img {
-  /* display: block;
-  margin: 0px auto; */
-}
-</style>
+<style></style>

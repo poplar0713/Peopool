@@ -3,6 +3,7 @@ Write your variables here. All available variables can be
 found in element-plus/packages/theme-chalk/src/common/var.scss.
 For example, to overwrite the theme color:
 */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR&display=swap");
 $--color-primary: #ffc000;
 
 /* icon font path, required */
@@ -14,6 +15,8 @@ html,
 body {
   height: 100%;
   width: 100%;
+  font-family: "Nanum Gothic", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 // dialog

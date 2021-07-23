@@ -54,6 +54,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+img {
+  display: block;
+  margin: 0px auto;
+}
 /* h3 {
   margin: 40px 0 0;
 }
