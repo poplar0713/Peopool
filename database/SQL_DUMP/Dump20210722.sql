@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: test2
+-- Host: localhost    Database: peopool
 -- ------------------------------------------------------
 -- Server version	5.7.33-log
 
@@ -70,24 +70,6 @@ LOCK TABLES `enterprise` WRITE;
 /*!40000 ALTER TABLE `enterprise` DISABLE KEYS */;
 /*!40000 ALTER TABLE `enterprise` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `test2`.`enterprise_AFTER_INSERT` AFTER INSERT ON `enterprise` FOR EACH ROW
-BEGIN
-insert into ent_profile(ent_index) values (new.ent_index);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `follow`
@@ -98,9 +80,9 @@ DROP TABLE IF EXISTS `follow`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `follow` (
   `fol_index` int(11) NOT NULL AUTO_INCREMENT,
+  `fol_type` tinyint(1) DEFAULT NULL,
   `follower` int(11) DEFAULT NULL,
   `following` int(11) DEFAULT NULL,
-  `fol_type` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`fol_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -123,12 +105,11 @@ DROP TABLE IF EXISTS `hashtag`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hashtag` (
   `tag_index` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_type` int(11) NOT NULL,
+  `tag_target` int(11) NOT NULL,
   `taglist_index` int(11) NOT NULL,
-  `ind_index` int(11) NOT NULL,
   PRIMARY KEY (`tag_index`),
   KEY `FK_taglist_TO_hashtag_1` (`taglist_index`),
-  KEY `FK_individual_TO_hashtag_1` (`ind_index`),
-  CONSTRAINT `FK_individual_TO_hashtag_1` FOREIGN KEY (`ind_index`) REFERENCES `individual` (`ind_index`),
   CONSTRAINT `FK_taglist_TO_hashtag_1` FOREIGN KEY (`taglist_index`) REFERENCES `taglist` (`taglist_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -199,24 +180,6 @@ LOCK TABLES `individual` WRITE;
 INSERT INTO `individual` VALUES (1,'1','1','1','1','1','1','1');
 /*!40000 ALTER TABLE `individual` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `test2`.`individual_AFTER_INSERT` AFTER INSERT ON `individual` FOR EACH ROW
-BEGIN
- Insert into ind_profile(ind_index) values (new.ind_index);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `interview`
@@ -251,38 +214,6 @@ LOCK TABLES `interview` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `recruit`
---
-
-DROP TABLE IF EXISTS `recruit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `recruit` (
-  `rec_index` int(11) NOT NULL AUTO_INCREMENT,
-  `ent_index` int(11) NOT NULL,
-  `rec_detail` varchar(255) DEFAULT NULL,
-  `rec_qualifications` varchar(255) DEFAULT NULL,
-  `rec_preferention` varchar(255) DEFAULT NULL,
-  `rec_starttime` datetime DEFAULT NULL,
-  `rec_endtime` datetime DEFAULT NULL,
-  `rec_requiredDoc` varchar(255) DEFAULT NULL,
-  `rec_deadline` char(1) DEFAULT NULL,
-  PRIMARY KEY (`rec_index`),
-  KEY `FK_enterprise_TO_recruit_1` (`ent_index`),
-  CONSTRAINT `FK_enterprise_TO_recruit_1` FOREIGN KEY (`ent_index`) REFERENCES `enterprise` (`ent_index`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `recruit`
---
-
-LOCK TABLES `recruit` WRITE;
-/*!40000 ALTER TABLE `recruit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recruit` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `suggestion`
 --
 
@@ -299,6 +230,8 @@ CREATE TABLE `suggestion` (
   `ent_index` int(11) NOT NULL,
   `sug_decision` datetime DEFAULT NULL,
   `sug_state` char(1) DEFAULT 'W',
+  `sug_duty` varchar(100) NOT NULL,
+  `sug_message` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`sug_index`),
   KEY `FK_individual_TO_suggestion_1` (`ind_index`),
   KEY `FK_enterprise_TO_suggestion_1` (`ent_index`),
@@ -315,27 +248,6 @@ LOCK TABLES `suggestion` WRITE;
 /*!40000 ALTER TABLE `suggestion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `suggestion` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `test2`.`suggestion_AFTER_UPDATE` AFTER UPDATE ON `suggestion` FOR EACH ROW
-BEGIN
-	if old.sug_state != new.sug_state
-    then
-		insert into interview(ind_index,ent_index,int_start) values (new.ind_index,new.ent_index,new.sug_decision);
-	END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `taglist`
@@ -369,4 +281,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 17:37:00
+-- Dump completed on 2021-07-22 15:51:02

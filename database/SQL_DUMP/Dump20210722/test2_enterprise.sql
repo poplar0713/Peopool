@@ -16,32 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ent_profile`
+-- Table structure for table `enterprise`
 --
 
-DROP TABLE IF EXISTS `ent_profile`;
+DROP TABLE IF EXISTS `enterprise`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ent_profile` (
-  `ent_index` int(11) NOT NULL,
-  `ent_image` varchar(255) DEFAULT '-',
-  `ent_ceo` varchar(20) DEFAULT '-',
-  `ent_history` varchar(255) DEFAULT '-',
-  `ent_address` varchar(100) DEFAULT '-',
-  `ent_website` varchar(100) DEFAULT '-',
-  `ent_introduce` varchar(255) DEFAULT '내용을 입력해주세요',
-  KEY `FK_enterprise_TO_ent_profile_1` (`ent_index`),
-  CONSTRAINT `FK_enterprise_TO_ent_profile_1` FOREIGN KEY (`ent_index`) REFERENCES `enterprise` (`ent_index`)
+CREATE TABLE `enterprise` (
+  `ent_index` int(11) NOT NULL AUTO_INCREMENT,
+  `ent_id` varchar(20) DEFAULT NULL,
+  `ent_password` varchar(60) DEFAULT NULL,
+  `ent_name` varchar(20) DEFAULT NULL,
+  `ent_contact` varchar(11) DEFAULT NULL,
+  `ent_email` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`ent_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ent_profile`
+-- Dumping data for table `enterprise`
 --
 
-LOCK TABLES `ent_profile` WRITE;
-/*!40000 ALTER TABLE `ent_profile` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ent_profile` ENABLE KEYS */;
+LOCK TABLES `enterprise` WRITE;
+/*!40000 ALTER TABLE `enterprise` DISABLE KEYS */;
+/*!40000 ALTER TABLE `enterprise` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 17:38:08
+-- Dump completed on 2021-07-22 15:51:09

@@ -16,31 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `hashtag`
+-- Table structure for table `suggestion`
 --
 
-DROP TABLE IF EXISTS `hashtag`;
+DROP TABLE IF EXISTS `suggestion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hashtag` (
-  `tag_index` int(11) NOT NULL AUTO_INCREMENT,
-  `taglist_index` int(11) NOT NULL,
+CREATE TABLE `suggestion` (
+  `sug_index` int(11) NOT NULL AUTO_INCREMENT,
+  `sug_send` datetime DEFAULT NULL,
+  `sug_timeone` datetime DEFAULT NULL,
+  `sug_timetwo` datetime DEFAULT NULL,
+  `sug_timethree` datetime DEFAULT NULL,
   `ind_index` int(11) NOT NULL,
-  PRIMARY KEY (`tag_index`),
-  KEY `FK_taglist_TO_hashtag_1` (`taglist_index`),
-  KEY `FK_individual_TO_hashtag_1` (`ind_index`),
-  CONSTRAINT `FK_individual_TO_hashtag_1` FOREIGN KEY (`ind_index`) REFERENCES `individual` (`ind_index`),
-  CONSTRAINT `FK_taglist_TO_hashtag_1` FOREIGN KEY (`taglist_index`) REFERENCES `taglist` (`taglist_index`)
+  `ent_index` int(11) NOT NULL,
+  `sug_decision` datetime DEFAULT NULL,
+  `sug_state` char(1) DEFAULT 'W',
+  `sug_duty` varchar(100) NOT NULL,
+  `sug_message` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`sug_index`),
+  KEY `FK_individual_TO_suggestion_1` (`ind_index`),
+  KEY `FK_enterprise_TO_suggestion_1` (`ent_index`),
+  CONSTRAINT `FK_enterprise_TO_suggestion_1` FOREIGN KEY (`ent_index`) REFERENCES `enterprise` (`ent_index`),
+  CONSTRAINT `FK_individual_TO_suggestion_1` FOREIGN KEY (`ind_index`) REFERENCES `individual` (`ind_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hashtag`
+-- Dumping data for table `suggestion`
 --
 
-LOCK TABLES `hashtag` WRITE;
-/*!40000 ALTER TABLE `hashtag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hashtag` ENABLE KEYS */;
+LOCK TABLES `suggestion` WRITE;
+/*!40000 ALTER TABLE `suggestion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `suggestion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 17:38:09
+-- Dump completed on 2021-07-22 15:51:09

@@ -16,26 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `taglist`
+-- Table structure for table `ind_profile`
 --
 
-DROP TABLE IF EXISTS `taglist`;
+DROP TABLE IF EXISTS `ind_profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `taglist` (
-  `taglist_index` int(11) NOT NULL AUTO_INCREMENT,
-  `taglist_name` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`taglist_index`)
+CREATE TABLE `ind_profile` (
+  `ind_index` int(11) NOT NULL,
+  `ind_resume` varchar(200) DEFAULT '-',
+  `ind_video` varchar(200) DEFAULT '-',
+  `ind_photo` varchar(200) DEFAULT '-',
+  `ind_switch` char(1) DEFAULT 'F',
+  `ind_introduce` varchar(200) DEFAULT '내용을 입력해주세요.',
+  PRIMARY KEY (`ind_index`),
+  CONSTRAINT `FK_individual_TO_ind_profile_1` FOREIGN KEY (`ind_index`) REFERENCES `individual` (`ind_index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `taglist`
+-- Dumping data for table `ind_profile`
 --
 
-LOCK TABLES `taglist` WRITE;
-/*!40000 ALTER TABLE `taglist` DISABLE KEYS */;
-/*!40000 ALTER TABLE `taglist` ENABLE KEYS */;
+LOCK TABLES `ind_profile` WRITE;
+/*!40000 ALTER TABLE `ind_profile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ind_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-21 17:38:09
+-- Dump completed on 2021-07-22 15:51:09
