@@ -1,16 +1,15 @@
 <template>
   <!-- Form -->
   <div>
-    <div class="loginbutton">
-      <img src="@/assets/PeoPool.png" alt="" style="width:30%" />
-      <el-button
-        type="warning"
-        plain
-        @click="$store.state.LoginDialog = true"
-        style="width:30%"
-        >시작하기</el-button
-      >
-    </div>
+    <el-button
+      id="startbtn"
+      type="warning"
+      plain
+      @click="$store.state.LoginDialog = true"
+      style="width:30%"
+      >시작하기 ></el-button
+    >
+
     <br />
     <el-dialog title="Login" v-model="$store.state.LoginDialog">
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -122,13 +121,17 @@ export default {
 };
 </script>
 
-<style>
-.loginbutton {
-  /* width: 100px; 
-  hegiht: 200px; 
-  margin: 0 auto;
-  top: 20%; 
-  left: 40%; */
-  /* cursor: pointer; */
+<style scoped>
+#startbtn {
+  background-color: #ffc000;
+  color: #5f2d9a;
+  font-weight: bold;
+  font-size: 20px;
+  height: 50px;
+  margin-left: 60px;
+  border-radius: 30px;
+}
+#startbtn:hover {
+  background-color: #f7d46b;
 }
 </style>
