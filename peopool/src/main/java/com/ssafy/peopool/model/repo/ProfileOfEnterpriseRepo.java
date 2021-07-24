@@ -19,5 +19,5 @@ public interface ProfileOfEnterpriseRepo {
 	ProfileOfEnterprise getProfileOfEnterprise(int index) throws SQLException;
 
 	// 이름으로 회사 검색
-	ProfileOfEnterprise getProfilofEnterprise(String name) throws SQLException;
+	ProfileOfEnterprise getNameOfEnterprise(String name) throws SQLException;
 }

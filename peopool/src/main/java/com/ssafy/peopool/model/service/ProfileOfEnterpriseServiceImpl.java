@@ -34,9 +34,11 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	}
 
 	@Override
-	public ProfileOfEnterprise getProfilofEnterprise(String name) throws SQLException {
+	public ProfileOfEnterprise getNameOfEnterprise(String name) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

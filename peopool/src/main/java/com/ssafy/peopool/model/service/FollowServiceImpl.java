@@ -36,27 +36,17 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public List<Individual> getEFollowing(int index) throws SQLException {
+	public List<Individual> getFollowing(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Individual> getEFollower(int index) throws SQLException {
+	public List<Individual> getFollower(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public List<Enterprise> getIFollowing(int index) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Enterprise> getIFollower(int index) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
