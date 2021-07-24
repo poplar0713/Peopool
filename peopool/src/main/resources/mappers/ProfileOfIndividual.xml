@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.peopool.model.repo.ProfileOfIndividualRepo">
+
+	<update id="modifyProfile" parameterType="ProfileOfIndividual">
+		update ind_profile 
+		set ind_resume = #{ind_resume}, ind_video=#{ind_video}, ind_photo=#{ind_photo}, ind_introduce=#{ind_introduce}
+		where ind_index = #{ind_index}
+	</update>
+	
+	<update id="modifySwitchOn" parameterType="String">
+		update ind_profile 
+		set ind_switch = true 
+		where ind_index = #{ind_index}
+	</update>
+	
+	<update id="modifySwitchOff" parameterType="String">
+		update ind_profile 
+		set ind_switch = false 
+		where ind_index = #{ind_index}
+	</update>
+	
+	<select id="getProfileOfIndividual" parameterType="String" resultType="Individual">
+		select * 
+		from ind_profile 
+		where ind_index = #{ind_index}
+	</select>
+</mapper>

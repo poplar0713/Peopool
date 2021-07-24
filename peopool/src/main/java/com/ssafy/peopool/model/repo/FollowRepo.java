@@ -21,15 +21,9 @@ public interface FollowRepo {
 	// 팔로우 숫자 조회
 	Follow getFollowCount(int index) throws SQLException;
 
-	// 기업의 팔로워 조회
-	List<Individual> getEFollowing(int index) throws SQLException;
+	// 팔로워 조회
+	List<Follow> getFollowing(int index) throws SQLException;
 
-	// 기업의 팔로잉 조회
-	List<Individual> getEFollower(int index) throws SQLException;
-
-	// 개인의 팔로워 조회
-	List<Enterprise> getIFollowing(int index) throws SQLException;
-
-	// 개인의 팔로잉 조회
-	List<Enterprise> getIFollower(int index) throws SQLException;
+	// 팔로잉 조회
+	List<Individual> getFollower(int index) throws SQLException;
 }

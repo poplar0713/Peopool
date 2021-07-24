@@ -9,14 +9,14 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//http://localhost:9999/vuews/swagger-ui.html
+//http://localhost:9999/swagger-ui.html
 
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
    @Bean
-   public Docket postsApi() {
+   public Docket api() {
       return new Docket(DocumentationType.SWAGGER_2)
             .groupName("peopool")
             .apiInfo(apiInfo())

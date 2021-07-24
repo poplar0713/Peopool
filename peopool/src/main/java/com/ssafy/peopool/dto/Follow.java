@@ -3,8 +3,8 @@ package com.ssafy.peopool.dto;
 // 팔로우
 public class Follow {
 	int fol_index; // 팔로우인덱스
-	int ent_index; // 기업인덱스
-	int ind_index; // 회원인덱스
+	int follower; // 기업인덱스
+	int following; // 회원인덱스
 	boolean fol_type; // 팔로워 타입
 
 	public Follow() {
@@ -18,22 +18,6 @@ public class Follow {
 		this.fol_index = fol_index;
 	}
 
-	public int getEnt_index() {
-		return ent_index;
-	}
-
-	public void setEnt_index(int ent_index) {
-		this.ent_index = ent_index;
-	}
-
-	public int getInd_index() {
-		return ind_index;
-	}
-
-	public void setInd_index(int ind_index) {
-		this.ind_index = ind_index;
-	}
-	
 	public boolean isFol_type() {
 		return fol_type;
 	}
@@ -42,12 +26,28 @@ public class Follow {
 		this.fol_type = fol_type;
 	}
 
+	public int getFollower() {
+		return follower;
+	}
+
+	public void setFollower(int follower) {
+		this.follower = follower;
+	}
+
+	public int getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(int following) {
+		this.following = following;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Follow [fol_index=").append(fol_index).append(", ent_index=").append(ent_index)
-				.append(", ind_index=").append(ind_index).append(", fol_type=").append(fol_type).append("]");
-		return builder.toString();
+		return "Follow [fol_index=" + fol_index + ", follower=" + follower + ", following=" + following + ", fol_type="
+				+ fol_type + "]";
 	}
+
+	
 	
 }
