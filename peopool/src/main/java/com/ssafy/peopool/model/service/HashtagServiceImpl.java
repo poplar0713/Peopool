@@ -19,25 +19,25 @@ public class HashtagServiceImpl implements HashtagService {
 	@Override
 	public HashMap<Integer, String> tagByUser() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return hashtagRepo.tagByUser();
 	}
 
 	@Override
 	public HashMap<String, Integer> countByTag() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return hashtagRepo.countByTag();
 	}
 
 	@Override
 	public void registerHashtag(int tag_inex, int ind_index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		hashtagRepo.registerHashtag(tag_inex, ind_index);
 	}
 
 	@Override
 	public void deletedHashtag(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		hashtagRepo.deletedHashtag(index);
 	}
 
 }
