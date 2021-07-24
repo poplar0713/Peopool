@@ -20,7 +20,7 @@ import com.ssafy.peopool.model.service.HashtagService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/hus")
+@RequestMapping("/has")
 public class HashtagController {
 
 	@Autowired
