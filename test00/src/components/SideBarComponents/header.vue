@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 15px; width:100%;">
+  <div style="float:right; margin-top:5px; width:50%;">
     <el-input
       placeholder="Please input"
       v-model="keyword"

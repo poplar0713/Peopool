@@ -1,90 +1,50 @@
 <template>
+  <!-- TabSchedule -->
+
   <el-container>
-    <el-aside style="width:200px"><SideBarUser /></el-aside>
+    <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
-      <!-- 검색창 -->
       <el-header><Header /></el-header>
-      <!-- 메인 -->
       <el-main>
-        <el-container>
-          <el-header style="text-align:center;"
-            ><h2>XXX님, 오늘도 취업소식이 없으세요?</h2></el-header
-          >
-          <el-container>
-            <el-aside width="30%">
-              <el-row>
-                <h4>나의 영상</h4>
-                <el-upload
-                  limit="1"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :file-list="fileList"
-                  accept="video/*"
-                  style="margin-left:10%"
-                >
-                  <el-button size="small">PR영상 업로드</el-button>
-                  <template #tip>
-                    <!-- <div class="el-upload__tip">
-                      </div> -->
-                  </template>
-                </el-upload>
-              </el-row>
-              <el-row>
-                <div v-if="hasVideo">
-                  <video
-                    src="@/assets/samplevideo.mp4"
-                    height="360"
-                    width="640"
-                    controls
-                    style="width:100%; height:100%"
-                  ></video>
-                </div>
-                <div v-else class="videoNotFound">
-                  <h4>PR 동영상을 아직 업로드 하지 않았습니다</h4>
-                  <h4>오른쪽 상단의 버튼을 눌러 영상을 업로드 해보세요</h4>
-                </div>
-              </el-row>
-            </el-aside>
-            <el-main>
-              <el-tabs :tab-position="tabPosition" style="height: 250;">
-                <el-tab-pane label="Following Enterprise">
-                  <TabFollowings />
-                </el-tab-pane>
-                <el-tab-pane label="Required Interview"
-                  ><TabRequiredInterview
-                /></el-tab-pane>
-                <el-tab-pane label="Schedule">
-                  <TabSchedule />
-                </el-tab-pane>
-                <el-tab-pane label="Documents">
-                  <TabDocuments />
-                </el-tab-pane>
-              </el-tabs>
-            </el-main>
-          </el-container>
-        </el-container>
+        <el-row :gutter="20">
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left"
+                >오늘 요청받은 인터뷰</el-divider
+              ><TabRequiredInterview /></div
+          ></el-col>
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">인터뷰 일정</el-divider
+              ><TabSchedule /></div
+          ></el-col>
+        </el-row>
       </el-main>
+      <el-footer>
+        <el-divider content-position="left">나의 PR 영상</el-divider><PRVideo />
+      </el-footer>
     </el-container>
   </el-container>
 
-  <!-- TabSchedule -->
+  <TabDocuments />
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import TabFollowings from "@/components/MainUser/TabFollowings.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import TabDocuments from "@/components/MainUser/TabDocuments.vue";
-import Header from "@/components/SideBarComponents/header.vue";
 
+import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
   components: {
     SideBarUser,
-    TabFollowings,
+
     TabRequiredInterview,
     TabSchedule,
     TabDocuments,
     Header,
+
   },
   data() {
     return {
@@ -121,6 +81,7 @@ export default {
   background-color: white;
   border-radius: 20px;
 }
+
 /* .main {
   border-radius: 20px 20px 20px 20px;
   margin-top: 2%;

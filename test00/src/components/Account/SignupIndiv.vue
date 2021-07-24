@@ -150,7 +150,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
-          this.$store.dispatch('getsignupdata',this.ruleForm);
+          this.$store.dispatch("getsignupdata", this.ruleForm);
           this.openFullScreen2();
           this.$store.state.SignupDialogIndiv = false;
           this.successmessage();

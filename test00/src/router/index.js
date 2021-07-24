@@ -40,7 +40,7 @@ const routes = [
     component: Start,
   },
   {
-    path: "/interview",
+    path: "/user/interviewroom/:company/:userid",
     name: "InterviewRoom",
     component: InterviewRoom,
   },

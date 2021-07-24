@@ -22,14 +22,22 @@
           <i class="el-icon-user"></i>
           <span><ProfileUser /></span>
         </el-menu-item>
-        <el-menu-item index="3">
-          <i class="el-icon-setting"></i>
-          <span><DragSetting /></span>
-        </el-menu-item>
         <!--  -->
         <el-menu-item index="5">
           <i class="el-icon-video-camera"></i>
-          <span><UserInterviewManage/></span>
+          <span><UserInterviewManage /></span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="5">
+          <i class="el-icon-right"></i>
+          <i class="el-icon-office-building"></i>
+          <span><UserFollowings /></span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="5">
+          <i class="el-icon-user-solid"></i>
+          <i class="el-icon-back"></i>
+          <span><UserFollowers /></span>
         </el-menu-item>
         <!--  -->
         <el-menu-item index="6" disabled>
@@ -54,14 +62,16 @@
 </template>
 
 <script>
-import DragSetting from "@/components/Recruitment/DragSetting.vue";
 import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
 import UserInterviewManage from "@/components/SideBarComponents/UserOfInterview/UserInterviewManage.vue";
+import UserFollowings from "@/components/SideBarComponents/FollowOfUser/UserFollowings.vue";
+import UserFollowers from "@/components/SideBarComponents/FollowOfUser/UserFollowers.vue";
 export default {
   components: {
-    DragSetting,
     ProfileUser,
     UserInterviewManage,
+    UserFollowings,
+    UserFollowers
   },
   methods: {
     ch(data) {

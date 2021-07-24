@@ -1,10 +1,24 @@
 <template>
-  <el-scrollbar height="100%">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-      <el-form-item label="" prop="Introduction">
-        <el-input type="textarea" v-model="Introduction" :rows="8"></el-input>
-      </el-form-item>
-    </el-form>
+  <el-scrollbar>
+    <div style="width:100%;">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+        <!-- 개인회원이름 -->
+        <el-form-item label="" prop="Introduction">
+          <el-input type="textarea" v-model="ruleForm.Introduction"></el-input>
+        </el-form-item>
+        <div style="float:right">
+          <el-form-item>
+            <el-button @click="resetForm('ruleForm')">Reset</el-button>
+            <el-button
+              type="warning"
+              @click="submitForm('ruleForm')"
+              v-loading.fullscreen.lock="fullscreenLoading"
+              >Save</el-button
+            >
+          </el-form-item>
+        </div>
+      </el-form>
+    </div>
   </el-scrollbar>
 </template>
 
@@ -12,7 +26,18 @@
 export default {
   data() {
     return {
-      Introduction: "",
+      ruleForm: {
+        Introduction: "",
+      },
+      rules: {
+        Introduction: [
+          {
+            required: true,
+            message: "Please input your Introduction",
+            trigger: "blur",
+          },
+        ],
+      },
       fullscreenLoading: false,
     };
   },
@@ -20,11 +45,8 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!');
-          this.$store.dispatch("getsignupdata", this.ruleForm);
           this.openFullScreen2();
-          this.$store.state.SignupDialogIndiv = false;
-          this.successmessage();
+          // 저장하는 방법 찾아보기
         } else {
           console.log("error submit!!");
           this.failed();
@@ -44,16 +66,17 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.successmessage();
       }, 3000);
     },
     successmessage() {
       this.$message({
-        message: "Welcome to PeoPool channel",
+        message: "Success",
         type: "success",
       });
     },
     failed() {
-      this.$message.error("Oops, check your identification info");
+      this.$message.error("Oops, Input your Introduction");
     },
   },
 };

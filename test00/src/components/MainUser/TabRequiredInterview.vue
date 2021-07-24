@@ -7,8 +7,7 @@
           data.company_name.toLowerCase().includes(search.toLowerCase())
       )
     "
-    style="width: 100%"
-    height="250"
+    height="300"
   >
     <el-table-column label="date" prop="date"> </el-table-column>
     <el-table-column label="time" prop="time"> </el-table-column>

@@ -13,8 +13,8 @@ $--font-path: "~element-plus/lib/theme-chalk/fonts";
 
 html,
 body {
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
   font-family: "Nanum Gothic", sans-serif;
   font-family: "Noto Sans KR", sans-serif;
 }
@@ -22,15 +22,15 @@ body {
 // dialog
 .el-dialog {
   border-radius: 30px;
+  cursor: auto;
 }
 .el-dialog__header {
-
   border-radius: 30px;
   padding-top: 15px;
   padding-bottom: 10px;
+  height: 70%;
 }
 .el-dialog__body {
-
   border-radius: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -58,7 +58,7 @@ body {
   border-radius: 30px;
 }
 // aside
-// .el-aside { background-color: white; margin: auto;}
+// .el-aside { }
 // .el-aside__header { background-color: white; border-radius: 30px;}
 // .el-aside__body { background-color: white; border-radius: 30px;}
 // .el-aside__footer { background-color: white; border-radius: 30px; }
@@ -79,7 +79,6 @@ body {
   width: 100%;
   border-radius: 10px;
   border-color: #939597;
-  
 }
 //
 .el-tag {
@@ -87,4 +86,6 @@ body {
   border-color: #939597;
 }
 
-
+.el-table__header {
+  height: 70%;
+}

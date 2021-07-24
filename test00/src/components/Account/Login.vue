@@ -35,6 +35,7 @@
               <SignupIndiv />
             </el-dialog>
           </div>
+          <div><KakaoLogin /></div>
         </el-tab-pane>
         <el-tab-pane label="기업회원" name="second">
           <LoginCompany />
@@ -65,13 +66,14 @@ import SignupCompany from "@/components/Account/SignupCompany.vue";
 import SignupIndiv from "@/components/Account/SignupIndiv.vue";
 import LoginIndiv from "@/components/Account/LoginIndiv.vue";
 import LoginCompany from "@/components/Account/LoginCompany.vue";
-
+import KakaoLogin from "./KakaoLogin.vue";
 export default {
   components: {
     SignupIndiv,
     SignupCompany,
     LoginIndiv,
     LoginCompany,
+    KakaoLogin,
   },
   data() {
     return {
@@ -122,13 +124,4 @@ export default {
 };
 </script>
 
-<style>
-.loginbutton {
-  /* width: 100px; 
-  hegiht: 200px; 
-  margin: 0 auto;
-  top: 20%; 
-  left: 40%; */
-  /* cursor: pointer; */
-}
-</style>
+<style></style>
