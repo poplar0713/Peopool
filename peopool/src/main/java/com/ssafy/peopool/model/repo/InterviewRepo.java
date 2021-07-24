@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InterviewRepo {
-	void registerUL(String url) throws SQLException;
+	void registerURL(String url) throws SQLException;
 
 	List<InterviewRepo> getInterviews(int index) throws SQLException;
 

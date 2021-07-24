@@ -19,49 +19,49 @@ public class IndividualServiceImpl implements IndividualService {
 	@Override
 	public List<Individual> getAllUser() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return individualRepo.getAllUser();
 	}
 
 	@Override
 	public Individual loginCheckIndividual(String id) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return individualRepo.loginCheckIndividual(id);
 	}
 
 	@Override
 	public Individual getIndividual(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return individualRepo.getIndividual(index);
 	}
 
 	@Override
 	public void registerIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		individualRepo.registerIndividual(individual);
 	}
 
 	@Override
 	public void modifyIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		individualRepo.modifyIndividual(individual);
 	}
 
 	@Override
 	public void deleteIndividual(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		individualRepo.deleteIndividual(index);
 	}
 
 	@Override
 	public String findIndividualID(String name, String phone) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return findIndividualID(name, phone);
 	}
 
 	@Override
 	public String findIndividualPW(String id, String phone) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return findIndividualPW(id, phone);
 	}
 
 }

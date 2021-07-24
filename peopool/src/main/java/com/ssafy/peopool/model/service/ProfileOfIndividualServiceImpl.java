@@ -17,29 +17,25 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	@Override
 	public void modifyProfile(String file, int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		profileOfIndividualRepo.modifyProfile(file, index);
 	}
 
 	@Override
 	public void modifySwitchOn(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		profileOfIndividualRepo.modifySwitchOn(index);
 	}
 
 	@Override
 	public void modifySwitchOff(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		profileOfIndividualRepo.modifySwitchOff(index);
 	}
 
 	@Override
 	public ProfileOfIndividual getProfile(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return profileOfIndividualRepo.getProfile(index);
 	}
-
-	
-
-	
 
 }

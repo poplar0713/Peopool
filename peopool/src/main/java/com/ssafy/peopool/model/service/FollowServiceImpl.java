@@ -18,33 +18,33 @@ public class FollowServiceImpl implements FollowService {
 	FollowRepo followRepo;
 
 	@Override
-	public void registerFoloow(int foloower, int following) throws SQLException {
+	public void registerFollow(int follower, int following) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		followRepo.registerFollow(follower, following);
 	}
 
 	@Override
-	public void deleteFollow(int follwer, int following) throws SQLException {
+	public void deleteFollow(int follower, int following) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		followRepo.deleteFollow(follower, following);
 	}
 
 	@Override
-	public Follow getFollowCount(int index) throws SQLException {
+	public int getFollowCount(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return followRepo.getFollowCount(index);
 	}
 
 	@Override
-	public List<Individual> getFollowing(int index) throws SQLException {
+	public List<Follow> getFollowing(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return followRepo.getFollowing(index);
 	}
 
 	@Override
-	public List<Individual> getFollower(int index) throws SQLException {
+	public List<Follow> getFollower(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return followRepo.getFollower(index);
 	}
 
 	

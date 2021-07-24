@@ -17,31 +17,31 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public void registerSuggestion(SuggestionRepo suggestion) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		suggestionRepo.registerSuggestion(suggestion);
 	}
 
 	@Override
 	public void acceptSuggestion(String time, int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		suggestionRepo.acceptSuggestion(time, index);
 	}
 
 	@Override
 	public void rejectSuggestion(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		suggestionRepo.rejectSuggestion(index);
 	}
 
 	@Override
 	public void deleteSuggestion(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		suggestionRepo.deleteSuggestion(index);
 	}
 
 	@Override
 	public SuggestionRepo getSuggestion(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return suggestionRepo.getSuggestion(index);
 	}
 
 }

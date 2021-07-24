@@ -18,27 +18,24 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	@Override
 	public void modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		profileOfEnterpriseRepo.modifyProfileOfEnterprise(profileOfEnterprise);
 	}
 
 	@Override
 	public void deleteProfileOfEnterprise(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		profileOfEnterpriseRepo.deleteProfileOfEnterprise(index);
 	}
 
 	@Override
 	public ProfileOfEnterprise getProfileOfEnterprise(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return profileOfEnterpriseRepo.getProfileOfEnterprise(index);
 	}
 
 	@Override
 	public ProfileOfEnterprise getNameOfEnterprise(String name) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return profileOfEnterpriseRepo.getNameOfEnterprise(name);
 	}
-
-	
-
 }

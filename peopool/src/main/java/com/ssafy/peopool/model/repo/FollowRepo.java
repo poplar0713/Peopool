@@ -13,17 +13,17 @@ import com.ssafy.peopool.dto.Individual;
 public interface FollowRepo {
 
 	// 팔로잉 추가
-	void registerFoloow(int foloower, int following) throws SQLException;
+	void registerFollow(int follower, int following) throws SQLException;
 
 	// 팔로우 삭제
-	void deleteFollow(int follwer, int following) throws SQLException;
+	void deleteFollow(int follower, int following) throws SQLException;
 
 	// 팔로우 숫자 조회
-	Follow getFollowCount(int index) throws SQLException;
+	int getFollowCount(int index) throws SQLException;
 
 	// 팔로워 조회
 	List<Follow> getFollowing(int index) throws SQLException;
 
 	// 팔로잉 조회
-	List<Individual> getFollower(int index) throws SQLException;
+	List<Follow> getFollower(int index) throws SQLException;
 }
