@@ -25,7 +25,6 @@ public class TagListController {
 	@GetMapping("/")
 	public ResponseEntity<List<TagList>> getTagList() {
 		return new ResponseEntity<>(taglistService.getTagList(), HttpStatus.OK);
-
 	}
 
 }

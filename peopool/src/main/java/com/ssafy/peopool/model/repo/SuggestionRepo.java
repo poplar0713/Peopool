@@ -4,22 +4,24 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.peopool.model.Suggestion;
+
 @Repository
 public interface SuggestionRepo {
 
 	// 면접 제안
-	void registerSuggestion(SuggestionRepo suggestion) throws SQLException;
+	int registerSuggestion(Suggestion suggestion);
 
 	// 면접 제안 수락
-	void acceptSuggestion(String time, int index) throws SQLException;
+	int acceptSuggestion(String time, int index);
 
 	// 면접 제안 거절
-	void rejectSuggestion(int index) throws SQLException;
+	int rejectSuggestion(int index);
 
 	// 면접 제안 삭제
-	void deleteSuggestion(int index) throws SQLException;
+	int deleteSuggestion(int index);
 
 	// 면접 제안 조회
-	SuggestionRepo getSuggestion(int index) throws SQLException;
+	Suggestion getSuggestion(int index);
 
 }

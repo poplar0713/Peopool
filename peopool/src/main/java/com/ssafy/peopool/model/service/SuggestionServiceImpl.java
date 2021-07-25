@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.Suggestion;
 import com.ssafy.peopool.model.repo.SuggestionRepo;
 
 @Service
@@ -15,31 +16,31 @@ public class SuggestionServiceImpl implements SuggestionService {
 	
 	
 	@Override
-	public void registerSuggestion(SuggestionRepo suggestion) throws SQLException {
+	public int registerSuggestion(Suggestion suggestion){
 		// TODO Auto-generated method stub
-		suggestionRepo.registerSuggestion(suggestion);
+		return suggestionRepo.registerSuggestion(suggestion);
 	}
 
 	@Override
-	public void acceptSuggestion(String time, int index) throws SQLException {
+	public int acceptSuggestion(String time, int index){
 		// TODO Auto-generated method stub
-		suggestionRepo.acceptSuggestion(time, index);
+		return suggestionRepo.acceptSuggestion(time, index);
 	}
 
 	@Override
-	public void rejectSuggestion(int index) throws SQLException {
+	public int rejectSuggestion(int index){
 		// TODO Auto-generated method stub
-		suggestionRepo.rejectSuggestion(index);
+		return suggestionRepo.rejectSuggestion(index);
 	}
 
 	@Override
-	public void deleteSuggestion(int index) throws SQLException {
+	public int deleteSuggestion(int index) {
 		// TODO Auto-generated method stub
-		suggestionRepo.deleteSuggestion(index);
+		return suggestionRepo.deleteSuggestion(index);
 	}
 
 	@Override
-	public SuggestionRepo getSuggestion(int index) throws SQLException {
+	public Suggestion getSuggestion(int index){
 		// TODO Auto-generated method stub
 		return suggestionRepo.getSuggestion(index);
 	}
