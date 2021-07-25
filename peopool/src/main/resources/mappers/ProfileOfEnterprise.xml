@@ -22,5 +22,10 @@
 		on ent_profile.ent_index = enterprise.ent_index 
 		where ent_name = #{ent_name}
 	</select>
+	
+	<delete id="deleteProfileOfEnterprise" parameterType="index">
+		delete from ent_profile
+		where ent_index = #{ent_index}
+	</delete>
 
 </mapper>

@@ -16,15 +16,15 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	
 	
 	@Override
-	public void modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException {
+	public boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException {
 		// TODO Auto-generated method stub
-		profileOfEnterpriseRepo.modifyProfileOfEnterprise(profileOfEnterprise);
+		return profileOfEnterpriseRepo.modifyProfileOfEnterprise(profileOfEnterprise) == 1;
 	}
 
 	@Override
-	public void deleteProfileOfEnterprise(int index) throws SQLException {
+	public boolean deleteProfileOfEnterprise(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		profileOfEnterpriseRepo.deleteProfileOfEnterprise(index);
+		return profileOfEnterpriseRepo.deleteProfileOfEnterprise(index) == 1;
 	}
 
 	@Override
