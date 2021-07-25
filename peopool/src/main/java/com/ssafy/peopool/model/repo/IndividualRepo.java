@@ -19,17 +19,17 @@ public interface IndividualRepo {
 	Individual getIndividual(int index) throws SQLException;
 
 	// 개인 회원 등록
-	void registerIndividual(Individual individual) throws SQLException;
+	int registerIndividual(Individual individual) throws SQLException;
 
 	// 개인 회원 정보 수정
-	void modifyIndividual(Individual individual) throws SQLException;
+	int modifyIndividual(Individual individual) throws SQLException;
 
 	// 개인회원 탈퇴
-	void deleteIndividual(int index) throws SQLException;
+	int deleteIndividual(int index) throws SQLException;
 
 	// 아이디 찾기
-	String findIndividualID(String name, String phone) throws SQLException;
+	Individual findIndividualID(Individual individual) throws SQLException;
 
 	// 비밀번호 찾기
-	String findIndividualPW(String id, String phone) throws SQLException;
+	Individual findIndividualPW(Individual individual) throws SQLException;
 }

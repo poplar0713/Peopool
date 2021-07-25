@@ -35,33 +35,33 @@ public class IndividualServiceImpl implements IndividualService {
 	}
 
 	@Override
-	public void registerIndividual(Individual individual) throws SQLException {
+	public boolean registerIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		individualRepo.registerIndividual(individual);
+		return individualRepo.registerIndividual(individual) == 1;
 	}
 
 	@Override
-	public void modifyIndividual(Individual individual) throws SQLException {
+	public boolean modifyIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		individualRepo.modifyIndividual(individual);
+		return individualRepo.modifyIndividual(individual) == 1;
 	}
 
 	@Override
-	public void deleteIndividual(int index) throws SQLException {
+	public boolean deleteIndividual(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		individualRepo.deleteIndividual(index);
+		return individualRepo.deleteIndividual(index) == 1;
 	}
 
 	@Override
-	public String findIndividualID(String name, String phone) throws SQLException {
+	public Individual findIndividualID(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		return findIndividualID(name, phone);
+		return findIndividualID(individual);
 	}
 
 	@Override
-	public String findIndividualPW(String id, String phone) throws SQLException {
+	public Individual findIndividualPW(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		return findIndividualPW(id, phone);
+		return findIndividualPW(individual);
 	}
 
 }
