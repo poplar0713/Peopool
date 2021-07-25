@@ -1,15 +1,27 @@
 package com.ssafy.peopool.controller;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.Individual;
+import com.ssafy.peopool.model.ProfileOfEnterprise;
 //import com.ssafy.api.request.UserLoginPostReq;
 //import com.ssafy.api.request.UserRegiserIdGetReq;
 //import com.ssafy.api.request.UserRegisterPostReq;
@@ -38,8 +50,71 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/ind")
 public class IndividualController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+	
 	@Autowired
 	IndividualService individualService;
+	
+	@ApiOperation(value = "개인 회원 전체 조회", response = String.class)
+	@GetMapping()
+	public ResponseEntity<List<Individual>> getAllUser() throws SQLException{
+		return new ResponseEntity<>(individualService.getAllUser(), HttpStatus.OK);
+	}
+	
+	
+	@ApiOperation(value = "개인 로그인", response = String.class)
+	@GetMapping("/login")
+	public ResponseEntity<Individual> loginCheckIndividual(@RequestParam("id")String id) throws SQLException{
+		return new ResponseEntity<>(individualService.loginCheckIndividual(id), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "개인 회원 정보 조회", response = String.class)
+	@GetMapping("{index}")
+	public ResponseEntity<Individual> getIndividual(@PathVariable("index")int index) throws SQLException{
+		return new ResponseEntity<>(individualService.getIndividual(index), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "개인 회원 가입", response = String.class)
+	@PostMapping()
+	public ResponseEntity<String> registerIndividual(@RequestBody Individual individual) throws SQLException{
+		if(individualService.registerIndividual(individual)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "개인 회원 정보 수정", response = String.class)
+	@PutMapping()
+	public ResponseEntity<String> modifyIndividual(@RequestBody Individual individual) throws SQLException{
+		if(individualService.modifyIndividual(individual)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	
+	@ApiOperation(value = "개인 회원 탈퇴", response = String.class)
+	@DeleteMapping("{index}")
+	public ResponseEntity<String> deleteIndividual(@PathVariable("index")int index) throws SQLException{
+		if(individualService.deleteIndividual(index)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "아이디 찾기", response = String.class)
+	@GetMapping("/findID")
+	public ResponseEntity<Individual> findIndividualID(@RequestParam("name")String name, @RequestParam("phone")String phone) throws SQLException{
+		return new ResponseEntity<>(individualService.findIndividualID(name, phone), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "비밀번호 찾기", response = String.class)
+	@GetMapping("/findPW")
+	public ResponseEntity<Individual> findIndividualPW(@RequestParam("id")String id, @RequestParam("phone")String phone) throws SQLException{
+		return new ResponseEntity<>(individualService.findIndividualPW(id, phone), HttpStatus.OK);
+	}
 	
 //	@PostMapping()
 //	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
