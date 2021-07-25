@@ -1,27 +1,18 @@
 <template>
   <el-row :gutter="24">
     <el-col :span="6" v-for="(item, i) in ents.slice(0,8)" :key="i">
-      <el-card shadow="hover" style="margin:5px">
-        <el-row :gutter="20">
-          <el-col :span="6"
-            ><div class="grid-content bg-purple">
-              {{ item.ent_name }}
-            </div></el-col
-          >
-          <el-col :span="9"><div class="grid-content bg-purple"><el-button>상세보기</el-button></div></el-col>
-          <el-col :span="9"
-            ><div class="grid-content bg-purple">
-              <el-button>팔로우</el-button>
-            </div></el-col
-          >
-        </el-row>
-      </el-card>
+      <CompanyCard :item="item"/>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import CompanyCard from "@/components/search/CompanyCard.vue";
+
 export default {
+  components:{
+    CompanyCard
+  },
   data() {
     return {
       ents: [
