@@ -3,9 +3,7 @@ package com.ssafy.peopool.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ssafy.peopool.dto.Enterprise;
 import com.ssafy.peopool.dto.Follow;
-import com.ssafy.peopool.dto.Individual;
 
 public interface FollowService {
 	

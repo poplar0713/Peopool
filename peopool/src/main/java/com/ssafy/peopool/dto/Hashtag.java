@@ -1,10 +1,36 @@
 package com.ssafy.peopool.dto;
 
 public class Hashtag {
+	int tag_index;
+	int tag_type;
+	int tag_target;
 	int taglist_index;
-	String taglist_name;
 
 	public Hashtag() {
+	}
+
+	public int getTag_index() {
+		return tag_index;
+	}
+
+	public void setTag_index(int tag_index) {
+		this.tag_index = tag_index;
+	}
+
+	public int getTag_type() {
+		return tag_type;
+	}
+
+	public void setTag_type(int tag_type) {
+		this.tag_type = tag_type;
+	}
+
+	public int getTag_target() {
+		return tag_target;
+	}
+
+	public void setTag_target(int tag_target) {
+		this.tag_target = tag_target;
 	}
 
 	public int getTaglist_index() {
@@ -15,20 +41,12 @@ public class Hashtag {
 		this.taglist_index = taglist_index;
 	}
 
-	public String getTaglist_name() {
-		return taglist_name;
-	}
-
-	public void setTaglist_name(String taglist_name) {
-		this.taglist_name = taglist_name;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Tag [taglist_index=").append(taglist_index).append(", taglist_name=").append(taglist_name)
+		builder.append("Hashtag [tag_index=").append(tag_index).append(", tag_type=").append(tag_type)
+				.append(", tag_target=").append(tag_target).append(", taglist_index=").append(taglist_index)
 				.append("]");
 		return builder.toString();
 	}
-
 }
