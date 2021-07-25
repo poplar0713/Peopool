@@ -7,12 +7,17 @@
       <el-header><Header /></el-header>
       <el-main>
         <el-row :gutter="20">
-          <el-col :span="12"
+          <el-col :span="11"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">내정보</el-divider
+              ><MyInfo /></div
+          ></el-col>
+          <el-col :span="6"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">요청받은 인터뷰</el-divider
               ><TabRequiredInterview /></div
           ></el-col>
-          <el-col :span="12"
+          <el-col :span="7"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">인터뷰 일정</el-divider
               ><TabSchedule /></div
@@ -21,7 +26,9 @@
       </el-main>
       <el-footer>
         <el-divider content-position="left">기업 정보</el-divider>
-        <CompanyInfo />
+        <CompanyList />
+        <el-divider content-position="left">관심기업 정보</el-divider>
+        <CompanyList />
       </el-footer>
     </el-container>
   </el-container>
@@ -29,16 +36,18 @@
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
+import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
-import CompanyInfo from "@/components/MainUser/CompanyInfo.vue";
+import CompanyList from "@/components/MainUser/CompanyList.vue";
 import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
   components: {
     SideBarUser,
-    CompanyInfo,
+    CompanyList,
     TabRequiredInterview,
     TabSchedule,
+    MyInfo,
 
     Header,
   },

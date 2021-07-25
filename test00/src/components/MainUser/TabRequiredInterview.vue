@@ -1,6 +1,9 @@
 <template>
   <el-table :data="tableData" height="300">
     <el-table-column type="expand">
+      <template #header>
+        
+      </template>
       <template #default="props">
         <div style="text-align:center;">
           <div>

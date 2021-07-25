@@ -1,74 +1,29 @@
 <template>
-  <el-container class="mainLayout">
-    <el-aside width="250px"><SideBarUser /></el-aside>
-
-    <el-container>
-      <el-header><Header /></el-header>
-      <el-main>
-        <el-container>
-          <h2>'{{ this.keyword }}' 검색결과</h2>
-        </el-container>
-        <div v-if="this.ents.length > 0">
-          <el-aside width="50%"
-            ><h3>기업 {{ this.ents.length }}</h3></el-aside
+  <el-row :gutter="24">
+    <el-col :span="6" v-for="(item, i) in ents.slice(0,8)" :key="i">
+      <el-card shadow="hover" style="margin:5px">
+        <el-row :gutter="20">
+          <el-col :span="6"
+            ><div class="grid-content bg-purple">
+              {{ item.ent_name }}
+            </div></el-col
           >
-          <el-main>
-            <el-row :gutter="20">
-              <company-card
-                v-for="(item, i) in listData"
-                :key="i"
-                :ent_id="item.ent_id"
-                :ent_img="item.ent_img"
-                :ent_name="item.ent_name"
-                :ent_info="item.ent_info"
-                :ent_ceo="item.ent_ceo"
-                :follow="item.follow"
-                style="width:100px"
-              ></company-card>
-            </el-row>
-            <br />
-            <pagination
-              :pageSetting="
-                pageDataSetting(
-                  this.getLength(),
-                  this.limit,
-                  this.block,
-                  this.page
-                )
-              "
-              @paging="pagingMethod"
-          /></el-main>
-        </div>
-        <div v-else>
-          <el-main>
-            <h3>검색결과가 없어요</h3>
-          </el-main>
-        </div>
-
-        <el-divider />
-      </el-main>
-    </el-container>
-  </el-container>
+          <el-col :span="9"><div class="grid-content bg-purple"><el-button>상세보기</el-button></div></el-col>
+          <el-col :span="9"
+            ><div class="grid-content bg-purple">
+              <el-button>팔로우</el-button>
+            </div></el-col
+          >
+        </el-row>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
-import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import Header from "@/components/SideBarComponents/header.vue";
-import CompanyCard from "../components/search/CompanyCard.vue";
-import Pagination from "../components/Pagination.vue";
-
 export default {
-  components: {
-    SideBarUser,
-    Header,
-    CompanyCard,
-    Pagination,
-  },
-
   data() {
     return {
-      keyword: "삼성",
-      listData: [],
       ents: [
         {
           ent_ind: 0,
@@ -179,56 +134,9 @@ export default {
           follow: false,
         },
       ],
-      page: 1,
-      limit: 5,
-      block: 5,
     };
-  },
-  methods: {
-    getLength() {
-      console.log(this.ents.length);
-      return this.ents.length;
-    },
-    mounted() {
-      this.pagingMethod(this.page);
-    },
-    pagingMethod(page) {
-      this.listData = this.ents.slice(
-        (page - 1) * this.limit,
-        page * this.limit
-      );
-      this.page = page;
-      this.pageDataSetting(this.getLength(), this.limit, this.block, page);
-    },
-    pageDataSetting(total, limit, block, page) {
-      const totalPage = Math.ceil(total / limit);
-      let currentPage = page;
-      const first =
-        currentPage > 1 ? parseInt(currentPage, 10) - parseInt(1, 10) : null;
-      const end =
-        totalPage !== currentPage
-          ? parseInt(currentPage, 10) + parseInt(1, 10)
-          : null;
-
-      let startIndex = (Math.ceil(currentPage / block) - 1) * block + 1;
-      let endIndex =
-        startIndex + block > totalPage ? totalPage : startIndex + block - 1;
-      let list = [];
-      for (let index = startIndex; index <= endIndex; index++) {
-        list.push(index);
-      }
-      return { first, end, list, currentPage };
-    },
   },
 };
 </script>
 
-<style>
-el-main {
-  background-color: wheat;
-}
-.contents {
-  text-align: center;
-  align-content: center;
-}
-</style>
+<style></style>

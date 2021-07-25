@@ -6,7 +6,7 @@
           !search || data.company.toLowerCase().includes(search.toLowerCase())
       )
     "
-    :default-sort="{ prop: 'date', order: 'descending' }"
+    :default-sort="{ prop: 'date', order: 'ascending' }"
     height="300"
   >
     <el-table-column label="Date" prop="date" sortable> </el-table-column>
