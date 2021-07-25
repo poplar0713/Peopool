@@ -3,20 +3,21 @@ package com.ssafy.peopool.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ssafy.peopool.model.Interview;
 import com.ssafy.peopool.model.repo.InterviewRepo;
 
 public interface InterviewService {
 	
-	void registerURL(String url) throws SQLException;
+	boolean registerURL(String url) throws SQLException;
 
-	List<InterviewRepo> getInterviews(int index) throws SQLException;
+	List<Interview> getInterviews(int index) throws SQLException;
 
-	List<InterviewRepo> getLastInterviews(int index) throws SQLException;
+	List<Interview> getLastInterviews(int index) throws SQLException;
 
-	void finishInterview() throws SQLException;
+	boolean finishInterview(Interview interview) throws SQLException;
 
-	void isInterview() throws SQLException;
+	boolean isInterview(Interview interview) throws SQLException;
 
-	void registerInterview(InterviewRepo interview) throws SQLException;
+	boolean registerInterview(Interview interview) throws SQLException;
 
 }

@@ -4,13 +4,13 @@
  
 <mapper namespace="com.ssafy.peopool.model.repo.HashtagRepo">
 
-	<select id="tagByUser" resultType="">
+	<select id="tagByUser" resultType="java.util.HashMap">
 		select *
 		from hashtag h left outer join taglist t on h.taglist_index = t.taglist_index
 		where ind_index = #{ind_index}
 	</select>
 	
-	<select id="countByTag" resultType="">
+	<select id="countByTag" resultType="java.util.HashMap">
 		select t.tag_name, count(*)
 		from hashtag h left outer join taglist t on h.taglist_index = t.taglist_index
 		group by h.taglist_index
