@@ -10,7 +10,7 @@
           <el-col :span="12"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left"
-                >오늘 요청받은 인터뷰</el-divider
+                >요청받은 인터뷰</el-divider
               ><TabRequiredInterview /></div
           ></el-col>
           <el-col :span="12"
@@ -21,19 +21,15 @@
         </el-row>
       </el-main>
       <el-footer>
-        <el-divider content-position="left">나의 PR 영상</el-divider><PRVideo />
+        <el-divider content-position="left">기업 정보</el-divider>
       </el-footer>
     </el-container>
   </el-container>
-
-  <TabDocuments />
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
-import TabDocuments from "@/components/MainUser/TabDocuments.vue";
-
 import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
@@ -42,9 +38,8 @@ export default {
 
     TabRequiredInterview,
     TabSchedule,
-    TabDocuments,
-    Header,
 
+    Header,
   },
   data() {
     return {

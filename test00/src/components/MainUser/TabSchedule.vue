@@ -6,9 +6,10 @@
           !search || data.company.toLowerCase().includes(search.toLowerCase())
       )
     "
+    :default-sort="{ prop: 'date', order: 'descending' }"
     height="300"
   >
-    <el-table-column label="Date" prop="date"> </el-table-column>
+    <el-table-column label="Date" prop="date" sortable> </el-table-column>
     <el-table-column label="Company" prop="company"> </el-table-column>
     <el-table-column align="right">
       <template #header>
@@ -24,7 +25,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="GoToInteriewRoom(scope.row.company, this.user)"
+          @click="GoToInteriewRoom(scope.row.company, user)"
           >Interview Room</el-button
         >
         <!-- {{scope.row.url}} -->

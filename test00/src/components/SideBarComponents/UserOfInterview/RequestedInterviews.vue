@@ -12,7 +12,7 @@
   >
     <el-table-column label="date" prop="date"> </el-table-column>
     <el-table-column label="time" prop="time"> </el-table-column>
-    <el-table-column label="company_id" prop="company_id"> </el-table-column>
+
     <el-table-column label="Company" prop="company_name"> </el-table-column>
     <el-table-column align="right">
       <template #header>
