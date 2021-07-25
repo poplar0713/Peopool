@@ -10,10 +10,10 @@ import com.ssafy.peopool.model.ProfileOfEnterprise;
 public interface ProfileOfEnterpriseRepo {
 
 	// 프로필 수정
-	void modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
+	int modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
 
 	// 프로필 삭제
-	void deleteProfileOfEnterprise(int index) throws SQLException;
+	int deleteProfileOfEnterprise(int index) throws SQLException;
 
 	// 프로필 조회
 	ProfileOfEnterprise getProfileOfEnterprise(int index) throws SQLException;

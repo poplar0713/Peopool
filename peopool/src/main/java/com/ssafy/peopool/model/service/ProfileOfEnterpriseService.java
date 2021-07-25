@@ -8,10 +8,10 @@ public interface ProfileOfEnterpriseService {
 	
 
 	// 프로필 수정
-	void modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
+	boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
 
 	// 프로필 삭제
-	void deleteProfileOfEnterprise(int index) throws SQLException;
+	boolean deleteProfileOfEnterprise(int index) throws SQLException;
 
 	// 프로필 조회
 	ProfileOfEnterprise getProfileOfEnterprise(int index) throws SQLException;
