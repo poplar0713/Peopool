@@ -2,7 +2,7 @@ package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
 
-import com.ssafy.peopool.dto.ProfileOfIndividual;
+import com.ssafy.peopool.model.ProfileOfIndividual;
 
 public interface ProfileOfIndividualService {
 

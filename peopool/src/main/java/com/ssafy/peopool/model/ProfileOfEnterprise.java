@@ -1,4 +1,4 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
 
 public class ProfileOfEnterprise {
 	int ent_index; // 기업 인덱스

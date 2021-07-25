@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.peopool.dto.Suggestion;
+import com.ssafy.peopool.model.Suggestion;
 import com.ssafy.peopool.model.service.SuggestionService;
 
 import io.swagger.annotations.ApiOperation;

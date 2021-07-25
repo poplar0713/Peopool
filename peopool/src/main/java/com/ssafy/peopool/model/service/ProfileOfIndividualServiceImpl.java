@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.peopool.dto.ProfileOfIndividual;
+import com.ssafy.peopool.model.ProfileOfIndividual;
 import com.ssafy.peopool.model.repo.ProfileOfIndividualRepo;
 
 @Service

@@ -2,13 +2,12 @@ package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.peopool.dto.Enterprise;
-import com.ssafy.peopool.dto.Follow;
-import com.ssafy.peopool.dto.Individual;
+import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.repo.FollowRepo;
 
 @Service
@@ -18,33 +17,40 @@ public class FollowServiceImpl implements FollowService {
 	FollowRepo followRepo;
 
 	@Override
-	public void registerFollow(int follower, int following) throws SQLException {
+	public boolean registerFollow(Follow follow) throws SQLException {
 		// TODO Auto-generated method stub
-		followRepo.registerFollow(follower, following);
+		return followRepo.registerFollow(follow) == 1;
 	}
 
 	@Override
-	public void deleteFollow(int follower, int following) throws SQLException {
+	public boolean deleteFollow(Follow follow) throws SQLException {
 		// TODO Auto-generated method stub
-		followRepo.deleteFollow(follower, following);
+		return followRepo.deleteFollow(follow) == 1;
 	}
 
 	@Override
-	public int getFollowCount(int index) throws SQLException {
+	public int getFollowerCount(Map<String, String> map) throws SQLException {
 		// TODO Auto-generated method stub
-		return followRepo.getFollowCount(index);
+		return followRepo.getFollowerCount(map);
+	}
+	
+	@Override
+	public int getFollowingCount(Map<String, String> map) throws SQLException {
+		// TODO Auto-generated method stub
+		return followRepo.getFollowingCount(map);
+	}
+
+
+	@Override
+	public List<Follow> getFollowing(Map<String, String> map) throws SQLException {
+		// TODO Auto-generated method stub
+		return followRepo.getFollowing(map);
 	}
 
 	@Override
-	public List<Follow> getFollowing(int index) throws SQLException {
+	public List<Follow> getFollower(Map<String, String> map) throws SQLException {
 		// TODO Auto-generated method stub
-		return followRepo.getFollowing(index);
-	}
-
-	@Override
-	public List<Follow> getFollower(int index) throws SQLException {
-		// TODO Auto-generated method stub
-		return followRepo.getFollower(index);
+		return followRepo.getFollower(map);
 	}
 
 	

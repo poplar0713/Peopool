@@ -1,4 +1,4 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
 
 // 면접 일정
 public class Interview {

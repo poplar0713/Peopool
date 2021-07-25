@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.peopool.dto.ProfileOfEnterprise;
-import com.ssafy.peopool.dto.ProfileOfIndividual;
+import com.ssafy.peopool.model.ProfileOfEnterprise;
+import com.ssafy.peopool.model.ProfileOfIndividual;
 import com.ssafy.peopool.model.service.ProfileOfEnterpriseService;
 
 import io.swagger.annotations.ApiOperation;

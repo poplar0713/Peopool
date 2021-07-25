@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.peopool.dto.Interview;
+import com.ssafy.peopool.model.Interview;
 import com.ssafy.peopool.model.service.InterviewService;
 
 import io.swagger.annotations.ApiOperation;

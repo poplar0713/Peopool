@@ -1,4 +1,4 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
 
 public class ProfileOfIndividual {
 	int ind_index; // 회원 인덱스

@@ -1,4 +1,4 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
 
 // 팔로우
 public class Follow {

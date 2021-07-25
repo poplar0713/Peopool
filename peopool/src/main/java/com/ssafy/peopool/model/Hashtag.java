@@ -1,4 +1,4 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
 
 public class Hashtag {
 	int taglist_index;

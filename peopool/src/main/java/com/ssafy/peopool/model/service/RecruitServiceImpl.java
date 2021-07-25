@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.peopool.dto.Recruit;
+import com.ssafy.peopool.model.Recruit;
 import com.ssafy.peopool.model.repo.RecruitRepo;
 
 @Service
