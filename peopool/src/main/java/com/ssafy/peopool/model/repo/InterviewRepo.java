@@ -5,17 +5,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.peopool.model.Interview;
+
 @Repository
 public interface InterviewRepo {
-	void registerURL(String url) throws SQLException;
+	int registerURL(String url) throws SQLException;
 
-	List<InterviewRepo> getInterviews(int index) throws SQLException;
+	List<Interview> getInterviews(int index) throws SQLException;
 
-	List<InterviewRepo> getLastInterviews(int index) throws SQLException;
+	List<Interview> getLastInterviews(int index) throws SQLException;
 
-	void finishInterview() throws SQLException;
+	int finishInterview(Interview interview) throws SQLException;
 
-	void isInterview() throws SQLException;
+	int isInterview(Interview interview) throws SQLException;
 
-	void registerInterview(InterviewRepo interview) throws SQLException;
+	int registerInterview(Interview interview) throws SQLException;
 }

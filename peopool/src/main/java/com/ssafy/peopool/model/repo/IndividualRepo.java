@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.peopool.dto.Individual;
+import com.ssafy.peopool.model.Individual;
 
 @Repository
 public interface IndividualRepo {

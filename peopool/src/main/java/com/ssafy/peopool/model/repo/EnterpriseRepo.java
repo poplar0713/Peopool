@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.peopool.dto.Enterprise;
+import com.ssafy.peopool.model.Enterprise;
 
 @Repository
 public interface EnterpriseRepo {

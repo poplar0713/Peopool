@@ -1,4 +1,4 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
 
 public class Recruit {
 	int rec_index; // 공고 인덱스

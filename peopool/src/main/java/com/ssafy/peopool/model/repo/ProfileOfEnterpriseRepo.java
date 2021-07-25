@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.peopool.dto.ProfileOfEnterprise;
+import com.ssafy.peopool.model.ProfileOfEnterprise;
 
 @Repository
 public interface ProfileOfEnterpriseRepo {

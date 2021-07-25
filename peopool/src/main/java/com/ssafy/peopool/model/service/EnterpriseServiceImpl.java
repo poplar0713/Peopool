@@ -7,7 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.peopool.dto.Enterprise;
+import com.ssafy.peopool.model.Enterprise;
 import com.ssafy.peopool.model.repo.EnterpriseRepo;
 
 @Service

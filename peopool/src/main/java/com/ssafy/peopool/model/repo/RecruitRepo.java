@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.ssafy.peopool.dto.Recruit;
+import com.ssafy.peopool.model.Recruit;
 
 @Repository
 public interface RecruitRepo {

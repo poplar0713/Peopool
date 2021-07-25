@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.peopool.dto.Follow;
+import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.service.HashtagService;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/hus")
+@RequestMapping("/has")
 public class HashtagController {
 
 	@Autowired

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.Interview;
 import com.ssafy.peopool.model.repo.InterviewRepo;
 
 @Service
@@ -16,39 +17,39 @@ public class InterviewServiceImpl implements InterviewService{
 	
 	
 	@Override
-	public void registerURL(String url) throws SQLException {
+	public boolean registerURL(String url) throws SQLException {
 		// TODO Auto-generated method stub
-		interviewRepo.registerURL(url);
+		return interviewRepo.registerURL(url) == 1;
 	}
 
 	@Override
-	public List<InterviewRepo> getInterviews(int index) throws SQLException {
+	public List<Interview> getInterviews(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.getInterviews(index);
 	}
 
 	@Override
-	public List<InterviewRepo> getLastInterviews(int index) throws SQLException {
+	public List<Interview> getLastInterviews(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.getLastInterviews(index);
 	}
 
 	@Override
-	public void finishInterview() throws SQLException {
+	public boolean finishInterview(Interview interview) throws SQLException {
 		// TODO Auto-generated method stub
-		interviewRepo.finishInterview();
+		return interviewRepo.finishInterview(interview) == 1;
 	}
 
 	@Override
-	public void isInterview() throws SQLException {
+	public boolean isInterview(Interview interview) throws SQLException {
 		// TODO Auto-generated method stub
-		interviewRepo.isInterview();
+		return interviewRepo.isInterview(interview) == 1;
 	}
 
 	@Override
-	public void registerInterview(InterviewRepo interview) throws SQLException {
+	public boolean registerInterview(Interview interview) throws SQLException {
 		// TODO Auto-generated method stub
-		interviewRepo.registerInterview(interview);
+		return interviewRepo.registerInterview(interview) == 1;
 	}
 
 }

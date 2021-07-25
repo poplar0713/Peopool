@@ -3,7 +3,7 @@ package com.ssafy.peopool.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ssafy.peopool.dto.Individual;
+import com.ssafy.peopool.model.Individual;
 
 public interface IndividualService {
 	// 개인 회원 전체 조회

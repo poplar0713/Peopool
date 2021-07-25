@@ -1,4 +1,12 @@
-package com.ssafy.peopool.dto;
+package com.ssafy.peopool.model;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 // 면접 일정
 public class Interview {
@@ -6,8 +14,13 @@ public class Interview {
 	int int_index; // 일정 인덱스
 	int ind_index; // 회원 인덱스
 	int ent_index; // 기업 인덱스
-	String int_start; // 면접 시작 시간
-	String int_end; // 면접 종료 시간
+	
+	@JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+	LocalDateTime int_start; // 면접 시작 시간
+	
+	@JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+	LocalDateTime int_end; // 면접 종료 시간
+	
 	String int_url; // 면접 URL
 	String int_show; // 진행 여부 (show / now show)
 
@@ -38,19 +51,19 @@ public class Interview {
 		this.ent_index = ent_index;
 	}
 
-	public String getInt_start() {
+	public LocalDateTime getInt_start() {
 		return int_start;
 	}
 
-	public void setInt_start(String int_start) {
+	public void setInt_start(LocalDateTime int_start) {
 		this.int_start = int_start;
 	}
 
-	public String getInt_end() {
+	public LocalDateTime getInt_end() {
 		return int_end;
 	}
 
-	public void setInt_end(String int_end) {
+	public void setInt_end(LocalDateTime int_end) {
 		this.int_end = int_end;
 	}
 
@@ -72,11 +85,13 @@ public class Interview {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Interview [int_index=").append(int_index).append(", ind_index=").append(ind_index)
-				.append(", ent_index=").append(ent_index).append(", int_start=").append(int_start).append(", int_end=")
-				.append(int_end).append(", int_url=").append(int_url).append(", int_show=").append(int_show)
-				.append("]");
-		return builder.toString();
+		return "Interview [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
+				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_url=" + int_url + ", int_show="
+				+ int_show + "]";
 	}
+
+	
+
+	
+	
 }
