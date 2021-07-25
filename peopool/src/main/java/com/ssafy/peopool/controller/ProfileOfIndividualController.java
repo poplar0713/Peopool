@@ -1,6 +1,7 @@
 package com.ssafy.peopool.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,30 +20,45 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/poi")
 public class ProfileOfIndividualController {
 
-	
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+
 	@Autowired
 	ProfileOfIndividualService profileOfIndividualService;
-	
+
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<String> getProfile(@PathVariable("index")String index){
-		return null;
-		
+	public ResponseEntity<ProfileOfIndividual> getProfile(@PathVariable("index") int index) {
+		return new ResponseEntity<ProfileOfIndividual>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
+
 	}
-	
-	
+
 	@ApiOperation(value = "index에 해당하는 프로필을 수정한다.", response = String.class)
-	@PutMapping("{index}")
-	public ResponseEntity<String> modifyProfile(@PathVariable("index")String index){
-		return null;
-		
+	@PutMapping()
+	public ResponseEntity<String> modifyProfile(@PathVariable("profile") ProfileOfIndividual file,
+			@PathVariable("index") int index) {
+		if (profileOfIndividualService.modifyProfile(file, index)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
 	}
-	
-	
-	@ApiOperation(value = "index에 해당하는 프로필을 삭제한다.", response = String.class)
-	@DeleteMapping("{index}")
-	public ResponseEntity<String> deleteProfile(@PathVariable("index")String indexs){
-		return null;
-		
+
+	@ApiOperation(value = "index에 해당하는 프로필을 공개로 변경한다.", response = String.class)
+	@PutMapping("/switchOn/{index}")
+	public ResponseEntity<String> modifySwitchOn(@PathVariable("index") int index) {
+		if (profileOfIndividualService.modifySwitchOn(index)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@ApiOperation(value = "index에 해당하는 프로필을 공개로 변경한다.", response = String.class)
+	@PutMapping("/switchOff/{index}")
+	public ResponseEntity<String> modifySwitchOff(@PathVariable("index") int index) {
+		if (profileOfIndividualService.modifySwitchOff(index)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 }

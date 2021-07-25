@@ -10,15 +10,15 @@ import com.ssafy.peopool.model.ProfileOfIndividual;
 public interface ProfileOfIndividualRepo {
 
 	// 프로필 수정
-	void modifyProfile(String file, int index) throws SQLException;
+	int modifyProfile(ProfileOfIndividual profile, int index);
 
 	// 프로필 공개
-	void modifySwitchOn(int index) throws SQLException;
+	int modifySwitchOn(int index);
 
 	// 프로필 비공개
-	void modifySwitchOff(int index) throws SQLException;
+	int modifySwitchOff(int index);
 
 	// 프로필 조회
-	ProfileOfIndividual getProfile(int index) throws SQLException;
+	ProfileOfIndividual getProfile(int index);
 
 }

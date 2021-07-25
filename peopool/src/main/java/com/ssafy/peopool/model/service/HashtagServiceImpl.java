@@ -1,6 +1,5 @@
 package com.ssafy.peopool.model.service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,33 +10,31 @@ import com.ssafy.peopool.model.repo.HashtagRepo;
 @Service
 public class HashtagServiceImpl implements HashtagService {
 
-	
 	@Autowired
 	HashtagRepo hashtagRepo;
-	
-	
+
 	@Override
-	public HashMap<Integer, String> tagByUser() throws SQLException {
+	public HashMap<Integer, String> tagByUser() {
 		// TODO Auto-generated method stub
 		return hashtagRepo.tagByUser();
 	}
 
 	@Override
-	public HashMap<String, Integer> countByTag() throws SQLException {
+	public HashMap<String, Integer> countByTag() {
 		// TODO Auto-generated method stub
 		return hashtagRepo.countByTag();
 	}
 
 	@Override
-	public void registerHashtag(int tag_inex, int ind_index) throws SQLException {
+	public boolean registerHashtag(int tag_inex, int ind_index) {
 		// TODO Auto-generated method stub
-		hashtagRepo.registerHashtag(tag_inex, ind_index);
+		return hashtagRepo.registerHashtag(tag_inex, ind_index) == 1;
 	}
 
 	@Override
-	public void deletedHashtag(int index) throws SQLException {
+	public boolean deletedHashtag(int index) {
 		// TODO Auto-generated method stub
-		hashtagRepo.deletedHashtag(index);
+		return hashtagRepo.deletedHashtag(index) == 1;
 	}
 
 }
