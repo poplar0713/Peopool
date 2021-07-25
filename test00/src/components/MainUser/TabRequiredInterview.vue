@@ -9,11 +9,7 @@
             >
           </div>
           <div>
-            <el-radio
-              v-model="radio"
-              label="2"
-              border
-              style=" margin:10px"
+            <el-radio v-model="radio" label="2" border style=" margin:10px"
               >{{ props.row.date2 }} {{ props.row.time2 }}</el-radio
             >
           </div>
@@ -124,11 +120,11 @@ export default {
       });
       // console.log(row.date);
       // console.log(radio1);
-      const date = eval(`row.date${radio}`)
-      this.submitteddate = date
+      const date = eval(`row.date${radio}`);
+      this.submitteddate = date;
       console.log(this.submitteddate);
-      const time = eval(`row.time${radio}`)
-      this.submittedtime = time
+      const time = eval(`row.time${radio}`);
+      this.submittedtime = time;
       console.log(this.submittedtime);
       return row;
     },

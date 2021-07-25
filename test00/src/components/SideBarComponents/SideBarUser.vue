@@ -71,7 +71,7 @@ export default {
     ProfileUser,
     UserInterviewManage,
     UserFollowings,
-    UserFollowers
+    UserFollowers,
   },
   methods: {
     ch(data) {

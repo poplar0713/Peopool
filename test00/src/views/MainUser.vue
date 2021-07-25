@@ -9,8 +9,7 @@
         <el-row :gutter="20">
           <el-col :span="12"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left"
-                >요청받은 인터뷰</el-divider
+              <el-divider content-position="left">요청받은 인터뷰</el-divider
               ><TabRequiredInterview /></div
           ></el-col>
           <el-col :span="12"
@@ -22,6 +21,7 @@
       </el-main>
       <el-footer>
         <el-divider content-position="left">기업 정보</el-divider>
+        <CompanyInfo />
       </el-footer>
     </el-container>
   </el-container>
@@ -30,12 +30,13 @@
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
+import CompanyInfo from "@/components/MainUser/CompanyInfo.vue";
 import Header from "@/components/SideBarComponents/header.vue";
 
 export default {
   components: {
     SideBarUser,
-
+    CompanyInfo,
     TabRequiredInterview,
     TabSchedule,
 
