@@ -36,15 +36,15 @@
 		where ind_index = #{index}
 	</delete>
 	
-	<select id="findIndividualID" parameterType="String" resultType="Individual">
+	<select id="findIndividualID" parameterType="Individual" resultType="Individual">
 		select * 
 		from individual 
-		where ind_name = #{name} and ind_phone = #{phone}
+		where ind_name = #{ind_name} and ind_phone = #{ind_phone}
 	</select>
 	
-	<select id="findIndividualPW" parameterType="String" resultType="Individual">
+	<select id="findIndividualPW" parameterType="Individual" resultType="Individual">
 		select * 
 		from individual 
-		where ind_id = #{id} and ind_phone = #{phone}
+		where ind_id = #{ind_id} and ind_phone = #{ind_phone}
 	</select>
 </mapper>

@@ -105,15 +105,15 @@ public class IndividualController {
 	}
 	
 	@ApiOperation(value = "아이디 찾기", response = String.class)
-	@GetMapping("/findID")
-	public ResponseEntity<Individual> findIndividualID(@RequestParam("name")String name, @RequestParam("phone")String phone) throws SQLException{
-		return new ResponseEntity<>(individualService.findIndividualID(name, phone), HttpStatus.OK);
+	@GetMapping("/findid")
+	public ResponseEntity<Individual> findIndividualID(@RequestBody Individual individual) throws SQLException{
+		return new ResponseEntity<>(individualService.findIndividualID(individual), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "비밀번호 찾기", response = String.class)
-	@GetMapping("/findPW")
-	public ResponseEntity<Individual> findIndividualPW(@RequestParam("id")String id, @RequestParam("phone")String phone) throws SQLException{
-		return new ResponseEntity<>(individualService.findIndividualPW(id, phone), HttpStatus.OK);
+	@GetMapping("/findpw")
+	public ResponseEntity<Individual> findIndividualPW(@RequestBody Individual individual) throws SQLException{
+		return new ResponseEntity<>(individualService.findIndividualPW(individual), HttpStatus.OK);
 	}
 	
 //	@PostMapping()

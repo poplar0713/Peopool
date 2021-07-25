@@ -19,9 +19,9 @@ public class EnterpriseServiceImpl implements EnterpriseService{
 	
 
 	@Override
-	public List<Enterprise> getEnterprise() throws SQLException {
+	public List<Enterprise> getAllEnterprise() throws SQLException {
 		// TODO Auto-generated method stub
-		return enterpriseRepo.getEnterprise();
+		return enterpriseRepo.getAllEnterprise();
 	}
 
 	@Override
@@ -31,39 +31,39 @@ public class EnterpriseServiceImpl implements EnterpriseService{
 	}
 
 	@Override
-	public Enterprise getEnterprise(String id) throws SQLException {
+	public Enterprise getEnterprise(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		return enterpriseRepo.getEnterprise(id);
+		return enterpriseRepo.getEnterprise(index);
 	}
 
 	@Override
-	public void registerEnterprise(Enterprise enterprise) throws SQLException {
+	public boolean registerEnterprise(Enterprise enterprise) throws SQLException {
 		// TODO Auto-generated method stub
-		registerEnterprise(enterprise);
+		return enterpriseRepo.registerEnterprise(enterprise) == 1;
 	}
 
 	@Override
-	public void modifyEnterprise(Enterprise enterprise) throws SQLException {
+	public boolean modifyEnterprise(Enterprise enterprise) throws SQLException {
 		// TODO Auto-generated method stub
-		modifyEnterprise(enterprise);
+		return enterpriseRepo.modifyEnterprise(enterprise) == 1;
 	}
 
 	@Override
-	public void deleteEnterprise(int index) throws SQLException {
+	public boolean deleteEnterprise(int index) throws SQLException {
 		// TODO Auto-generated method stub
-		deleteEnterprise(index);
+		return enterpriseRepo.deleteEnterprise(index) == 1;
 	}
 
 	@Override
-	public String findEnterpriseID(String name, String email) throws SQLException {
+	public Enterprise findEnterpriseID(Enterprise enterprise) throws SQLException {
 		// TODO Auto-generated method stub
-		return findEnterpriseID(name, email);
+		return findEnterpriseID(enterprise);
 	}
 
 	@Override
-	public String findEnterprisePW(String id, String email) throws SQLException {
+	public Enterprise findEnterprisePW(Enterprise enterprise) throws SQLException {
 		// TODO Auto-generated method stub
-		return findEnterprisePW(id, email);
+		return findEnterprisePW(enterprise);
 	}
 
 }

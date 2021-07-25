@@ -53,15 +53,15 @@ public class IndividualServiceImpl implements IndividualService {
 	}
 
 	@Override
-	public Individual findIndividualID(String name, String phone) throws SQLException {
+	public Individual findIndividualID(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		return findIndividualID(name, phone);
+		return findIndividualID(individual);
 	}
 
 	@Override
-	public Individual findIndividualPW(String id, String phone) throws SQLException {
+	public Individual findIndividualPW(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		return findIndividualPW(id, phone);
+		return findIndividualPW(individual);
 	}
 
 }
