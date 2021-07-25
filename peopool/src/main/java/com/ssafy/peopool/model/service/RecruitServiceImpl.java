@@ -18,43 +18,43 @@ public class RecruitServiceImpl implements RecruitService{
 	
 	
 	@Override
-	public List<Recruit> getAllRecruit() throws SQLException {
+	public List<Recruit> getAllRecruit(){
 		// TODO Auto-generated method stub
 		return recruitRepo.getAllRecruit();
 	}
 
 	@Override
-	public List<Recruit> getERecruit(int index) throws SQLException {
+	public List<Recruit> getERecruit(int index){
 		// TODO Auto-generated method stub
 		return recruitRepo.getERecruit(index);
 	}
 
 	@Override
-	public List<Recruit> getRecruit(boolean check) throws SQLException {
+	public List<Recruit> getRecruit(boolean check){
 		// TODO Auto-generated method stub
 		return recruitRepo.getRecruit(check);
 	}
 
 	@Override
-	public void registerRecruit(Recruit recruit) throws SQLException {
+	public int registerRecruit(Recruit recruit){
 		// TODO Auto-generated method stub
-		recruitRepo.registerRecruit(recruit);
+		return recruitRepo.registerRecruit(recruit);
 	}
 
 	@Override
-	public void modifyRecruit(Recruit recruit) throws SQLException {
+	public int modifyRecruit(Recruit recruit){
 		// TODO Auto-generated method stub
-		recruitRepo.modifyRecruit(recruit);
+		return recruitRepo.modifyRecruit(recruit);
 	}
 
 	@Override
-	public void deleteRecruit(int index) throws SQLException {
+	public int deleteRecruit(int index){
 		// TODO Auto-generated method stub
-		recruitRepo.deleteRecruit(index);
+		return recruitRepo.deleteRecruit(index);
 	}
 
 	@Override
-	public Recruit getRecruit(int index) throws SQLException {
+	public Recruit getRecruit(int index){
 		// TODO Auto-generated method stub
 		return recruitRepo.getRecruit(index);
 	}

@@ -13,27 +13,27 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 
 	@Autowired
 	ProfileOfIndividualRepo profileOfIndividualRepo;
-	
+
 	@Override
-	public void modifyProfile(String file, int index) throws SQLException {
+	public boolean modifyProfile(ProfileOfIndividual profile, int index) {
 		// TODO Auto-generated method stub
-		profileOfIndividualRepo.modifyProfile(file, index);
+		return profileOfIndividualRepo.modifyProfile(profile, index) == 1;
 	}
 
 	@Override
-	public void modifySwitchOn(int index) throws SQLException {
+	public boolean modifySwitchOn(int index) {
 		// TODO Auto-generated method stub
-		profileOfIndividualRepo.modifySwitchOn(index);
+		return profileOfIndividualRepo.modifySwitchOn(index) == 1;
 	}
 
 	@Override
-	public void modifySwitchOff(int index) throws SQLException {
+	public boolean modifySwitchOff(int index) {
 		// TODO Auto-generated method stub
-		profileOfIndividualRepo.modifySwitchOff(index);
+		return profileOfIndividualRepo.modifySwitchOff(index) == 1;
 	}
 
 	@Override
-	public ProfileOfIndividual getProfile(int index) throws SQLException {
+	public ProfileOfIndividual getProfile(int index) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.getProfile(index);
 	}

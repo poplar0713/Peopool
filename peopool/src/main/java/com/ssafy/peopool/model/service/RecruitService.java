@@ -6,28 +6,27 @@ import java.util.List;
 import com.ssafy.peopool.model.Recruit;
 
 public interface RecruitService {
-	
 
 	// 전체 공고 조회
-	List<Recruit> getAllRecruit() throws SQLException;
+	List<Recruit> getAllRecruit();
 
 	// 회사 전체 공고 조회
-	List<Recruit> getERecruit(int index) throws SQLException;
+	List<Recruit> getERecruit(int index);
 
 	// 진행중인 공고 조회
 	// 종료된 공고 조회
-	List<Recruit> getRecruit(boolean check) throws SQLException;
+	List<Recruit> getRecruit(boolean check);
 
 	// 공고 등록
-	void registerRecruit(Recruit recruit) throws SQLException;
+	int registerRecruit(Recruit recruit);
 
 	// 공고 수정
-	void modifyRecruit(Recruit recruit) throws SQLException;
+	int modifyRecruit(Recruit recruit);
 
 	// 공고 삭제
-	void deleteRecruit(int index) throws SQLException;
+	int deleteRecruit(int index);
 
 	// 공고 조회
-	Recruit getRecruit(int index) throws SQLException;
+	Recruit getRecruit(int index);
 
 }
