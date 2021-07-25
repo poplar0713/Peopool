@@ -6,11 +6,6 @@ import java.util.Map;
 
 import com.ssafy.peopool.model.Follow;
 
-<<<<<<< HEAD
-=======
-import com.ssafy.peopool.dto.Follow;
->>>>>>> f5baafcce50f0d76a6263aedec03b359aa8d270d
-
 public interface FollowService {
 	
 
