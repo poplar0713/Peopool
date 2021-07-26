@@ -36,11 +36,6 @@ const routes = [
     component: SearchCompany,
   },
   {
-    path: "/",
-    name: "Start",
-    component: Start,
-  },
-  {
     path: "/user/interviewroom/:company/:user",
     name: "InterviewRoom",
     component: InterviewRoom,
