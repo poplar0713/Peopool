@@ -10,11 +10,14 @@
 	</insert>
 	
 	<delete id="deleteFollow" parameterType="Follow">
-		delete from follow where follower = #{follower} and following = #{following} and fol_type=#{fol_type}
+		delete from follow 
+		where follower = #{follower} and following = #{following} and fol_type=#{fol_type}
 	</delete>
 	
 	<select id="getFollowingCount" parameterType="String" resultType="int">
-		select count(*) from follow where following =#{index} and fol_type =#{type}
+		select count(*) 
+		from follow 
+		where following =#{index} and fol_type =#{type}
 	</select>
 	
 	<select id="getFollowerCount" parameterType="String" resultType="int">
