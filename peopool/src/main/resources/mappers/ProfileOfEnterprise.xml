@@ -10,22 +10,22 @@
 		where ent_index = #{ent_index}
 	</update>
 	
-	<select id="getProfileOfEnterprise" parameterType="String" resultType="ProfileOfEnterprise">
+	<select id="getProfileOfEnterprise" parameterType="int" resultType="ProfileOfEnterprise">
 		select * 
 		from ent_profile 
-		where ent_index = #{ent_index}
+		where ent_index = #{index}
 	</select>
 	
 	<select id="getNameOfEnterprise" parameterType="String" resultType="ProfileOfEnterprise">
 		select * 
 		from ent_profile join enterprise 
 		on ent_profile.ent_index = enterprise.ent_index 
-		where ent_name = #{ent_name}
+		where ent_name = #{name}
 	</select>
 	
-	<delete id="deleteProfileOfEnterprise" parameterType="index">
+	<delete id="deleteProfileOfEnterprise" parameterType="int">
 		delete from ent_profile
-		where ent_index = #{ent_index}
+		where ent_index = #{index}
 	</delete>
 
 </mapper>

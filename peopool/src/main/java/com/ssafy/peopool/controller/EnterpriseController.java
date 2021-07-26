@@ -56,14 +56,14 @@ public class EnterpriseController {
 	
 	@ApiOperation(value = "기업회원 아이디 찾기", response = String.class)
 	@GetMapping("/findid")
-	public ResponseEntity<Enterprise> findEnterpriseID(@RequestBody Enterprise enterprise) throws SQLException{
-		return new ResponseEntity<>(enterpriseService.findEnterpriseID(enterprise), HttpStatus.OK);
+	public ResponseEntity<Enterprise> findEnterpriseID(@RequestParam("name")String name, @RequestParam("email")String email) throws SQLException{
+		return new ResponseEntity<>(enterpriseService.findEnterpriseID(name, email), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "기업회원 비밀번호 찾기", response = String.class)
 	@GetMapping("/findpw")
-	public ResponseEntity<Enterprise> findEnterprisePW(@RequestBody Enterprise enterprise) throws SQLException{
-		return new ResponseEntity<>(enterpriseService.findEnterprisePW(enterprise), HttpStatus.OK);
+	public ResponseEntity<Enterprise> findEnterprisePW(@RequestParam("id")String id, @RequestParam("email")String email) throws SQLException{
+		return new ResponseEntity<>(enterpriseService.findEnterprisePW(id, email), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "기업회원 회원가입", response = String.class)

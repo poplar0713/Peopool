@@ -28,8 +28,8 @@ public interface EnterpriseRepo {
 	int deleteEnterprise(int index) throws SQLException;
 
 	// 기업 아이디 찾기
-	Enterprise findEnterpriseID(Enterprise enterprise) throws SQLException;
+	Enterprise findEnterpriseID(String name, String email) throws SQLException;
 
 	// 기업 비밀번호 찾기
-	Enterprise findEnterprisePW(Enterprise enterprise) throws SQLException;
+	Enterprise findEnterprisePW(String id, String email) throws SQLException;
 }

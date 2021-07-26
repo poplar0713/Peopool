@@ -55,15 +55,15 @@ public class EnterpriseServiceImpl implements EnterpriseService{
 	}
 
 	@Override
-	public Enterprise findEnterpriseID(Enterprise enterprise) throws SQLException {
+	public Enterprise findEnterpriseID(String name, String email) throws SQLException {
 		// TODO Auto-generated method stub
-		return findEnterpriseID(enterprise);
+		return enterpriseRepo.findEnterpriseID(name, email);
 	}
 
 	@Override
-	public Enterprise findEnterprisePW(Enterprise enterprise) throws SQLException {
+	public Enterprise findEnterprisePW(String id, String email) throws SQLException {
 		// TODO Auto-generated method stub
-		return findEnterprisePW(enterprise);
+		return enterpriseRepo.findEnterprisePW(id, email);
 	}
 
 }
