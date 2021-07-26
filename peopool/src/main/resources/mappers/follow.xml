@@ -13,19 +13,19 @@
 		delete from follow where follower = #{follower} and following = #{following} and fol_type=#{fol_type}
 	</delete>
 	
-	<select id="getFollowingCount" parameterType="map" resultType="int">
+	<select id="getFollowingCount" parameterType="String" resultType="int">
 		select count(*) from follow where following =#{index} and fol_type =#{type}
 	</select>
 	
-	<select id="getFollowerCount" parameterType="map" resultType="int">
+	<select id="getFollowerCount" parameterType="String" resultType="int">
 		select count(*) from follow where follower =#{index} and fol_type =#{type}
 	</select>
 
-	<select id="getFollowing" parameterType="map" resultType="Follow">
+	<select id="getFollowing" parameterType="String" resultType="Follow">
 		select * from follow where follower = #{index} and fol_type =#{type}
 	</select>
 	
-	<select id="getFollower" parameterType="map" resultType="Follow">
+	<select id="getFollower" parameterType="String" resultType="Follow">
 		select * from follow where following = #{index} and fol_type =#{type}
 	</select>
 </mapper>

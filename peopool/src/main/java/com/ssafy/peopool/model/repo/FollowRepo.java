@@ -19,14 +19,14 @@ public interface FollowRepo {
 	int deleteFollow(Follow follow) throws SQLException;
 
 	// 팔로우 숫자 조회
-	int getFollowerCount(Map<String, String> map) throws SQLException;
+	int getFollowerCount(String index, String type) throws SQLException;
 	
 	
-	int getFollowingCount(Map<String, String> map) throws SQLException;
+	int getFollowingCount(String index, String type) throws SQLException;
 
 	// 팔로워 조회
-	List<Follow> getFollowing(Map<String, String> map) throws SQLException;
+	List<Follow> getFollowing(String index, String type) throws SQLException;
 
 	// 팔로잉 조회
-	List<Follow> getFollower(Map<String, String> map) throws SQLException;
+	List<Follow> getFollower(String index, String type) throws SQLException;
 }

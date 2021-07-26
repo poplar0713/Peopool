@@ -30,27 +30,27 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public int getFollowerCount(Map<String, String> map) throws SQLException {
+	public int getFollowerCount(String index, String type) throws SQLException {
 		// TODO Auto-generated method stub
-		return followRepo.getFollowerCount(map);
+		return followRepo.getFollowerCount(index, type);
 	}
 
 	@Override
-	public int getFollowingCount(Map<String, String> map) throws SQLException {
+	public int getFollowingCount(String index, String type) throws SQLException {
 		// TODO Auto-generated method stub
-		return followRepo.getFollowingCount(map);
+		return followRepo.getFollowingCount(index, type);
 	}
 
 	@Override
-	public List<Follow> getFollowing(Map<String, String> map) throws SQLException {
+	public List<Follow> getFollowing(String index, String type) throws SQLException {
 		// TODO Auto-generated method stub
-		return followRepo.getFollowing(map);
+		return followRepo.getFollowing(index, type);
 	}
 
 	@Override
-	public List<Follow> getFollower(Map<String, String> map) throws SQLException {
+	public List<Follow> getFollower(String index, String type) throws SQLException {
 		// TODO Auto-generated method stub
-		return followRepo.getFollower(map);
+		return followRepo.getFollower(index, type);
 	}
 
 }
