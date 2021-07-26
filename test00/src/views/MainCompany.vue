@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchUser /></el-header>
 
       <el-main>
         <check-annc />
@@ -25,14 +25,14 @@ import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 import webviewer from "@/components/MainCompany/webviewer.vue";
-import Header from "@/components/SideBarComponents/header.vue";
+import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 export default {
   components: {
     SideBarCompany,
     CheckAnnc,
     ApplicantList,
     webviewer,
-    Header,
+    headerSearchUser,
   },
 
   data() {
