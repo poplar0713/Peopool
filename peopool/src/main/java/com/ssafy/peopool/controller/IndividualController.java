@@ -66,8 +66,8 @@ public class IndividualController {
 	
 	@ApiOperation(value = "개인 로그인", response = String.class)
 	@GetMapping("/login")
-	public ResponseEntity<Individual> loginCheckIndividual(@RequestParam("id")String id) throws SQLException{
-		return new ResponseEntity<>(individualService.loginCheckIndividual(id), HttpStatus.OK);
+	public ResponseEntity<Individual> loginCheckIndividual(@RequestParam("id")String id, @RequestParam("pw") String pw) throws SQLException{
+		return new ResponseEntity<>(individualService.loginCheckIndividual(id,pw), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "개인 회원 정보 조회", response = String.class)
