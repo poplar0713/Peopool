@@ -28,8 +28,8 @@ public interface IndividualRepo {
 	int deleteIndividual(int index) throws SQLException;
 
 	// 아이디 찾기
-	Individual findIndividualID(Individual individual) throws SQLException;
+	Individual findIndividualID(String name, String phone) throws SQLException;
 
 	// 비밀번호 찾기
-	Individual findIndividualPW(Individual individual) throws SQLException;
+	Individual findIndividualPW(String id, String phone) throws SQLException;
 }
