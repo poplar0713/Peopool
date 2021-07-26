@@ -24,7 +24,7 @@
 	
 	<update id="finishInterview" parameterType="Interview">
 		update interview
-		set int_end=#{int_end}
+		set int_end=#{int_end,jdbcType=TIMESTAMP}
 		where int_index=#{int_index}
 	</update>
 	
@@ -36,7 +36,7 @@
 	
 	<insert id="registerInterview" parameterType="Interview">
 		insert into interview(ind_index, ent_index, int_start, int_url)
-		values(#{ind_index}, #{ent_index}, #{int_start}, #{int_url})
+		values(#{ind_index}, #{ent_index}, #{int_start,jdbcType=TIMESTAMP}, #{int_url})
 	</insert>
 	
 	

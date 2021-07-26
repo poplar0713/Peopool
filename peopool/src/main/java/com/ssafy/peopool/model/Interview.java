@@ -15,11 +15,9 @@ public class Interview {
 	int ind_index; // 회원 인덱스
 	int ent_index; // 기업 인덱스
 	
-	@JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-	LocalDateTime int_start; // 면접 시작 시간
+	Timestamp int_start; // 면접 시작 시간
 	
-	@JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-	LocalDateTime int_end; // 면접 종료 시간
+	Timestamp int_end; // 면접 종료 시간
 	
 	String int_url; // 면접 URL
 	String int_show; // 진행 여부 (show / now show)
@@ -51,19 +49,19 @@ public class Interview {
 		this.ent_index = ent_index;
 	}
 
-	public LocalDateTime getInt_start() {
+	public Timestamp getInt_start() {
 		return int_start;
 	}
 
-	public void setInt_start(LocalDateTime int_start) {
+	public void setInt_start(Timestamp int_start) {
 		this.int_start = int_start;
 	}
 
-	public LocalDateTime getInt_end() {
+	public Timestamp getInt_end() {
 		return int_end;
 	}
 
-	public void setInt_end(LocalDateTime int_end) {
+	public void setInt_end(Timestamp int_end) {
 		this.int_end = int_end;
 	}
 
@@ -89,6 +87,8 @@ public class Interview {
 				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_url=" + int_url + ", int_show="
 				+ int_show + "]";
 	}
+
+	
 
 	
 

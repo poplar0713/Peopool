@@ -61,41 +61,29 @@ public class FollowController {
 	
 	@ApiOperation(value = "팔로워 숫자 조회", response = String.class)
 	@GetMapping("/counter")
-	public ResponseEntity<Integer> getFollowerCount(@RequestBody Follow follow) throws SQLException{
-		Map<String, String> map = new HashMap<>();
-		map.put("index", Integer.toString(follow.getFollower()));
-		String type = "";
-		if(follow.isFol_type()) type = "T";
-		else type = "F";
-		map.put("type", type);
-		return new ResponseEntity<>(followService.getFollowerCount(map), HttpStatus.OK);
+	public ResponseEntity<Integer> getFollowerCount(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
+		return new ResponseEntity<>(followService.getFollowerCount(index, type), HttpStatus.OK);
 		
 	}
 	
 	@ApiOperation(value = "팔로잉 숫자 조회", response = String.class)
 	@GetMapping("/counting")
-	public ResponseEntity<Integer> getFollowingCount(@RequestBody Follow follow) throws SQLException{
-		Map<String, String> map = new HashMap<>();
-		map.put("index", Integer.toString(follow.getFollowing()));
-		String type = "";
-		if(follow.isFol_type()) type = "T";
-		else type = "F";
-		map.put("type", type);
-		return new ResponseEntity<>(followService.getFollowingCount(map), HttpStatus.OK);
+	public ResponseEntity<Integer> getFollowingCount(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
+		return new ResponseEntity<>(followService.getFollowingCount(index, type), HttpStatus.OK);
 		
 	}
 	
 	@ApiOperation(value = "팔로잉 조회", response = String.class)
 	@GetMapping("/following")
-	public ResponseEntity<List<Follow>> getEFollowing(@RequestParam Map<String, String> map) throws SQLException{
-		return new ResponseEntity<>(followService.getFollowing(map), HttpStatus.OK);
+	public ResponseEntity<List<Follow>> getEFollowing(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
+		return new ResponseEntity<>(followService.getFollowing(index, type), HttpStatus.OK);
 		
 	}
 	
 	@ApiOperation(value = "팔로워 조회", response = String.class)
 	@GetMapping("/follower")
-	public ResponseEntity<List<Follow>> getEFollower(@RequestParam Map<String, String> map) throws SQLException{
-		return new ResponseEntity<>(followService.getFollower(map), HttpStatus.OK);
+	public ResponseEntity<List<Follow>> getEFollower(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
+		return new ResponseEntity<>(followService.getFollower(index, type), HttpStatus.OK);
 		
 	}
 
