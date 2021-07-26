@@ -23,10 +23,6 @@
     <el-form-item label="Birth" prop="ind_birth">
       <el-input type="date" v-model="ruleForm.ind_birth"></el-input>
     </el-form-item>
-    <!-- 공개여부 -->
-    <el-form-item label="Open to the public" prop="open">
-      <el-switch v-model="ruleForm.open"></el-switch>
-    </el-form-item>
     <!-- 성별 -->
     <el-form-item label="Gender" prop="ind_gender">
       <el-radio-group v-model="ruleForm.ind_gender">
@@ -65,13 +61,12 @@ export default {
         SignupIndivPWConfirm: "",
         ind_name: "",
         ind_birth: "",
-        open: false,
         ind_gender: "",
         ind_phone: "",
         ind_email: "",
       },
       rules: {
-        SignupIndivID: [
+        ind_id: [
           {
             required: true,
             message: "Please input Activity ID",
@@ -84,7 +79,7 @@ export default {
             trigger: "blur",
           },
         ],
-        SignupIndivPW: [
+        ind_password: [
           {
             required: true,
             message: "Please input Activity Password",
@@ -106,35 +101,35 @@ export default {
             trigger: "blur",
           },
         ],
-        UserName: [
+        ind_name: [
           {
             required: true,
             message: "Please input your Name",
             trigger: "blur",
           },
         ],
-        UserBirth: [
+        ind_birth: [
           {
             required: true,
             message: "Please input your Birth",
             trigger: "blur",
           },
         ],
-        Gender: [
+        ind_gender: [
           {
             required: true,
             message: "Please select your Gender",
             trigger: "change",
           },
         ],
-        UserTel: [
+        ind_phone: [
           {
             required: true,
             message: "Please input your Phone number",
             trigger: "change",
           },
         ],
-        UserEmail: [
+        ind_email: [
           {
             required: true,
             message: "Please input your Email",
