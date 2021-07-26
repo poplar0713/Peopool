@@ -3,7 +3,7 @@
     <el-aside width="200px"><SideBarUser /></el-aside>
 
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-container>
           <h2>'{{ this.keyword }}' 검색결과</h2>
@@ -45,14 +45,14 @@
 
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import Header from "@/components/SideBarComponents/header.vue";
+import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import CompanyCard from "../components/search/CompanyCard.vue";
 import Pagination from "../components/Pagination.vue";
 
 export default {
   components: {
     SideBarUser,
-    Header,
+    headerSearchCompany,
     CompanyCard,
     Pagination,
   },

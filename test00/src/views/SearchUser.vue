@@ -3,7 +3,7 @@
     <el-aside width="250px"><SideBarCompany /></el-aside>
 
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchUser /></el-header>
       <el-main>
         <SearchList :followData="followData" inputdata="Java" />
       </el-main>
@@ -16,14 +16,14 @@ import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 // // import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 // // import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 // import WebViewer from "@/components/MainCompany/WebViewer.vue";
-import Header from "@/components/SideBarComponents/header.vue";
+import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 import SearchList from "@/components/search/SearchList.vue";
 export default {
   components: {
     SideBarCompany,
     SearchList,
     //   WebViewer,
-    Header,
+    headerSearchUser,
   },
   data() {
     return {

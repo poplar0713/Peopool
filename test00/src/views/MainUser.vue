@@ -4,7 +4,7 @@
   <el-container>
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-row :gutter="20">
           <el-col :span="11"
@@ -39,7 +39,7 @@ import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue
 import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
-import Header from "@/components/SideBarComponents/header.vue";
+import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
 export default {
   components: {
@@ -49,7 +49,7 @@ export default {
     TabSchedule,
     MyInfo,
 
-    Header,
+    headerSearchCompany,
   },
   data() {
     return {

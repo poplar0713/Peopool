@@ -2,7 +2,7 @@
   <el-container class="mainLayout">
     <el-aside width="250px"><SideBarCompany /></el-aside>
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchUser /></el-header>
       <el-header><h2>채용 프로세스 관리</h2></el-header>
       <el-main>
         <div class="mainBoard">
@@ -101,7 +101,7 @@
 </style>
 <script>
 import SideBarCompany from "../components/SideBarComponents/SideBarCompany.vue";
-import Header from "../components/SideBarComponents/headerSearchCompany.vue";
+import headerSearchUser from "../components/SideBarComponents/headerSearchUser.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
@@ -109,7 +109,7 @@ import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vu
 export default {
   components: {
     SideBarCompany,
-    Header,
+    headerSearchUser,
     ApplicantList,
     ExamineCard,
     InterviewCalender,
