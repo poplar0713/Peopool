@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="24">
-    <el-col :span="6" v-for="(item, i) in ents.slice(0,8)" :key="i">
-      <CompanyCard :item="item"/>
+    <el-col :span="6" v-for="(item, i) in ents.slice(0, 8)" :key="i">
+      <CompanyCard :item="item" />
     </el-col>
   </el-row>
 </template>
@@ -10,8 +10,8 @@
 import CompanyCard from "@/components/search/CompanyCard.vue";
 
 export default {
-  components:{
-    CompanyCard
+  components: {
+    CompanyCard,
   },
   data() {
     return {

@@ -3,7 +3,7 @@
     <el-aside width="200px"><SideBarUser /></el-aside>
 
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-container>
           <h2>'{{ this.keyword }}' 검색결과</h2>
@@ -45,14 +45,14 @@
 
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import Header from "@/components/SideBarComponents/header.vue";
+import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import CompanyCard from "../components/search/CompanyCard.vue";
 import Pagination from "../components/Pagination.vue";
 
 export default {
   components: {
     SideBarUser,
-    Header,
+    headerSearchCompany,
     CompanyCard,
     Pagination,
   },
@@ -185,18 +185,26 @@ export default {
       this.pagingMethod(this.page);
     },
     pagingMethod(page) {
-      this.listData = this.ents.slice((page - 1) * this.limit, page * this.limit);
+      this.listData = this.ents.slice(
+        (page - 1) * this.limit,
+        page * this.limit
+      );
       this.page = page;
       this.pageDataSetting(this.getLength(), this.limit, this.block, page);
     },
     pageDataSetting(total, limit, block, page) {
       const totalPage = Math.ceil(total / limit);
       let currentPage = page;
-      const first = currentPage > 1 ? parseInt(currentPage, 10) - parseInt(1, 10) : null;
-      const end = totalPage !== currentPage ? parseInt(currentPage, 10) + parseInt(1, 10) : null;
+      const first =
+        currentPage > 1 ? parseInt(currentPage, 10) - parseInt(1, 10) : null;
+      const end =
+        totalPage !== currentPage
+          ? parseInt(currentPage, 10) + parseInt(1, 10)
+          : null;
 
       let startIndex = (Math.ceil(currentPage / block) - 1) * block + 1;
-      let endIndex = startIndex + block > totalPage ? totalPage : startIndex + block - 1;
+      let endIndex =
+        startIndex + block > totalPage ? totalPage : startIndex + block - 1;
       let list = [];
       for (let index = startIndex; index <= endIndex; index++) {
         list.push(index);

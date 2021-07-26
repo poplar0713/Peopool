@@ -2,7 +2,7 @@
   <el-container class="mainLayout">
     <el-aside width="250px"><SideBarCompany /></el-aside>
     <el-container>
-      <el-header><Header /></el-header>
+      <el-header><headerSearchUser /></el-header>
       <el-header><h2>채용 프로세스 관리</h2></el-header>
       <el-main>
         <div class="mainBoard">
@@ -10,9 +10,12 @@
             <el-tab-pane label="면접 제안 중" name="offerTab"
               ><h3>면접 수락 대기</h3>
               <el-table :data="waitinglist" :default-sort="{ prop: 'p_name' }">
-                <el-table-column prop="p_name" label="성명" fixed> </el-table-column>
-                <el-table-column prop="p_part" label="직무" fixed> </el-table-column>
-                <el-table-column prop="date1" label="면접 제안 시간"> </el-table-column>
+                <el-table-column prop="p_name" label="성명" fixed>
+                </el-table-column>
+                <el-table-column prop="p_part" label="직무" fixed>
+                </el-table-column>
+                <el-table-column prop="date1" label="면접 제안 시간">
+                </el-table-column>
                 <el-table-column prop="date2" label=""> </el-table-column>
                 <el-table-column prop="date3" label=""> </el-table-column>
               </el-table>
@@ -29,13 +32,24 @@
                         :timestamp="days.date"
                       >
                         <el-card style="width: 80%; align-content: center;">
-                          <el-table :data="days.Interviewer" :default-sort="{ prop: 'time' }">
-                            <el-table-column prop="time" label="면접시간" sortable>
+                          <el-table
+                            :data="days.Interviewer"
+                            :default-sort="{ prop: 'time' }"
+                          >
+                            <el-table-column
+                              prop="time"
+                              label="면접시간"
+                              sortable
+                            >
                             </el-table-column>
-                            <el-table-column prop="p_name" label="성명"> </el-table-column>
-                            <el-table-column prop="p_part" label="직무"> </el-table-column>
+                            <el-table-column prop="p_name" label="성명">
+                            </el-table-column>
+                            <el-table-column prop="p_part" label="직무">
+                            </el-table-column>
                             <el-table-column label="" prop="p_ind">
-                              <el-button @click="enterInterViewRoom(p_ind)" type="warning"
+                              <el-button
+                                @click="enterInterViewRoom(p_ind)"
+                                type="warning"
                                 >면접장 입장</el-button
                               >
                             </el-table-column>
@@ -69,7 +83,10 @@
         </div>
       </el-main>
       <el-main>
-        <applicant-list title="현재 팔로우 중인 지원자" :followData="followData" />
+        <applicant-list
+          title="현재 팔로우 중인 지원자"
+          :followData="followData"
+        />
       </el-main>
     </el-container>
   </el-container>
@@ -84,7 +101,7 @@
 </style>
 <script>
 import SideBarCompany from "../components/SideBarComponents/SideBarCompany.vue";
-import Header from "../components/SideBarComponents/header.vue";
+import headerSearchUser from "../components/SideBarComponents/headerSearchUser.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
@@ -92,7 +109,7 @@ import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vu
 export default {
   components: {
     SideBarCompany,
-    Header,
+    headerSearchUser,
     ApplicantList,
     ExamineCard,
     InterviewCalender,
