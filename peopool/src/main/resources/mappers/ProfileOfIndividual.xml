@@ -10,21 +10,21 @@
 		where ind_index = #{ind_index}
 	</update>
 	
-	<update id="modifySwitchOn" parameterType="String">
+	<update id="modifySwitchOn" parameterType="int">
 		update ind_profile 
-		set ind_switch = true 
-		where ind_index = #{ind_index}
+		set ind_switch = 'T'
+		where ind_index = #{index}
 	</update>
 	
-	<update id="modifySwitchOff" parameterType="String">
+	<update id="modifySwitchOff" parameterType="int">
 		update ind_profile 
-		set ind_switch = false 
-		where ind_index = #{ind_index}
+		set ind_switch = 'F'
+		where ind_index = #{index}
 	</update>
 	
-	<select id="getProfileOfIndividual" parameterType="String" resultType="Individual">
+	<select id="getProfile" parameterType="int" resultType="ProfileOfIndividual">
 		select * 
 		from ind_profile 
-		where ind_index = #{ind_index}
+		where ind_index = #{index}
 	</select>
 </mapper>

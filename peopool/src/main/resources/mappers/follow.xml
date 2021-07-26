@@ -21,7 +21,9 @@
 	</select>
 	
 	<select id="getFollowerCount" parameterType="String" resultType="int">
-		select count(*) from follow where follower =#{index} and fol_type =#{type}
+		select count(*) 
+		from follow 
+		where follower =#{index} and fol_type =#{type}
 	</select>
 
 	<select id="getFollowing" parameterType="String" resultType="Follow">

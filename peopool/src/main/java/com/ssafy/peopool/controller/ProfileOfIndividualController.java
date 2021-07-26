@@ -28,8 +28,8 @@ public class ProfileOfIndividualController {
 
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<ProfileOfIndividual> getProfile(@PathVariable("index") int index) {
-		return new ResponseEntity<ProfileOfIndividual>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
+	public ResponseEntity<ProfileOfIndividual> getProfile(@PathVariable("index")int index) {
+		return new ResponseEntity<>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
 
 	}
 
