@@ -36,15 +36,15 @@
 		where ent_index = #{index}
 	</delete>
 	
-	<select id="findEnterpriseID" parameterType="Enterprise" resultType="Enterprise">
+	<select id="findEnterpriseID" parameterType="String" resultType="Enterprise">
 		select * 
 		from enterprise 
-		where ent_name = #{ent_name} and ent_email = #{ent_email}
+		where ent_name = #{name} and ent_email = #{email}
 	</select>
 	
-	<select id="findEnterprisePW" parameterType="Enterprise" resultType="Enterprise">
+	<select id="findEnterprisePW" parameterType="String" resultType="Enterprise">
 		select * 
 		from enterprise 
-		where ent_id = #{ent_id} and ent_email = #{ent_email}
+		where ent_id = #{id} and ent_email = #{email}
 	</select>
 </mapper>
