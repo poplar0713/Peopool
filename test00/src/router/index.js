@@ -41,7 +41,7 @@ const routes = [
     component: Start,
   },
   {
-    path: "/interview",
+    path: "/user/interviewroom/:company/:user",
     name: "InterviewRoom",
     component: InterviewRoom,
   },

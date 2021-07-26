@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar height="100%">
+  <div style="width:100%;">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 학력 -->
       <el-form-item label="School" prop="School">
@@ -23,7 +23,18 @@
         <el-switch v-model="ruleForm.open"></el-switch>
       </el-form-item>
     </el-form>
-  </el-scrollbar>
+    <div style="float:right">
+      <el-form-item>
+        <el-button @click="resetForm('ruleForm')">Reset</el-button>
+        <el-button
+          type="warning"
+          @click="submitForm('ruleForm')"
+          v-loading.fullscreen.lock="fullscreenLoading"
+          >Save</el-button
+        >
+      </el-form-item>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -35,8 +46,6 @@ export default {
         Graduation: "",
         open: false,
         School: "1",
-        UserTel: "",
-        UserEmail: "",
       },
       rules: {
         SchoolName: [
@@ -60,20 +69,6 @@ export default {
             trigger: "change",
           },
         ],
-        UserTel: [
-          {
-            required: true,
-            message: "Please input your Phone number",
-            trigger: "change",
-          },
-        ],
-        UserEmail: [
-          {
-            required: true,
-            message: "Please input your Email",
-            trigger: "change",
-          },
-        ],
       },
       fullscreenLoading: false,
     };
@@ -86,7 +81,6 @@ export default {
           this.$store.dispatch("getsignupdata", this.ruleForm);
           this.openFullScreen2();
           this.$store.state.SignupDialogIndiv = false;
-          this.successmessage();
         } else {
           console.log("error submit!!");
           this.failed();
@@ -106,16 +100,17 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.successmessage();
       }, 3000);
     },
     successmessage() {
       this.$message({
-        message: "Welcome to PeoPool channel",
+        message: "Success",
         type: "success",
       });
     },
     failed() {
-      this.$message.error("Oops, check your identification info");
+      this.$message.error("Oops, check your Information");
     },
   },
 };

@@ -10,15 +10,15 @@
       height="70%"
       :before-close="handleClose"
     >
-    <SideBarProfileUser/>
-      <template #footer>
+      <SideBarProfileUser />
+      <!-- <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisibleTag = false">Cancel</el-button>
           <el-button type="primary" @click="(dialogVisibleTag = false), tagok()"
             >Confirm</el-button
           >
         </span>
-      </template>
+      </template> -->
     </el-dialog>
   </el-container>
 </template>
@@ -32,8 +32,8 @@ export default {
       dialogVisibleTag: false,
     };
   },
-  components:{
-    SideBarProfileUser
+  components: {
+    SideBarProfileUser,
   },
   methods: {
     handleClose(done) {

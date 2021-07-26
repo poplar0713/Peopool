@@ -11,7 +11,9 @@
 
       <span v-for="page in pageSetting.list" :key="page">
         <span v-if="page === pageSetting.currentPage"
-          ><el-button @click="sendPage(page)" type="primary">{{ page }}</el-button></span
+          ><el-button @click="sendPage(page)" type="primary">{{
+            page
+          }}</el-button></span
         >
         <span v-else>
           <el-button @click="sendPage(page)">{{ page }}</el-button></span

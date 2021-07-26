@@ -8,7 +8,7 @@
     <el-form-item label="Password" prop="LoginIndivPW">
       <el-input type="password" v-model="ruleForm.LoginIndivPW"></el-input>
     </el-form-item>
-    <!-- 생성 및 취소 버튼 -->
+
     <el-form-item>
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
       <el-button
@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  components: {},
   data() {
     return {
       loading: true,
@@ -67,9 +68,8 @@ export default {
         if (valid) {
           // alert('submit!');
           this.openFullScreen2();
-          this.$router.push("/user/"+this.ruleForm.LoginIndivID);
+          this.$router.push("/user/" + this.ruleForm.LoginIndivID);
           this.$store.state.LoginDialog = false;
-          
         } else {
           console.log("error submit!!");
           return false;

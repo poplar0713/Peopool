@@ -1,58 +1,64 @@
 <template>
-  <el-container>
-    <el-aside width="200px"><SideBarCompany /></el-aside>
-    <el-main>
-      <div>
-        <p>#노예</p>
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="item in 20" :key="item">
-            <h3 class="medium">{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <el-row>
-        <el-col :span="12">
-          <div class="grid-content bg-purple">
-            <div>
-              <p>#Java</p>
-              <el-carousel :interval="4000" type="card" height="200px">
-                <el-carousel-item v-for="item in 20" :key="item">
-                  <h3 class="medium">{{ item }}</h3>
-                </el-carousel-item>
-              </el-carousel>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div class="grid-content bg-purple">
-            <div>
-              <p>#Python</p>
-              <el-carousel :interval="4000" type="card" height="200px">
-                <el-carousel-item v-for="item in 20" :key="item">
-                  <h3 class="medium">{{ item }}</h3>
-                </el-carousel-item>
-              </el-carousel>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-    </el-main>
-  </el-container>
+  <div class="block">
+    <span class="demonstration">When you have more than 7 pages</span>
+    <el-pagination layout="prev, pager, next" :total="50"> </el-pagination>
+    <div
+      v-for="name in visibleNames"
+      :key="name"
+      visibleNames="visibleNames"
+      currentpage="currentpage"
+    >
+      {{ name }}
+    </div>
+    >{{ name }}
+  </div>
 </template>
 
 <script>
-import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
-
 export default {
-  components: {
-    SideBarCompany,
+  data() {
+    return {
+      currentpage: 0,
+      pageSize: 3,
+      visibleNames: [],
+      dataSource: [
+        { name: "hello1" },
+        { name: "hello2" },
+        { name: "hello3" },
+        { name: "hello4" },
+        { name: "hello5" },
+        { name: "hello6" },
+        { name: "hello7" },
+        { name: "hello8" },
+        { name: "hello9" },
+        { name: "hello10" },
+        { name: "hello11" },
+        { name: "hello12" },
+        { name: "hello13" },
+        { name: "hello14" },
+        { name: "hello15" },
+        { name: "hello16" },
+        { name: "hello17" },
+      ],
+    };
+  },
+  beforeMount: function() {
+    this.updateVisibleNames();
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    updatePage(pageNumber) {
+      this.currentpage = pageNumber;
+      this.updateVisibleNames();
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    updateVisibleNames() {
+      this.visibleNames = this.dataSource(
+        this.currentpage * this.pageSize,
+        this.currentpage * this.pageSize + this.pageSize
+      );
+
+      if (this.visibleNames.length == 0 && this.currentpage > 0) {
+        this.updatePage(this.currentpage - 1);
+      }
     },
   },
 };

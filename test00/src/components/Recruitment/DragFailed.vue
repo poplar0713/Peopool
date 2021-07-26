@@ -21,12 +21,12 @@
               @change="log"
               itemKey="name"
             >
-            <el-scrollbar height="400px">
-              <template #item="{ element }">
-                <div class="list-group-item">
-                  {{ element.name }} {{ element.id }}
-                </div>
-              </template>
+              <el-scrollbar height="400px">
+                <template #item="{ element }">
+                  <div class="list-group-item">
+                    {{ element.name }} {{ element.id }}
+                  </div>
+                </template>
               </el-scrollbar>
             </draggable>
           </div>
