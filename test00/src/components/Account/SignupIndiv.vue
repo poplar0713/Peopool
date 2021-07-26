@@ -1,12 +1,12 @@
 <template>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
     <!-- 개인회원 ID -->
-    <el-form-item label="ID" prop="SignupIndivID">
-      <el-input v-model="ruleForm.SignupIndivID"></el-input>
+    <el-form-item label="ID" prop="ind_id">
+      <el-input v-model="ruleForm.ind_id"></el-input>
     </el-form-item>
     <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="SignupIndivPW">
-      <el-input type="password" v-model="ruleForm.SignupIndivPW"></el-input>
+    <el-form-item label="Password" prop="ind_password">
+      <el-input type="password" v-model="ruleForm.ind_password"></el-input>
     </el-form-item>
     <!-- 개인회원 PW 확인 -->
     <el-form-item label="Password Confirmation" prop="SignupIndivPWConfirm">
@@ -16,31 +16,27 @@
       ></el-input>
     </el-form-item>
     <!-- 개인회원이름 -->
-    <el-form-item label="Name" prop="UserName">
-      <el-input v-model="ruleForm.UserName"></el-input>
+    <el-form-item label="Name" prop="ind_name">
+      <el-input v-model="ruleForm.ind_name"></el-input>
     </el-form-item>
     <!-- 개인회원 생년월일 -->
-    <el-form-item label="Birth" prop="UserBirth">
-      <el-input type="date" v-model="ruleForm.UserBirth"></el-input>
-    </el-form-item>
-    <!-- 공개여부 -->
-    <el-form-item label="Open to the public" prop="open">
-      <el-switch v-model="ruleForm.open"></el-switch>
+    <el-form-item label="Birth" prop="ind_birth">
+      <el-input type="date" v-model="ruleForm.ind_birth"></el-input>
     </el-form-item>
     <!-- 성별 -->
-    <el-form-item label="Gender" prop="Gender">
-      <el-radio-group v-model="ruleForm.Gender">
+    <el-form-item label="Gender" prop="ind_gender">
+      <el-radio-group v-model="ruleForm.ind_gender">
         <el-radio label="male"></el-radio>
         <el-radio label="female"></el-radio>
       </el-radio-group>
     </el-form-item>
     <!-- 연락처 -->
-    <el-form-item label="Tel" prop="UserTel">
-      <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
+    <el-form-item label="Tel" prop="ind_phone">
+      <el-input type="tel" v-model="ruleForm.ind_phone"></el-input>
     </el-form-item>
     <!-- 이메일 -->
-    <el-form-item label="Email" prop="UserEmail">
-      <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
+    <el-form-item label="Email" prop="ind_email">
+      <el-input type="email" v-model="ruleForm.ind_email"></el-input>
     </el-form-item>
     <!-- 생성 및 취소 버튼 -->
     <el-form-item>
@@ -60,18 +56,17 @@ export default {
   data() {
     return {
       ruleForm: {
-        SignupIndivID: "",
-        SignupIndivPW: "",
+        ind_id: "",
+        ind_password: "",
         SignupIndivPWConfirm: "",
-        UserName: "",
-        UserBirth: "",
-        open: false,
-        Gender: "",
-        UserTel: "",
-        UserEmail: "",
+        ind_name: "",
+        ind_birth: "",
+        ind_gender: "",
+        ind_phone: "",
+        ind_email: "",
       },
       rules: {
-        SignupIndivID: [
+        ind_id: [
           {
             required: true,
             message: "Please input Activity ID",
@@ -84,7 +79,7 @@ export default {
             trigger: "blur",
           },
         ],
-        SignupIndivPW: [
+        ind_password: [
           {
             required: true,
             message: "Please input Activity Password",
@@ -106,35 +101,35 @@ export default {
             trigger: "blur",
           },
         ],
-        UserName: [
+        ind_name: [
           {
             required: true,
             message: "Please input your Name",
             trigger: "blur",
           },
         ],
-        UserBirth: [
+        ind_birth: [
           {
             required: true,
             message: "Please input your Birth",
             trigger: "blur",
           },
         ],
-        Gender: [
+        ind_gender: [
           {
             required: true,
             message: "Please select your Gender",
             trigger: "change",
           },
         ],
-        UserTel: [
+        ind_phone: [
           {
             required: true,
             message: "Please input your Phone number",
             trigger: "change",
           },
         ],
-        UserEmail: [
+        ind_email: [
           {
             required: true,
             message: "Please input your Email",
