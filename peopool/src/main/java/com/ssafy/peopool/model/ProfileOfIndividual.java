@@ -5,7 +5,7 @@ public class ProfileOfIndividual {
 	String ind_resume; // 회원 이력서
 	String ind_video; // 회원 PR동영상
 	String ind_photo; // 회원 사진
-	boolean ind_switch; // On-Off 스위치
+	String ind_switch; // On-Off 스위치
 	String ind_introduce; // 회원 자기소개
 
 	public ProfileOfIndividual() {
@@ -43,11 +43,11 @@ public class ProfileOfIndividual {
 		this.ind_photo = ind_photo;
 	}
 
-	public boolean isInd_switch() {
+	public String getInd_switch() {
 		return ind_switch;
 	}
 
-	public void setInd_switch(boolean ind_switch) {
+	public void setInd_switch(String ind_switch) {
 		this.ind_switch = ind_switch;
 	}
 
@@ -61,11 +61,9 @@ public class ProfileOfIndividual {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ProfileOfIndividual [ind_index=").append(ind_index).append(", ind_resume=").append(ind_resume)
-				.append(", ind_video=").append(ind_video).append(", ind_photo=").append(ind_photo)
-				.append(", ind_switch=").append(ind_switch).append(", ind_introduce=").append(ind_introduce)
-				.append("]");
-		return builder.toString();
+		return "ProfileOfIndividual [ind_index=" + ind_index + ", ind_resume=" + ind_resume + ", ind_video=" + ind_video
+				+ ", ind_photo=" + ind_photo + ", ind_switch=" + ind_switch + ", ind_introduce=" + ind_introduce + "]";
 	}
+
+	
 }
