@@ -69,6 +69,10 @@ export default {
           // alert('submit!');
           this.openFullScreen2();
           this.$router.push("/user/" + this.ruleForm.LoginIndivID);
+          // axios.post 로그인구현
+          
+
+          // 
           this.$store.state.LoginDialog = false;
         } else {
           console.log("error submit!!");

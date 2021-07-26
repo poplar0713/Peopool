@@ -21,13 +21,13 @@
     </el-form-item>
     <!-- 개인회원 생년월일 -->
     <el-form-item label="Birth" prop="ind_birth">
-      <el-input type="date" v-model="ruleForm.ind_birth"></el-input>
+      <el-input v-model="ruleForm.ind_birth"></el-input>
     </el-form-item>
     <!-- 성별 -->
     <el-form-item label="Gender" prop="ind_gender">
       <el-radio-group v-model="ruleForm.ind_gender">
-        <el-radio label="male"></el-radio>
-        <el-radio label="female"></el-radio>
+        <el-radio label="M"></el-radio>
+        <el-radio label="F"></el-radio>
       </el-radio-group>
     </el-form-item>
     <!-- 연락처 -->
@@ -52,13 +52,14 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
+      SignupIndivPWConfirm: "",
       ruleForm: {
         ind_id: "",
         ind_password: "",
-        SignupIndivPWConfirm: "",
         ind_name: "",
         ind_birth: "",
         ind_gender: "",
@@ -86,8 +87,8 @@ export default {
             trigger: "blur",
           },
           {
-            min: 10,
-            max: 15,
+            min: 5,
+            max: 10,
             message: "Length should be 10 to 15",
             trigger: "blur",
           },
@@ -95,8 +96,8 @@ export default {
         SignupIndivPWConfirm: [
           { required: true, message: "Please check Password", trigger: "blur" },
           {
-            min: 10,
-            max: 15,
+            min: 5,
+            max: 10,
             message: "Length should be 10 to 15",
             trigger: "blur",
           },
@@ -109,6 +110,11 @@ export default {
           },
         ],
         ind_birth: [
+          {
+            length: 6,
+            message: "Please input your Birth(YYMMDD)",
+            trigger: "blur",
+          },
           {
             required: true,
             message: "Please input your Birth",
@@ -140,20 +146,31 @@ export default {
       fullscreenLoading: false,
     };
   },
+  computed: {},
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!');
-          this.$store.dispatch("getsignupdata", this.ruleForm);
+          console.log(this.ruleForm);
           this.openFullScreen2();
-          this.$store.state.SignupDialogIndiv = false;
-          this.successmessage();
+          // 데이터정보 보내기
+          axios
+            .post("http://localhost:8080/ind", "this.ruleForm")
+            .then((res) => {
+              if (res.status == 200) {
+                this.$store.state.SignupDialogIndiv = false;
+                this.successmessage();
+                console.log(this.ruleForm);
+                // this.$router.push(`user/${this.ruleForm.ind_id}`)
+              }
+            })
+            .catch(() => {});
         } else {
           console.log("error submit!!");
           this.failed();
           return false;
         }
+        //
       });
     },
     resetForm(formName) {
