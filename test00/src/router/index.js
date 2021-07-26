@@ -7,6 +7,7 @@ import MainCompany from "../views/MainCompany.vue";
 import InterviewRoom from "../views/InterviewRoom.vue";
 import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
+import test from "../views/About.vue";
 
 const routes = [
   {
@@ -53,6 +54,11 @@ const routes = [
     path: "/searchcompany",
     name: "searchcompany",
     component: SearchCompany,
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: test,
   },
 ];
 
