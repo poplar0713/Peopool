@@ -3,17 +3,15 @@
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="ind_id">
       <el-input v-model="ruleForm.ind_id"></el-input>
+      <el-button type="info" @click="checkID">중복확인</el-button>
     </el-form-item>
     <!-- 개인회원 PW -->
     <el-form-item label="Password" prop="ind_password">
       <el-input type="password" v-model="ruleForm.ind_password"></el-input>
     </el-form-item>
     <!-- 개인회원 PW 확인 -->
-    <el-form-item label="Password Confirmation" prop="SignupIndivPWConfirm">
-      <el-input
-        type="password"
-        v-model="ruleForm.SignupIndivPWConfirm"
-      ></el-input>
+    <el-form-item label="Password Confirmation" prop="ind_password_cf">
+      <el-input type="password" v-model="ruleForm.ind_password_cf"></el-input>
     </el-form-item>
     <!-- 개인회원이름 -->
     <el-form-item label="Name" prop="ind_name">
@@ -54,9 +52,10 @@
 <script>
 import axios from "axios";
 export default {
+  // data
   data() {
     return {
-      SignupIndivPWConfirm: "",
+      ind_password_cf: "",
       ruleForm: {
         ind_id: "",
         ind_password: "",
@@ -93,7 +92,7 @@ export default {
             trigger: "blur",
           },
         ],
-        SignupIndivPWConfirm: [
+        ind_password_cf: [
           { required: true, message: "Please check Password", trigger: "blur" },
           {
             min: 5,
@@ -111,15 +110,15 @@ export default {
         ],
         ind_birth: [
           {
-            length: 6,
+            required: true,
             message: "Please input your Birth(YYMMDD)",
             trigger: "blur",
           },
-          {
-            required: true,
-            message: "Please input your Birth",
-            trigger: "blur",
-          },
+          // {
+          //   type:"Number",
+          //   message: "Please input your Birth(YYMMDD)",
+          //   trigger: "blur",
+          // },
         ],
         ind_gender: [
           {
@@ -146,7 +145,17 @@ export default {
       fullscreenLoading: false,
     };
   },
+  // watch
+  watch: {
+    ind_password_cf(value) {
+      if (value != this.ind_password) {
+        alert("비밀번호를 확인해주세요.");
+      }
+    },
+  },
+  // computed
   computed: {},
+  // method
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -155,8 +164,7 @@ export default {
           this.openFullScreen2();
           // 데이터정보 보내기
           axios
-            .post("https://localhost:8443/ind", 
-            { 
+            .post("https://localhost:8443/ind", {
               ind_id: this.ruleForm.ind_id,
               ind_password: this.ruleForm.ind_password,
               ind_name: this.ruleForm.ind_name,
@@ -206,6 +214,11 @@ export default {
       this.$message.error("Oops, check your identification info");
     },
   },
+  checkID(){
+    axios.post('https://localhost:8443/idv/checkid',{
+
+    })
+  }
 };
 </script>
 
