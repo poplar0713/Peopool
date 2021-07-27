@@ -116,6 +116,19 @@ public class IndividualController {
 		return new ResponseEntity<>(individualService.findIndividualPW(id, phone), HttpStatus.OK);
 	}
 	
+	
+	@ApiOperation(value = "아이디 중복 체크", response = String.class)
+	@PostMapping("/checkid")
+	public ResponseEntity<String> getUserId(@RequestParam("id")String id) throws SQLException{
+//		Individual individual = individualService.getUserId(id);
+//		return ResponseEntity.status(200).body(individual.getInd_id());
+		
+		if(individualService.getUserId(id) != null) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 //	@PostMapping()
 //	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
 //    @ApiResponses({

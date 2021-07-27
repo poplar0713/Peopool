@@ -64,4 +64,10 @@ public class IndividualServiceImpl implements IndividualService {
 		return individualRepo.findIndividualPW(id, phone);
 	}
 
+	@Override
+	public Individual getUserId(String id) throws SQLException {
+		// TODO Auto-generated method stub
+		return individualRepo.getUserId(id);
+	}
+
 }

@@ -26,6 +26,9 @@ public interface IndividualRepo {
 
 	// 개인회원 탈퇴
 	int deleteIndividual(int index) throws SQLException;
+	
+	// 개인회원 아이디 중복 체크
+	Individual getUserId(String id) throws SQLException;
 
 	// 아이디 찾기
 	Individual findIndividualID(String name, String phone) throws SQLException;
