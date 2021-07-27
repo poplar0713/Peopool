@@ -14,7 +14,11 @@
     </el-form-item>
     <!-- 기업회원 PW 확인 -->
     <el-form-item label="Password Confirmation" prop="ent_password_cf">
-      <el-input type="password" v-model="ruleForm.ent_password_cf"></el-input>
+      <el-input
+        type="password"
+        v-model="ruleForm.ent_password_cf"
+        autocomplete="off"
+      ></el-input>
     </el-form-item>
     <!-- 연락처 -->
     <el-form-item label="Tel" prop="ent_contact">
@@ -41,6 +45,16 @@
 import axios from "axios";
 export default {
   data() {
+    // 비밀번호 체크
+    const checkPWCF = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("비밀번호(확인)를 다시 입력해주세요"));
+      } else if (value !== this.ruleForm.ent_password) {
+        callback(new Error("비밀번호를 확인해주세요"));
+      } else {
+        callback();
+      }
+    };
     return {
       ruleForm: {
         ent_name: "",
@@ -97,6 +111,7 @@ export default {
             message: "5-10자리로 설정해주세요",
             trigger: "blur",
           },
+          { validator: checkPWCF, trigger: "blur" },
         ],
         ent_contact: [
           {

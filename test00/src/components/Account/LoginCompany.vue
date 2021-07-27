@@ -15,7 +15,6 @@
         type="warning"
         @click="submitForm('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
-        :plain="true"
         >Login</el-button
       >
     </el-form-item>
