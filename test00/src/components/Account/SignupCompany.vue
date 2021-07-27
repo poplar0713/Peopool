@@ -1,35 +1,28 @@
 <template>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
     <!-- 기업명 -->
-    <el-form-item label="Company Name" prop="CompanyName">
-      <el-input v-model="ruleForm.CompanyName"></el-input>
+    <el-form-item label="Company Name" prop="ent_name">
+      <el-input v-model="ruleForm.ent_name"></el-input>
     </el-form-item>
     <!-- 기업회원 ID -->
-    <el-form-item label="ID" prop="SignupCompanyID">
-      <el-input v-model="ruleForm.SignupCompanyID"></el-input>
+    <el-form-item label="ID" prop="ent_id">
+      <el-input v-model="ruleForm.ent_id"></el-input>
     </el-form-item>
-    <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="SignupCompanyPW">
-      <el-input type="password" v-model="ruleForm.SignupCompanyPW"></el-input>
+    <!-- 기업회원 PW -->
+    <el-form-item label="Password" prop="ent_password">
+      <el-input type="password" v-model="ruleForm.ent_password"></el-input>
     </el-form-item>
-    <!-- 개인회원 PW 확인 -->
-    <el-form-item label="Password Confirmation" prop="SignupCompanyPWConfirm">
-      <el-input
-        type="password"
-        v-model="ruleForm.SignupCompanyPWConfirm"
-      ></el-input>
+    <!-- 기업회원 PW 확인 -->
+    <el-form-item label="Password Confirmation" prop="ent_password_cf">
+      <el-input type="password" v-model="ruleForm.ent_password_cf"></el-input>
     </el-form-item>
     <!-- 연락처 -->
-    <el-form-item label="Tel" prop="CompanyTel">
-      <el-input type="tel" v-model="ruleForm.CompanyTel"></el-input>
+    <el-form-item label="Tel" prop="ent_contact">
+      <el-input type="tel" v-model="ruleForm.ent_contact"></el-input>
     </el-form-item>
     <!-- 이메일 -->
-    <el-form-item label="Email" prop="CompanyEmail">
-      <el-input type="email" v-model="ruleForm.CompanyEmail"></el-input>
-    </el-form-item>
-    <!-- 공개여부 -->
-    <el-form-item label="Open to the public" prop="open">
-      <el-switch v-model="ruleForm.open"></el-switch>
+    <el-form-item label="Email" prop="ent_email">
+      <el-input type="email" v-model="ruleForm.ent_email"></el-input>
     </el-form-item>
     <!-- 생성 및 취소 버튼 -->
     <el-form-item>
@@ -45,31 +38,31 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       ruleForm: {
-        CompanyName: "",
-        SignupCompanyID: "",
-        SignupCompanyPW: "",
-        SignupCompanyPWConfirm: "",
-        CompanyTel: "",
-        CompanyEmail: "",
+        ent_name: "",
+        ent_id: "",
+        ent_password: "",
+        ent_password_cf: "",
+        ent_contact: "",
+        ent_email: "",
         open: false,
       },
       rules: {
-        CompanyName: [
+        ent_name: [
           {
             required: true,
-            message: "Please input Company Name",
+            message: "회사명을 입력해주세요",
             trigger: "blur",
           },
-          // { min: 5, max: 10, message: 'Length should be 5 to 10', trigger: 'blur' }
         ],
-        SignupCompanyID: [
+        ent_id: [
           {
             required: true,
-            message: "Please input Activity ID",
+            message: "사용하실 아이디를 입력해주세요",
             trigger: "blur",
           },
           {
@@ -79,44 +72,48 @@ export default {
             trigger: "blur",
           },
         ],
-        SignupCompanyPW: [
+        ent_password: [
           {
             required: true,
-            message: "Please input Activity Password",
+            message: "비밀번호를 입력해주세요",
             trigger: "blur",
           },
           {
-            min: 10,
-            max: 15,
-            message: "Length should be 10 to 15",
+            min: 5,
+            max: 10,
+            message: "5-10자리로 설정해주세요",
             trigger: "blur",
           },
         ],
-        SignupCompanyPWConfirm: [
-          { required: true, message: "Please check Password", trigger: "blur" },
+        ent_password_cf: [
           {
-            min: 10,
-            max: 15,
-            message: "Length should be 10 to 15",
+            required: true,
+            message: "비밀번호를 확인해주세요",
             trigger: "blur",
           },
           {
-            required: "this.SignupCompanyPW==this.SignupCompanyPWConfirm",
-            message: "Please Check your PW or PW confirmation",
+            min: 5,
+            max: 10,
+            message: "5-10자리로 설정해주세요",
             trigger: "blur",
           },
         ],
-        CompanyTel: [
+        ent_contact: [
           {
             required: true,
-            message: "Please input your Phone Number",
+            message: "연락처를 입력해주세요",
             trigger: "change",
           },
         ],
-        CompanyEmail: [
+        ent_email: [
           {
             required: true,
-            message: "Please input your Email",
+            message: "이메일을 입력해주세요",
+            trigger: "change",
+          },
+          {
+            type: "email",
+            message: "이메일형식을 바르게 입력해주세요",
             trigger: "change",
           },
         ],
@@ -128,9 +125,27 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!');
           this.openFullScreen2();
           this.$store.state.SignupDialogCompany = false;
+          // 데이터정보 보내기
+          axios
+            .post("https://localhost:8443/ent", {
+              ent_id: this.ruleForm.ent_id,
+              ent_password: this.ruleForm.ent_password,
+              ent_name: this.ruleForm.ent_name,
+              ent_contact: this.ruleForm.ent_contact,
+              ent_email: this.ruleForm.ent_email,
+            })
+            .then((res) => {
+              if (res.status == 200) {
+                this.$store.state.SignupDialogCompany = false;
+                this.successmessage();
+                console.log(this.ruleForm);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           this.failed();
@@ -154,7 +169,7 @@ export default {
     },
     successmessage() {
       this.$message({
-        message: "Welcome to PeoPool channel",
+        message: "회원가입(기업용)이 완료되었습니다",
         type: "success",
       });
     },

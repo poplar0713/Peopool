@@ -229,7 +229,7 @@ export default {
     // 성공메시지
     successmessage() {
       this.$message({
-        message: "Welcome to PeoPool channel",
+        message: "회원가입(개인용)이 완료되었습니다",
         type: "success",
       });
     },
