@@ -8,10 +8,10 @@
 		from individual
 	</select>
 	
-	<select id="loginCheckIndividual" parameterType="String" resultType="Individual">
-		select *
+	<select id="loginCheckIndividual"  resultType="Individual">
+		select ind_name
 		from individual
-		where ind_id=#{id}
+		where ind_id=#{id} and ind_pw=#{pw};
 	</select>
 	
 	<select id="getIndividual" parameterType="int" resultType="Individual">
@@ -46,5 +46,11 @@
 		select * 
 		from individual 
 		where ind_id = #{id} and ind_phone = #{phone}
+	</select>
+	
+	<select id="getUserId" parameterType="String" resultType="Individual">
+		select *
+		from individual
+		where ind_id=#{id}
 	</select>
 </mapper>

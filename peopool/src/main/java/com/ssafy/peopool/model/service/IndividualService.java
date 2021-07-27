@@ -10,7 +10,7 @@ public interface IndividualService {
 		List<Individual> getAllUser() throws SQLException;
 
 		// 개인 로그인
-		Individual loginCheckIndividual(String id) throws SQLException;
+		Individual loginCheckIndividual(String id,String pw) throws SQLException;
 
 		// 개인 회원정보조회 ( 이름, 생년월일, 성별, 번호, 이메일)
 		Individual getIndividual(int index) throws SQLException;
@@ -23,6 +23,9 @@ public interface IndividualService {
 
 		// 개인회원 탈퇴
 		boolean deleteIndividual(int index) throws SQLException;
+		
+		// 개인회원 아이디 중복 체크
+		Individual getUserId(String id) throws SQLException;
 
 		// 아이디 찾기
 		Individual findIndividualID(String name, String phone) throws SQLException;

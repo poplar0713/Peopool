@@ -66,8 +66,8 @@ public class IndividualController {
 	
 	@ApiOperation(value = "개인 로그인", response = String.class)
 	@GetMapping("/login")
-	public ResponseEntity<Individual> loginCheckIndividual(@RequestParam("id")String id) throws SQLException{
-		return new ResponseEntity<>(individualService.loginCheckIndividual(id), HttpStatus.OK);
+	public ResponseEntity<Individual> loginCheckIndividual(@RequestParam("id")String id, @RequestParam("pw") String pw) throws SQLException{
+		return new ResponseEntity<>(individualService.loginCheckIndividual(id,pw), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "개인 회원 정보 조회", response = String.class)
@@ -114,6 +114,19 @@ public class IndividualController {
 	@GetMapping("/findpw")
 	public ResponseEntity<Individual> findIndividualPW(@RequestParam("id")String id, @RequestParam("phone")String phone) throws SQLException{
 		return new ResponseEntity<>(individualService.findIndividualPW(id, phone), HttpStatus.OK);
+	}
+	
+	
+	@ApiOperation(value = "아이디 중복 체크", response = String.class)
+	@PostMapping("/checkid")
+	public ResponseEntity<String> getUserId(@RequestParam("id")String id) throws SQLException{
+//		Individual individual = individualService.getUserId(id);
+//		return ResponseEntity.status(200).body(individual.getInd_id());
+		
+		if(individualService.getUserId(id) != null) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 //	@PostMapping()
