@@ -119,9 +119,9 @@ public class IndividualController {
 	
 	@ApiOperation(value = "아이디 중복 체크", response = String.class)
 	@PostMapping("/checkid")
-	public ResponseEntity<String> getUserId(@RequestParam("id")String id) throws SQLException{
-		Individual individual = individualService.getUserId(id);
-		return ResponseEntity.status(200).body(individual.getInd_id());
+	public ResponseEntity<String> getUserId(@RequestBody Individual individual) throws SQLException{
+		Individual ind = individualService.getUserId(individual.getInd_id());
+		return ResponseEntity.status(200).body(ind.getInd_id());
 		
 //		if(individualService.getUserId(id) != null) {
 //            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
