@@ -155,7 +155,16 @@ export default {
           this.openFullScreen2();
           // 데이터정보 보내기
           axios
-            .post("http://localhost:8080/ind", "this.ruleForm")
+            .post("https://localhost:8443/ind", 
+            { 
+              ind_id: this.ruleForm.ind_id,
+              ind_password: this.ruleForm.ind_password,
+              ind_name: this.ruleForm.ind_name,
+              ind_birth: this.ruleForm.ind_birth,
+              ind_gender: this.ruleForm.ind_gender,
+              ind_phone: this.ruleForm.ind_phone,
+              ind_email: this.ruleForm.ind_email,
+            })
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogIndiv = false;

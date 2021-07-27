@@ -2,6 +2,20 @@ module.exports = {
   outputDir: "../peopool/src/main/resources/static",
   indexPath: "../static/index.html",
   devServer: {
-    proxy: "http://localhost:8080",
+    https: true,
+    port: 8443,
+    open: true,
+    proxy: {
+      'api.v1':'https://localhost:8443/'
+    },
+    '/webjars': {
+      target: 'https://localhost:8443/'
+    },
+    '/group-call':{
+      target: 'https://localhost:8443/'
+    },
+    '/upload':{
+      target: 'https://localhost:8443/'
+    }
   },
 };
