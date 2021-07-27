@@ -6,13 +6,13 @@
         v-model="ruleForm.ind_id"
         placeholder="중복확인을 해주세요"
       ></el-input>
-      <el-button @click="checkID" v-if="allowedID === false"
+      <el-button @click="checkID"
         >중복확인</el-button
       >
-      <p type="primary" v-if="allowedID === true">사용가능한 아이디입니다</p>
+      <!-- <p type="primary" v-if="allowedID === true">사용가능한 아이디입니다</p>
       <el-button @click="checkID" v-if="allowedID === true"
         >다른아이디 사용하기</el-button
-      >
+      > -->
     </el-form-item>
     <!-- 개인회원 PW -->
     <el-form-item label="Password" prop="ind_password">
@@ -61,7 +61,7 @@
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
       <el-button
         type="warning"
-        @click="submitForm('ruleForm')"
+        @click="SignupInd('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
         >Create</el-button
       >
@@ -79,14 +79,35 @@ export default {
       if (value === "") {
         callback(new Error("비밀번호(확인)를 다시 입력해주세요"));
       } else if (value !== this.ruleForm.ind_password) {
-        callback(new Error("비밀번호를 확인해주세요"));
+        callback(new Error("비밀번호(를 확인해주세요"));
+      } else if (length.value < 5 || length.value > 10) {
+        callback(new Error("5-10자리로 설정해주세요"));
       } else {
         callback();
       }
     };
+    // 아이디 중복 체크
+    const validationID = (rule, value, callback) => {
+      // this.checkID();
+      if (value === "") {
+        callback(new Error("ID를 입력해주세요"));
+      // } else if (this.allowedID == false) {
+      //   callback(new Error("다른사용자가 이미 사용하고있는 아이디입니다"));
+      } else if (length.value < 5 || length.value > 10) {
+        callback(new Error("1-15자리로 설정해주세요"));
+      } else {
+        callback();
+        // this.checkID();
+        // setTimeout(() => {
+        //   if (this.allowedID == false) {
+        //     callback (new Error("다른사용자가 이미 사용하고있는 아이디입니다"));
+        //   }
+        // }, 3000);
+      }
+    };
     return {
       filled: false,
-      allowedID: false,
+      allowedID: true,
       ruleForm: {
         ind_id: "",
         ind_password: "",
@@ -99,19 +120,7 @@ export default {
       },
       rules: {
         // 아이디
-        ind_id: [
-          {
-            required: true,
-            message: "사용하실 아이디를 입력해주세요",
-            trigger: "blur",
-          },
-          {
-            min: 3,
-            max: 10,
-            message: "최소 3글자, 최대10글자의 아이디를 입력해주세요",
-            trigger: "blur",
-          },
-        ],
+        ind_id: [{ validator: validationID, trigger: "blur" }],
         // 비밀번호
         ind_password: [
           {
@@ -137,11 +146,6 @@ export default {
             min: 5,
             max: 10,
             message: "5-10자리로 설정해주세요",
-            trigger: "blur",
-          },
-          {
-            equalTo: "ind_password",
-            message: "비밀번호를 확인해주세요",
             trigger: "blur",
           },
           { validator: checkPWCF, trigger: "blur" },
@@ -207,7 +211,7 @@ export default {
   computed: {},
   // method
   methods: {
-    submitForm(formName) {
+    SignupInd(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           console.log(this.ruleForm);
