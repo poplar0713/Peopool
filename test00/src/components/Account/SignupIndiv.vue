@@ -55,8 +55,6 @@ export default {
   // data
   data() {
     return {
-      availableId: false,
-      acceptedId: "",
       ind_password_cf: "",
       ruleForm: {
         ind_id: "",
@@ -183,7 +181,9 @@ export default {
                 // this.$router.push(`user/${this.ruleForm.ind_id}`)
               }
             })
-            .catch(() => {});
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           this.failed();
@@ -219,22 +219,15 @@ export default {
       alert("진입성공");
       axios
         .post("https://localhost:8443/ind/checkid", {
-          id: this.ruleForm.ind_id,
+          ind_id: this.ruleForm.ind_id,
         })
-        .then(function(result) {
-          this.availableId = false;
-          this.acceptedId = "";
-          console.log(this.availableId);
-          console.log(this.acceptedId);
-          console.log(result);
-          alert("동일한 ID가 존재합니다");
+        .then((res)=> {
+          // console.log(res);
+          alert(res);
         })
-        .catch(function(err) {
-          this.availableId = true;
-          this.acceptedId = this.ruleForm.ind_id;
-          console.log(this.availableId);
-          console.log(this.acceptedId);
-          console.log(err);
+        .catch(err=> {
+          // console.log(err);
+          alert(err);
         });
     },
   },

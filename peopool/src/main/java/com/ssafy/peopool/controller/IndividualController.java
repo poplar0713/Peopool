@@ -119,7 +119,7 @@ public class IndividualController {
 	
 	@ApiOperation(value = "아이디 중복 체크", response = String.class)
 	@PostMapping("/checkid")
-	public ResponseEntity<String> getUserId(@RequestParam("id")String id) throws SQLException{
+	public ResponseEntity<String> getUserId(@RequestBody String id) throws SQLException{
 		Individual individual = individualService.getUserId(id);
 		return ResponseEntity.status(200).body(individual.getInd_id());
 		
