@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="LoginCompanyID">
       <el-input v-model="ruleForm.LoginCompanyID"></el-input>
@@ -15,7 +15,6 @@
         type="warning"
         @click="submitForm('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
-        :plain="true"
         >Login</el-button
       >
     </el-form-item>
@@ -34,26 +33,14 @@ export default {
         LoginCompanyID: [
           {
             required: true,
-            message: "Please input Activity ID",
-            trigger: "blur",
-          },
-          {
-            min: 5,
-            max: 10,
-            message: "Length should be 5 to 10",
+            message: "아이디를 입력해주세요",
             trigger: "blur",
           },
         ],
         LoginCompanyPW: [
           {
             required: true,
-            message: "Please input Activity Password",
-            trigger: "blur",
-          },
-          {
-            min: 10,
-            max: 15,
-            message: "Length should be 10 to 15",
+            message: "비밀번호를 입력해주세요",
             trigger: "blur",
           },
         ],

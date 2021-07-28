@@ -1,6 +1,5 @@
 <template>
   <!-- TabSchedule -->
-
   <el-container>
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>

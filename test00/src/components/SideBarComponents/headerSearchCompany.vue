@@ -23,6 +23,7 @@ export default {
   methods: {
     search() {
       console.log(this.keyword);
+      this.$router.push(`/searchcompany/${this.keyword}`);
     },
   },
 };
