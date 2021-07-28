@@ -2,15 +2,8 @@
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="ind_id">
-      <el-input
-        @keydown="recheck"
-        v-model="ruleForm.ind_id"
-      ></el-input>
+      <el-input @keydown="recheck" v-model="ruleForm.ind_id"></el-input>
       <el-button @click="checkID">중복확인</el-button>
-      <!-- <p type="primary" v-if="allowedID === true">사용가능한 아이디입니다</p>
-      <el-button @click="checkID" v-if="allowedID === true"
-        >다른아이디 사용하기</el-button
-      > -->
     </el-form-item>
     <!-- 개인회원 PW -->
     <el-form-item label="Password" prop="ind_password">
@@ -66,7 +59,6 @@
     </el-form-item>
   </el-form>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -238,9 +230,12 @@ export default {
             .catch((err) => {
               console.log(err);
             });
-        } else {
+        } else if (this.allowedID == false) {
           console.log("error submit!!");
           this.recheckid();
+          return false;
+        } else {
+          this.failed();
           return false;
         }
         //
@@ -271,7 +266,7 @@ export default {
     },
     // 실패메시지
     failed() {
-      this.$message.error("아이디양식을 확인해주세요");
+      this.$message.error("회원가입 양식을 확인해주세요");
     },
     recheckid() {
       this.$message.error("아이디 중복검사를 해주세요");
@@ -298,7 +293,7 @@ export default {
               type: "success",
             });
           });
-      } else{
+      } else {
         this.failed();
       }
     },
@@ -308,6 +303,5 @@ export default {
   },
 };
 </script>
-
 
 <style></style>

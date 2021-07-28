@@ -7,6 +7,7 @@
     <!-- 기업회원 ID -->
     <el-form-item label="ID" prop="ent_id">
       <el-input v-model="ruleForm.ent_id"></el-input>
+      <el-button @click="checkID">중복확인</el-button>
     </el-form-item>
     <!-- 기업회원 PW -->
     <el-form-item label="Password" prop="ent_password">
@@ -78,6 +79,7 @@ export default {
     //   }
     // };
     return {
+      allowedID: false,
       ruleForm: {
         ent_name: "",
         ent_id: "",
@@ -156,7 +158,7 @@ export default {
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
+        if (valid && this.allowedID) {
           this.openFullScreen2();
           this.$store.state.SignupDialogCompany = false;
           // 데이터정보 보내기
@@ -207,6 +209,32 @@ export default {
     },
     failed() {
       this.$message.error("Oops, check your identification info");
+    },
+    // id중복체크
+    checkID() {
+      // alert("진입성공");
+      if (this.ruleForm.ent_id.length > 4 && this.ruleForm.ent_id.length < 11) {
+        axios
+          .post("https://localhost:8443/ent/checkid", {
+            ent_id: this.ruleForm.ent_id,
+          })
+          .then((res) => {
+            console.log(res);
+            this.$message.error("이미 다른 사용자가 사용중인 아이디입니다.");
+            this.ruleForm.ent_id = "";
+            this.allowedID = false;
+          })
+          .catch((err) => {
+            console.log(err);
+            this.allowedID = true;
+            this.$message({
+              message: "사용가능한 아이디입니다.",
+              type: "success",
+            });
+          });
+      } else {
+        this.failed();
+      }
     },
   },
 };
