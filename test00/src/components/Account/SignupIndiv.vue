@@ -2,11 +2,11 @@
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="ind_id">
-      <el-input
+      <el-input @keydown="recheck"
         v-model="ruleForm.ind_id"
         placeholder="중복확인을 해주세요"
       ></el-input>
-      <el-button @click="checkID">중복확인</el-button>
+      <el-button @click="checkID" disabled="length.this.ruleForm.ind_id<4 || length.this.ruleForm.ind_id>11">중복확인</el-button>
       <!-- <p type="primary" v-if="allowedID === true">사용가능한 아이디입니다</p>
       <el-button @click="checkID" v-if="allowedID === true"
         >다른아이디 사용하기</el-button
@@ -97,7 +97,7 @@ export default {
     };
     return {
       filled: false,
-      allowedID: true,
+      allowedID: false,
       ruleForm: {
         ind_id: "",
         ind_password: "",
@@ -208,7 +208,7 @@ export default {
   methods: {
     SignupInd(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
+        if (valid && this.allowedID) {
           console.log(this.ruleForm);
           this.openFullScreen2();
           // 데이터정보 보내기
@@ -268,9 +268,13 @@ export default {
     failed() {
       this.$message.error("Oops, check your identification info");
     },
+    recheckid() {
+      this.$message.error("아이디 중복검사를 해주세요.");
+    },
     // id중복체크
     checkID() {
       // alert("진입성공");
+      // if()
       axios
         .post("https://localhost:8443/ind/checkid", {
           ind_id: this.ruleForm.ind_id,
@@ -290,6 +294,9 @@ export default {
           });
         });
     },
+    recheck(){
+      this.allowedID = false;
+    }
   },
 };
 </script>
