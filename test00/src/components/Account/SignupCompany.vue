@@ -49,12 +49,34 @@ export default {
     const checkPWCF = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("비밀번호(확인)를 다시 입력해주세요"));
-      } else if (value !== this.ruleForm.ent_password) {
-        callback(new Error("비밀번호를 확인해주세요"));
+      } else if (value !== this.ruleForm.ind_password) {
+        callback(new Error("비밀번호(를 확인해주세요"));
       } else {
         callback();
       }
     };
+    // 아이디 중복 체크
+    // const validationID = (rule, value, callback) => {
+    //   // this.checkID();
+    //   if (value === "") {
+    //     callback(new Error("ID를 입력해주세요"));
+    //   } else if (length.value < 5 || length.value > 10) {
+    //     callback(new Error("1-15자리로 설정해주세요"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
+    // 회사 중복 체크
+    // const validationID = (rule, value, callback) => {
+    //   // this.checkID();
+    //   if (value === "") {
+    //     callback(new Error("ID를 입력해주세요"));
+    //   } else if (length.value < 5 || length.value > 10) {
+    //     callback(new Error("1-15자리로 설정해주세요"));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     return {
       ruleForm: {
         ent_name: "",

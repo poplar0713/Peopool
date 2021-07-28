@@ -2,11 +2,11 @@
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="ind_id">
-      <el-input @keydown="recheck"
+      <el-input
+        @keydown="recheck"
         v-model="ruleForm.ind_id"
-        placeholder="중복확인을 해주세요"
       ></el-input>
-      <el-button @click="checkID" disabled="length.this.ruleForm.ind_id<4 || length.this.ruleForm.ind_id>11">중복확인</el-button>
+      <el-button @click="checkID">중복확인</el-button>
       <!-- <p type="primary" v-if="allowedID === true">사용가능한 아이디입니다</p>
       <el-button @click="checkID" v-if="allowedID === true"
         >다른아이디 사용하기</el-button
@@ -79,8 +79,6 @@ export default {
         callback(new Error("비밀번호(확인)를 다시 입력해주세요"));
       } else if (value !== this.ruleForm.ind_password) {
         callback(new Error("비밀번호(를 확인해주세요"));
-      } else if (length.value < 5 || length.value > 10) {
-        callback(new Error("5-10자리로 설정해주세요"));
       } else {
         callback();
       }
@@ -114,6 +112,12 @@ export default {
         ind_id: [
           {
             validator: validationID,
+            trigger: "blur",
+          },
+          {
+            min: 5,
+            max: 10,
+            message: "5-10자리로 설정해주세요",
             trigger: "blur",
           },
         ],
@@ -236,7 +240,7 @@ export default {
             });
         } else {
           console.log("error submit!!");
-          this.failed();
+          this.recheckid();
           return false;
         }
         //
@@ -267,37 +271,40 @@ export default {
     },
     // 실패메시지
     failed() {
-      this.$message.error("Oops, check your identification info");
+      this.$message.error("아이디양식을 확인해주세요");
     },
     recheckid() {
-      this.$message.error("아이디 중복검사를 해주세요.");
+      this.$message.error("아이디 중복검사를 해주세요");
     },
     // id중복체크
     checkID() {
       // alert("진입성공");
-      // if()
-      axios
-        .post("https://localhost:8443/ind/checkid", {
-          ind_id: this.ruleForm.ind_id,
-        })
-        .then((res) => {
-          console.log(res);
-          this.$message.error("이미 다른 사용자가 사용중인 아이디입니다.");
-          this.ruleForm.ind_id = "";
-          this.allowedID = false;
-        })
-        .catch((err) => {
-          console.log(err);
-          this.allowedID = true;
-          this.$message({
-            message: "사용가능한 아이디입니다.",
-            type: "success",
+      if (this.ruleForm.ind_id.length > 4 && this.ruleForm.ind_id.length < 11) {
+        axios
+          .post("https://localhost:8443/ind/checkid", {
+            ind_id: this.ruleForm.ind_id,
+          })
+          .then((res) => {
+            console.log(res);
+            this.$message.error("이미 다른 사용자가 사용중인 아이디입니다.");
+            this.ruleForm.ind_id = "";
+            this.allowedID = false;
+          })
+          .catch((err) => {
+            console.log(err);
+            this.allowedID = true;
+            this.$message({
+              message: "사용가능한 아이디입니다.",
+              type: "success",
+            });
           });
-        });
+      } else{
+        this.failed();
+      }
     },
-    recheck(){
+    recheck() {
       this.allowedID = false;
-    }
+    },
   },
 };
 </script>
