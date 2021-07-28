@@ -67,6 +67,7 @@
   </el-form>
 </template>
 
+
 <script>
 import axios from "axios";
 export default {
@@ -227,7 +228,7 @@ export default {
                 this.$store.state.SignupDialogIndiv = false;
                 this.successmessage();
                 console.log(this.ruleForm);
-                // this.$router.push(`user/${this.ruleForm.ind_id}`)
+                // this.$router.push(user/${this.ruleForm.ind_id})
               }
             })
             .catch((err) => {
@@ -300,5 +301,6 @@ export default {
   },
 };
 </script>
+
 
 <style></style>
