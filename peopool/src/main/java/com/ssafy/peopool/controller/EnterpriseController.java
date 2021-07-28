@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.Enterprise;
+import com.ssafy.peopool.model.Individual;
 import com.ssafy.peopool.model.service.EnterpriseService;
 
 import io.swagger.annotations.ApiOperation;
@@ -92,6 +93,13 @@ public class EnterpriseController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "아이디 중복 체크", response = String.class)
+	@PostMapping("/checkid")
+	public ResponseEntity<String> getUserId(@RequestBody Enterprise enterprise) throws SQLException{
+		Enterprise ent = enterpriseService.getUserId(enterprise.getEnt_id());
+		return ResponseEntity.status(200).body(ent.getEnt_id());
 	}
 
 }
