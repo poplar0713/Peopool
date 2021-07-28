@@ -6,9 +6,7 @@
         v-model="ruleForm.ind_id"
         placeholder="중복확인을 해주세요"
       ></el-input>
-      <el-button @click="checkID"
-        >중복확인</el-button
-      >
+      <el-button @click="checkID">중복확인</el-button>
       <!-- <p type="primary" v-if="allowedID === true">사용가능한 아이디입니다</p>
       <el-button @click="checkID" v-if="allowedID === true"
         >다른아이디 사용하기</el-button
@@ -91,18 +89,10 @@ export default {
       // this.checkID();
       if (value === "") {
         callback(new Error("ID를 입력해주세요"));
-      // } else if (this.allowedID == false) {
-      //   callback(new Error("다른사용자가 이미 사용하고있는 아이디입니다"));
       } else if (length.value < 5 || length.value > 10) {
         callback(new Error("1-15자리로 설정해주세요"));
       } else {
         callback();
-        // this.checkID();
-        // setTimeout(() => {
-        //   if (this.allowedID == false) {
-        //     callback (new Error("다른사용자가 이미 사용하고있는 아이디입니다"));
-        //   }
-        // }, 3000);
       }
     };
     return {
@@ -120,7 +110,12 @@ export default {
       },
       rules: {
         // 아이디
-        ind_id: [{ validator: validationID, trigger: "blur" }],
+        ind_id: [
+          {
+            validator: validationID,
+            trigger: "blur",
+          },
+        ],
         // 비밀번호
         ind_password: [
           {
