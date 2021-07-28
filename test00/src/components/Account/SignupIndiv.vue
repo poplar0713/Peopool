@@ -222,9 +222,10 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogIndiv = false;
-                this.successmessage();
                 console.log(this.ruleForm);
-                // this.$router.push(user/${this.ruleForm.ind_id})
+                setTimeout(() => {
+                  this.successmessage();
+                }, 3000);
               }
             })
             .catch((err) => {

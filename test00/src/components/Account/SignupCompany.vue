@@ -6,7 +6,7 @@
     </el-form-item>
     <!-- 기업회원 ID -->
     <el-form-item label="ID" prop="ent_id">
-      <el-input v-model="ruleForm.ent_id"></el-input>
+      <el-input v-model="ruleForm.ent_id" @keydown="recheck"></el-input>
       <el-button @click="checkID">중복확인</el-button>
     </el-form-item>
     <!-- 기업회원 PW -->
@@ -173,7 +173,9 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogCompany = false;
-                this.successmessage();
+                setTimeout(() => {
+                  this.successmessage();
+                }, 3000);
                 console.log(this.ruleForm);
               }
             })
@@ -242,6 +244,9 @@ export default {
       } else {
         this.failed();
       }
+    },
+    recheck() {
+      this.allowedID = false;
     },
   },
 };
