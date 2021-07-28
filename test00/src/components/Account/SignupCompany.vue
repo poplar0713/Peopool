@@ -48,9 +48,9 @@ export default {
     // 비밀번호 체크
     const checkPWCF = (rule, value, callback) => {
       if (value === "") {
+        callback(new Error("비밀번호를 입력해주세요"));
+      } else if (value !== this.ruleForm.ent_password) {
         callback(new Error("비밀번호(확인)를 다시 입력해주세요"));
-      } else if (value !== this.ruleForm.ind_password) {
-        callback(new Error("비밀번호(를 확인해주세요"));
       } else {
         callback();
       }
@@ -122,11 +122,6 @@ export default {
           },
         ],
         ent_password_cf: [
-          {
-            required: true,
-            message: "비밀번호를 확인해주세요",
-            trigger: "blur",
-          },
           {
             min: 5,
             max: 10,
