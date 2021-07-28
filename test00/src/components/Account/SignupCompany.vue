@@ -180,8 +180,11 @@ export default {
             .catch((err) => {
               console.log(err);
             });
-        } else {
+        } else if (this.allowedID == false) {
           console.log("error submit!!");
+          this.recheckid();
+          return false;
+        } else {
           this.failed();
           return false;
         }
@@ -208,7 +211,11 @@ export default {
       });
     },
     failed() {
-      this.$message.error("Oops, check your identification info");
+      this.$message.error("회원가입양식을 확인해주세요");
+    },
+    // 중복검사요청메시지
+    recheckid() {
+      this.$message.error("아이디 중복검사를 해주세요");
     },
     // id중복체크
     checkID() {

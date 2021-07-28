@@ -268,6 +268,7 @@ export default {
     failed() {
       this.$message.error("회원가입 양식을 확인해주세요");
     },
+    // 중복검사요청메시지
     recheckid() {
       this.$message.error("아이디 중복검사를 해주세요");
     },

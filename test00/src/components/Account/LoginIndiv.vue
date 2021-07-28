@@ -56,6 +56,7 @@ export default {
     };
   },
   methods: {
+    // 로그인
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -72,9 +73,11 @@ export default {
         }
       });
     },
+    // 폼초기화
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    // 스크린로딩
     openFullScreen2() {
       const loading = this.$loading({
         lock: true,
