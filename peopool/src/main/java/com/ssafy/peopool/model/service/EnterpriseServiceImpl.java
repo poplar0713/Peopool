@@ -66,4 +66,10 @@ public class EnterpriseServiceImpl implements EnterpriseService{
 		return enterpriseRepo.findEnterprisePW(id, email);
 	}
 
+	@Override
+	public Enterprise getUserId(String id) throws SQLException {
+		// TODO Auto-generated method stub
+		return enterpriseRepo.getUserId(id);
+	}
+
 }

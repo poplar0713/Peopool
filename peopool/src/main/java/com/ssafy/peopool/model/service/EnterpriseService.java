@@ -29,5 +29,8 @@ public interface EnterpriseService {
 
 		// 기업 비밀번호 찾기
 		Enterprise findEnterprisePW(String id, String email) throws SQLException;
+		
+		// 아이디 중복 체크
+		Enterprise getUserId(String id) throws SQLException;
 
 }
