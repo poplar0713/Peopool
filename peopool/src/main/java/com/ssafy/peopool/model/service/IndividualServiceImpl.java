@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.peopool.model.Individual;
@@ -14,6 +15,9 @@ public class IndividualServiceImpl implements IndividualService {
 
 	@Autowired
 	IndividualRepo individualRepo;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	
 	@Override
@@ -37,6 +41,7 @@ public class IndividualServiceImpl implements IndividualService {
 	@Override
 	public boolean registerIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
+		individual.setInd_password(passwordEncoder.encode(individual.getInd_password()));
 		return individualRepo.registerIndividual(individual) == 1;
 	}
 
