@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), individualService)) 
                 .authorizeRequests()
-                .antMatchers("/ind/{indix}").authenticated()      
-    	        	    .anyRequest().permitAll()
+//                .antMatchers().authenticated()      
+    	        	    .anyRequest().permitAll() // 접근 권한 수정 필요
                 .and().cors();
     }
 }
