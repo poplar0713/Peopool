@@ -4,6 +4,7 @@
       placeholder="Please input"
       v-model="keyword"
       class="input-with-select"
+      @keyup="search"
     >
       <template #append>
         <el-button @click="search" icon="el-icon-search"></el-button>
@@ -25,7 +26,7 @@ export default {
       console.log(this.keyword);
       this.$router.push({
         name: "searchuser",
-        params: { keyword: this.keyword },
+        query: { keyword: this.keyword },
       });
     },
   },
