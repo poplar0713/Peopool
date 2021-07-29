@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-// import axios from 'axios'
+import $axios from 'axios'
 
 export default createStore({
   state: {
@@ -41,9 +41,13 @@ export default createStore({
     },
   },
   actions: {
-    getsignupdata(context,data) {
-      this.commit("Signupdata", data);
+    requestLogin({ state }, payload) {
+      console.log("requestLogin", state, payload);
+      const url = "/ind/login";
+      let body = payload;
+      return $axios.post(url, body);
     },
   },
+
   modules: {},
 });

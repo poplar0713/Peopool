@@ -62,7 +62,20 @@ export default {
           // alert('submit!');
           this.openFullScreen2();
           this.$router.push("/user/" + this.ruleForm.LoginIndivID);
+
           // axios.post 로그인구현
+          this.$store
+            .dispatch("requestLogin", {
+              ind_id: this.ruleForm.LoginIndivID,
+              ind_password: this.ruleForm.LoginIndivPW,
+            })
+            .then(function(result) {
+              this.$router.push(`user/${this.ruleForm.LoginIndivID}`);
+              alert("accessToken: " + result.data.accessToken);
+            })
+            .catch(function(err) {
+              alert(err);
+            });
 
           //
           this.$store.state.LoginDialog = false;
