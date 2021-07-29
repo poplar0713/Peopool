@@ -2,13 +2,13 @@
   <div style="width: 100%; height:100%">
     <div>
       <div v-if="hasVideo">
-        <video
+        <!-- <video
           src="@/assets/samplevideo.mp4"
           height="300"
           width="500"
           controls
           style="width:100%; height:300"
-        ></video>
+        ></video> -->
       </div>
       <div v-else class="videoNotFound">
         <h4>PR 동영상을 아직 업로드 하지 않았습니다.</h4>
