@@ -18,6 +18,7 @@
 package com.ssafy.peopool.webrtc;
 
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import org.kurento.client.IceCandidate;
 import org.slf4j.Logger;
@@ -51,19 +52,26 @@ public class CallHandler extends TextWebSocketHandler {
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		String url = session.getUri().toString();
+		System.out.println(url);
+		String[] str = url.split("/groupcall/");
+		System.out.println(str[1]);
+		StringTokenizer st = new StringTokenizer(str[1], "/");
+		String id = st.nextToken();
+		String name = st.nextToken();
+		String room = st.nextToken();
 		final JsonObject jsonMessage = gson.fromJson(message.getPayload(), JsonObject.class);
 
 		final UserSession user = registry.getBySession(session);
 
 		if (user != null) {
-			log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
+			log.debug("Incoming message from user '{}': {}", user.getName(), name);
 		} else {
-			log.debug("Incoming message from new user: {}", jsonMessage);
+			log.debug("Incoming message from new user: {}", name);
 		}
-
-		switch (jsonMessage.get("id").getAsString()) {
+		switch (id) {
 		case "joinRoom":
-			joinRoom(jsonMessage, session);
+			joinRoom(room, name, session);
 			break;
 		case "receiveVideoFrom":
 			final String senderName = jsonMessage.get("sender").getAsString();
@@ -86,6 +94,31 @@ public class CallHandler extends TextWebSocketHandler {
 		default:
 			break;
 		}
+//		switch (jsonMessage.get("id").getAsString()) {
+//		case "joinRoom":
+//			joinRoom(jsonMessage, session);
+//			break;
+//		case "receiveVideoFrom":
+//			final String senderName = jsonMessage.get("sender").getAsString();
+//			final UserSession sender = registry.getByName(senderName);
+//			final String sdpOffer = jsonMessage.get("sdpOffer").getAsString();
+//			user.receiveVideoFrom(sender, sdpOffer);
+//			break;
+//		case "leaveRoom":
+//			leaveRoom(user);
+//			break;
+//		case "onIceCandidate":
+//			JsonObject candidate = jsonMessage.get("candidate").getAsJsonObject();
+//
+//			if (user != null) {
+//				IceCandidate cand = new IceCandidate(candidate.get("candidate").getAsString(),
+//						candidate.get("sdpMid").getAsString(), candidate.get("sdpMLineIndex").getAsInt());
+//				user.addCandidate(cand, jsonMessage.get("name").getAsString());
+//			}
+//			break;
+//		default:
+//			break;
+//		}
 	}
 
 	@Override
@@ -97,6 +130,15 @@ public class CallHandler extends TextWebSocketHandler {
 	private void joinRoom(JsonObject params, WebSocketSession session) throws IOException {
 		final String roomName = params.get("room").getAsString();
 		final String name = params.get("name").getAsString();
+		log.info("PARTICIPANT {}: trying to join room {}", name, roomName);
+
+		Room room = roomManager.getRoom(roomName);
+		final UserSession user = room.join(name, session);
+		registry.register(user);
+	}
+
+	private void joinRoom(String roomName, String name, WebSocketSession session) throws IOException {
+
 		log.info("PARTICIPANT {}: trying to join room {}", name, roomName);
 
 		Room room = roomManager.getRoom(roomName);
