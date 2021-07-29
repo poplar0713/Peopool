@@ -52,9 +52,6 @@
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-turn-off"></i>
-          <span v-if="!state.token"
-            ><button type="text" @click="Logout">Logout</button></span
-          >
         </el-menu-item>
         <!--  -->
       </el-menu>

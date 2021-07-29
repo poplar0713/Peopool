@@ -71,7 +71,7 @@ export default {
               ind_password: this.ruleForm.LoginIndivPW,
             })
             .then(function(result) {
-              this.$router.push(`user/${this.ruleForm.LoginIndivID}`);
+              this.$router.push('user');
               alert("accessToken: " + result.data.accessToken);
             })
             .catch(function(err) {
