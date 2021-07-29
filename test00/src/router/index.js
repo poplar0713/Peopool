@@ -46,7 +46,7 @@ const routes = [
     component: InterviewRoom,
   },
   {
-    path: "/searchuser/:keyword",
+    path: "/searchuser",
     name: "searchuser",
     component: SearchUser,
   },
