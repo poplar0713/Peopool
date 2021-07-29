@@ -28,7 +28,7 @@ export default createStore({
   actions: {
     requestLogin({ state }, payload) {
       console.log("requestLogin", state, payload);
-      const url = "https://localhost8443/ind/login";
+      const url = "/ind/login";
       let body = payload;
       return $axios.post(url, body);
     },
