@@ -18,4 +18,5 @@ installElementPlus(app);
 app
   .use(router)
   .use(store)
+  // .use(AxiosPlugin)
   .mount("#app");

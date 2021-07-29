@@ -1,6 +1,5 @@
 <template>
   <!-- TabSchedule -->
-
   <el-container>
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
@@ -55,7 +54,7 @@ export default {
     return {
       mainsearch: "",
       search: "",
-      username: this.$store.state.temp.UserName,
+      username: "",
       hasVideo: true,
       hasDoc: true,
       videosrc: "@/assets/samplevideo.mp4",

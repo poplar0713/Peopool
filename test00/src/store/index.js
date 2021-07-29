@@ -1,19 +1,8 @@
 import { createStore } from "vuex";
-// import axios from 'axios'
+import $axios from 'axios'
 
 export default createStore({
   state: {
-    temp: [
-      { SignupIndivID: "" },
-      { SignupIndivPW: "" },
-      { SignupIndivPWConfirm: "" },
-      { UserName: "" },
-      { UserBirth: "" },
-      { open: false },
-      { Gender: "" },
-      { UserTel: "" },
-      { UserEmail: "" },
-    ],
     LoginDialog: false,
     SignupDialogIndiv: false,
     SignupDialogCompany: false,
@@ -35,14 +24,13 @@ export default createStore({
       },
     ],
   },
-  mutations: {
-    Signupdata(state, data) {
-      this.state.temp = data;
-    },
-  },
+  mutations: {},
   actions: {
-    getsignupdata(context,data) {
-      this.commit("Signupdata", data);
+    requestLogin({ state }, payload) {
+      console.log("requestLogin", state, payload);
+      const url = "/auth/login";
+      let body = payload;
+      return $axios.post(url, body);
     },
   },
   modules: {},

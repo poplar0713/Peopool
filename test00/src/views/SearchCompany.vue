@@ -6,7 +6,7 @@
       <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-container>
-          <h2>'{{ this.keyword }}' 검색결과</h2>
+          <h2>'{{ $route.params.keyword }}' 검색결과</h2>
         </el-container>
         <div v-if="this.ents.length > 0">
           <el-aside width="50%"

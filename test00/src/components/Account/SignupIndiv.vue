@@ -1,53 +1,58 @@
 <template>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
     <!-- 개인회원 ID -->
-    <el-form-item label="ID" prop="SignupIndivID">
-      <el-input v-model="ruleForm.SignupIndivID"></el-input>
+    <el-form-item label="ID" prop="ind_id">
+      <el-input @keydown="recheck" v-model="ruleForm.ind_id"></el-input>
+      <el-button @click="checkID">중복확인</el-button>
     </el-form-item>
     <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="SignupIndivPW">
-      <el-input type="password" v-model="ruleForm.SignupIndivPW"></el-input>
-    </el-form-item>
-    <!-- 개인회원 PW 확인 -->
-    <el-form-item label="Password Confirmation" prop="SignupIndivPWConfirm">
+    <el-form-item label="Password" prop="ind_password">
       <el-input
         type="password"
-        v-model="ruleForm.SignupIndivPWConfirm"
+        v-model="ruleForm.ind_password"
+        autocomplete="off"
+      ></el-input>
+    </el-form-item>
+    <!-- 개인회원 PW 확인 -->
+    <el-form-item label="Password Confirmation" prop="ind_password_cf">
+      <el-input
+        type="password"
+        v-model="ruleForm.ind_password_cf"
+        autocomplete="off"
       ></el-input>
     </el-form-item>
     <!-- 개인회원이름 -->
-    <el-form-item label="Name" prop="UserName">
-      <el-input v-model="ruleForm.UserName"></el-input>
+    <el-form-item label="Name" prop="ind_name">
+      <el-input v-model="ruleForm.ind_name"></el-input>
     </el-form-item>
     <!-- 개인회원 생년월일 -->
-    <el-form-item label="Birth" prop="UserBirth">
-      <el-input type="date" v-model="ruleForm.UserBirth"></el-input>
-    </el-form-item>
-    <!-- 공개여부 -->
-    <el-form-item label="Open to the public" prop="open">
-      <el-switch v-model="ruleForm.open"></el-switch>
+    <el-form-item label="Birth" prop="ind_birth">
+      <el-input
+        v-model="ruleForm.ind_birth"
+        placeholder="YYMMDD형식으로 작성해주세요"
+      ></el-input>
     </el-form-item>
     <!-- 성별 -->
-    <el-form-item label="Gender" prop="Gender">
-      <el-radio-group v-model="ruleForm.Gender">
-        <el-radio label="male"></el-radio>
-        <el-radio label="female"></el-radio>
+    <el-form-item label="Gender" prop="ind_gender">
+      <el-radio-group v-model="ruleForm.ind_gender">
+        <el-radio label="M"></el-radio>
+        <el-radio label="F"></el-radio>
       </el-radio-group>
     </el-form-item>
     <!-- 연락처 -->
-    <el-form-item label="Tel" prop="UserTel">
-      <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
+    <el-form-item label="Tel" prop="ind_phone">
+      <el-input type="tel" v-model="ruleForm.ind_phone"></el-input>
     </el-form-item>
     <!-- 이메일 -->
-    <el-form-item label="Email" prop="UserEmail">
-      <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
+    <el-form-item label="Email" prop="ind_email">
+      <el-input type="email" v-model="ruleForm.ind_email"></el-input>
     </el-form-item>
     <!-- 생성 및 취소 버튼 -->
     <el-form-item>
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
       <el-button
         type="warning"
-        @click="submitForm('ruleForm')"
+        @click="SignupInd('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
         >Create</el-button
       >
@@ -56,88 +61,135 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  // data
   data() {
+    // 비밀번호 체크
+    const checkPWCF = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("비밀번호(확인)를 입력해주세요"));
+      } else if (value !== this.ruleForm.ind_password) {
+        callback(new Error("비밀번호를 확인해주세요"));
+      } else {
+        callback();
+      }
+    };
+    // 아이디 중복 체크
+    const validationID = (rule, value, callback) => {
+      // this.checkID();
+      if (value === "") {
+        callback(new Error("ID를 입력해주세요"));
+      } else if (length.value < 5 || length.value > 10) {
+        callback(new Error("1-15자리로 설정해주세요"));
+      } else {
+        callback();
+      }
+    };
     return {
+      filled: false,
+      allowedID: false,
       ruleForm: {
-        SignupIndivID: "",
-        SignupIndivPW: "",
-        SignupIndivPWConfirm: "",
-        UserName: "",
-        UserBirth: "",
-        open: false,
-        Gender: "",
-        UserTel: "",
-        UserEmail: "",
+        ind_id: "",
+        ind_password: "",
+        ind_password_cf: "",
+        ind_name: "",
+        ind_birth: "",
+        ind_gender: "",
+        ind_phone: "",
+        ind_email: "",
       },
       rules: {
-        SignupIndivID: [
+        // 아이디
+        ind_id: [
           {
-            required: true,
-            message: "Please input Activity ID",
+            validator: validationID,
             trigger: "blur",
           },
           {
             min: 5,
             max: 10,
-            message: "Length should be 5 to 10",
+            message: "5-10자리로 설정해주세요",
             trigger: "blur",
           },
         ],
-        SignupIndivPW: [
+        // 비밀번호
+        ind_password: [
           {
             required: true,
-            message: "Please input Activity Password",
+            message: "비밀번호를 입력해주세요",
             trigger: "blur",
           },
           {
-            min: 10,
-            max: 15,
-            message: "Length should be 10 to 15",
+            min: 5,
+            max: 10,
+            message: "5-10자리로 설정해주세요",
             trigger: "blur",
           },
         ],
-        SignupIndivPWConfirm: [
-          { required: true, message: "Please check Password", trigger: "blur" },
-          {
-            min: 10,
-            max: 15,
-            message: "Length should be 10 to 15",
-            trigger: "blur",
-          },
-        ],
-        UserName: [
+        // 비밀번호확인
+        ind_password_cf: [
           {
             required: true,
-            message: "Please input your Name",
+            message: "비밀번호를 확인해주세요",
+            trigger: "blur",
+          },
+          {
+            min: 5,
+            max: 10,
+            message: "5-10자리로 설정해주세요",
+            trigger: "blur",
+          },
+          { validator: checkPWCF, trigger: "blur" },
+        ],
+        // 이름
+        ind_name: [
+          {
+            required: true,
+            message: "이름을 입력해주세요",
             trigger: "blur",
           },
         ],
-        UserBirth: [
+        // 생년월일
+        ind_birth: [
           {
             required: true,
-            message: "Please input your Birth",
+            message: "생년월일을 입력해주세요",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            max: 6,
+            message: "'YYMMDD'형식의 생년월일을 입력해주세요",
             trigger: "blur",
           },
         ],
-        Gender: [
+        // 성별
+        ind_gender: [
           {
             required: true,
-            message: "Please select your Gender",
+            message: "성별을 체크해주세요",
             trigger: "change",
           },
         ],
-        UserTel: [
+        // 연락처
+        ind_phone: [
           {
             required: true,
-            message: "Please input your Phone number",
+            message: "연락처를 입력해주세요",
             trigger: "change",
           },
         ],
-        UserEmail: [
+        // 이메일
+        ind_email: [
           {
             required: true,
-            message: "Please input your Email",
+            message: "이메일을 입력해주세요",
+            trigger: "change",
+          },
+          {
+            type: "email",
+            message: "이메일형식을 바르게 입력해주세요",
             trigger: "change",
           },
         ],
@@ -145,24 +197,55 @@ export default {
       fullscreenLoading: false,
     };
   },
+  // watch
+  watch: {},
+  // computed
+  computed: {},
+  // method
   methods: {
-    submitForm(formName) {
+    SignupInd(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          // alert('submit!');
-          this.$store.dispatch("getsignupdata", this.ruleForm);
+        if (valid && this.allowedID) {
+          console.log(this.ruleForm);
           this.openFullScreen2();
-          this.$store.state.SignupDialogIndiv = false;
-          this.successmessage();
-        } else {
+          // 데이터정보 보내기
+          axios
+            .post("https://localhost:8443/ind", {
+              ind_id: this.ruleForm.ind_id,
+              ind_password: this.ruleForm.ind_password,
+              ind_name: this.ruleForm.ind_name,
+              ind_birth: this.ruleForm.ind_birth,
+              ind_gender: this.ruleForm.ind_gender,
+              ind_phone: this.ruleForm.ind_phone,
+              ind_email: this.ruleForm.ind_email,
+            })
+            .then((res) => {
+              if (res.status == 200) {
+                this.$store.state.SignupDialogIndiv = false;
+                console.log(this.ruleForm);
+                setTimeout(() => {
+                  this.successmessage();
+                }, 3000);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else if (this.allowedID == false) {
           console.log("error submit!!");
+          this.recheckid();
+          return false;
+        } else {
           this.failed();
           return false;
         }
+        //
       });
     },
+    // 초기화
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      // 로딩
     },
     openFullScreen2() {
       const loading = this.$loading({
@@ -175,14 +258,49 @@ export default {
         loading.close();
       }, 3000);
     },
+    // 성공메시지
     successmessage() {
       this.$message({
-        message: "Welcome to PeoPool channel",
+        message: "회원가입(개인용)이 완료되었습니다",
         type: "success",
       });
     },
+    // 실패메시지
     failed() {
-      this.$message.error("Oops, check your identification info");
+      this.$message.error("회원가입 양식을 확인해주세요");
+    },
+    // 중복검사요청메시지
+    recheckid() {
+      this.$message.error("아이디 중복검사를 해주세요");
+    },
+    // id중복체크
+    checkID() {
+      // alert("진입성공");
+      if (this.ruleForm.ind_id.length > 4 && this.ruleForm.ind_id.length < 11) {
+        axios
+          .post("https://localhost:8443/ind/checkid", {
+            ind_id: this.ruleForm.ind_id,
+          })
+          .then((res) => {
+            console.log(res);
+            this.$message.error("이미 다른 사용자가 사용중인 아이디입니다.");
+            this.ruleForm.ind_id = "";
+            this.allowedID = false;
+          })
+          .catch((err) => {
+            console.log(err);
+            this.allowedID = true;
+            this.$message({
+              message: "사용가능한 아이디입니다.",
+              type: "success",
+            });
+          });
+      } else {
+        this.failed();
+      }
+    },
+    recheck() {
+      this.allowedID = false;
     },
   },
 };

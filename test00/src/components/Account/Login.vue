@@ -17,9 +17,8 @@
           <!-- 개인로그인 -->
           <LoginIndiv />
           <!-- 회원가입했니? -->
-          <div>
+          <div style="text-align:center">
             <el-button
-              type="text"
               @click="$store.state.SignupDialogIndiv = true"
               style="color:black"
               >아직 회원이 아니신가요?</el-button
@@ -34,13 +33,16 @@
               <SignupIndiv />
             </el-dialog>
           </div>
-          <div><KakaoLogin /></div>
+          <br />
+          <!-- 카카오톡로그인 -->
+          <div style="text-align:center"><KakaoLogin /></div>
+          <!-- 구글로그인 -->
+          <!--  -->
         </el-tab-pane>
         <el-tab-pane label="기업회원" name="second">
           <LoginCompany />
-          <div>
+          <div style="text-align:center">
             <el-button
-              type="text"
               @click="$store.state.SignupDialogCompany = true"
               style="color:black"
               >아직 (기업)회원이 아니신가요?</el-button
@@ -77,10 +79,10 @@ export default {
   data() {
     return {
       dialogTableVisible: false,
-      // dialogFormVisible: false,
-      // dialogVisible2: false,
       fullscreenLoading: false,
       activeName: "first",
+      name: "",
+      formLabelWidth: "80px",
       form: {
         individualmemberID: "",
         individualmemberPW: "",
@@ -89,12 +91,10 @@ export default {
         PhoneNumber: "",
         open: false,
       },
-      name: "",
-      formLabelWidth: "120px",
     };
   },
   methods: {
-    //
+    // 창닫기
     handleClose(done) {
       this.$confirm("Are you sure to close this page?")
         .then(() => {
@@ -103,7 +103,7 @@ export default {
         })
         .catch(() => {});
     },
-    //
+    // 제출
     onSubmit() {
       console.log("submit!");
       this.$router.push("home");
