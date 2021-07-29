@@ -25,14 +25,25 @@
           <span>Interview List</span>
         </el-menu-item>
         <el-menu-item index="3">
-          <i class="el-icon-star-on"></i>
-          <span>Following Applicants</span>
+          <i class="el-icon-right"></i>
+          <i class="el-icon-user-solid"></i>
+          <span><CompanyFollowings /></span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="4">
+          <i class="el-icon-office-building"></i>
+          <i class="el-icon-back"></i>
+          <span><CompanyFollowers /></span>
         </el-menu-item>
         <el-menu-item index="4">
+          <i class="el-icon-star-on"></i>
+          <span @click="GoToRecruit">RECRIT</span>
+        </el-menu-item>
+        <el-menu-item index="5">
           <i class="el-icon-setting"></i>
           <span>setting</span>
         </el-menu-item>
-        <el-menu-item index="7">
+        <el-menu-item index="6">
           <i class="el-icon-turn-off"></i>
           <span @click="Logout">Logout</span>
         </el-menu-item>
@@ -44,18 +55,26 @@
 </template>
 
 <script>
+import CompanyFollowers from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowers.vue";
+import CompanyFollowings from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowings.vue";
 export default {
-  components: {},
+  components: {
+    CompanyFollowers,
+    CompanyFollowings,
+  },
   methods: {
     ch(data) {
       console.log(data);
       this.$router.push("searchDetail");
     },
-        Logout() {
+    Logout() {
       localStorage.clear();
       location.reload();
-      this.$router.push('')
+      this.$router.push("");
     },
+    GoToRecruit(){
+      this.$router.push('recruiting')
+    }
   },
   data() {
     return {

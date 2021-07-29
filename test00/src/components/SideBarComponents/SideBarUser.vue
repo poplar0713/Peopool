@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside class="sidebar" width="200px">
-      <router-link to="/company" style="text-decoration: none;">
+      <router-link to="/user" style="text-decoration: none;">
         <div class="title">
           <div>
             <span class="f">P</span>
@@ -92,7 +92,7 @@ export default {
     Logout() {
       localStorage.clear();
       location.reload();
-      this.$router.push('');
+      this.$router.push("");
     },
   },
   data() {

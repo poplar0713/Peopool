@@ -1,7 +1,7 @@
 <template>
   <div class="keywordBox">
     <div id="keyword">
-      {{ inputdata }}
+      {{ $route.params.keyword }}
     </div>
     <p>해당 태그에 다음 피풀인이 기업의 많은 관심을 받고 있어요!</p>
   </div>
@@ -41,7 +41,7 @@
     </el-carousel>
   </div>
 
-  <p>#{{ inputdata }}의 결과</p>
+  <p>#{{ $route.params.keyword }}의 결과</p>
   <div id="resultBox">
     <el-card
       id="result"
@@ -76,7 +76,6 @@ export default {
     return {};
   },
   props: {
-    inputdata: String,
     followData: Object,
   },
 };

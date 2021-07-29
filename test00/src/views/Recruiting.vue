@@ -46,12 +46,30 @@
                             </el-table-column>
                             <el-table-column prop="p_part" label="직무">
                             </el-table-column>
-                            <el-table-column label="" prop="p_ind">
-                              <el-button
-                                @click="enterInterViewRoom(p_ind)"
-                                type="warning"
-                                >면접장 입장</el-button
-                              >
+                            <el-table-column label="" prop="p_name">
+                              <template #default="scope">
+                                <el-button
+                                  size="mini"
+                                  @click="
+                                    Cancel(
+                                      scope.$index,
+                                      scope.row,
+                                      scope.row.p_name
+                                    )
+                                  "
+                                  >Cancel</el-button
+                                >
+                                <!-- {{scope.row.company}} -->
+                                <el-button
+                                  size="mini"
+                                  type="danger"
+                                  @click="
+                                    GoToInteriewRoom(scope.row.p_name)
+                                  "
+                                  >Interview Room</el-button
+                                >
+                                <!-- {{scope.row.url}} -->
+                              </template>
                             </el-table-column>
                           </el-table></el-card
                         >
@@ -118,6 +136,7 @@ export default {
     return {
       now: new Date(),
       tabposition: "right",
+      company:"로그인된기업",
       waitinglist: [
         {
           p_name: "천서진",
@@ -281,8 +300,12 @@ export default {
     },
   },
   methods: {
-    enterInterViewRoom(p_ind) {
-      console.log(p_ind);
+    GoToInteriewRoom(row) {
+      // console.log(p_ind);
+      this.$router.push({
+        name: "InterviewRoom",
+        params: { company: this.company, user: row },
+      });
     },
   },
 };
