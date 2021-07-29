@@ -70,12 +70,12 @@ export default {
               ind_id: this.ruleForm.LoginIndivID,
               ind_password: this.ruleForm.LoginIndivPW,
             })
-            .then(function(result) {
+            .then((result)=> {
               alert("accessToken: " + result.data.accessToken);
-              this.$router.push("/user/" + this.ruleForm.LoginIndivID);
-             localStorage.setItem('token', result.data.accessToken);
+              this.$router.push("user");
+              localStorage.setItem("token", result.data.accessToken);
             })
-            .catch(function(err) {
+            .catch((err)=> {
               alert(err);
             });
           //

@@ -1,5 +1,10 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    style="text-align:center"
+  >
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="LoginCompanyID">
       <el-input v-model="ruleForm.LoginCompanyID"></el-input>
@@ -53,6 +58,22 @@ export default {
         if (valid) {
           // alert("submit!");
           this.Loging();
+          // axios.post 로그인구현
+          // this.$store
+          //   .dispatch("requestLogin", {
+          //     ind_id: this.ruleForm.LoginIndivID,
+          //     ind_password: this.ruleForm.LoginIndivPW,
+          //   })
+          //   .then((result) => {
+          //     alert("accessToken: " + result.data.accessToken);
+          //     this.$router.push("user");
+          //     localStorage.setItem("token", result.data.accessToken);
+          //   })
+          //   .catch((err) => {
+          //     alert(err);
+          //   });
+          // //
+          // this.$store.state.LoginDialog = false;
         } else {
           console.log("error submit!!");
           return false;
