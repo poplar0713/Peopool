@@ -26,9 +26,15 @@ export default createStore({
   },
   mutations: {},
   actions: {
-    requestLogin({ state }, payload) {
+    requestLoginind({ state }, payload) {
       console.log("requestLogin", state, payload);
       const url = "/auth/login";
+      let body = payload;
+      return $axios.post(url, body);
+    },
+    requestLoginent({ state }, payload) {
+      console.log("requestLogin", state, payload);
+      const url = "/auth/entlogin";
       let body = payload;
       return $axios.post(url, body);
     },
