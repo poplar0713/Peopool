@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from "axios";
+// import axios from 'axios'
 export default {
   components: {},
   data() {
@@ -58,14 +59,24 @@ export default {
   },
   methods: {
     // 로그인
-    async submitForm(formName) {
+    submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
           this.openFullScreen2();
-          // this.$router.push("/user/" + this.ruleForm.LoginIndivID);
           // axios.post 로그인구현
-
+          this.$store
+            .dispatch("requestLogin", {
+              ind_id: this.ruleForm.LoginIndivID,
+              ind_password: this.ruleForm.LoginIndivPW,
+            })
+            .then(function(result) {
+              alert("accessToken: " + result.data.accessToken);
+              // this.$router.push("/user/" + this.ruleForm.LoginIndivID);
+            })
+            .catch(function(err) {
+              alert(err);
+            });
           //
           this.$store.state.LoginDialog = false;
         } else {
@@ -73,8 +84,8 @@ export default {
           return false;
         }
       });
-      const response = await axios.post()
     },
+
     // 폼초기화
     resetForm(formName) {
       this.$refs[formName].resetFields();

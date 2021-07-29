@@ -23,9 +23,9 @@ public class IndividualServiceImpl implements IndividualService {
 	}
 
 	@Override
-	public Individual loginCheckIndividual(String id,String pw) throws SQLException {
+	public Individual loginCheckIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
-		return individualRepo.loginCheckIndividual(id,pw);
+		return individualRepo.loginCheckIndividual(individual);
 	}
 
 	@Override

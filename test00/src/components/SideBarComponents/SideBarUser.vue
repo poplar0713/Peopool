@@ -52,7 +52,9 @@
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-turn-off"></i>
-          <span>Logout</span>
+          <span v-if="!state.token"
+            ><button type="text" @click="Logout">Logout</button></span
+          >
         </el-menu-item>
         <!--  -->
       </el-menu>
@@ -87,6 +89,11 @@ export default {
     search(data) {
       console.log(data);
       this.$router.push("searchDetail");
+    },
+    // 로그아웃
+    Logout() {
+      localStorage.clear();
+      location.reload();
     },
   },
   data() {
