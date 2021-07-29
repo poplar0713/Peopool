@@ -1,11 +1,16 @@
 <template>
-  <div>인터뷰룸</div>
-  <div>{{ $route.params.company }}기업의 인터뷰룸입니다.</div>
-  <div>지원자 {{ $route.params.user }}님의 면접을 기대합니다.</div>
+  <el-container>
+    <el-aside width="200px"><SideBarUser /></el-aside>
+    <el-container></el-container>
+  </el-container>
 </template>
 
 <script>
+import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 export default {
+  components: {
+    SideBarUser,
+  },
   name: "InterviewRoom",
 };
 </script>

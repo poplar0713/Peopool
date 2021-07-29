@@ -59,7 +59,7 @@ const routes = [
     path: "/recruiting",
     name: "recruiting",
     component: Recruiting
-  }
+  },
 ];
 
 const router = createRouter({
