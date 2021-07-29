@@ -54,7 +54,7 @@ export default {
     return {
       mainsearch: "",
       search: "",
-      username: this.$store.state.temp.UserName,
+      username: "",
       hasVideo: true,
       hasDoc: true,
       videosrc: "@/assets/samplevideo.mp4",
