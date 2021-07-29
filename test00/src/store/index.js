@@ -28,11 +28,7 @@ export default createStore({
   actions: {
     requestLogin({ state }, payload) {
       console.log("requestLogin", state, payload);
-<<<<<<< HEAD
-      const url = "/ind/login";
-=======
       const url = "/auth/login";
->>>>>>> 6d5f31f6ba1d47e64438d2220e3772795da394fa
       let body = payload;
       return $axios.post(url, body);
     },

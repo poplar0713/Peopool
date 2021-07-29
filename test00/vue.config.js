@@ -18,11 +18,7 @@ module.exports = {
       "/upload": {
         target: "https://localhost:8443/",
       },
-<<<<<<< HEAD
-      "/ind": {
-=======
       "/auth": {
->>>>>>> 6d5f31f6ba1d47e64438d2220e3772795da394fa
         target: "https://localhost:8443/",
       },
     },
