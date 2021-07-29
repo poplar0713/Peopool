@@ -13,7 +13,7 @@ public interface IndividualRepo {
 	List<Individual> getAllUser() throws SQLException;
 
 	// 개인 로그인
-	Individual loginCheckIndividual(String id,String pw) throws SQLException;
+	Individual loginCheckIndividual(Individual individual) throws SQLException;
 
 	// 개인 회원정보조회 ( 이름, 생년월일, 성별, 번호, 이메일)
 	Individual getIndividual(int index) throws SQLException;

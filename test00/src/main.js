@@ -15,8 +15,8 @@ import installElementPlus from "./plugins/element";
 // kakaotalk
 window.Kakao.init("e5254ff19094b2f428ebe96dfb28c1a7");
 // firebase
-require("../node_modules/firebaseui/dist/firebaseui.js");
-require("../node_modules/firebaseui/dist/firebaseui.css");
+// require("../node_modules/firebaseui/dist/firebaseui.js");
+// require("../node_modules/firebaseui/dist/firebaseui.css");
 
 const app = createApp(App);
 installElementPlus(app);
