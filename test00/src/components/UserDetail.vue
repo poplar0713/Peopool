@@ -30,7 +30,7 @@
           </el-collapse-item>
           <el-collapse-item title="Documents" name="4">
             <div>
-              관련서류목록
+              <webviewer initialDoc="파이팅 프런트.docx" />
             </div>
           </el-collapse-item>
           <el-collapse-item title="reservation" name="5">
@@ -132,7 +132,11 @@
 </template>
 
 <script>
+import webviewer from "@/components/MainCompany/webviewer.vue";
 export default {
+  components: {
+    webviewer,
+  },
   name: "userdetail",
   setup() {},
   created() {

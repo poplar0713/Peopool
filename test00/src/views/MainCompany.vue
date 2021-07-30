@@ -14,7 +14,7 @@
           title="Today 눈여겨보는 관심 피풀인"
           :followData="followData"
         />
-        <webviewer initialDoc="파이팅 프런트.docx" />
+        <!-- <webviewer initialDoc="파이팅 프런트.docx" /> -->
       </el-main>
     </el-container>
   </el-container>
@@ -24,14 +24,14 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
-import webviewer from "@/components/MainCompany/webviewer.vue";
+// import webviewer from "@/components/MainCompany/webviewer.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 export default {
   components: {
     SideBarCompany,
     CheckAnnc,
     ApplicantList,
-    webviewer,
+    // webviewer,
     headerSearchUser,
   },
 
