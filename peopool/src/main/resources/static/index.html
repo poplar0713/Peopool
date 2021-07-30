@@ -4,7 +4,11 @@
     <!-- <link rel="styleSheet" href="style.css" type="text/css" media="screen" /> -->
 
     <script src="/webjars/webrtc-adapter/release/adapter.js"></script>
-
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
     <script src="./js/participant.js"></script>
     <script src="./js/kurento-utils.js"></script>
   </head>
@@ -44,15 +48,18 @@
         <div id="room" style="display: none">
           <h2 id="room-header"></h2>
           <div id="participants"></div>
-          <!-- <input
+          <input
             type="button"
             id="button-leave"
             onmouseup="leaveRoom();"
             value="Leave room"
-          /> -->
+          />
+          <button id="videoTurnOff">camera</button>
+          <button id="startButton">share</button>
         </div>
       </div>
     </div>
     <script src="./js/conferenceroom.js"></script>
+    <script src="./js/displaymedia.js"></script>
   </body>
 </html>
