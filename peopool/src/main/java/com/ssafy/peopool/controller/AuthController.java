@@ -49,9 +49,10 @@ public class AuthController {
 	public ResponseEntity<LoginRes> login(@RequestBody @ApiParam(value="로그인 정보", required = true) Individual individual) throws SQLException {
 		String userId = individual.getInd_id();
 		String password = individual.getInd_password();
-		int index = individual.getInd_index();
+
 		
 		Individual ind = individualService.getUserId(userId);
+		int index = ind.getInd_index();
 		if(passwordEncoder.matches(password, ind.getInd_password())) {
 			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index)));
 		}
@@ -69,9 +70,10 @@ public class AuthController {
 	public ResponseEntity<LoginRes> loginEnt(@RequestBody @ApiParam(value="로그인 정보", required = true) Enterprise enterprise) throws SQLException {
 		String userId = enterprise.getEnt_id();
 		String password = enterprise.getEnt_password();
-		int index = enterprise.getEnt_index();
+
 		
 		Enterprise ent = enterpriseService.getUserId(userId);
+		int index = ent.getEnt_index();
 		if(passwordEncoder.matches(password, ent.getEnt_password())) {
 			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index)));
 		}
