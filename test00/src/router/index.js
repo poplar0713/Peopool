@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import MainUser from '../views/MainUser.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import MainUser from "../views/MainUser.vue";
 import SearchDetail from "../views/SearchDetail.vue";
 import Start from "../views/Start.vue";
 import MainCompany from "../views/MainCompany.vue";

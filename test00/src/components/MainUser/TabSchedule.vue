@@ -74,8 +74,21 @@ export default {
     },
     GoToInteriewRoom(company, user) {
       console.log(company, user);
-      this.$router.push(`interviewroom/${company}/${user}`);
-      // user/interviewroom으로 넘어감
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        // this.$router.push(`interviewroom/${company}/${user}`);
+        this.$router.push({
+          name: "InterviewRoom",
+          params: { company: company, user: user },
+        });
+        // user/interviewroom으로 넘어감
+      }, 1000);
     },
   },
 };

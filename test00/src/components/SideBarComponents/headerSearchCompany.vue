@@ -4,7 +4,7 @@
       placeholder="Please input"
       v-model="keyword"
       class="input-with-select"
-      @keyup="search"
+      @keydown.enter="search"
     >
       <template #append>
         <el-button @click="search" icon="el-icon-search"></el-button>
