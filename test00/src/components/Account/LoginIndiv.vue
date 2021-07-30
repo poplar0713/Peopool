@@ -73,7 +73,7 @@ export default {
             .then(function(result) {
               alert("accessToken: " + result.data.accessToken);
               this.$router.push("/user/" + this.ruleForm.LoginIndivID);
-             localStorage.setItem('token', result.data.accessToken);
+              localStorage.setItem('token', result.data.accessToken);
             })
             .catch(function(err) {
               alert(err);
