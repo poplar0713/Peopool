@@ -34,7 +34,7 @@ export default createStore({
     },
     requestLoginent({ state }, payload) {
       console.log("requestLogin", state, payload);
-      const url = "/auth/entlogin";
+      const url = "/auth/loginent";
       let body = payload;
       return $axios.post(url, body);
     },

@@ -95,7 +95,7 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$store.state.LoginDialog = false;
-        this.$router.push("company");
+        
         this.Hello();
       }, 3000);
     },
