@@ -11,6 +11,7 @@
       ><PRVideo
     /></el-tab-pane>
     <el-tab-pane label="Tags"><SideBarProfileUserTags /></el-tab-pane>
+    <el-tab-pane label="Documents"><SideBarProfileUserDoc /></el-tab-pane>
   </el-tabs>
 </template>
 
@@ -20,6 +21,7 @@ import SideBarProfileUserEducation from "./SideBarProfileUserEducation.vue";
 import TSideBarProfileUserIntroduction from "./TSideBarProfileUserIntroduction.vue";
 import SideBarProfileUserTags from "./SideBarProfileUserTags.vue";
 import PRVideo from "./PRVideo.vue";
+import SideBarProfileUserDoc from "./SideBarProfileUserDoc.vue";
 export default {
   components: {
     SideBarProfileUserInfo,
@@ -27,6 +29,7 @@ export default {
     TSideBarProfileUserIntroduction,
     SideBarProfileUserTags,
     PRVideo,
+    SideBarProfileUserDoc,
   },
   data() {
     return {

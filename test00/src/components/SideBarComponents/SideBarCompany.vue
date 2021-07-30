@@ -69,12 +69,12 @@ export default {
     },
     Logout() {
       localStorage.clear();
-      location.reload();
-      this.$router.push("");
+      // location.reload();
+      this.$router.push("/");
     },
-    GoToRecruit(){
-      this.$router.push('recruiting')
-    }
+    GoToRecruit() {
+      this.$router.push("recruiting");
+    },
   },
   data() {
     return {
