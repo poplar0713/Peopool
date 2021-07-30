@@ -4,17 +4,12 @@ import store from "./store";
 import router from "./router";
 import installElementPlus from "./plugins/element";
 
-// axios cors err
-// import axios from 'axios' 
-// import AxiosPlugin from 'vue-axios-cors';
-// axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded' 
-// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// import vueMoment from "vue-moment";
+// Vue.use(vueMoment);
 
-
-
-// kakaotalk
+// // kakaotalk
 window.Kakao.init("e5254ff19094b2f428ebe96dfb28c1a7");
-// firebase
+// // firebase
 // require("../node_modules/firebaseui/dist/firebaseui.js");
 // require("../node_modules/firebaseui/dist/firebaseui.css");
 

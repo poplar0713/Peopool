@@ -40,6 +40,8 @@ import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
+// const token = localStorage.getItem('token')
+
 export default {
   components: {
     SideBarUser,

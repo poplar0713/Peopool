@@ -27,8 +27,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-// import axios from 'axios'
 export default {
   components: {},
   data() {
@@ -66,16 +64,26 @@ export default {
           this.openFullScreen2();
           // axios.post 로그인구현
           this.$store
-            .dispatch("requestLogin", {
+            .dispatch("requestLoginind", {
               ind_id: this.ruleForm.LoginIndivID,
               ind_password: this.ruleForm.LoginIndivPW,
             })
+<<<<<<< HEAD
             .then(function(result) {
               alert("accessToken: " + result.data.accessToken);
               this.$router.push("/user/" + this.ruleForm.LoginIndivID);
               localStorage.setItem('token', result.data.accessToken);
+=======
+            .then((result) => {
+              // alert("accessToken: " + result.data.accessToken);
+
+              localStorage.setItem("token", result.data.accessToken);
+              setTimeout(() => {
+                this.$router.push("user");
+              }, 3000);
+>>>>>>> cho
             })
-            .catch(function(err) {
+            .catch((err) => {
               alert(err);
             });
           //

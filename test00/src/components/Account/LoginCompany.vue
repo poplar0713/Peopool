@@ -1,5 +1,10 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    style="text-align:center"
+  >
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="LoginCompanyID">
       <el-input v-model="ruleForm.LoginCompanyID"></el-input>
@@ -53,6 +58,24 @@ export default {
         if (valid) {
           // alert("submit!");
           this.Loging();
+          this.$store
+            .dispatch("requestLoginent", {
+              ent_id: this.ruleForm.LoginCompanyID,
+              ent_password: this.ruleForm.LoginCompanyPW,
+            })
+            .then((result) => {
+              // alert("accessToken: " + result.data.accessToken);
+
+              localStorage.setItem("token", result.data.accessToken);
+              setTimeout(() => {
+                this.$router.push("company");
+              }, 3000);
+            })
+            .catch((err) => {
+              alert(err);
+            });
+          //
+          this.$store.state.LoginDialog = false;
         } else {
           console.log("error submit!!");
           return false;
@@ -72,7 +95,7 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$store.state.LoginDialog = false;
-        this.$router.push("company");
+        
         this.Hello();
       }, 3000);
     },

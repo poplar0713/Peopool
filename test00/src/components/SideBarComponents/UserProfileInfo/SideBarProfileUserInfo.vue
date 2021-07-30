@@ -3,22 +3,24 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 개인회원이름 -->
       <el-form-item label="Name" prop="UserName">
-        <el-input v-model="ruleForm.UserName"></el-input>
+        <el-input v-model="ruleForm.UserName">{{
+          this.ruleForm.UserName
+        }}</el-input>
       </el-form-item>
       <!-- 개인회원 생년월일 -->
       <el-form-item label="Birth" prop="UserBirth">
-        <el-input type="date" v-model="ruleForm.UserBirth"></el-input>
+        <el-input
+          v-model="ruleForm.UserBirth"
+          placeholder="YYMMDD형식으로 작성해주세요"
+        ></el-input>
       </el-form-item>
       <!-- 개인회원 PW -->
-      <el-form-item label="Password" prop="SignupIndivPW">
-        <el-input type="password" v-model="ruleForm.SignupIndivPW"></el-input>
+      <el-form-item label="Password" prop="Password">
+        <el-input type="password" v-model="ruleForm.Password"></el-input>
       </el-form-item>
       <!-- 개인회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="SignupIndivPWConfirm">
-        <el-input
-          type="password"
-          v-model="ruleForm.SignupIndivPWConfirm"
-        ></el-input>
+      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
+        <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
       <!-- 공개여부 -->
       <el-form-item label="Open to the public" prop="open">
@@ -40,15 +42,15 @@
         <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
       </el-form-item>
       <div style="float:right">
-      <el-form-item>
-        <el-button @click="resetForm('ruleForm')">Reset</el-button>
-        <el-button
-          type="warning"
-          @click="submitForm('ruleForm')"
-          v-loading.fullscreen.lock="fullscreenLoading"
-          >Save</el-button
-        >
-      </el-form-item>
+        <el-form-item>
+          <el-button @click="resetForm('ruleForm')">Reset</el-button>
+          <el-button
+            type="warning"
+            @click="submitForm('ruleForm')"
+            v-loading.fullscreen.lock="fullscreenLoading"
+            >Save</el-button
+          >
+        </el-form-item>
       </div>
     </el-form>
   </div>
@@ -59,29 +61,16 @@ export default {
   data() {
     return {
       ruleForm: {
-        SignupIndivPW: "",
-        SignupIndivPWConfirm: "",
-        UserName: "",
-        UserBirth: "",
+        Password: "",
+        PasswordConfirm: "",
+        UserName: "사용자이름",
+        UserBirth: "000000",
         open: false,
         Gender: "",
         UserTel: "",
         UserEmail: "",
       },
       rules: {
-        SignupIndivID: [
-          {
-            required: true,
-            message: "Please input Activity ID",
-            trigger: "blur",
-          },
-          {
-            min: 5,
-            max: 10,
-            message: "Length should be 5 to 10",
-            trigger: "blur",
-          },
-        ],
         SignupIndivPW: [
           {
             required: true,
@@ -107,35 +96,46 @@ export default {
         UserName: [
           {
             required: true,
-            message: "Please input your Name",
+            message: "이름을 입력해주세요",
             trigger: "blur",
           },
         ],
         UserBirth: [
           {
             required: true,
-            message: "Please input your Birth",
+            message: "생년월일을 입력해주세요",
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            max: 6,
+            message: "'YYMMDD'형식의 생년월일을 입력해주세요",
             trigger: "blur",
           },
         ],
         Gender: [
           {
             required: true,
-            message: "Please select your Gender",
+            message: "성별을 체크해주세요",
             trigger: "change",
           },
         ],
         UserTel: [
           {
             required: true,
-            message: "Please input your Phone number",
+            message: "연락처를 입력해주세요",
             trigger: "change",
           },
         ],
         UserEmail: [
           {
             required: true,
-            message: "Please input your Email",
+            message: "이메일을 입력해주세요",
+            trigger: "change",
+          },
+          {
+            type: "email",
+            message: "이메일형식을 바르게 입력해주세요",
             trigger: "change",
           },
         ],
@@ -149,7 +149,6 @@ export default {
         if (valid) {
           // alert('submit!');
           this.openFullScreen2();
-          this.$store.state.SignupDialogIndiv = false;
           this.successmessage();
         } else {
           console.log("error submit!!");

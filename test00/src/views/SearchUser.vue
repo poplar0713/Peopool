@@ -5,7 +5,10 @@
     <el-container>
       <el-header><headerSearchUser /></el-header>
       <el-main>
-        <SearchList :followData="followData" inputdata="Java" />
+        <SearchList
+          :followData="followData"
+          :inputdata="$route.params.keyword"
+        />
       </el-main>
     </el-container>
   </el-container>

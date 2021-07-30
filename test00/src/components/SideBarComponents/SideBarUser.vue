@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside class="sidebar" width="200px">
-      <router-link to="/company" style="text-decoration: none;">
+      <router-link to="/user" style="text-decoration: none;">
         <div class="title">
           <div>
             <span class="f">P</span>
@@ -52,9 +52,7 @@
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-turn-off"></i>
-          <span v-if="!state.token"
-            ><button type="text" @click="Logout">Logout</button></span
-          >
+          <span @click="Logout">Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>
@@ -93,7 +91,8 @@ export default {
     // 로그아웃
     Logout() {
       localStorage.clear();
-      location.reload();
+      // location.reload();
+      this.$router.push("/");
     },
   },
   data() {

@@ -57,16 +57,16 @@ export default {
       }
     };
     // 아이디 중복 체크
-    // const validationID = (rule, value, callback) => {
-    //   // this.checkID();
-    //   if (value === "") {
-    //     callback(new Error("ID를 입력해주세요"));
-    //   } else if (length.value < 5 || length.value > 10) {
-    //     callback(new Error("1-15자리로 설정해주세요"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
+    const validationID = (rule, value, callback) => {
+      // this.checkID();
+      if (value === "") {
+        callback(new Error("ID를 입력해주세요"));
+      } else if (length.value < 5 || length.value > 10) {
+        callback(new Error("1-15자리로 설정해주세요"));
+      } else {
+        callback();
+      }
+    };
     // 회사 중복 체크
     // const validationID = (rule, value, callback) => {
     //   // this.checkID();
@@ -107,6 +107,10 @@ export default {
             min: 5,
             max: 10,
             message: "Length should be 5 to 10",
+            trigger: "blur",
+          },
+          {
+            validator: validationID,
             trigger: "blur",
           },
         ],
@@ -173,10 +177,10 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogCompany = false;
+                console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
                 }, 3000);
-                console.log(this.ruleForm);
               }
             })
             .catch((err) => {
