@@ -41,7 +41,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.4",
-    "vue-cli-plugin-element-plus": "0.0.13"
+    "vue-cli-plugin-element-plus": "0.0.13",
+    "webpack": "^4.46.0"
   },
   "eslintConfig": {
     "root": true,

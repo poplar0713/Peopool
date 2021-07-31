@@ -11,6 +11,10 @@ export default {
   components: {
     SideBarUser,
   },
+  created() {
+    var ws = new WebSocket("wss://localhost:8443" + "/groupcall");
+    console.log(ws);
+  },
   name: "InterviewRoom",
 };
 </script>

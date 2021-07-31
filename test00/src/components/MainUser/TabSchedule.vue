@@ -2,7 +2,8 @@
   <el-table
     :data="
       tableData.filter(
-        (data) => !search || data.company.toLowerCase().includes(search.toLowerCase())
+        (data) =>
+          !search || data.company.toLowerCase().includes(search.toLowerCase())
       )
     "
     :default-sort="{ prop: 'date', order: 'ascending' }"
@@ -15,11 +16,16 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-button size="mini" @click="Cancel(scope.$index, scope.row, scope.row.company)"
+        <el-button
+          size="mini"
+          @click="Cancel(scope.$index, scope.row, scope.row.company)"
           >Cancel</el-button
         >
         <!-- {{scope.row.company}} -->
-        <el-button size="mini" type="danger" @click="GoToInteriewRoom(scope.row.company, user)"
+        <el-button
+          size="mini"
+          type="danger"
+          @click="GoToInteriewRoom(scope.row.company, user)"
           >Interview Room</el-button
         >
         <!-- {{scope.row.url}} -->
@@ -29,6 +35,7 @@
 </template>
 
 <script>
+// import sockjs from "sockjs-client";
 export default {
   data() {
     return {
@@ -68,11 +75,13 @@ export default {
     },
     GoToInteriewRoom(company, user) {
       console.log(company, user);
-
-      window.open("https://localhost:8443", "_blank");
-
-      this.$router.push(`interviewroom/${company}/${user}`);
+      // window.open("https://localhost:8443", "_blank");
+      // this.$router.push(`interviewroom/${company}/${user}`);
       // user/interviewroom으로 넘어감
+      var ws = new WebSocket("wss://localhost:8443" + "/groupcall");
+      ws.onopen = () => {
+        console.log(ws);
+      };
     },
   },
 };
