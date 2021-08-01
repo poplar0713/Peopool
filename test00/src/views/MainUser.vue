@@ -8,7 +8,9 @@
         <el-row :gutter="20">
           <el-col :span="11"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">내정보</el-divider
+              <el-divider content-position="left">{{
+                this.username
+              }}</el-divider
               ><MyInfo /></div
           ></el-col>
           <el-col :span="6"
@@ -27,7 +29,7 @@
         <el-divider content-position="left">기업 정보</el-divider>
         <CompanyList />
         <el-divider content-position="left">관심기업 정보</el-divider>
-        <CompanyList />
+        <InterestedCompanyList />
       </el-footer>
     </el-container>
   </el-container>
@@ -38,21 +40,37 @@ import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue
 import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
+import InterestedCompanyList from "@/components/MainUser/InterestedCompanyList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
-// const token = localStorage.getItem('token')
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
   components: {
     SideBarUser,
     CompanyList,
+    InterestedCompanyList,
     TabRequiredInterview,
     TabSchedule,
     MyInfo,
-
     headerSearchCompany,
   },
   data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 회원정보 가져오기
+    axios
+      .get(`https://localhost:8443/ind/${index}`)
+      .then((res) => {
+        console.log(res.data.ind_name);
+        this.username = res.data.ind_name;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return {
       mainsearch: "",
       search: "",
@@ -63,6 +81,7 @@ export default {
       fileList: [],
     };
   },
+  mounted() {},
   methods: {
     uploadFile() {},
     handleRemove(file, fileList) {

@@ -8,18 +8,12 @@
 
 <script>
 import CompanyCard from "@/components/search/CompanyCard.vue";
-// import axios from 'axios';
 
 export default {
   components: {
     CompanyCard,
   },
   data() {
-    // 기업 회원 조회
-    // axios.get('https://localhost:8443/ent')
-    // .then((res)=>)
-    // .catch()
-
     return {
       ents: [
         {

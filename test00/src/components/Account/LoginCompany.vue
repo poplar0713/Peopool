@@ -64,9 +64,8 @@ export default {
               ent_password: this.ruleForm.LoginCompanyPW,
             })
             .then((result) => {
-              // alert("accessToken: " + result.data.accessToken);
-
               localStorage.setItem("token", result.data.accessToken);
+              this.$store.state.type = "1";
               setTimeout(() => {
                 this.$router.push("company");
               }, 3000);
@@ -95,7 +94,7 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$store.state.LoginDialog = false;
-        
+
         this.Hello();
       }, 3000);
     },

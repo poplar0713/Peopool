@@ -1,11 +1,12 @@
 import { createStore } from "vuex";
-import $axios from 'axios'
+import $axios from "axios";
 
 export default createStore({
   state: {
     LoginDialog: false,
     SignupDialogIndiv: false,
     SignupDialogCompany: false,
+    type:0,
     fileList: [
       {
         name: "자소서",

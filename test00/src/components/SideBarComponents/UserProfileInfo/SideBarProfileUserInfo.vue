@@ -57,14 +57,35 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+
 export default {
   data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 회원정보 가져오기
+    axios
+      .get(`https://localhost:8443/ind/${index}`)
+      .then((res) => {
+        console.log(res.data.ind_name);
+        this.ruleForm.UserName = res.data.ind_name;
+        this.ruleForm.UserBirth = res.data.ind_birth;
+        this.ruleForm.Gender = res.data.ind_gender;
+        this.ruleForm.UserTel = res.data.ind_phone;
+        this.ruleForm.UserEmail = res.data.ind_email;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return {
       ruleForm: {
         Password: "",
         PasswordConfirm: "",
-        UserName: "사용자이름",
-        UserBirth: "000000",
+        UserName: "",
+        UserBirth: "",
         open: false,
         Gender: "",
         UserTel: "",
@@ -150,6 +171,7 @@ export default {
           // alert('submit!');
           this.openFullScreen2();
           this.successmessage();
+          // axios.put(`https://localhost:8443/ind/${index}`)
         } else {
           console.log("error submit!!");
           this.failed();
