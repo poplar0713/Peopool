@@ -1,6 +1,6 @@
 version: '20.10.7' # docker -v 버전을 입력
 
-services: # 실행하려는 컨테이너들을 정의
+services: ##실행하려는 컨테이너들을 정의
     jenkins: # 서비스의 이름
     image: 'jenkins/jenkins' # 사용할 도커 이미지
     # 명시적으로 중지되거나, Docker 자체가 중지되는 경우 재시작
