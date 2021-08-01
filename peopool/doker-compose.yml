@@ -14,3 +14,4 @@ services: # 실행하려는 컨테이너들을 정의
     - '/var/run/docker.sock:/var/run/docker.sock'
     - '$HOME:/home'
     container_name: 'jenkins'
+    command: 'mvn -U clean spring-boot:run -Dspring-boot.run.jvmArguments="-Dkms.url=ws://52.79.162.52:8888/kurento"'
