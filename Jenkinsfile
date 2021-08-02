@@ -12,6 +12,7 @@ pipeline {
 		}
 		stage('Docker run') {
 			agent any
+			options { skipDefaultCheckout(false) }
 			steps {
 				sh 'docker ps -f name=peopoolfe -q \
 					| xargs --no-run-if-empty docker container stop'
