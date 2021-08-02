@@ -91,8 +91,8 @@ export default {
     // 로그아웃
     Logout() {
       localStorage.clear();
-      location.reload();
-      this.$router.push("");
+      // location.reload();
+      this.$router.push("/");
     },
   },
   data() {

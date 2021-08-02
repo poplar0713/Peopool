@@ -35,80 +35,101 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+
 export default {
   data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 요청받은 인터뷰
+    axios
+      .get(`https://localhost:8443/sug/${index}`, {
+        params: {
+          index: index,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.tableData = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return {
       radio: "1",
       submitteddate: "",
       submittedtime: "",
       responseform: [{ submitteddate: "" }, { submittedtime: "" }],
       tableData: [
-        {
-          company_id: 1,
-          company_name: "삼성피자",
-          company_field: "??????????",
-          date1: "2021-08-30",
-          time1: "13:00-14:00",
-          date2: "2021-08-31",
-          time2: "13:00-14:00",
-          date3: "2021-08-32",
-          time3: "13:00-14:00",
-        },
-        {
-          company_id: 2,
-          company_name: "삼성햄버거",
-          company_field: "??????????",
-          date1: "2021-04-30",
-          time1: "13:00-14:00",
-          date2: "2021-03-30",
-          time2: "13:00-14:00",
-          date3: "2021-02-30",
-          time3: "13:00-14:00",
-        },
-        {
-          company_id: 3,
-          company_name: "삼성양말",
-          company_field: "??????????",
-          date1: "2021-02-30",
-          time1: "13:00-14:00",
-          date2: "2021-03-30",
-          time2: "13:00-14:00",
-          date3: "2021-04-30",
-          time3: "13:00-14:00",
-        },
-        {
-          company_id: 4,
-          company_name: "삼성볶음밥",
-          company_field: "??????????",
-          date1: "2021-02-30",
-          time1: "13:00-14:00",
-          date2: "2021-03-30",
-          time2: "13:00-14:00",
-          date3: "2021-04-30",
-          time3: "13:00-14:00",
-        },
-        {
-          company_id: 5,
-          company_name: "삼성정장",
-          company_field: "??????????",
-          date1: "2021-02-30",
-          time1: "13:00-14:00",
-          date2: "2021-03-30",
-          time2: "13:00-14:00",
-          date3: "2021-04-30",
-          time3: "13:00-14:00",
-        },
-        {
-          company_id: 5,
-          company_name: "삼성신발",
-          company_field: "??????????",
-          date1: "2021-02-30",
-          time1: "13:00-14:00",
-          date2: "2021-03-30",
-          time2: "13:00-14:00",
-          date3: "2021-04-30",
-          time3: "13:00-14:00",
-        },
+        // {
+        //   company_id: 1,
+        //   company_name: "삼성피자",
+        //   company_field: "??????????",
+        //   date1: "2021-08-30",
+        //   time1: "13:00-14:00",
+        //   date2: "2021-08-31",
+        //   time2: "13:00-14:00",
+        //   date3: "2021-08-32",
+        //   time3: "13:00-14:00",
+        // },
+        // {
+        //   company_id: 2,
+        //   company_name: "삼성햄버거",
+        //   company_field: "??????????",
+        //   date1: "2021-04-30",
+        //   time1: "13:00-14:00",
+        //   date2: "2021-03-30",
+        //   time2: "13:00-14:00",
+        //   date3: "2021-02-30",
+        //   time3: "13:00-14:00",
+        // },
+        // {
+        //   company_id: 3,
+        //   company_name: "삼성양말",
+        //   company_field: "??????????",
+        //   date1: "2021-02-30",
+        //   time1: "13:00-14:00",
+        //   date2: "2021-03-30",
+        //   time2: "13:00-14:00",
+        //   date3: "2021-04-30",
+        //   time3: "13:00-14:00",
+        // },
+        // {
+        //   company_id: 4,
+        //   company_name: "삼성볶음밥",
+        //   company_field: "??????????",
+        //   date1: "2021-02-30",
+        //   time1: "13:00-14:00",
+        //   date2: "2021-03-30",
+        //   time2: "13:00-14:00",
+        //   date3: "2021-04-30",
+        //   time3: "13:00-14:00",
+        // },
+        // {
+        //   company_id: 5,
+        //   company_name: "삼성정장",
+        //   company_field: "??????????",
+        //   date1: "2021-02-30",
+        //   time1: "13:00-14:00",
+        //   date2: "2021-03-30",
+        //   time2: "13:00-14:00",
+        //   date3: "2021-04-30",
+        //   time3: "13:00-14:00",
+        // },
+        // {
+        //   company_id: 5,
+        //   company_name: "삼성신발",
+        //   company_field: "??????????",
+        //   date1: "2021-02-30",
+        //   time1: "13:00-14:00",
+        //   date2: "2021-03-30",
+        //   time2: "13:00-14:00",
+        //   date3: "2021-04-30",
+        //   time3: "13:00-14:00",
+        // },
       ],
     };
   },
@@ -127,6 +148,12 @@ export default {
       const time = eval(`row.time${radio}`);
       this.submittedtime = time;
       console.log(this.submittedtime);
+      // 면접수락요청
+      axios.put("https://localhost:8443/sug/accept", {
+        index: this.index,
+        time: this.submittedtime,
+      });
+
       return row;
     },
     reject(row) {

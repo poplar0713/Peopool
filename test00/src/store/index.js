@@ -6,6 +6,7 @@ export default createStore({
     LoginDialog: false,
     SignupDialogIndiv: false,
     SignupDialogCompany: false,
+    type:0,
     fileList: [
       {
         name: "자소서",
@@ -34,7 +35,7 @@ export default createStore({
     },
     requestLoginent({ state }, payload) {
       console.log("requestLogin", state, payload);
-      const url = "/auth/entlogin";
+      const url = "/auth/loginent";
       let body = payload;
       return $axios.post(url, body);
     },

@@ -12,7 +12,7 @@
     <!--  -->
     <el-table
       :data="
-        followings.filter(
+        followers.filter(
           (data) =>
             !search ||
             data.company_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -44,12 +44,34 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+
 export default {
   data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    //팔로워정보 가져오기
+    axios
+      .get("https://localhost:8443/fol/follower", {
+        params: {
+          index: index,
+          type: this.$store.state.type,
+        },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.followers = res.data;
+      })
+      .catch((err) => console.log(err));
+
     return {
       dialogVisible: false,
       user: "김백수",
-      followings: [
+      followers: [
         {
           company_id: 0,
           company_name: "삼성전자",

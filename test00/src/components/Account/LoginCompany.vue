@@ -1,10 +1,5 @@
 <template>
-  <el-form
-    :model="ruleForm"
-    :rules="rules"
-    ref="ruleForm"
-    style="text-align:center"
-  >
+  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="LoginCompanyID">
       <el-input v-model="ruleForm.LoginCompanyID"></el-input>
@@ -64,9 +59,8 @@ export default {
               ent_password: this.ruleForm.LoginCompanyPW,
             })
             .then((result) => {
-              // alert("accessToken: " + result.data.accessToken);
-
               localStorage.setItem("token", result.data.accessToken);
+              this.$store.state.type = "1";
               setTimeout(() => {
                 this.$router.push("company");
               }, 3000);
