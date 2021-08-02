@@ -108,7 +108,7 @@ public class CallHandler extends TextWebSocketHandler {
     final Room room = roomManager.getRoom(user.getRoomName());
     room.leave(user);
     if (room.getParticipants().isEmpty()) {
-      roomManager.removeRoom(room);
+      roomManager.removeRoom(room);//방삭제
     }
   }
 }
