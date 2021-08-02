@@ -34,7 +34,7 @@ stages {
             sh 'docker images -f "dangling=true" -q \
                 | xargs -r docker rmi'
 
-            sh 'docker run -d --name peopoolbe -p 8443:8443 peopoolbe:latest --env JAVA_OPTS=-Dspring-boot.run.jvmArguments="-Dkms.url=ws://52.79.162.52:8888/kurento"'
+            sh 'docker run -d --name peopoolbe -p 8443:8443 peopoolbe:latest -e -Dspring-boot.run.jvmArguments="-Dkms.url=ws://52.79.162.52:8888/kurento"
         }
     }
 }
