@@ -8,12 +8,7 @@
         <el-row :gutter="20">
           <el-col :span="11"
             ><div class="grid-content bg-purple">
-<<<<<<< HEAD
               <el-divider content-position="left">{{this.username}}</el-divider><MyInfo /></div
-=======
-              <el-divider content-position="left">내정보</el-divider
-              ><MyInfo /></div
->>>>>>> c5ba662e5b5277ed667749f4d16ce2af241b4fdf
           ></el-col>
           <el-col :span="6"
             ><div class="grid-content bg-purple">
