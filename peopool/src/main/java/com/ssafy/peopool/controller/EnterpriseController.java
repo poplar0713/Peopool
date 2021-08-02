@@ -42,12 +42,6 @@ public class EnterpriseController {
 		
 	}
 	
-	@ApiOperation(value = "기업 회원 로그인", response = String.class)
-	@GetMapping("/login")
-	public ResponseEntity<Enterprise> loginCheckEnterprise(@RequestParam("id")String id) throws SQLException{
-		return new ResponseEntity<>(enterpriseService.loginCheckEnterprise(id), HttpStatus.OK);	
-	}
-	
 	
 	@ApiOperation(value = "기업회원 회원 정보 조회", response = String.class)
 	@GetMapping("{index}")

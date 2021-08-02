@@ -12,9 +12,6 @@ public interface EnterpriseRepo {
 	// 기업 회원 전체 조회
 	List<Enterprise> getAllEnterprise() throws SQLException;
 
-	// 기업로그인(아이디 / 비밀번호 조회)
-	Enterprise loginCheckEnterprise(String id) throws SQLException;
-
 	// 기업 회원 정보 조회 ( 이름, 연락처, 이메일 )
 	Enterprise getEnterprise(int index) throws SQLException;
 
@@ -33,5 +30,6 @@ public interface EnterpriseRepo {
 	// 기업 비밀번호 찾기
 	Enterprise findEnterprisePW(String id, String email) throws SQLException;
 	
+	// 기업 회원 아이디 중복 체크
 	Enterprise getUserId(String id) throws SQLException;
 }

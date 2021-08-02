@@ -8,12 +8,6 @@
 		from individual
 	</select>
 	
-	<select id="loginCheckIndividual"  resultType="Individual">
-		select ind_name
-		from individual
-		where ind_id=#{id} and ind_pw=#{pw};
-	</select>
-	
 	<select id="getIndividual" parameterType="int" resultType="Individual">
 		select *
 		from individual

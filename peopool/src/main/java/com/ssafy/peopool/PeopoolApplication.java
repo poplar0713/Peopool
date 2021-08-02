@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
@@ -19,6 +20,7 @@ import com.ssafy.peopool.webrtc.UserRegistry;
 
 @SpringBootApplication
 @RestController
+@EnableWebSocket
 public class PeopoolApplication implements WebSocketConfigurer {
 
 	@GetMapping("/peopool")

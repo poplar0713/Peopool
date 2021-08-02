@@ -17,10 +17,10 @@
 	</select>
 	
 	<select id="getNameOfEnterprise" parameterType="String" resultType="ProfileOfEnterprise">
-		select * 
+		select ent_profile.ent_index, ent_profile.ent_image, ent_profile.ent_ceo, ent_profile.ent_history, ent_profile.ent_address, ent_profile.ent_website, ent_profile.ent_introduce
 		from ent_profile join enterprise 
 		on ent_profile.ent_index = enterprise.ent_index 
-		where ent_name = #{name}
+		where enterprise.ent_name = #{name}
 	</select>
 	
 	<delete id="deleteProfileOfEnterprise" parameterType="int">

@@ -54,69 +54,69 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
 		</dependency>
-		 <!-- WebJars -->
-    <!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
-    <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>webjars-locator</artifactId>
-        <version>0.32</version>
-    </dependency>
+		<!-- WebJars -->
+		<!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+			<version>0.32</version>
+		</dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
-    <dependency>
-        <groupId>org.webjars.bower</groupId>
-        <artifactId>jquery</artifactId>
-        <version>3.3.1</version>
-    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.3.1</version>
+		</dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.webjars.bower/bootstrap -->
-    <dependency>
-        <groupId>org.webjars.bower</groupId>
-        <artifactId>bootstrap</artifactId>
-        <version>3.3.7</version>
-    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/bootstrap -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7</version>
+		</dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.webjars.bower/demo-console -->
-    <dependency>
-        <groupId>org.webjars.bower</groupId>
-        <artifactId>demo-console</artifactId>
-        <version>1.5.1</version>
-    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/demo-console -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>demo-console</artifactId>
+			<version>1.5.1</version>
+		</dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.webjars.bower/ekko-lightbox -->
-    <dependency>
-        <groupId>org.webjars.bower</groupId>
-        <artifactId>ekko-lightbox</artifactId>
-        <version>4.0.2</version>
-    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/ekko-lightbox -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>ekko-lightbox</artifactId>
+			<version>4.0.2</version>
+		</dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.webjars.bower/webrtc-adapter -->
-    <dependency>
-        <groupId>org.webjars.bower</groupId>
-        <artifactId>webrtc-adapter</artifactId>
-        <version>7.4.0</version>
-    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/webrtc-adapter -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>webrtc-adapter</artifactId>
+			<version>7.4.0</version>
+		</dependency>
 
-    <!-- Kurento -->
-    <!-- https://mvnrepository.com/artifact/org.kurento/kurento-client -->
-    <dependency>
-        <groupId>org.kurento</groupId>
-        <artifactId>kurento-client</artifactId>
-        <version>6.15.0</version>
-    </dependency>
+		<!-- Kurento -->
+		<!-- https://mvnrepository.com/artifact/org.kurento/kurento-client -->
+		<dependency>
+			<groupId>org.kurento</groupId>
+			<artifactId>kurento-client</artifactId>
+			<version>6.15.0</version>
+		</dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.kurento/kurento-utils-js -->
-    <dependency>
-        <groupId>org.kurento</groupId>
-        <artifactId>kurento-utils-js</artifactId>
-        <version>6.15.0</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-    <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>2.8.6</version>
-    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.kurento/kurento-utils-js -->
+		<dependency>
+			<groupId>org.kurento</groupId>
+			<artifactId>kurento-utils-js</artifactId>
+			<version>6.15.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
+		</dependency>
 		<!-- <dependency> <groupId>org.apche.tomcat.embed</groupId> <artifactId>tomcat-embed-jasper</artifactId> 
 			</dependency> -->
 		<dependency>
@@ -141,6 +141,57 @@
 		<!-- <dependency> <groupId>io.springfox</groupId> <artifactId>springfox-boot-start</artifactId> 
 			<version>3.0.0</version> </dependency> -->
 		<!-- Kurento -->
+
+
+		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.10.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.20</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+
+
+
+
+
+
 
 	</dependencies>
 

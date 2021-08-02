@@ -10,13 +10,16 @@ import com.ssafy.peopool.model.ProfileOfIndividual;
 public interface ProfileOfIndividualRepo {
 
 	// 프로필 수정
-	int modifyProfile(ProfileOfIndividual profile, int index);
+	int modifyProfile(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 공개
-	int modifySwitchOn(int index);
+	int modifySwitchOn(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 비공개
-	int modifySwitchOff(int index);
+	int modifySwitchOff(ProfileOfIndividual profileOfIndividual);
+	
+	// 프로필 삭제
+	int deleteProfile(int index);
 
 	// 프로필 조회
 	ProfileOfIndividual getProfile(int index);
