@@ -6,6 +6,7 @@ pipeline {
 		
 		stage('Docker build') {
 			agent any
+			options { skipDefaultCheckout(false) }
 			steps {
 				sh 'docker build -t peopoolfe:latest "/var/jenkins_home/workspace/peopoolFE/test00"'
 			}
