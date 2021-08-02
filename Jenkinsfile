@@ -3,12 +3,7 @@ pipeline {
 	options { skipDefaultCheckout(true) }
     
 	stages {
-		stage('Build and Test') {
-			agent any 
-			steps{
-				sh 'npm run build'
-			}
-		}
+		
 		stage('Docker build') {
 			agent any
 			steps {
