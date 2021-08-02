@@ -3,11 +3,12 @@ import $axios from 'axios'
 
 export default createStore({
   state: {
-    url: "http://52.79.162.52:8443/",
+    url: "/",
     LoginDialog: false,
     SignupDialogIndiv: false,
     SignupDialogCompany: false,
     type: 0,
+    othertype:0,
     fileList: [
       {
         name: "자소서",

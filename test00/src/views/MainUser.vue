@@ -8,7 +8,7 @@
         <el-row :gutter="20">
           <el-col :span="11"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">내정보</el-divider><MyInfo /></div
+              <el-divider content-position="left">{{this.username}}</el-divider><MyInfo /></div
           ></el-col>
           <el-col :span="6"
             ><div class="grid-content bg-purple">
@@ -58,7 +58,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`http://52.79.162.52:8443/ind/${index}`)
+      .get(`/ind/${index}`)
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;

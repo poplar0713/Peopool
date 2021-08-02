@@ -72,6 +72,7 @@ export default {
               // alert("accessToken: " + result.data.accessToken);
               localStorage.setItem("token", result.data.accessToken);
               this.$store.state.type = "0";
+              this.$store.state.othertype = "1";
               // console.log(this.$store.state.type);
               setTimeout(() => {
                 this.$router.push("user");

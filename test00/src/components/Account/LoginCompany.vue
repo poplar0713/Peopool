@@ -61,6 +61,7 @@ export default {
             .then((result) => {
               localStorage.setItem("token", result.data.accessToken);
               this.$store.state.type = "1";
+              this.$store.state.type = "0";
               setTimeout(() => {
                 this.$router.push("company");
               }, 3000);
