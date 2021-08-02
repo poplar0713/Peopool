@@ -167,7 +167,7 @@ export default {
           this.$store.state.SignupDialogCompany = false;
           // 데이터정보 보내기
           axios
-            .post("https://localhost:8443/ent", {
+            .post("https://52.79.162.52:8443/ent", {
               ent_id: this.ruleForm.ent_id,
               ent_password: this.ruleForm.ent_password,
               ent_name: this.ruleForm.ent_name,
@@ -228,7 +228,7 @@ export default {
       // alert("진입성공");
       if (this.ruleForm.ent_id.length > 4 && this.ruleForm.ent_id.length < 11) {
         axios
-          .post("https://localhost:8443/ent/checkid", {
+          .post("https://52.79.162.52:8443/ent/checkid", {
             ent_id: this.ruleForm.ent_id,
           })
           .then((res) => {

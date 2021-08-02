@@ -63,7 +63,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`https://localhost:8443/ind/${index}`)
+      .get(`https://52.79.162.52:8443/ind/${index}`)
       .then((res) => {
         console.log(res.data.ind_name);
         this.ruleForm.UserName = res.data.ind_name;
