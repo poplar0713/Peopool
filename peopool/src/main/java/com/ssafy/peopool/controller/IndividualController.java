@@ -122,7 +122,6 @@ public class IndividualController {
 	public ResponseEntity<String> getUserId(@RequestBody Individual individual) throws SQLException{
 		Individual ind = individualService.getUserId(individual.getInd_id());
 		return ResponseEntity.status(200).body(ind.getInd_id());
-
 		
 //		if(individualService.getUserId(id) != null) {
 //            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
