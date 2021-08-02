@@ -2,7 +2,7 @@ module.exports = {
   // outputDir: "../peopool/src/main/resources/static",
   // indexPath: "../static/index.html",
   devServer: {
-    https: true,
+    // https: false,
     port: 8444,
     open: true,
     proxy: {

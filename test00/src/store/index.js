@@ -3,7 +3,7 @@ import $axios from 'axios'
 
 export default createStore({
   state: {
-    url: "https://52.79.162.52:8443/",
+    url: "http://52.79.162.52:8443/",
     LoginDialog: false,
     SignupDialogIndiv: false,
     SignupDialogCompany: false,
