@@ -1,6 +1,4 @@
 module.exports = {
-  outputDir: "../peopool/src/main/resources/static",
-  indexPath: "../static/index.html",
   devServer: {
     https: true,
     port: 8444,
@@ -24,4 +22,3 @@ module.exports = {
     },
   },
 };
-
