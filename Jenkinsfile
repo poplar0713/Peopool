@@ -4,15 +4,10 @@ pipeline {
     
 	stages {
 		stage('Build and Test') {
-			// docker image에 명시된 image를 활용하여 steps 수행
-			agent {
-				docker {
-					image 'maven:3-alpine'
-					args '-v /root/.m2:/root/.m2'
-				}
+			agent any 
+			steps{
+				sh 'npm run build'
 			}
-			options { skipDefaultCheckout(false) }
-			
 		}
 		stage('Docker build') {
 			agent any
