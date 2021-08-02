@@ -7,6 +7,7 @@ module.exports = {
     open: true,
     proxy: {
       "api.v1": {
+<<<<<<< HEAD
         target: "https://52.79.162.52:8443//",
       },
       "/webjars": {
@@ -24,8 +25,22 @@ module.exports = {
       "^/ind": {
         target: "https://52.79.162.52:8443//",
         changeOrigin: true,
+=======
+        target: "https://localhost:8443/",
+      },
+      "/webjars": {
+        target: "https://localhost:8443/",
+      },
+      "/group-call": {
+        target: "https://localhost:8443/",
+      },
+      "/upload": {
+        target: "https://localhost:8443/",
+      },
+      "/auth": {
+        target: "https://localhost:8443/",
+>>>>>>> c5ba662e5b5277ed667749f4d16ce2af241b4fdf
       },
     },
   },
 };
-
