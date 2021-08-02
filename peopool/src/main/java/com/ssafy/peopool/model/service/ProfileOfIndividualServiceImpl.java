@@ -15,27 +15,33 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	ProfileOfIndividualRepo profileOfIndividualRepo;
 
 	@Override
-	public boolean modifyProfile(ProfileOfIndividual profile, int index) {
+	public boolean modifyProfile(ProfileOfIndividual profileOfIndividual) {
 		// TODO Auto-generated method stub
-		return profileOfIndividualRepo.modifyProfile(profile, index) == 1;
+		return profileOfIndividualRepo.modifyProfile(profileOfIndividual) == 1;
 	}
 
 	@Override
-	public boolean modifySwitchOn(int index) {
+	public boolean modifySwitchOn(ProfileOfIndividual profileOfIndividual) {
 		// TODO Auto-generated method stub
-		return profileOfIndividualRepo.modifySwitchOn(index) == 1;
+		return profileOfIndividualRepo.modifySwitchOn(profileOfIndividual) == 1;
 	}
 
 	@Override
-	public boolean modifySwitchOff(int index) {
+	public boolean modifySwitchOff(ProfileOfIndividual profileOfIndividual) {
 		// TODO Auto-generated method stub
-		return profileOfIndividualRepo.modifySwitchOff(index) == 1;
+		return profileOfIndividualRepo.modifySwitchOff(profileOfIndividual) == 1;
 	}
 
 	@Override
 	public ProfileOfIndividual getProfile(int index) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.getProfile(index);
+	}
+
+	@Override
+	public boolean deleteProfile(int index) {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.deleteProfile(index) == 1;
 	}
 
 }

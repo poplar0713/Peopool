@@ -8,12 +8,6 @@
 		from enterprise
 	</select>
 	
-	<select id="loginCheckEnterprise" parameterType="String" resultType="Enterprise">
-		select * 
-		from enterprise 
-		where ent_id = #{id}
-	</select>
-	
 	<select id="getEnterprise" parameterType="int" resultType="Enterprise">
 		select * 
 		from enterprise 

@@ -27,12 +27,6 @@ public class IndividualServiceImpl implements IndividualService {
 	}
 
 	@Override
-	public Individual loginCheckIndividual(Individual individual) throws SQLException {
-		// TODO Auto-generated method stub
-		return individualRepo.loginCheckIndividual(individual);
-	}
-
-	@Override
 	public Individual getIndividual(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return individualRepo.getIndividual(index);
@@ -48,6 +42,7 @@ public class IndividualServiceImpl implements IndividualService {
 	@Override
 	public boolean modifyIndividual(Individual individual) throws SQLException {
 		// TODO Auto-generated method stub
+		individual.setInd_password(passwordEncoder.encode(individual.getInd_password()));
 		return individualRepo.modifyIndividual(individual) == 1;
 	}
 

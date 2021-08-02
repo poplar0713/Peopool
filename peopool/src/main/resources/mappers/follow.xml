@@ -27,10 +27,14 @@
 	</select>
 
 	<select id="getFollowing" parameterType="String" resultType="Follow">
-		select * from follow where following = #{index} and fol_type =#{type}
+		select * 
+		from follow 
+		where following = #{index} and fol_type =#{type}
 	</select>
 	
 	<select id="getFollower" parameterType="String" resultType="Follow">
-		select * from follow where follower = #{index} and fol_type =#{type}
+		select * 
+		from follow 
+		where follower = #{index} and fol_type =#{type}
 	</select>
 </mapper>

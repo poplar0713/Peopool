@@ -35,28 +35,36 @@ public class ProfileOfIndividualController {
 
 	@ApiOperation(value = "index에 해당하는 프로필을 수정한다.", response = String.class)
 	@PutMapping()
-	public ResponseEntity<String> modifyProfile(@PathVariable("profile") ProfileOfIndividual file,
-			@PathVariable("index") int index) {
-		if (profileOfIndividualService.modifyProfile(file, index)) {
+	public ResponseEntity<String> modifyProfile(@RequestBody ProfileOfIndividual profileOfIndividual) {
+		if (profileOfIndividualService.modifyProfile(profileOfIndividual)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
 	}
 
-	@ApiOperation(value = "index에 해당하는 프로필을 공개로 변경한다.", response = String.class)
-	@PutMapping("/switchOn/{index}")
-	public ResponseEntity<String> modifySwitchOn(@PathVariable("index") int index) {
-		if (profileOfIndividualService.modifySwitchOn(index)) {
+	@ApiOperation(value = "프로필을 공개로 변경한다.", response = String.class)
+	@PutMapping("/switchOn")
+	public ResponseEntity<String> modifySwitchOn(@RequestBody ProfileOfIndividual profileOfIndividual ) {
+		if (profileOfIndividualService.modifySwitchOn(profileOfIndividual)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-	@ApiOperation(value = "index에 해당하는 프로필을 공개로 변경한다.", response = String.class)
-	@PutMapping("/switchOff/{index}")
-	public ResponseEntity<String> modifySwitchOff(@PathVariable("index") int index) {
-		if (profileOfIndividualService.modifySwitchOff(index)) {
+	@ApiOperation(value = "프로필을 비공개로 변경한다.", response = String.class)
+	@PutMapping("/switchOff")
+	public ResponseEntity<String> modifySwitchOff(@RequestBody ProfileOfIndividual profileOfIndividual) {
+		if (profileOfIndividualService.modifySwitchOff(profileOfIndividual)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "프로필을 삭제한다.", response = String.class)
+	@DeleteMapping("/{index}")
+	public ResponseEntity<String> deleteProfile(@PathVariable("index")int index) {
+		if (profileOfIndividualService.deleteProfile(index)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

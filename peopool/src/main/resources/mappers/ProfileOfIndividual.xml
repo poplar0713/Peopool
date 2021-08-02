@@ -10,16 +10,16 @@
 		where ind_index = #{ind_index}
 	</update>
 	
-	<update id="modifySwitchOn" parameterType="int">
+	<update id="modifySwitchOn" parameterType="ProfileOfIndividual">
 		update ind_profile 
 		set ind_switch = 'T'
-		where ind_index = #{index}
+		where ind_index = #{ind_index}
 	</update>
 	
-	<update id="modifySwitchOff" parameterType="int">
+	<update id="modifySwitchOff" parameterType="ProfileOfIndividual">
 		update ind_profile 
 		set ind_switch = 'F'
-		where ind_index = #{index}
+		where ind_index = #{ind_index}
 	</update>
 	
 	<select id="getProfile" parameterType="int" resultType="ProfileOfIndividual">
@@ -27,4 +27,9 @@
 		from ind_profile 
 		where ind_index = #{index}
 	</select>
+	
+	<delete id="deleteProfile" parameterType="int">
+		delete from ind_profile
+		where ind_index = #{index}
+	</delete>
 </mapper>

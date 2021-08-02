@@ -28,6 +28,11 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/fol")
 public class FollowController {
 	
+
+//follower : follow 당한 사람
+//following  : follow 한 사람
+//fol_type   : follow 한 사람의 형태
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(FollowController.class);
 	private static final String SUCCESS = "success";
@@ -62,7 +67,14 @@ public class FollowController {
 	@ApiOperation(value = "팔로워 숫자 조회", response = String.class)
 	@GetMapping("/counter")
 	public ResponseEntity<Integer> getFollowerCount(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
-		return new ResponseEntity<>(followService.getFollowerCount(index, type), HttpStatus.OK);
+		String temp = "";
+		if(type.equals("0")) {
+			temp = "1";
+		}
+		else {
+			temp = "0";
+		}
+		return new ResponseEntity<>(followService.getFollowerCount(index, temp), HttpStatus.OK);
 		
 	}
 	
@@ -83,7 +95,14 @@ public class FollowController {
 	@ApiOperation(value = "팔로워 조회", response = String.class)
 	@GetMapping("/follower")
 	public ResponseEntity<List<Follow>> getEFollower(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
-		return new ResponseEntity<>(followService.getFollower(index, type), HttpStatus.OK);
+		String temp = "";
+		if(type.equals("0")) {
+			temp = "1";
+		}
+		else {
+			temp = "0";
+		}
+		return new ResponseEntity<>(followService.getFollower(index, temp), HttpStatus.OK);
 		
 	}
 
