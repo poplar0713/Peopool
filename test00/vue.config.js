@@ -7,19 +7,19 @@ module.exports = {
     open: true,
     proxy: {
       "api.v1": {
-        target: "https://52.79.162.52:8443/",
+        target: "http://52.79.162.52:8443/",
       },
       "/webjars": {
-        target: "https://52.79.162.52:8443/",
+        target: "http://52.79.162.52:8443/",
       },
       "/group-call": {
-        target: "https://52.79.162.52:8443/",
+        target: "http://52.79.162.52:8443/",
       },
       "/upload": {
-        target: "https://52.79.162.52:8443/",
+        target: "http://52.79.162.52:8443/",
       },
       "/auth": {
-        target: "https://52.79.162.52:8443/",
+        target: "http://52.79.162.52:8443/",
       },
     },
   },
