@@ -37,8 +37,9 @@ import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
-// import jwt_decode from "jwt-decode";
-// import axios from "axios";
+
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
   components: {
@@ -47,23 +48,24 @@ export default {
     TabRequiredInterview,
     TabSchedule,
     MyInfo,
+
     headerSearchCompany,
   },
   data() {
-    // // 토큰가져오기
-    // const token = localStorage.getItem("token");
-    // const decoded = jwt_decode(token);
-    // const index = decoded.index;
-    // // 회원정보 가져오기
-    // axios
-    //   .get(`https://localhost:8443/ind/${index}`)
-    //   .then((res) => {
-    //     console.log(res.data.ind_name);
-    //     this.username = res.data.ind_name;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 회원정보 가져오기
+    axios
+      .get(`https://localhost:8443/ind/${index}`)
+      .then((res) => {
+        console.log(res.data.ind_name);
+        this.username = res.data.ind_name;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return {
       mainsearch: "",
       search: "",
