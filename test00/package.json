@@ -18,6 +18,9 @@
     "firebaseui": "^4.8.1",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^3.1.2",
+    "kurento-client": "^6.16.0",
+    "kurento-utils": "^6.16.0",
+    "stompjs": "^2.3.3",
     "v-calendar": "^3.0.0-alpha.5",
     "vee-validate": "^4.4.7",
     "vue": "^3.1.4",
@@ -26,6 +29,7 @@
     "vue3-carousel": "^0.1.23",
     "vuedraggable": "^4.0.3",
     "vuex": "^4.0.0-0",
+    "webrtc-adapter": "^8.1.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
