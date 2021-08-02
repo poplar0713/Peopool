@@ -34,7 +34,7 @@ stages {
             sh 'docker images -f "dangling=true" -q \
                 | xargs -r docker rmi'
 
-            sh 'docker run -d --name peopoolbe -p 80:8443 peopoolbe' 
+            sh 'docker run -d --name peopoolbe -p 80:8443 peopoolbe JAVA_OPTS="-Dkms.url=ws://52.79.162.52:8888/kurento"' 
         }
     }
 }
