@@ -32,4 +32,6 @@ public interface EnterpriseRepo {
 
 	// 기업 비밀번호 찾기
 	Enterprise findEnterprisePW(String id, String email) throws SQLException;
+	
+	Enterprise getUserId(String id) throws SQLException;
 }

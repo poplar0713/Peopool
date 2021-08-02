@@ -8,10 +8,10 @@
 		from individual
 	</select>
 	
-	<select id="loginCheckIndividual"  resultType="Individual">
+	<select id="loginCheckIndividual"  parameterType="Individual" resultType="Individual">
 		select ind_name
 		from individual
-		where ind_id=#{id} and ind_pw=#{pw};
+		where  ind_id=#{ind_id} and ind_password=#{ind_password};
 	</select>
 	
 	<select id="getIndividual" parameterType="int" resultType="Individual">
