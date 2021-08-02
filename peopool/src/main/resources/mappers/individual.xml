@@ -12,7 +12,7 @@
 		select ind_name
 		from individual
 		where  ind_id=#{ind_id} and ind_password=#{ind_password};
-	</selec>
+	</select>
 	
 	<select id="getIndividual" parameterType="int" resultType="Individual">
 		select *
