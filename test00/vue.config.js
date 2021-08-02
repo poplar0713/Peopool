@@ -3,7 +3,7 @@ module.exports = {
   indexPath: "../static/index.html",
   devServer: {
     https: true,
-    port: 8443,
+    port: 8444,
     open: true,
     proxy: {
       "api.v1": {
