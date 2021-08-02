@@ -1,3 +1,6 @@
+pipeline {
+    agent none
+    options { skipDefaultCheckout(true) }
 stages {
 
     stage('Build and Test') {
@@ -34,4 +37,5 @@ stages {
             sh 'docker run -d --name peopoolBE -p 8443:8080 peopoolBE:latest JAVA_OPTS="-Dkms.url=ws://52.79.162.52:8888/kurento'
         }
     }
+}
 }
