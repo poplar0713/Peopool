@@ -17,7 +17,7 @@ pipeline {
 		stage('Docker build') {
 			agent any
 			steps {
-				sh 'docker build -t peopoolfe:latest <front dockerfile path>'
+				sh 'docker build -t peopoolfe:latest "/var/jenkins_home/workspace/peopoolFE/test00"'
 			}
 		}
 		stage('Docker run') {
