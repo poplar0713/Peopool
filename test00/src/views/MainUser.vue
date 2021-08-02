@@ -8,7 +8,8 @@
         <el-row :gutter="20">
           <el-col :span="11"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">내정보</el-divider><MyInfo /></div
+              <el-divider content-position="left">내정보</el-divider
+              ><MyInfo /></div
           ></el-col>
           <el-col :span="6"
             ><div class="grid-content bg-purple">
@@ -17,7 +18,8 @@
           ></el-col>
           <el-col :span="7"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 일정</el-divider><TabSchedule /></div
+              <el-divider content-position="left">인터뷰 일정</el-divider
+              ><TabSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
@@ -40,6 +42,7 @@ import headerSearchCompany from "@/components/SideBarComponents/headerSearchComp
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import server from "@/server.js";
 
 export default {
   components: {
@@ -50,6 +53,9 @@ export default {
     MyInfo,
 
     headerSearchCompany,
+  },
+  cerated() {
+    console.log(server);
   },
   data() {
     // 토큰가져오기
