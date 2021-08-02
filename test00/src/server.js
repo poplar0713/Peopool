@@ -1,8 +1,4 @@
-export default { serverurl };
 
-const server_url = "https://localhost:8443";
+const server_url = "https://52.79.162.52:8443/";
 
-function serverurl() {
-  return server_url;
-}
-
+export default { server_url };
