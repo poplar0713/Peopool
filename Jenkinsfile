@@ -6,13 +6,13 @@ pipeline {
 		
 		stage('Docker build') {
 			agent any
+			options { skipDefaultCheckout(false) }
 			steps {
 				sh 'docker build -t peopoolfe:latest "/var/jenkins_home/workspace/peopoolFE/test00"'
 			}
 		}
 		stage('Docker run') {
 			agent any
-			options { skipDefaultCheckout(false) }
 			steps {
 				sh 'docker ps -f name=peopoolfe -q \
 					| xargs --no-run-if-empty docker container stop'
