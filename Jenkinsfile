@@ -23,7 +23,7 @@ pipeline {
 				sh 'docker images -f "dangling=true" -q \
 					| xargs -r docker rmi'
 				
-				sh 'docker run -d --name peopoolfe -p 80:8080 peopoolfe:latest'
+				sh 'docker run -d --name peopoolfe -p 3000:3000 peopoolfe:latest'
 			}
 		}
 	}
