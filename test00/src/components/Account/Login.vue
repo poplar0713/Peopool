@@ -18,6 +18,7 @@
           <LoginIndiv />
           <!-- 회원가입했니? -->
           <div style="text-align:center">
+            <!-- 회원가입 -->
             <el-button
               @click="$store.state.SignupDialogIndiv = true"
               style="color:black"
@@ -31,6 +32,37 @@
             >
               <!-- 개인회원가입 -->
               <SignupIndiv />
+            </el-dialog>
+            <br /><br />
+            <!-- 아이디찾기 -->
+            <el-button
+              @click="$store.state.findUserId = true"
+              style="color:black"
+              >아이디찾기</el-button
+            >
+            <el-dialog
+              title="아이디 찾기"
+              v-model="$store.state.findUserId"
+              width="30%"
+              :before-close="handleClose"
+            >
+
+              <FindUserId />
+            </el-dialog>
+            <!-- 비밀번호찾기 -->
+            <el-button
+              @click="$store.state.findUserPw = true"
+              style="color:black"
+              >비밀번호찾기</el-button
+            >
+            <el-dialog
+              title="비밀번호 찾기"
+              v-model="$store.state.findUserPw"
+              width="30%"
+              :before-close="handleClose"
+            >
+
+              <FindUserPw />
             </el-dialog>
           </div>
           <br />
@@ -68,6 +100,8 @@ import SignupIndiv from "@/components/Account/SignupIndiv.vue";
 import LoginIndiv from "@/components/Account/LoginIndiv.vue";
 import LoginCompany from "@/components/Account/LoginCompany.vue";
 import KakaoLogin from "./KakaoLogin.vue";
+import FindUserId from "./FindUserId.vue";
+import FindUserPw from "./FindUserPw.vue";
 export default {
   components: {
     SignupIndiv,
@@ -75,6 +109,8 @@ export default {
     LoginIndiv,
     LoginCompany,
     KakaoLogin,
+    FindUserId,
+    FindUserPw,
   },
   data() {
     return {

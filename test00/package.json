@@ -18,6 +18,7 @@
     "firebaseui": "^4.8.1",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^3.1.2",
+    "sockjs": "^0.3.21",
     "v-calendar": "^3.0.0-alpha.5",
     "vee-validate": "^4.4.7",
     "vue": "^3.1.4",

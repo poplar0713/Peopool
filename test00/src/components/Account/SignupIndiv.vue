@@ -210,7 +210,7 @@ export default {
           this.openFullScreen2();
           // 데이터정보 보내기
           axios
-            .post("https://localhost:8443/ind", {
+            .post("/ind", {
               ind_id: this.ruleForm.ind_id,
               ind_password: this.ruleForm.ind_password,
               ind_name: this.ruleForm.ind_name,
@@ -221,10 +221,10 @@ export default {
             })
             .then((res) => {
               if (res.status == 200) {
-                this.$store.state.SignupDialogIndiv = false;
                 console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
+                  this.$store.state.SignupDialogIndiv = false;
                 }, 3000);
               }
             })
@@ -278,7 +278,7 @@ export default {
       // alert("진입성공");
       if (this.ruleForm.ind_id.length > 4 && this.ruleForm.ind_id.length < 11) {
         axios
-          .post("https://localhost:8443/ind/checkid", {
+          .post("/ind/checkid", {
             ind_id: this.ruleForm.ind_id,
           })
           .then((res) => {

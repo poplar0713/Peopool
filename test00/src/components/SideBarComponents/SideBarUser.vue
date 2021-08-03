@@ -90,9 +90,23 @@ export default {
     },
     // 로그아웃
     Logout() {
+      // 깔끔하게 비우기
       localStorage.clear();
-      // location.reload();
-      this.$router.push("/");
+      // 로딩페이지
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push("/");
+        this.$message({
+          message: "로그아웃",
+          type: "success",
+        });
+      }, 2000);
     },
   },
   data() {

@@ -18,7 +18,7 @@
             class="el-icon-office-building
 "
           ></i>
-          <span>Profile</span>
+          <span><ProfileCompany /></span>
         </el-menu-item>
         <el-menu-item index="2">
           <i class="el-icon-camera"></i>
@@ -55,12 +55,14 @@
 </template>
 
 <script>
-import CompanyFollowers from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowers.vue";
+import ProfileCompany from "@/components/SideBarComponents/ProfileCompany.vue";
 import CompanyFollowings from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowings.vue";
+import CompanyFollowers from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowers.vue";
 export default {
   components: {
     CompanyFollowers,
     CompanyFollowings,
+    ProfileCompany,
   },
   methods: {
     ch(data) {
@@ -68,9 +70,23 @@ export default {
       this.$router.push("searchDetail");
     },
     Logout() {
+      // 깔끔하게 비우기
       localStorage.clear();
-      // location.reload();
-      this.$router.push("/");
+      // 로딩페이지
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push("/");
+        this.$message({
+          message: "로그아웃",
+          type: "success",
+        });
+      }, 2000);
     },
     GoToRecruit() {
       this.$router.push("recruiting");
@@ -104,6 +120,10 @@ export default {
 .title span {
   font-family: "Work Sans", sans-serif;
   font-size: 40px;
+}
+.title {
+  margin: 10px;
+  text-align: center;
 }
 .f {
   color: #ffc000;

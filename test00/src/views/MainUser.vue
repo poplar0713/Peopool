@@ -8,7 +8,10 @@
         <el-row :gutter="20">
           <el-col :span="11"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">내정보</el-divider><MyInfo /></div
+              <el-divider content-position="left">{{
+                this.username
+              }}</el-divider
+              ><MyInfo /></div
           ></el-col>
           <el-col :span="6"
             ><div class="grid-content bg-purple">
@@ -17,7 +20,8 @@
           ></el-col>
           <el-col :span="7"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 일정</el-divider><TabSchedule /></div
+              <el-divider content-position="left">인터뷰 일정</el-divider
+              ><TabSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
@@ -40,6 +44,7 @@ import headerSearchCompany from "@/components/SideBarComponents/headerSearchComp
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import server_url from "@/server.js";
 
 export default {
   components: {
@@ -48,8 +53,10 @@ export default {
     TabRequiredInterview,
     TabSchedule,
     MyInfo,
-
     headerSearchCompany,
+  },
+  mounted() {
+    console.log(server_url);
   },
   data() {
     // 토큰가져오기
@@ -58,7 +65,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`https://localhost:8443/ind/${index}`)
+      .get(`/ind/${index}`)
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;
@@ -100,42 +107,4 @@ export default {
   background-color: white;
   border-radius: 20px;
 }
-
-/* .main {
-  border-radius: 20px 20px 20px 20px;
-  margin-top: 2%;
-  margin-left: 2%;
-  margin-right: 2%;
-  background-color: #f4f6f6;
-  position: relative;
-}
-.videoNotFound {
-  border-radius: 20px 20px 20px 20px;
-  width: 440px;
-  height: 330px;
-  border-color: gray;
-  border-width: 4px;
-  border-style: dotted;
-  text-align: center;
-  background-color: white;
-}
-video {
-  margin: 1%;
-  height: auto;
-  max-width: 1280px;
-}
-.section {
-  border-radius: 20px 20px 20px 20px;
-  width: auto;
-  height: auto;
-  margin: 1%;
-  padding: 1%;
-  background-color: white;
-}
-.panel-tabs {
-  height: 500px;
-}
-.panel {
-  overflow: scroll;
-} */
 </style>
