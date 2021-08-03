@@ -15,11 +15,6 @@ export default {
     CompanyCard,
   },
   data() {
-    // 기업 회원 조회
-    // axios.get('/ent')
-    // .then((res)=>)
-    // .catch()
-
     return {
       ents: [
         {

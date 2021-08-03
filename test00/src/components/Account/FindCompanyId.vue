@@ -29,6 +29,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "FindCompanyId",
   components: {},
   data() {
     return {

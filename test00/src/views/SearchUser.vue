@@ -22,6 +22,7 @@ import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 import SearchList from "@/components/search/SearchList.vue";
 export default {
+  name: "SearchUser",
   components: {
     SideBarCompany,
     SearchList,

@@ -59,37 +59,6 @@ import axios from "axios";
 
 export default {
   data() {
-    // 토큰가져오기
-    const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
-    // 회원정보 가져오기
-    axios
-      .get(`/ind/${index}`)
-      .then((res) => {
-        this.ruleForm.UserName = res.data.ind_name;
-        this.ruleForm.UserBirth = res.data.ind_birth;
-        this.ruleForm.Gender = res.data.ind_gender;
-        this.ruleForm.UserTel = res.data.ind_phone;
-        this.ruleForm.UserEmail = res.data.ind_email;
-        this.ruleForm.UserIndex = res.data.ind_index;
-        this.ruleForm.UserId = res.data.ind_id;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    //public 상태확인
-    axios
-      .get(`/poi/${index}`)
-      .then((res) => {
-        if (res.data.ind_switch == "T") {
-          this.ruleForm.open = true;
-        } else {
-          this.ruleForm.open = false;
-        }
-      })
-      .catch();
-
     // 비밀번호확인 체크(비어있거나 비밀번호랑 다르면)
     const checkPWCF = (rule, value, callback) => {
       if (value === "") {
@@ -100,7 +69,6 @@ export default {
         callback();
       }
     };
-
     return {
       loading: false,
       userpw: "",
@@ -166,6 +134,38 @@ export default {
       },
       fullscreenLoading: false,
     };
+  },
+  mounted() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 회원정보 가져오기
+    axios
+      .get(`/ind/${index}`)
+      .then((res) => {
+        this.ruleForm.UserName = res.data.ind_name;
+        this.ruleForm.UserBirth = res.data.ind_birth;
+        this.ruleForm.Gender = res.data.ind_gender;
+        this.ruleForm.UserTel = res.data.ind_phone;
+        this.ruleForm.UserEmail = res.data.ind_email;
+        this.ruleForm.UserIndex = res.data.ind_index;
+        this.ruleForm.UserId = res.data.ind_id;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //public 상태확인
+    axios
+      .get(`/poi/${index}`)
+      .then((res) => {
+        if (res.data.ind_switch == "T") {
+          this.ruleForm.open = true;
+        } else {
+          this.ruleForm.open = false;
+        }
+      })
+      .catch();
   },
   methods: {
     submitForm(formName) {

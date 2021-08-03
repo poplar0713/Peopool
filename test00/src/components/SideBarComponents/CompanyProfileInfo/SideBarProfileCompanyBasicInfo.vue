@@ -7,26 +7,17 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-      <!-- 기업이미지 -->
-      <el-form-item label="Image" prop="ent_image">
-        {{ this.ruleForm.ent_image }}<br />
-        <el-input type="" v-model="ruleForm.ent_image"></el-input>
+      <!-- 기업이름 -->
+      <el-form-item label="Name" prop="CompanyName">
+        <strong>{{ this.ruleForm.CompanyName }}</strong>
       </el-form-item>
-      <!-- 기업대표 -->
-      <el-form-item label="CEO" prop="ent_ceo">
-        <el-input v-model="ruleForm.ent_ceo"></el-input>
+      <!-- 기업연락처 -->
+      <el-form-item label="Tel" prop="UserTel">
+        <el-input type="tel" v-model="ruleForm.CompanyTel"></el-input>
       </el-form-item>
-      <!-- 기업역사 -->
-      <el-form-item label="History" prop="ent_history">
-        <el-input v-model="ruleForm.ent_history"></el-input>
-      </el-form-item>
-      <!-- 기업주소 -->
-      <el-form-item label="Address" prop="ent_address">
-        <el-input v-model="ruleForm.ent_address"></el-input>
-      </el-form-item>
-      <!-- 기업웹사이트 -->
-      <el-form-item label="WebSite" prop="ent_website">
-        <el-input v-model="ruleForm.ent_website"></el-input>
+      <!-- 기업이메일 -->
+      <el-form-item label="Email" prop="UserEmail">
+        <el-input type="email" v-model="ruleForm.CompanyEmail"></el-input>
       </el-form-item>
       <!-- 기업회원 PW -->
       <el-form-item label="Password" prop="Password">
@@ -63,14 +54,13 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`/poe/index/${index}`)
+      .get(`/ent/${index}`)
       .then((res) => {
-        this.ruleForm.ent_index = res.data.ent_index;
-        this.ruleForm.ent_image = res.data.ent_image;
-        this.ruleForm.ent_ceo = res.data.ent_ceo;
-        this.ruleForm.ent_history = res.data.ent_history;
-        this.ruleForm.ent_address = res.data.ent_address;
-        this.ruleForm.ent_website = res.data.ent_website;
+        this.ruleForm.CompanyName = res.data.ent_name;
+        this.ruleForm.CompanyTel = res.data.ent_contact;
+        this.ruleForm.CompanyEmail = res.data.ent_email;
+        this.ruleForm.CompanyId = res.data.ent_id;
+        this.ruleForm.CompanyIndex = res.data.ent_index;
       })
       .catch((err) => {
         console.log(err);
@@ -90,37 +80,16 @@ export default {
     return {
       loading: false,
       ruleForm: {
-        ent_index: "",
-        ent_image: "",
-        ent_ceo: "",
-        ent_history: "",
-        ent_address: "",
-        ent_website: "",
         Password: "",
         PasswordConfirm: "",
+        CompanyName: "",
+        open: false,
+        CompanyTel: "",
+        CompanyEmail: "",
+        CompanyId: "",
+        CompanyIndex: 0,
       },
       rules: {
-        ent_ceo: [
-          {
-            required: true,
-            message: "기업의 대표를 입력해주세요",
-            trigger: "blur",
-          },
-        ],
-        ent_history: [
-          {
-            required: true,
-            message: "기업의 역사를 입력해주세요",
-            trigger: "blur",
-          },
-        ],
-        ent_address: [
-          {
-            required: true,
-            message: "기업의 주소를 입력해주세요",
-            trigger: "blur",
-          },
-        ],
         Password: [
           {
             required: true,
@@ -148,6 +117,25 @@ export default {
           },
           { validator: checkPWCF, trigger: "blur" },
         ],
+        CompanyTel: [
+          {
+            required: true,
+            message: "연락처를 입력해주세요",
+            trigger: "change",
+          },
+        ],
+        CompanyEmail: [
+          {
+            required: true,
+            message: "이메일을 입력해주세요",
+            trigger: "change",
+          },
+          {
+            type: "email",
+            message: "이메일형식을 바르게 입력해주세요",
+            trigger: "change",
+          },
+        ],
       },
       fullscreenLoading: false,
     };
@@ -156,15 +144,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // 기업정보수정
+          // 회원정보 수정
           axios
-            .put("/poe", {
-              ent_index: this.ruleForm.ent_index,
-              ent_image: this.ruleForm.ent_image,
-              ent_ceo: this.ruleForm.ent_ceo,
-              ent_history: this.ruleForm.ent_history,
-              ent_address: this.ruleForm.ent_address,
-              ent_website: this.ruleForm.ent_website,
+            .put("/ent", {
+              ent_email: this.ruleForm.CompanyEmail,
+              ent_id: this.ruleForm.CompanyId,
+              ent_index: this.ruleForm.CompanyIndex,
+              ent_name: this.ruleForm.CompanyName,
+              ent_password: this.ruleForm.Password,
+              ent_contact: this.ruleForm.CompanyTel,
             })
             .then((res) => {
               console.log(res);

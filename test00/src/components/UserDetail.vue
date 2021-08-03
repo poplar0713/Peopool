@@ -134,14 +134,11 @@
 <script>
 import webviewer from "@/components/MainCompany/webviewer.vue";
 export default {
+  name: "UserDetail",
   components: {
     webviewer,
   },
-  name: "userdetail",
-  setup() {},
-  created() {
-    console.log(this.user);
-  },
+  mounted() {},
   data() {
     return {
       dialogVisible: false,

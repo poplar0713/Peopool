@@ -2,33 +2,57 @@
   <!-- 카드 -->
   <el-card shadow="hover" style="margin-bottom:20px">
     <el-row>
-      <!-- <el-col :span="4" @click="dialogVisible = true">
-        <div>
-        <el-image
-          style="width: 100px; height: 100px"
-          :src="ent_img"
-          :fit="fit"
-        ></el-image>
-      </div></el-col> -->
-      <el-col :span="16" @click="dialogVisible = true"
+      <el-col :span="21" @click="dialogVisible = true"
         ><div>
-          <h3>{{ item.ent_name }}</h3>
+          <h4>{{ item.ent_name }}</h4>
         </div></el-col
       >
-      <el-col :span="8">
-        <div v-if="follow">
-          <el-button @click="clickfollowBtn">언팔로우</el-button>
-        </div>
-        <div v-else><el-button @click="clickfollowBtn">팔로우</el-button></div>
+      <el-col :span="3">
+        <!-- 팔로우 -->
+        <span v-if="follow" style="color: Tomato;">
+          <i
+            class="fas fa-heart fa-2x"
+            size:7x
+            @click="clickfollowBtn"
+            style="cursor:pointer"
+          ></i>
+        </span>
+        <!--  -->
+        <span v-if="follow == false" style="color: Tomato;">
+          <i
+            @click="clickfollowBtn"
+            class="far fa-heart fa-2x"
+            style="cursor:pointer"
+          ></i>
+        </span>
       </el-col>
     </el-row>
   </el-card>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
     <el-container>
-      <el-header
-        ><h2>{{ ent_name }}</h2></el-header
-      >
+      <el-header>
+        <h2>
+          {{ item.ent_name }}
+          <!-- 팔로우 -->
+          <span v-if="follow" style="color: Tomato;">
+            <i
+              class="fas fa-heart fa-2x"
+              size:7x
+              @click="clickfollowBtn"
+              style="cursor:pointer"
+            ></i>
+          </span>
+          <!--  -->
+          <span v-if="follow == false" style="color: Tomato;">
+            <i
+              @click="clickfollowBtn"
+              class="far fa-heart fa-2x"
+              style="cursor:pointer"
+            ></i>
+          </span>
+        </h2>
+      </el-header>
       <el-container>
         <el-aside width="300px"
           ><el-image
@@ -41,14 +65,7 @@
           {{ item.ent_info }}</el-main
         >
       </el-container>
-      <el-footer>
-        <el-button v-if="follow" @click="clickfollowBtn" type="danger"
-          >팔로우 해제</el-button
-        >
-        <el-button v-else @click="clickfollowBtn" type="warining"
-          >팔로우</el-button
-        >
-      </el-footer>
+      <el-footer> </el-footer>
     </el-container>
   </el-dialog>
 </template>
@@ -65,6 +82,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      follow: true,
     };
   },
   props: { item: Object },
@@ -72,8 +90,10 @@ export default {
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
+        this.follow = false;
       } else {
         console.log("팔로잉");
+        this.follow = true;
       }
     },
     handleClose() {

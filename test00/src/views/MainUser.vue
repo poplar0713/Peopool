@@ -47,6 +47,7 @@ import axios from "axios";
 import server_url from "@/server.js";
 
 export default {
+  name: "MainUser",
   components: {
     SideBarUser,
     CompanyList,
