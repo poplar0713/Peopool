@@ -10,13 +10,13 @@
 		where int_index = #{int_index}
 	</update>
 	
-	<select id="getInterviews" parameterType="String" resultType="Interview">
+	<select id="getInterviews" parameterType="int" resultType="Interview">
 		select *
 		from interview
 		where ind_index=#{ind_index} and int_start > now()
 	</select>
 	
-	<select id="getLastInterviews" parameterType="String" resultType="Interview">
+	<select id="getLastInterviews" parameterType="int" resultType="Interview">
 		select *
 		from interview
 		where ind_index=#{ind_index} and now() > int_end
@@ -24,7 +24,7 @@
 	
 	<update id="finishInterview" parameterType="Interview">
 		update interview
-		set int_end=#{int_end,jdbcType=TIMESTAMP}
+		set int_end=#{int_end}
 		where int_index=#{int_index}
 	</update>
 	
@@ -36,7 +36,7 @@
 	
 	<insert id="registerInterview" parameterType="Interview">
 		insert into interview(ind_index, ent_index, int_start, int_url)
-		values(#{ind_index}, #{ent_index}, #{int_start,jdbcType=TIMESTAMP}, #{int_url})
+		values(#{ind_index}, #{ent_index}, #{int_start}, #{int_url})
 	</insert>
 	
 	
