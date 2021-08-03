@@ -25,21 +25,21 @@ stages {
     stage('Docker run') {
         agent any
         steps{
-			sh 'docker ps -f name=peopoolfe -q \
-				| xargs --no-run-if-empty docker container stop'
-			sh 'docker ps -f name=peopoolbe -q \
-                | xargs --no-run-if-empty docker container stop'
+						sh 'docker ps -f name=peopoolfe -q \
+							| xargs --no-run-if-empty docker container stop'
+						sh 'docker ps -f name=peopoolbe -q \
+              | xargs --no-run-if-empty docker container stop'
 
-			sh 'docker container ls -a -f name=peopoolfe -q \
-				| xargs -r docker container rm'
-			sh 'docker container ls -a -f name=peopoolbe -q \
-                | xargs -r docker container rm'
+						sh 'docker container ls -a -f name=peopoolfe -q \
+							| xargs -r docker container rm'
+						sh 'docker container ls -a -f name=peopoolbe -q \
+              | xargs -r docker container rm'
 
-			sh 'docker images -f "dangling=true" -q \
-				| xargs -r docker rmi'
+						sh 'docker images -f "dangling=true" -q \
+							| xargs -r docker rmi'
 						
             sh 'docker run -d --name peopoolbe -p 8443:8443 -e JAVA_TOOL_OPTIONS="-Dkms.url=ws://52.79.162.52:8888/kurento" peopoolbe:latest '
-			sh 'docker run -d --name peopoolfe -p 80:80 peopoolfe:latest'
+						sh 'docker run -d --name peopoolfe -p 80:80 peopoolfe:latest'
 
         }
     }
