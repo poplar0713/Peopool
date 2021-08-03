@@ -37,4 +37,11 @@
 		from follow 
 		where follower = #{index} and fol_type =#{type}
 	</select>
+	
+	<select id="getCheck" parameterType="Follow" resultType="Follow">
+		select * 
+		from follow 
+		where following = #{following} and follower = #{follower} and fol_type =#{fol_type}
+	</select>
+	
 </mapper>

@@ -53,4 +53,10 @@ public class FollowServiceImpl implements FollowService {
 		return followRepo.getFollower(index, type);
 	}
 
+	@Override
+	public Follow getCheck(Follow follow) throws SQLException {
+		// TODO Auto-generated method stub
+		return followRepo.getCheck(follow);
+	}
+
 }

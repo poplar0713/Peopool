@@ -5,7 +5,7 @@ public class Follow {
 	int fol_index; // 팔로우인덱스
 	int follower; // 기업인덱스
 	int following; // 회원인덱스
-	boolean fol_type; // 팔로워 타입
+	int fol_type; // 팔로워 타입
 
 	public Follow() {
 	}
@@ -16,14 +16,6 @@ public class Follow {
 
 	public void setFol_index(int fol_index) {
 		this.fol_index = fol_index;
-	}
-
-	public boolean isFol_type() {
-		return fol_type;
-	}
-
-	public void setFol_type(boolean fol_type) {
-		this.fol_type = fol_type;
 	}
 
 	public int getFollower() {
@@ -42,12 +34,19 @@ public class Follow {
 		this.following = following;
 	}
 
+	public int getFol_type() {
+		return fol_type;
+	}
+
+	public void setFol_type(int fol_type) {
+		this.fol_type = fol_type;
+	}
+
 	@Override
 	public String toString() {
 		return "Follow [fol_index=" + fol_index + ", follower=" + follower + ", following=" + following + ", fol_type="
 				+ fol_type + "]";
 	}
-
 	
 	
 }
