@@ -17,28 +17,12 @@
       <div id="wrapper">
         <div id="join" class="animate join">
           <!-- <h1>Join a Room</h1> -->
-          <form
-            onsubmit="event.preventDefault(); register(); return false;"
-            accept-charset="UTF-8"
-          >
+          <form onsubmit="event.preventDefault(); register(); return false;" accept-charset="UTF-8">
             <p>
-              <input
-                type="text"
-                name="name"
-                value=""
-                id="name"
-                placeholder="Username"
-                required
-              />
+              <input type="text" name="name" value="" id="name" placeholder="Username" required />
             </p>
             <p>
-              <input
-                type="text"
-                name="room"
-                value=""
-                id="roomName"
-                placeholder="Room"
-              />
+              <input type="text" name="room" value="" id="roomName" placeholder="Room" />
             </p>
             <p class="submit">
               <input type="submit" name="commit" value="Join!" />
@@ -48,13 +32,9 @@
         <div id="room" style="display: none">
           <h2 id="room-header"></h2>
           <div id="participants"></div>
-          <input
-            type="button"
-            id="button-leave"
-            onmouseup="leaveRoom();"
-            value="Leave room"
-          />
-          <button id="videoTurnOff">camera</button>
+          <input type="button" id="button-leave" onmouseup="leaveRoom();" value="Leave room" />
+          <button id="videoButton" value="true">camera</button>
+          <button id="audioButton" value="true">audio</button>
           <button id="startButton">share</button>
         </div>
       </div>
