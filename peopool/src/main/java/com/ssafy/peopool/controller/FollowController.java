@@ -105,6 +105,14 @@ public class FollowController {
 		return new ResponseEntity<>(followService.getFollower(index, temp), HttpStatus.OK);
 		
 	}
+	
+	@ApiOperation(value = "팔로우 했는지 안했는지 조회", response = String.class)
+	@PostMapping("/check")
+	public ResponseEntity<Integer> getCheck(@RequestBody Follow follow) throws SQLException{
+		Follow fol = followService.getCheck(follow);
+		return ResponseEntity.status(200).body(fol.getFol_index());
+	}
+	
 
 
 

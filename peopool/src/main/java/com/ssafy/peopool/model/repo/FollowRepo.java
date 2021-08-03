@@ -29,4 +29,7 @@ public interface FollowRepo {
 
 	// 팔로잉 조회
 	List<Follow> getFollower(String index, String type) throws SQLException;
+	
+	// 팔로우 체크
+	Follow getCheck(Follow follow) throws SQLException;
 }
