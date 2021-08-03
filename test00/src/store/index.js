@@ -9,6 +9,8 @@ export default createStore({
     SignupDialogCompany: false,
     findUserId: false,
     findUserPw: false,
+    findCompanyId: false,
+    findCompanyPw: false,
     type: 0,
     othertype: 0,
     secretkey: "",

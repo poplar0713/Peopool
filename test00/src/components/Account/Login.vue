@@ -46,23 +46,21 @@
               width="30%"
               :before-close="handleClose"
             >
-
               <FindUserId />
             </el-dialog>
             <!-- 비밀번호찾기 -->
             <el-button
               @click="$store.state.findUserPw = true"
               style="color:black"
-              >비밀번호찾기</el-button
+              >비밀번호 초기화</el-button
             >
             <el-dialog
-              title="비밀번호 찾기"
+              title="비밀번호 초기화"
               v-model="$store.state.findUserPw"
               width="30%"
               :before-close="handleClose"
             >
-
-              <FindUserPw />
+              <ResetUserPw />
             </el-dialog>
           </div>
           <br />
@@ -71,6 +69,9 @@
           <!-- 구글로그인 -->
           <!--  -->
         </el-tab-pane>
+        <!-- 기업 -->
+        <!--  -->
+        <!--  -->
         <el-tab-pane label="기업회원" name="second">
           <LoginCompany />
           <div style="text-align:center">
@@ -87,6 +88,35 @@
             >
               <SignupCompany />
             </el-dialog>
+            <br /><br />
+            <!-- 아이디찾기 -->
+            <el-button
+              @click="$store.state.findCompanyId = true"
+              style="color:black"
+              >아이디찾기</el-button
+            >
+            <el-dialog
+              title="아이디 찾기"
+              v-model="$store.state.findCompanyId"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <FindCompanyId />
+            </el-dialog>
+            <!-- 비밀번호찾기 -->
+            <el-button
+              @click="$store.state.findCompanyPw = true"
+              style="color:black"
+              >비밀번호 초기화</el-button
+            >
+            <el-dialog
+              title="비밀번호 초기화"
+              v-model="$store.state.findCompanyPw"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <ResetCompanyPw />
+            </el-dialog>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -101,7 +131,9 @@ import LoginIndiv from "@/components/Account/LoginIndiv.vue";
 import LoginCompany from "@/components/Account/LoginCompany.vue";
 import KakaoLogin from "./KakaoLogin.vue";
 import FindUserId from "./FindUserId.vue";
-import FindUserPw from "./FindUserPw.vue";
+import ResetUserPw from "./ResetUserPw.vue";
+import FindCompanyId from "./FindCompanyId.vue";
+import ResetCompanyPw from "./ResetCompanyPw.vue";
 export default {
   components: {
     SignupIndiv,
@@ -110,7 +142,9 @@ export default {
     LoginCompany,
     KakaoLogin,
     FindUserId,
-    FindUserPw,
+    ResetUserPw,
+    FindCompanyId,
+    ResetCompanyPw,
   },
   data() {
     return {
