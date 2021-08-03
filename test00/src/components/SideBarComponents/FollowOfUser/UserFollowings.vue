@@ -55,7 +55,7 @@ export default {
     const index = decoded.index;
     //팔로워정보 가져오기
     axios
-      .get("https://localhost:8443/fol/following", {
+      .get("/fol/following", {
         params: {
           index: index,
           type: this.$store.state.type,

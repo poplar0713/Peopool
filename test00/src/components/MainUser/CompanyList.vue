@@ -16,7 +16,7 @@ export default {
   },
   data() {
     // 기업 회원 조회
-    // axios.get('https://localhost:8443/ent')
+    // axios.get('/ent')
     // .then((res)=>)
     // .catch()
 

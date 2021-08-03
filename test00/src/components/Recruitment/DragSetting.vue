@@ -125,7 +125,7 @@ export default {
       return draggingNode.data.label.indexOf("Level three 3-1-1") === -1;
     },
     handleClose(done) {
-      this.$confirm("Are you sure to close this dialog?")
+      this.$confirm("창을 닫으시겠습니까?")
         .then(() => {
           done();
           this.dialogVisible = false;

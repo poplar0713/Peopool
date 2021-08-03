@@ -1,46 +1,55 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    style="text-align:center"
+  >
     <!-- 개인회원 ID -->
-    <el-form-item label="ID" prop="LoginCompanyID">
-      <el-input v-model="ruleForm.LoginCompanyID"></el-input>
+    <el-form-item label="이름" prop="username">
+      <el-input v-model="ruleForm.username"></el-input>
     </el-form-item>
     <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="LoginCompanyPW">
-      <el-input type="password" v-model="ruleForm.LoginCompanyPW"></el-input>
+    <el-form-item label="연락처" prop="userphone">
+      <el-input type="password" v-model="ruleForm.userphone"></el-input>
     </el-form-item>
-    <!-- 생성 및 취소 버튼 -->
+
     <el-form-item>
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
       <el-button
         type="warning"
         @click="submitForm('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
-        >Login</el-button
+        >Find</el-button
       >
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  components: {},
   data() {
     return {
+      loading: true,
+      fullscreenLoading: false,
       ruleForm: {
-        LoginCompanyID: "",
-        LoginCompanyPW: "",
+        username: "",
+        userphone: "",
       },
       rules: {
-        LoginCompanyID: [
+        username: [
           {
             required: true,
-            message: "아이디를 입력해주세요",
+            message: "이름을 입력해주세요",
             trigger: "blur",
           },
         ],
-        LoginCompanyPW: [
+        userphone: [
           {
             required: true,
-            message: "비밀번호를 입력해주세요",
+            message: "연락처를 입력해주세요",
             trigger: "blur",
           },
         ],
@@ -48,39 +57,45 @@ export default {
     };
   },
   methods: {
+    // 찾기
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert("submit!");
-          this.Loging();
-          this.$store
-            .dispatch("requestLoginent", {
-              ent_id: this.ruleForm.LoginCompanyID,
-              ent_password: this.ruleForm.LoginCompanyPW,
+          // alert('submit!');
+          this.openFullScreen2();
+          // axios.get 아이디찾기
+          axios
+            .get("/ind/findid", {
+              params: {
+                name: this.ruleForm.username,
+                phone: this.ruleForm.userphone,
+              },
             })
             .then((result) => {
-              localStorage.setItem("token", result.data.accessToken);
-              this.$store.state.type = "1";
-              this.$store.state.type = "0";
+              console.log(result)
               setTimeout(() => {
-                this.$router.push("company");
+                this.$router.push("user");
               }, 3000);
             })
             .catch((err) => {
+              
               alert(err);
             });
           //
-          this.$store.state.LoginDialog = false;
+          this.$store.state.findUserId = false;
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
+
+    // 폼초기화
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    Loging() {
+    // 스크린로딩
+    openFullScreen2() {
       const loading = this.$loading({
         lock: true,
         text: "Loading",
@@ -89,18 +104,8 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-        this.$store.state.LoginDialog = false;
-        this.$router.push("company");
-        this.Hello();
       }, 3000);
     },
-  },
-  Hello() {
-    this.$message({
-      showClose: true,
-      message: "Hello, Nojobman",
-      type: "success",
-    });
   },
 };
 </script>
