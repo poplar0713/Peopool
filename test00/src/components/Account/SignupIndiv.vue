@@ -221,10 +221,10 @@ export default {
             })
             .then((res) => {
               if (res.status == 200) {
-                this.$store.state.SignupDialogIndiv = false;
                 console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
+                  this.$store.state.SignupDialogIndiv = false;
                 }, 3000);
               }
             })

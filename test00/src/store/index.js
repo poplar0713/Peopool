@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import $axios from 'axios'
+import $axios from "axios";
 
 export default createStore({
   state: {
@@ -7,6 +7,8 @@ export default createStore({
     LoginDialog: false,
     SignupDialogIndiv: false,
     SignupDialogCompany: false,
+    findUserId: false,
+    findUserPw: false,
     type: 0,
     othertype: 0,
     secretkey: "",
