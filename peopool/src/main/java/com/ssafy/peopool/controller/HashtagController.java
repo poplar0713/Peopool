@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.Follow;
+import com.ssafy.peopool.model.Hashtag;
 import com.ssafy.peopool.model.service.HashtagService;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,8 +33,15 @@ public class HashtagController {
 
 	@ApiOperation(value = "사용자별 등록한 태그목록", response = String.class)
 	@GetMapping("/tag")
-	public ResponseEntity<Map<Integer, String>> tagByUser() {
-		return new ResponseEntity<Map<Integer, String>>(hashtagService.tagByUser(), HttpStatus.OK);
+	public ResponseEntity<Map<String, Integer>> tagByUser(@RequestParam("index")int index) {
+		return new ResponseEntity<>(hashtagService.tagByUser(index), HttpStatus.OK);
+
+	}
+	
+	@ApiOperation(value = "태그별 등록한 사용자목록", response = String.class)
+	@GetMapping("/user")
+	public ResponseEntity<List<Integer>> userByTag(@RequestParam("name")String name) {
+		return new ResponseEntity<>(hashtagService.userByTag(name), HttpStatus.OK);
 
 	}
 
@@ -46,9 +54,8 @@ public class HashtagController {
 
 	@ApiOperation(value = "태그 등록", response = String.class)
 	@PostMapping()
-	public ResponseEntity<String> registerHashtag(@RequestParam("tag_index") int tag_index,
-			@RequestParam("ind_index") int ind_index) {
-		if (hashtagService.registerHashtag(tag_index, ind_index)) {
+	public ResponseEntity<String> registerHashtag(@RequestBody Hashtag hashtag) {
+		if (hashtagService.registerHashtag(hashtag)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -57,8 +64,8 @@ public class HashtagController {
 
 	@ApiOperation(value = "태그 삭제", response = String.class)
 	@DeleteMapping("{tag_index}")
-	public ResponseEntity<String> deleteHashtag(@PathVariable("tag_index") int tag_index) {
-		if (hashtagService.deletedHashtag(tag_index)) {
+	public ResponseEntity<String> deleteHashtag(@PathVariable("tag_index") int index) {
+		if (hashtagService.deletedHashtag(index)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
