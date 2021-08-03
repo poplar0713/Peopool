@@ -4,25 +4,35 @@
  
 <mapper namespace="com.ssafy.peopool.model.repo.HashtagRepo">
 
-	<select id="tagByUser" resultType="java.util.HashMap">
-		select *
-		from hashtag h left outer join taglist t on h.taglist_index = t.taglist_index
-		where ind_index = #{ind_index}
+	<select id="tagByUser" parameterType="int" resultType="java.util.HashMap">
+		select taglist_name, tag_index
+		from hashtag h left outer join taglist t 
+		on h.taglist_index = t.taglist_index
+		where tag_target = #{index}
+	</select>
+	
+	<select id="userByTag" parameterType="String" resultType="int">
+		select tag_target
+		from hashtag h left outer join taglist t 
+		on h.taglist_index = t.taglist_index
+		where taglist_name = #{name}
 	</select>
 	
 	<select id="countByTag" resultType="java.util.HashMap">
-		select t.tag_name, count(*)
-		from hashtag h left outer join taglist t on h.taglist_index = t.taglist_index
+		select taglist_name, count(*)
+		from hashtag h left outer join taglist t 
+		on h.taglist_index = t.taglist_index
 		group by h.taglist_index
 	</select>
 	
 	<insert id="registerHashtag" parameterType="Hashtag">
-		insert into hashtag(taglist_index, ind_index)
-		values(#{taglist_index}, #{ind_index})
+		insert into hashtag(taglist_index, tag_target, tag_type)
+		values(#{taglist_index}, #{tag_target}, #{tag_type})
 	</insert>
 	
-	<delete id="deleteHashtag" parameterType="String">
-		delete from hashtag where tag_index = #{tag_index}
+	<delete id="deleteHashtag" parameterType="int">
+		delete from hashtag 
+		where tag_index = #{index}
 	</delete>
 	
 </mapper>

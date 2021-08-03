@@ -9,6 +9,9 @@ import com.ssafy.peopool.model.ProfileOfEnterprise;
 @Repository
 public interface ProfileOfEnterpriseRepo {
 
+	// 전체 프로필 조회
+	ProfileOfEnterprise getAllProfile() throws SQLException;
+	
 	// 프로필 수정
 	int modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
 

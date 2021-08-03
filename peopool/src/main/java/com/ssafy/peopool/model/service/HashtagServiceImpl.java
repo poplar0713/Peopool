@@ -1,10 +1,13 @@
 package com.ssafy.peopool.model.service;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.Hashtag;
 import com.ssafy.peopool.model.repo.HashtagRepo;
 
 @Service
@@ -14,9 +17,15 @@ public class HashtagServiceImpl implements HashtagService {
 	HashtagRepo hashtagRepo;
 
 	@Override
-	public HashMap<Integer, String> tagByUser() {
+	public Map<String, Integer> tagByUser(int index) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.tagByUser();
+		return hashtagRepo.tagByUser(index);
+	}
+	
+	@Override
+	public List<Integer> userByTag(String name) {
+		// TODO Auto-generated method stub
+		return hashtagRepo.userByTag(name);
 	}
 
 	@Override
@@ -26,9 +35,9 @@ public class HashtagServiceImpl implements HashtagService {
 	}
 
 	@Override
-	public boolean registerHashtag(int tag_inex, int ind_index) {
+	public boolean registerHashtag(Hashtag hashtag) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.registerHashtag(tag_inex, ind_index) == 1;
+		return hashtagRepo.registerHashtag(hashtag) == 1;
 	}
 
 	@Override
@@ -36,5 +45,7 @@ public class HashtagServiceImpl implements HashtagService {
 		// TODO Auto-generated method stub
 		return hashtagRepo.deletedHashtag(index) == 1;
 	}
+
+	
 
 }

@@ -26,6 +26,13 @@ public class ProfileOfIndividualController {
 	@Autowired
 	ProfileOfIndividualService profileOfIndividualService;
 
+	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
+	@GetMapping()
+	public ResponseEntity<ProfileOfIndividual> getAllProfile() {
+		return new ResponseEntity<>(profileOfIndividualService.getAllProfile(), HttpStatus.OK);
+
+	}
+	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/{index}")
 	public ResponseEntity<ProfileOfIndividual> getProfile(@PathVariable("index")int index) {

@@ -14,6 +14,11 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	@Autowired
 	ProfileOfEnterpriseRepo profileOfEnterpriseRepo;
 	
+	@Override
+	public ProfileOfEnterprise getAllProfile() throws SQLException {
+		// TODO Auto-generated method stub
+		return profileOfEnterpriseRepo.getAllProfile();
+	}
 	
 	@Override
 	public boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException {
@@ -38,4 +43,6 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getNameOfEnterprise(name);
 	}
+
+	
 }

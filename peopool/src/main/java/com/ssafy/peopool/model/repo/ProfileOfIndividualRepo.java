@@ -9,6 +9,9 @@ import com.ssafy.peopool.model.ProfileOfIndividual;
 @Repository
 public interface ProfileOfIndividualRepo {
 
+	// 정체 프로필 조회
+	ProfileOfIndividual getAllProfile();
+	
 	// 프로필 수정
 	int modifyProfile(ProfileOfIndividual profileOfIndividual);
 

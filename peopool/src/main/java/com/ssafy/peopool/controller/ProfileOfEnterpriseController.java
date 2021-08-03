@@ -32,6 +32,14 @@ public class ProfileOfEnterpriseController {
 	@Autowired
 	ProfileOfEnterpriseService profileOfEnterpriseService;
 	
+	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
+	@GetMapping()
+	public ResponseEntity<ProfileOfEnterprise> getAllProfile() throws SQLException{
+		return new ResponseEntity<>(profileOfEnterpriseService.getAllProfile(), HttpStatus.OK);
+		
+	}
+	
+	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/index/{index}")
 	public ResponseEntity<ProfileOfEnterprise> getProfileOfEnterprise(@PathVariable("index")int index) throws SQLException{
