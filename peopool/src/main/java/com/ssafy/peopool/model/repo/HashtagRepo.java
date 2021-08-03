@@ -13,18 +13,18 @@ import com.ssafy.peopool.model.Hashtag;
 public interface HashtagRepo {
 
 	// 사용자 별 태그 목록
-	Map<String, Integer> tagByUser(int index);
+	List<Map<String, Object>> tagByUser(int index);
 	
 	// 태그별 사용자 목록
-	List<Integer> userByTag(String name);
+	List<Hashtag> userByTag(String name);
 
 	// 태그 별 사용자 수
-	HashMap<String, Integer> countByTag();
+	List<Map<String, Object>> countByTag();
 
 	// 태그 등록
 	int registerHashtag(Hashtag hashtag);
 
 	// 태그 삭제
-	int deletedHashtag(int index);
+	int deleteHashtag(int index);
 
 }
