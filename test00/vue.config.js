@@ -1,12 +1,21 @@
-
+const fs = require("fs");
 
 module.exports = {
   // outputDir: "../peopool/src/main/resources/static",
   // indexPath: "../static/index.html",
   devServer: {
-    https: true,
+    open: process.platform === "darwin",
+    host: "0.0.0.0",
     port: 8444,
-    open: true,
+    https: {
+      key: fs.readFileSync(".certs/key.pem"),
+      cert: fs.readFileSync(".certs/cert.pem"),
+    },
+    hotOnly: false,
+
+    // https: true,
+    // port: 8444,
+    // open: true,
     proxy: {
       "api.v1": {
         target: "https://52.79.162.52:8443/",

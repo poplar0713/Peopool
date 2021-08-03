@@ -30,6 +30,7 @@
         <CompanyList />
         <el-divider content-position="left">관심기업 정보</el-divider>
         <CompanyList />
+        <button @click="newsocket">websocket</button>
       </el-footer>
     </el-container>
   </el-container>
@@ -84,6 +85,12 @@ export default {
     };
   },
   methods: {
+    newsocket() {
+      let ws = new WebSocket("wss://localhost:8443/groupcall");
+      ws.onopen = () => {
+        console.log("access success socket");
+      };
+    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);
