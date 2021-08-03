@@ -14,11 +14,8 @@ public class Interview {
 	int int_index; // 일정 인덱스
 	int ind_index; // 회원 인덱스
 	int ent_index; // 기업 인덱스
-	
-	Timestamp int_start; // 면접 시작 시간
-	
-	Timestamp int_end; // 면접 종료 시간
-	
+	String int_start; // 면접 시작 시간
+	String int_end; // 면접 종료 시간
 	String int_url; // 면접 URL
 	String int_show; // 진행 여부 (show / now show)
 
@@ -49,19 +46,19 @@ public class Interview {
 		this.ent_index = ent_index;
 	}
 
-	public Timestamp getInt_start() {
+	public String getInt_start() {
 		return int_start;
 	}
 
-	public void setInt_start(Timestamp int_start) {
+	public void setInt_start(String int_start) {
 		this.int_start = int_start;
 	}
 
-	public Timestamp getInt_end() {
+	public String getInt_end() {
 		return int_end;
 	}
 
-	public void setInt_end(Timestamp int_end) {
+	public void setInt_end(String int_end) {
 		this.int_end = int_end;
 	}
 
@@ -86,11 +83,7 @@ public class Interview {
 		return "Interview [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
 				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_url=" + int_url + ", int_show="
 				+ int_show + "]";
-	}
-
-	
-
-	
+	}	
 
 	
 	
