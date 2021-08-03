@@ -1,6 +1,7 @@
 package com.ssafy.peopool.model.repo;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ public interface SuggestionRepo {
 	int registerSuggestion(Suggestion suggestion);
 
 	// 면접 제안 수락
-	int acceptSuggestion(String time, int index);
+	int acceptSuggestion(Suggestion suggestion);
 
 	// 면접 제안 거절
 	int rejectSuggestion(int index);
@@ -22,6 +23,6 @@ public interface SuggestionRepo {
 	int deleteSuggestion(int index);
 
 	// 면접 제안 조회
-	Suggestion getSuggestion(int index);
+	List<Suggestion> getSuggestion(int index);
 
 }
