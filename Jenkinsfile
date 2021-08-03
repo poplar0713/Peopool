@@ -31,8 +31,8 @@ stages {
             sh 'docker container ls -a -f name=peopoolbe -q \
                 | xargs -r docker container rm'
 
-            sh 'docker images -f "dangling=true" -q \
-                | xargs -r docker rmi'
+            //sh 'docker images -f "dangling=true" -q \
+             //   | xargs -r docker rmi'
 
             sh 'docker run -d --name peopoolbe -p 8443:8443 -e JAVA_TOOL_OPTIONS="-Dkms.url=ws://52.79.162.52:8888/kurento" peopoolbe:latest '
         }
