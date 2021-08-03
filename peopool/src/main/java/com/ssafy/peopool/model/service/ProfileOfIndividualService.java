@@ -6,6 +6,9 @@ import com.ssafy.peopool.model.ProfileOfIndividual;
 
 public interface ProfileOfIndividualService {
 
+	// 프로필 조회
+	ProfileOfIndividual getAllProfile();
+	
 	// 프로필 수정
 	boolean modifyProfile(ProfileOfIndividual profileOfIndividual);
 

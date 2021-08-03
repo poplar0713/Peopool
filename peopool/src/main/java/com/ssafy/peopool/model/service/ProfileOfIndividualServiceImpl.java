@@ -15,6 +15,12 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	ProfileOfIndividualRepo profileOfIndividualRepo;
 
 	@Override
+	public ProfileOfIndividual getAllProfile() {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.getAllProfile();
+	}
+	
+	@Override
 	public boolean modifyProfile(ProfileOfIndividual profileOfIndividual) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.modifyProfile(profileOfIndividual) == 1;
@@ -43,5 +49,7 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.deleteProfile(index) == 1;
 	}
+
+	
 
 }

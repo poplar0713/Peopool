@@ -4,6 +4,11 @@
 
 <mapper namespace="com.ssafy.peopool.model.repo.ProfileOfIndividualRepo">
 
+	<select id="getAllProfile" resultType="ProfileOfIndividual">
+		select * 
+		from ind_profile
+	</select>
+	
 	<update id="modifyProfile" parameterType="ProfileOfIndividual">
 		update ind_profile 
 		set ind_resume = #{ind_resume}, ind_video=#{ind_video}, ind_photo=#{ind_photo}, ind_introduce=#{ind_introduce}

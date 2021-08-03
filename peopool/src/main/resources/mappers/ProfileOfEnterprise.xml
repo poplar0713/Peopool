@@ -3,6 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.peopool.model.repo.ProfileOfEnterpriseRepo">
+	
+	<select id="getAllProfile" resultType="ProfileOfEnterprise">
+		select * 
+		from ent_profile 
+	</select>
+
 
 	<update id="modifyProfileOfEnterprise" parameterType="ProfileOfEnterprise">
 		update ent_profile 
