@@ -78,6 +78,18 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    //public 상태확인
+    axios
+      .get(`/poi/${index}`)
+      .then((res) => {
+        if (res.data.ind_switch == "T") {
+          this.ruleForm.open = true;
+        } else {
+          this.ruleForm.open = false;
+        }
+      })
+      .catch();
+
     // 비밀번호확인 체크(비어있거나 비밀번호랑 다르면)
     const checkPWCF = (rule, value, callback) => {
       if (value === "") {
@@ -159,8 +171,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!');
-          // this.openFullScreen2();
           // 회원정보 수정
           axios
             .put("/ind", {
@@ -186,6 +196,24 @@ export default {
             .catch((err) => {
               console.log(err);
             });
+          // switch off
+          if (this.ruleForm.open == false) {
+            axios
+              .put("/poi/switchOff", {
+                ind_index: this.ruleForm.UserIndex,
+              })
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
+          }
+          // switch on
+          if (this.ruleForm.open == true) {
+            axios
+              .put("/poi/switchOn", {
+                ind_index: this.ruleForm.UserIndex,
+              })
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
+          }
         } else {
           console.log("error submit!!");
           this.failed();

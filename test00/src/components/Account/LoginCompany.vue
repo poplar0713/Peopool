@@ -1,5 +1,10 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    style="text-align:center"
+  >
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="LoginCompanyID">
       <el-input v-model="ruleForm.LoginCompanyID"></el-input>

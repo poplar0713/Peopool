@@ -13,24 +13,6 @@ export default createStore({
     findCompanyPw: false,
     type: 0,
     othertype: 0,
-    secretkey: "",
-    fileList: [
-      {
-        name: "자소서",
-        url:
-          "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-      },
-      {
-        name: "이력서",
-        url:
-          "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-      },
-      {
-        name: "인턴보고서",
-        url:
-          "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-      },
-    ],
   },
   mutations: {},
   actions: {
