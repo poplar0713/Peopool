@@ -21,7 +21,7 @@ import com.ssafy.peopool.webrtc.UserRegistry;
 @SpringBootApplication
 @RestController
 @EnableWebSocket
-@CrossOrigin(origins={"https://i5d206.p.ssafy.io", "http://i5d206.p.ssafy.io", "http://localhost:8444", "https://localhost:8444"})
+@CrossOrigin(origins={"https://i5d206.p.ssafy.io", "http://i5d206.p.ssafy.io", "http://localhost:8444", "https://192.168.0.5:8444"})
 public class PeopoolApplication implements WebSocketConfigurer {
 
 	@GetMapping("/peopool")
