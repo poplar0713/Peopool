@@ -36,6 +36,7 @@ startButton.addEventListener("click", () => {
 
   // var participant = new Participant(sender);
   // participants[sender] = participant;
+  var participant = participants[name];
   var video = participant.getVideoElement();
 
   var options = {
@@ -43,7 +44,7 @@ startButton.addEventListener("click", () => {
     onicecandidate: participant.onIceCandidate.bind(participant),
   };
 
-  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+  participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
     options,
     function (error) {
       if (error) {
@@ -59,3 +60,39 @@ if (navigator.mediaDevices && "getDisplayMedia" in navigator.mediaDevices) {
 } else {
   errorMsg("getDisplayMedia is not supported");
 }
+
+const videoButton = document.getElementById("videoButton");
+videoButton.addEventListener("click", () => {
+  alert("Click VideoButton");
+  console.log(participants[name]);
+  console.log(participants[name].rtcPeer.videoEnabled);
+  if (videoButton.value == "false") {
+    participants[name].rtcPeer.videoEnabled = true;
+    videoButton.value = true;
+    videoButton.innerText = "Video Off";
+  }
+  else {
+    
+    participants[name].rtcPeer.videoEnabled = false;
+    videoButton.value = false;
+    videoButton.innerText = "Video On";
+  }
+});
+
+const audioButton = document.getElementById("audioButton");
+audioButton.addEventListener("click", () => {
+  alert("Click AudioButton");
+  console.log(participants[name]);
+  console.log(participants[name].rtcPeer.audioEnabled);
+  if (audioButton.value == "false") {
+    participants[name].rtcPeer.audioEnabled = true;
+    audioButton.value = true;
+    audioButton.innerText = "Audio Off";
+  }
+  else {
+    
+    participants[name].rtcPeer.audioEnabled = false;
+    audioButton.value = false;
+    audioButton.innerText = "Audio On";
+  }
+});

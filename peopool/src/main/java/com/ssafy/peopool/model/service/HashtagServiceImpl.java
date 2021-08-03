@@ -17,19 +17,19 @@ public class HashtagServiceImpl implements HashtagService {
 	HashtagRepo hashtagRepo;
 
 	@Override
-	public Map<String, Integer> tagByUser(int index) {
+	public List<Map<String, Object>> tagByUser(int index) {
 		// TODO Auto-generated method stub
 		return hashtagRepo.tagByUser(index);
 	}
 	
 	@Override
-	public List<Integer> userByTag(String name) {
+	public List<Hashtag> userByTag(String name) {
 		// TODO Auto-generated method stub
 		return hashtagRepo.userByTag(name);
 	}
 
 	@Override
-	public HashMap<String, Integer> countByTag() {
+	public List<Map<String, Object>> countByTag() {
 		// TODO Auto-generated method stub
 		return hashtagRepo.countByTag();
 	}
@@ -41,9 +41,9 @@ public class HashtagServiceImpl implements HashtagService {
 	}
 
 	@Override
-	public boolean deletedHashtag(int index) {
+	public boolean deleteHashtag(int index) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.deletedHashtag(index) == 1;
+		return hashtagRepo.deleteHashtag(index) == 1;
 	}
 
 	
