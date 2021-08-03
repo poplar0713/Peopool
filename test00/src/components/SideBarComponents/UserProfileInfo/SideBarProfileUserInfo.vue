@@ -193,18 +193,6 @@ export default {
         }
       });
     },
-    // // 전체풀스크린 로딩
-    // openFullScreen2() {
-    //   const loading = this.$loading({
-    //     lock: true,
-    //     text: "Loading",
-    //     spinner: "el-icon-loading",
-    //     background: "rgba(0, 0, 0, 0.7)",
-    //   });
-    //   setTimeout(() => {
-    //     loading.close();
-    //   }, 1000);
-    // },
     // save 성공
     successmessage() {
       this.$message({
