@@ -9,6 +9,7 @@ export default createStore({
     SignupDialogCompany: false,
     type: 0,
     othertype:0,
+    secretkey:"",
     fileList: [
       {
         name: "자소서",

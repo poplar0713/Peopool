@@ -73,7 +73,8 @@ export default {
               localStorage.setItem("token", result.data.accessToken);
               this.$store.state.type = "0";
               this.$store.state.othertype = "1";
-              // console.log(this.$store.state.type);
+              this.$store.state.secretkey = this.ruleForm.LoginIndivPW;
+
               setTimeout(() => {
                 this.$router.push("user");
               }, 3000);

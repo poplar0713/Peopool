@@ -107,42 +107,4 @@ export default {
   background-color: white;
   border-radius: 20px;
 }
-
-/* .main {
-  border-radius: 20px 20px 20px 20px;
-  margin-top: 2%;
-  margin-left: 2%;
-  margin-right: 2%;
-  background-color: #f4f6f6;
-  position: relative;
-}
-.videoNotFound {
-  border-radius: 20px 20px 20px 20px;
-  width: 440px;
-  height: 330px;
-  border-color: gray;
-  border-width: 4px;
-  border-style: dotted;
-  text-align: center;
-  background-color: white;
-}
-video {
-  margin: 1%;
-  height: auto;
-  max-width: 1280px;
-}
-.section {
-  border-radius: 20px 20px 20px 20px;
-  width: auto;
-  height: auto;
-  margin: 1%;
-  padding: 1%;
-  background-color: white;
-}
-.panel-tabs {
-  height: 500px;
-}
-.panel {
-  overflow: scroll;
-} */
 </style>
