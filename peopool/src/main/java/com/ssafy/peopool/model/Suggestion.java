@@ -11,6 +11,7 @@ public class Suggestion {
 	int ent_index; // 기업 인덱스
 	String sug_decision; // 결정시간
 	String sug_state; // 요청 상태
+	String sug_duty;// 직무
 
 	public Suggestion() {
 	}
@@ -87,14 +88,21 @@ public class Suggestion {
 		this.sug_state = sug_state;
 	}
 
+	public String getSug_duty() {
+		return sug_duty;
+	}
+
+	public void setSug_duty(String sug_duty) {
+		this.sug_duty = sug_duty;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Suggestion [sug_index=").append(sug_index).append(", sug_send=").append(sug_send)
-				.append(", sug_timeone=").append(sug_timeone).append(", sug_timetwo=").append(sug_timetwo)
-				.append(", sug_timethree=").append(sug_timethree).append(", ind_index=").append(ind_index)
-				.append(", ent_index=").append(ent_index).append(", sug_decision=").append(sug_decision)
-				.append(", sug_state=").append(sug_state).append("]");
-		return builder.toString();
+		return "Suggestion [sug_index=" + sug_index + ", sug_send=" + sug_send + ", sug_timeone=" + sug_timeone
+				+ ", sug_timetwo=" + sug_timetwo + ", sug_timethree=" + sug_timethree + ", ind_index=" + ind_index
+				+ ", ent_index=" + ent_index + ", sug_decision=" + sug_decision + ", sug_state=" + sug_state
+				+ ", sug_duty=" + sug_duty + "]";
 	}
+
+	
 }

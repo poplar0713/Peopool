@@ -43,17 +43,17 @@ public class InterviewController {
 		
 	}
 	
-	@ApiOperation(value = "면접 URL 등록", response = String.class)
-	@PutMapping("{url}")
-	public ResponseEntity<String> registerURL(@PathVariable("url")String url) throws SQLException{
-		if(interviewService.registerURL(url)) {
+	@ApiOperation(value = "면접 URL 등록(사용안함)", response = String.class)
+	@PutMapping("/url")
+	public ResponseEntity<String> registerURL(@RequestBody Interview interview) throws SQLException{
+		if(interviewService.registerURL(interview)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		
 	}
 	
-	@ApiOperation(value = "면접 일정 조회", response = String.class)
+	@ApiOperation(value = "개인 면접 일정 조회", response = String.class)
 	@GetMapping("{index}")
 	public ResponseEntity<List<Interview>> getInterviews(@PathVariable("index")int index) throws SQLException{
 		return new ResponseEntity<>(interviewService.getInterviews(index), HttpStatus.OK);

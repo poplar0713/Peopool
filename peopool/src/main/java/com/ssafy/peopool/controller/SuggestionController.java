@@ -1,5 +1,7 @@
 package com.ssafy.peopool.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +30,15 @@ public class SuggestionController {
 
 	@ApiOperation(value = "면접 요청 조회", response = String.class)
 	@GetMapping("{index}")
-	public ResponseEntity<Suggestion> getSuggestion(@PathVariable("index") int index) {
-		return new ResponseEntity<Suggestion>(suggestionService.getSuggestion(index), HttpStatus.OK);
+	public ResponseEntity<List<Suggestion>> getSuggestion(@PathVariable("index") int index) {
+		return new ResponseEntity<>(suggestionService.getSuggestion(index), HttpStatus.OK);
 
 	}
 
 	@ApiOperation(value = "면접 요청", response = String.class)
 	@PostMapping()
 	public ResponseEntity<String> registerSuggestion(@RequestBody Suggestion suggestion) {
-		if (suggestionService.registerSuggestion(suggestion) == 1) {
+		if (suggestionService.registerSuggestion(suggestion)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -45,9 +47,8 @@ public class SuggestionController {
 
 	@ApiOperation(value = "면접 수락", response = String.class)
 	@PutMapping("/accept")
-	public ResponseEntity<String> acceptSuggestion(@RequestParam("time") String time,
-			@RequestParam("index") int index) {
-		if (suggestionService.acceptSuggestion(time, index) == 1) {
+	public ResponseEntity<String> acceptSuggestion(@RequestBody Suggestion suggestion) {
+		if (suggestionService.acceptSuggestion(suggestion)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -57,7 +58,7 @@ public class SuggestionController {
 	@ApiOperation(value = "면접 거절", response = String.class)
 	@PutMapping("/reject")
 	public ResponseEntity<String> rejectSuggestion(@RequestParam("index") int index) {
-		if (suggestionService.rejectSuggestion(index) == 1) {
+		if (suggestionService.rejectSuggestion(index)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -67,7 +68,7 @@ public class SuggestionController {
 	@ApiOperation(value = "요청 기록 삭제", response = String.class)
 	@DeleteMapping("{index}")
 	public ResponseEntity<String> deleteSuggestion(@PathVariable("index") int index) {
-		if (suggestionService.deleteSuggestion(index) == 1) {
+		if (suggestionService.deleteSuggestion(index)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

@@ -17,9 +17,9 @@ public class InterviewServiceImpl implements InterviewService{
 	
 	
 	@Override
-	public boolean registerURL(String url) throws SQLException {
+	public boolean registerURL(Interview interview) throws SQLException {
 		// TODO Auto-generated method stub
-		return interviewRepo.registerURL(url) == 1;
+		return interviewRepo.registerURL(interview) == 1;
 	}
 
 	@Override

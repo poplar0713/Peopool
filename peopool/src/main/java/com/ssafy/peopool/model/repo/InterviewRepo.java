@@ -9,7 +9,7 @@ import com.ssafy.peopool.model.Interview;
 
 @Repository
 public interface InterviewRepo {
-	int registerURL(String url) throws SQLException;
+	int registerURL(Interview interview) throws SQLException;
 
 	List<Interview> getInterviews(int index) throws SQLException;
 

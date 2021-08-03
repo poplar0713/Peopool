@@ -8,7 +8,7 @@ import com.ssafy.peopool.model.repo.InterviewRepo;
 
 public interface InterviewService {
 	
-	boolean registerURL(String url) throws SQLException;
+	boolean registerURL(Interview interview) throws SQLException;
 
 	List<Interview> getInterviews(int index) throws SQLException;
 
