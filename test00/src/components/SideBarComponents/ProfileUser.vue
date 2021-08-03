@@ -11,14 +11,6 @@
       :before-close="handleClose"
     >
       <SideBarProfileUser />
-      <!-- <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisibleTag = false">Cancel</el-button>
-          <el-button type="primary" @click="(dialogVisibleTag = false), tagok()"
-            >Confirm</el-button
-          >
-        </span>
-      </template> -->
     </el-dialog>
   </el-container>
 </template>
@@ -37,7 +29,7 @@ export default {
   },
   methods: {
     handleClose(done) {
-      this.$confirm("Are you sure to close this dialog?")
+      this.$confirm("창을 닫으시겠습니까?")
         .then(() => {
           done();
           this.dialogVisibleTag = false;

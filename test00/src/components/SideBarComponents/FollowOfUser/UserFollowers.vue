@@ -67,7 +67,6 @@ export default {
         this.followers = res.data;
       })
       .catch((err) => console.log(err));
-
     return {
       dialogVisible: false,
       user: "김백수",

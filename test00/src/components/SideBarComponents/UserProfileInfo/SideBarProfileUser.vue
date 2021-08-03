@@ -6,6 +6,7 @@
     <el-tab-pane label="PR Video"><PRVideo /></el-tab-pane>
     <el-tab-pane label="Tags"><SideBarProfileUserTags /></el-tab-pane>
     <el-tab-pane label="Documents"><SideBarProfileUserDoc /></el-tab-pane>
+    <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
   </el-tabs>
 </template>
 
@@ -16,6 +17,7 @@ import TSideBarProfileUserIntroduction from "./TSideBarProfileUserIntroduction.v
 import SideBarProfileUserTags from "./SideBarProfileUserTags.vue";
 import PRVideo from "./PRVideo.vue";
 import SideBarProfileUserDoc from "./SideBarProfileUserDoc.vue";
+import DeleteUserAccount from "./DeleteUserAccount.vue";
 export default {
   components: {
     SideBarProfileUserInfo,
@@ -24,6 +26,7 @@ export default {
     SideBarProfileUserTags,
     PRVideo,
     SideBarProfileUserDoc,
+    DeleteUserAccount,
   },
   data() {
     return {
