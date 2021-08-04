@@ -71,6 +71,17 @@ public class SuggestionController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
 	}
+	
+	@ApiOperation(value = "기업회원의 면접 요청 취소", response = String.class)
+	@PutMapping("/cancel")
+	public ResponseEntity<String> cancelSuggestion(@RequestParam("index") int index) {
+		if (suggestionService.cancelSuggestion(index)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
+	}
+
 
 	@ApiOperation(value = "요청 기록 삭제", response = String.class)
 	@DeleteMapping("{index}")

@@ -15,6 +15,9 @@ public interface SuggestionService {
 
 	// 면접 제안 거절
 	boolean rejectSuggestion(int index);
+	
+	// 면접 제안 거절
+	boolean cancelSuggestion(int index);
 
 	// 면접 제안 삭제
 	boolean deleteSuggestion(int index);

@@ -18,6 +18,9 @@ public interface SuggestionRepo {
 
 	// 면접 제안 거절
 	int rejectSuggestion(int index);
+	
+	// 면접 제안 거절
+	int cancelSuggestion(int index);
 
 	// 면접 제안 삭제
 	int deleteSuggestion(int index);

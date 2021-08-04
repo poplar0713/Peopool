@@ -21,6 +21,12 @@
 		where sug_index = #{sug_index} 
 	</update>
 	
+	<update id="cancelSuggestion" parameterType="int">
+		update suggestion 
+		set sug_decision = null, sug_state = 'C' 
+		where sug_index = #{sug_index} 
+	</update>
+	
 	<delete id="deleteSuggestion" parameterType="int">
 		delete from suggestion 
 		where sug_index = #{index}
