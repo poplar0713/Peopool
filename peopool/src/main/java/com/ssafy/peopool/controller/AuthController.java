@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ import io.swagger.annotations.ApiResponse;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins="*", allowedHeaders = "*")
 public class AuthController {
 	@Autowired
 	IndividualService individualService;
