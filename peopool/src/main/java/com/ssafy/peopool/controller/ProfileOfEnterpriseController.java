@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.EntCard;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 import com.ssafy.peopool.model.service.ProfileOfEnterpriseService;
 
@@ -35,7 +36,7 @@ public class ProfileOfEnterpriseController {
 	
 	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
 	@GetMapping()
-	public ResponseEntity<List<ProfileOfEnterprise>> getAllProfile() throws SQLException{
+	public ResponseEntity<List<EntCard>> getAllProfile() throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getAllProfile(), HttpStatus.OK);
 		
 	}
@@ -43,14 +44,14 @@ public class ProfileOfEnterpriseController {
 	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/index/{index}")
-	public ResponseEntity<ProfileOfEnterprise> getProfileOfEnterprise(@PathVariable("index")int index) throws SQLException{
+	public ResponseEntity<EntCard> getProfileOfEnterprise(@PathVariable("index")int index) throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getProfileOfEnterprise(index), HttpStatus.OK);
 		
 	}
 	
 	@ApiOperation(value = "name에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/name/{name}")
-	public ResponseEntity<ProfileOfEnterprise> getNameOfEnterprise(@PathVariable("name")String name) throws SQLException{
+	public ResponseEntity<EntCard> getNameOfEnterprise(@PathVariable("name")String name) throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getNameOfEnterprise(name), HttpStatus.OK);
 		
 	}

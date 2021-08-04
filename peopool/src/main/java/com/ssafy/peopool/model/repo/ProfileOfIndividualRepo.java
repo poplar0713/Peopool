@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
 
 @Repository
 public interface ProfileOfIndividualRepo {
 
 	// 전체 프로필 조회
-	List<ProfileOfIndividual> getAllProfile();
+	List<IndCard> getAllProfile();
 	
 	// 프로필 수정
 	int modifyProfile(ProfileOfIndividual profileOfIndividual);
@@ -26,6 +27,6 @@ public interface ProfileOfIndividualRepo {
 	int deleteProfile(int index);
 
 	// 프로필 조회
-	ProfileOfIndividual getProfile(int index);
+	IndCard getProfile(int index);
 
 }
