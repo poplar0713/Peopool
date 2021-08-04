@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.EntCard;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 import com.ssafy.peopool.model.repo.ProfileOfEnterpriseRepo;
 
@@ -16,7 +17,7 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	ProfileOfEnterpriseRepo profileOfEnterpriseRepo;
 	
 	@Override
-	public List<ProfileOfEnterprise> getAllProfile() throws SQLException {
+	public List<EntCard> getAllProfile() throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getAllProfile();
 	}
@@ -34,13 +35,13 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	}
 
 	@Override
-	public ProfileOfEnterprise getProfileOfEnterprise(int index) throws SQLException {
+	public EntCard getProfileOfEnterprise(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getProfileOfEnterprise(index);
 	}
 
 	@Override
-	public ProfileOfEnterprise getNameOfEnterprise(String name) throws SQLException {
+	public EntCard getNameOfEnterprise(String name) throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getNameOfEnterprise(name);
 	}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
 import com.ssafy.peopool.model.service.ProfileOfIndividualService;
 
@@ -30,14 +31,14 @@ public class ProfileOfIndividualController {
 
 	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
 	@GetMapping()
-	public ResponseEntity<List<ProfileOfIndividual>> getAllProfile() {
+	public ResponseEntity<List<IndCard>> getAllProfile() {
 		return new ResponseEntity<>(profileOfIndividualService.getAllProfile(), HttpStatus.OK);
 
 	}
 	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<ProfileOfIndividual> getProfile(@PathVariable("index")int index) {
+	public ResponseEntity<IndCard> getProfile(@PathVariable("index")int index) {
 		return new ResponseEntity<>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
 
 	}
