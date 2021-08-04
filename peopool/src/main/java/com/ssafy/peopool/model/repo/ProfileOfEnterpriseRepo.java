@@ -1,6 +1,7 @@
 package com.ssafy.peopool.model.repo;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,7 @@ import com.ssafy.peopool.model.ProfileOfEnterprise;
 public interface ProfileOfEnterpriseRepo {
 
 	// 전체 프로필 조회
-	ProfileOfEnterprise getAllProfile() throws SQLException;
+	List<ProfileOfEnterprise> getAllProfile() throws SQLException;
 	
 	// 프로필 수정
 	int modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
