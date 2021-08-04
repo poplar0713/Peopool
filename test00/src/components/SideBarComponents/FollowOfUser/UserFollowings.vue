@@ -23,16 +23,12 @@
       height="250px"
     >
       <el-table-column label="Company" prop="follower"> </el-table-column>
-      <el-table-column label="Field" prop="company_field"> </el-table-column>
       <el-table-column align="right">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="unfollow(scope.row, scope.row.follower, this.user_index)"
+          <el-button size="mini" type="primary" @click="unfollow(scope.row)"
             >following</el-button
           >
           <!-- {{scope.row.company_name}} -->
@@ -49,6 +45,14 @@ import axios from "axios";
 
 export default {
   data() {
+    return {
+      dialogVisible: false,
+      user_index: "",
+      followings: [],
+      search: "",
+    };
+  },
+  mounted() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
@@ -68,28 +72,26 @@ export default {
         this.followings = res.data;
       })
       .catch((err) => console.log(err));
-    return {
-      dialogVisible: false,
-      user_index: 0,
-      followings: [],
-      search: "",
-    };
   },
   methods: {
-    unfollow(row, follower, user) {
-      console.log(row, follower, user);
+    unfollow(row) {
+      console.log(row.following, row.follower);
       // 언팔로우
       axios
         .delete("https://i5d206.p.ssafy.io:8443/fol", {
-          fol_type: 0,
-          following: user,
-          follower: follower,
+          data: {
+            fol_type: 0,
+            follower: row.follower,
+            following: row.following,
+          },
         })
-        .then(
-          (res) => console.log(res),
-          this.followings.splice(this.followings.indexOf(row), 1)
-        )
-        .catch();
+        .then((res) => {
+          console.log(res),
+            this.followings.splice(this.followings.indexOf(row), 1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

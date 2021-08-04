@@ -38,8 +38,12 @@ export default {
     this.userindex = index;
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
-      .then((res) => (this.ruleForm.Introduction = res.data.ind_introduce))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        this.ruleForm.Introduction = res.data.ind_introduce;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   data() {
     return {

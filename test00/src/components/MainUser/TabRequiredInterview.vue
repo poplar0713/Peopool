@@ -46,7 +46,7 @@ export default {
     const index = decoded.index;
     // 요청받은 인터뷰
     axios
-      .get(`/sug/${index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`, {
         params: {
           index: index,
         },
