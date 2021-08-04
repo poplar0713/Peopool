@@ -31,4 +31,10 @@
 		from suggestion 
 		where ind_index = #{index}
 	</select>
+	
+	<select id="getEntSuggestion" parameterType="int" resultType="Suggestion">
+		select * 
+		from suggestion 
+		where ent_index = #{index}
+	</select>
 </mapper>

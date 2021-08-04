@@ -46,4 +46,10 @@ public class SuggestionServiceImpl implements SuggestionService {
 		return suggestionRepo.getSuggestion(index);
 	}
 
+	@Override
+	public List<Suggestion> getEntSuggestion(int index) {
+		// TODO Auto-generated method stub
+		return suggestionRepo.getEntSuggestion(index);
+	}
+
 }

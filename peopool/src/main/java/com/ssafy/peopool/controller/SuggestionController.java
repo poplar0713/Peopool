@@ -28,10 +28,17 @@ public class SuggestionController {
 	@Autowired
 	SuggestionService suggestionService;
 
-	@ApiOperation(value = "면접 요청 조회", response = String.class)
+	@ApiOperation(value = "개인회원의 인덱스로 면접 요청 기록 조회", response = String.class)
 	@GetMapping("{index}")
 	public ResponseEntity<List<Suggestion>> getSuggestion(@PathVariable("index") int index) {
 		return new ResponseEntity<>(suggestionService.getSuggestion(index), HttpStatus.OK);
+
+	}
+	
+	@ApiOperation(value = "기업회원의 인덱스로 면접 요청 기록 조회", response = String.class)
+	@GetMapping("/ent/{index}")
+	public ResponseEntity<List<Suggestion>> getEntSuggestion(@PathVariable("index") int index) {
+		return new ResponseEntity<>(suggestionService.getEntSuggestion(index), HttpStatus.OK);
 
 	}
 
@@ -45,7 +52,7 @@ public class SuggestionController {
 
 	}
 
-	@ApiOperation(value = "면접 수락", response = String.class)
+	@ApiOperation(value = "개인회원의 면접 수락", response = String.class)
 	@PutMapping("/accept")
 	public ResponseEntity<String> acceptSuggestion(@RequestBody Suggestion suggestion) {
 		if (suggestionService.acceptSuggestion(suggestion)) {
@@ -55,7 +62,7 @@ public class SuggestionController {
 
 	}
 
-	@ApiOperation(value = "면접 거절", response = String.class)
+	@ApiOperation(value = "개인회원의 면접 거절", response = String.class)
 	@PutMapping("/reject")
 	public ResponseEntity<String> rejectSuggestion(@RequestParam("index") int index) {
 		if (suggestionService.rejectSuggestion(index)) {
@@ -74,4 +81,8 @@ public class SuggestionController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
 	}
+	
+	
+	
+	
 }

@@ -24,5 +24,9 @@ public interface SuggestionRepo {
 
 	// 면접 제안 조회
 	List<Suggestion> getSuggestion(int index);
+	
+	// 기업의 면접요청 기록 조회
+	List<Suggestion> getEntSuggestion(int index);
+	
 
 }
