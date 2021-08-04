@@ -149,7 +149,7 @@ export default {
       this.submittedtime = time;
       console.log(this.submittedtime);
       // 면접수락요청
-      axios.put("/sug/accept", {
+      axios.put("https://i5d206.p.ssafy.io:8443/sug/accept", {
         index: this.index,
         time: this.submittedtime,
       });

@@ -81,7 +81,7 @@ export default {
     const index = decoded.index;
     // 팔로우했는지 체크해보기
     axios
-      .post("/fol/check", {
+      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         fol_type: 0,
         follower: this.item.ent_index,
         following: index,
@@ -110,7 +110,7 @@ export default {
       if (this.follow) {
         console.log("팔로우 해제");
         axios
-          .delete("/fol", {
+          .delete("https://i5d206.p.ssafy.io:8443/fol", {
             fol_type: 0,
             following: this.user_index,
             follower: this.item.ent_index,
@@ -123,7 +123,7 @@ export default {
       } else if (this.follow == false) {
         console.log("팔로잉");
         axios
-          .post("/fol", {
+          .post("https://i5d206.p.ssafy.io:8443/fol", {
             fol_type: 0,
             following: this.user_index,
             follower: this.item.ent_index,

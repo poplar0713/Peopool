@@ -68,7 +68,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;

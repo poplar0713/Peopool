@@ -54,7 +54,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`/ent/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ent/${index}`)
       .then((res) => {
         this.ruleForm.CompanyName = res.data.ent_name;
         this.ruleForm.CompanyTel = res.data.ent_contact;
@@ -146,7 +146,7 @@ export default {
         if (valid) {
           // 회원정보 수정
           axios
-            .put("/ent", {
+            .put("https://i5d206.p.ssafy.io:8443/ent", {
               ent_email: this.ruleForm.CompanyEmail,
               ent_id: this.ruleForm.CompanyId,
               ent_index: this.ruleForm.CompanyIndex,

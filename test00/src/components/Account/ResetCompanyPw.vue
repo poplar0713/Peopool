@@ -116,7 +116,7 @@ export default {
           this.openFullScreen2();
           // axios.get 비번찾기
           axios
-            .get("/ent/findpw", {
+            .get("https://i5d206.p.ssafy.io:8443/ent/findpw", {
               params: {
                 email: this.ruleForm.companyemail,
                 id: this.ruleForm.companyid,
@@ -126,7 +126,7 @@ export default {
               console.log(result);
               // 비밀번호 변경
               axios
-                .put("/ent", {
+                .put("https://i5d206.p.ssafy.io:8443/ent", {
                   ent_contact: result.data.ent_contact,
                   ent_email: result.data.ent_email,
                   ent_id: result.data.ent_id,

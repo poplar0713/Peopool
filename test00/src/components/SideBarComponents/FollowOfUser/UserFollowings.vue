@@ -56,7 +56,7 @@ export default {
     this.user_index = index;
     //팔로잉정보 가져오기
     axios
-      .get("/fol/following", {
+      .get("https://i5d206.p.ssafy.io:8443/fol/following", {
         params: {
           index: index,
           type: 0,
@@ -80,7 +80,7 @@ export default {
       console.log(row, follower, user);
       // 언팔로우
       axios
-        .delete("/fol", {
+        .delete("https://i5d206.p.ssafy.io:8443/fol", {
           fol_type: 0,
           following: user,
           follower: follower,
