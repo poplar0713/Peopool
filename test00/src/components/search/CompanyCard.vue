@@ -34,7 +34,7 @@
       <el-header>
         <h2>
           {{ item.ent_name }}
-          <!-- 팔로우 -->
+          <!-- 팔로우일경우 -->
           <span v-if="follow" style="color: Tomato;">
             <i
               class="fas fa-heart fa-2x"
@@ -43,7 +43,7 @@
               style="cursor:pointer"
             ></i>
           </span>
-          <!--  -->
+          <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
             <i
               @click="clickfollowBtn"
@@ -70,13 +70,6 @@
   </el-dialog>
 </template>
 
-<style>
-.info {
-  padding: 3%;
-  width: "50%";
-}
-</style>
-
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -90,7 +83,7 @@ export default {
     axios
       .post("/fol/check", {
         fol_type: 0,
-        follower: this.item.ent_id,
+        follower: this.item.ent_index,
         following: index,
       })
       .then(
@@ -120,20 +113,26 @@ export default {
           .delete("/fol", {
             fol_type: 0,
             following: this.user_index,
-            follower: this.item.ent_id,
+            follower: this.item.ent_index,
           })
-          .then((res) => console.log(res), (this.follow = false))
+          .then((res) => {
+            console.log(res);
+          })
           .catch();
-      } else {
+        this.follow = false;
+      } else if (this.follow == false) {
         console.log("팔로잉");
         axios
           .post("/fol", {
             fol_type: 0,
             following: this.user_index,
-            follower: this.item.ent_id,
+            follower: this.item.ent_index,
           })
-          .then((res) => console.log(res), (this.follow = true))
+          .then((res) => {
+            console.log(res);
+          })
           .catch();
+        this.follow = true;
       }
     },
     handleClose() {
@@ -142,3 +141,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.info {
+  padding: 3%;
+  width: "50%";
+}
+</style>

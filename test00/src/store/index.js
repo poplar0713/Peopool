@@ -18,13 +18,13 @@ export default createStore({
   actions: {
     requestLoginind({ state }, payload) {
       console.log("requestLoginind", state, payload);
-      const url = "/auth/login";
+      const url = "https://i5d206.p.ssafy.io:8443/auth/login";
       let body = payload;
       return $axios.post(url, body);
     },
     requestLoginent({ state }, payload) {
       console.log("requestLoginent", state, payload);
-      const url = "/auth/loginent";
+      const url = "https://i5d206.p.ssafy.io:8443/auth/loginent";
       let body = payload;
       return $axios.post(url, body);
     },
