@@ -20,14 +20,14 @@
 	<select id="getProfileOfEnterprise" parameterType="int" resultType="EntCard">
 		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
 		from ent_profile p join enterprise e
-		on e.ent_index = e.ent_index
+		on p.ent_index = e.ent_index
 		where e.ent_index = #{index}
 	</select>
 	
 	<select id="getNameOfEnterprise" parameterType="String" resultType="EntCard">
 		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
 		from ent_profile p join enterprise e
-		on e.ent_index = e.ent_index
+		on p.ent_index = e.ent_index
 		where e.ent_name = #{name}
 	</select>
 	
