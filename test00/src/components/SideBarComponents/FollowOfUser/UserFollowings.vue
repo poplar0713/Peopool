@@ -22,7 +22,7 @@
       width="100%"
       height="250px"
     >
-      <el-table-column label="Company" prop="company_name"> </el-table-column>
+      <el-table-column label="Company" prop="follower"> </el-table-column>
       <el-table-column label="Field" prop="company_field"> </el-table-column>
       <el-table-column align="right">
         <template #header>
