@@ -8,7 +8,7 @@
         </div></el-col
       >
       <el-col :span="3">
-        <!-- 팔로우 -->
+        <!-- 팔로우가 되어있을때 -->
         <span v-if="follow" style="color: Tomato;">
           <i
             class="fas fa-heart fa-2x"
@@ -17,7 +17,7 @@
             style="cursor:pointer"
           ></i>
         </span>
-        <!--  -->
+        <!-- 팔로우가 안되어있을때 -->
         <span v-if="follow == false" style="color: Tomato;">
           <i
             @click="clickfollowBtn"
@@ -78,11 +78,37 @@
 </style>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 export default {
   data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 팔로우했는지 체크해보기
+    axios
+      .post("/fol/check", {
+        fol_type: 0,
+        follower: this.item.ent_id,
+        following: index,
+      })
+      .then(
+        (res) =>
+          // 팔로우가 되어있는것
+          console.log(res),
+        (this.follow = true)
+      )
+      .catch(
+        (err) =>
+          // 팔로우가 안되어있는것
+          console.log(err),
+        (this.follow = false)
+      );
     return {
       dialogVisible: false,
-      follow: true,
+      follow: false,
+      user_index: index,
     };
   },
   props: { item: Object },
@@ -90,10 +116,24 @@ export default {
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
-        this.follow = false;
+        axios
+          .delete("/fol", {
+            fol_type: 0,
+            following: this.user_index,
+            follower: this.item.ent_id,
+          })
+          .then((res) => console.log(res), (this.follow = false))
+          .catch();
       } else {
         console.log("팔로잉");
-        this.follow = true;
+        axios
+          .post("/fol", {
+            fol_type: 0,
+            following: this.user_index,
+            follower: this.item.ent_id,
+          })
+          .then((res) => console.log(res), (this.follow = true))
+          .catch();
       }
     },
     handleClose() {

@@ -8,13 +8,23 @@
 
 <script>
 import CompanyCard from "@/components/search/CompanyCard.vue";
-// import axios from 'axios';
+// import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
   components: {
     CompanyCard,
   },
   data() {
+    // 토큰가져오기
+    // const token = localStorage.getItem("token");
+    // const decoded = jwt_decode(token);
+    // const index = decoded.index;
+    // 기업 전체프로필 가져오기
+    axios
+      .get("/poe")
+      .then((res) => (this.ents = res.data))
+      .catch();
     return {
       ents: [
         {
