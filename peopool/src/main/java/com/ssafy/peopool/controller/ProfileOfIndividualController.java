@@ -1,5 +1,7 @@
 package com.ssafy.peopool.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,7 @@ public class ProfileOfIndividualController {
 
 	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
 	@GetMapping()
-	public ResponseEntity<ProfileOfIndividual> getAllProfile() {
+	public ResponseEntity<List<ProfileOfIndividual>> getAllProfile() {
 		return new ResponseEntity<>(profileOfIndividualService.getAllProfile(), HttpStatus.OK);
 
 	}

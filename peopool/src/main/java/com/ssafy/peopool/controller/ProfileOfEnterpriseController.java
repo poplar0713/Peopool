@@ -1,6 +1,7 @@
 package com.ssafy.peopool.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class ProfileOfEnterpriseController {
 	
 	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
 	@GetMapping()
-	public ResponseEntity<ProfileOfEnterprise> getAllProfile() throws SQLException{
+	public ResponseEntity<List<ProfileOfEnterprise>> getAllProfile() throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getAllProfile(), HttpStatus.OK);
 		
 	}

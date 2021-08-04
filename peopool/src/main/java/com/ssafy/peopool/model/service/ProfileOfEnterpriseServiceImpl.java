@@ -1,6 +1,7 @@
 package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	ProfileOfEnterpriseRepo profileOfEnterpriseRepo;
 	
 	@Override
-	public ProfileOfEnterprise getAllProfile() throws SQLException {
+	public List<ProfileOfEnterprise> getAllProfile() throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getAllProfile();
 	}
