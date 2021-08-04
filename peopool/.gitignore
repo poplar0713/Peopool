@@ -12,7 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
+.chunk.js
 ### IntelliJ IDEA ###
 .idea
 *.iws
