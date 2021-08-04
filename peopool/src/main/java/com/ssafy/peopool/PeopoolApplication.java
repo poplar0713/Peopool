@@ -23,9 +23,6 @@ import com.ssafy.peopool.webrtc.UserRegistry;
 @RestController
 @EnableWebSocket
 @CrossOrigin(origins="*",allowedHeaders = "*")
-=======
-@CrossOrigin(origins="*", allowedHeaders = "*")
->>>>>>> movieBE
 public class PeopoolApplication implements WebSocketConfigurer {
 
 	@GetMapping("/peopool")
