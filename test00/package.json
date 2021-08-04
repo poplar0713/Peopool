@@ -1,0 +1,65 @@
+{
+  "name": "test00",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer",
+    "postinstall": "node tools/copy-webviewer-files.js"
+  },
+  "dependencies": {
+    "@pdftron/webviewer": "^8.0.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "element-plus": "^1.0.2-beta.55",
+    "firebase": "^8.8.0",
+    "firebaseui": "^4.8.1",
+    "font-awesome": "^4.7.0",
+    "jwt-decode": "^3.1.2",
+    "sockjs": "^0.3.21",
+    "v-calendar": "^3.0.0-alpha.5",
+    "vee-validate": "^4.4.7",
+    "vue": "^3.1.4",
+    "vue-router": "^4.0.0-0",
+    "vue-webrtc": "^2.0.0",
+    "vue3-carousel": "^0.1.23",
+    "vuedraggable": "^4.0.3",
+    "vuex": "^4.0.0-0",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "^4.5.13",
+    "@vue/cli-plugin-vuex": "^4.5.13",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.1.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.4",
+    "vue-cli-plugin-element-plus": "0.0.13"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
