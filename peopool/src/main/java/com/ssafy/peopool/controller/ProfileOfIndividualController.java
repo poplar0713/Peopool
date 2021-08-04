@@ -70,7 +70,7 @@ public class ProfileOfIndividualController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiOperation(value = "프로필을 삭제한다.", response = String.class)
+	@ApiOperation(value = "프로필을 삭제한다.(사용안함)", response = String.class)
 	@DeleteMapping("/{index}")
 	public ResponseEntity<String> deleteProfile(@PathVariable("index")int index) {
 		if (profileOfIndividualService.deleteProfile(index)) {
