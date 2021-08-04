@@ -7,8 +7,12 @@ import InterviewRoom from "../views/InterviewRoom.vue";
 import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
-
+import JoinForm from "@/components/InterviewRoom/Interviewroomyh.vue";
 const routes = [
+  {
+    path: "/meetinter",
+    component: JoinForm,
+  },
   {
     path: "/",
     name: "Start",
