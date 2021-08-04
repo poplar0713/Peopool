@@ -29,8 +29,7 @@
         <el-divider content-position="left">기업 정보</el-divider>
         <CompanyList />
         <el-divider content-position="left">관심기업 정보</el-divider>
-        <CompanyList />
-        <button @click="newsocket">websocket</button>
+        <InterestedCompanyList />
       </el-footer>
     </el-container>
   </el-container>
@@ -41,6 +40,7 @@ import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue
 import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
+import InterestedCompanyList from "@/components/MainUser/InterestedCompanyList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
 import jwt_decode from "jwt-decode";
@@ -48,9 +48,11 @@ import axios from "axios";
 import server_url from "@/server.js";
 
 export default {
+  name: "MainUser",
   components: {
     SideBarUser,
     CompanyList,
+    InterestedCompanyList,
     TabRequiredInterview,
     TabSchedule,
     MyInfo,

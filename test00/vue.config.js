@@ -18,43 +18,43 @@ module.exports = {
     // open: true,
     proxy: {
       "api.v1": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/webjars": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/group-call": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/upload": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/auth": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/ind": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/ent": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/fol": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/has": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/int": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/poe": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/poi": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
       "/taglist/": {
-        target: "https://52.79.162.52:8443/",
+        target: "https://i5d206.p.ssafy.io:8443",
       },
     },
   },

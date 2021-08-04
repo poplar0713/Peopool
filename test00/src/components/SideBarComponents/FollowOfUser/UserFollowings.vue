@@ -32,7 +32,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="unfollow(scope.row.company_name, this.user)"
+            @click="unfollow(scope.row, scope.row.follower, this.user_index)"
             >following</el-button
           >
           <!-- {{scope.row.company_name}} -->
@@ -53,12 +53,13 @@ export default {
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    //팔로워정보 가져오기
+    this.user_index = index;
+    //팔로잉정보 가져오기
     axios
       .get("/fol/following", {
         params: {
           index: index,
-          type: this.$store.state.type,
+          type: 0,
         },
       })
       // 팔로워데이터 넣어주기
@@ -69,40 +70,26 @@ export default {
       .catch((err) => console.log(err));
     return {
       dialogVisible: false,
-      user: "김백수",
-      followings: [
-        {
-          company_id: 0,
-          company_name: "삼성전자",
-          company_field: "전자",
-        },
-        {
-          company_id: 1,
-          company_name: "삼성SDS",
-          company_field: "삼성",
-        },
-        {
-          company_id: 2,
-          company_name: "카카오",
-          company_field: "IT",
-        },
-        {
-          company_id: 3,
-          company_name: "갓카오",
-          company_field: "IT",
-        },
-        {
-          company_id: 4,
-          company_name: "카갓오",
-          company_field: "IT",
-        },
-      ],
+      user_index: 0,
+      followings: [],
       search: "",
     };
   },
   methods: {
-    unfollow(company, user) {
-      console.log(company, user);
+    unfollow(row, follower, user) {
+      console.log(row, follower, user);
+      // 언팔로우
+      axios
+        .delete("/fol", {
+          fol_type: 0,
+          following: user,
+          follower: follower,
+        })
+        .then(
+          (res) => console.log(res),
+          this.followings.splice(this.followings.indexOf(row), 1)
+        )
+        .catch();
     },
   },
 };

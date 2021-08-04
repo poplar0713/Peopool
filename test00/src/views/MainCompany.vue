@@ -27,6 +27,7 @@ import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 // import webviewer from "@/components/MainCompany/webviewer.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 export default {
+  name: "MainCompany",
   components: {
     SideBarCompany,
     CheckAnnc,
@@ -34,7 +35,7 @@ export default {
     // webviewer,
     headerSearchUser,
   },
-
+  mounted() {},
   data() {
     return {
       tableData: [
