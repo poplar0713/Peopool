@@ -22,7 +22,7 @@ import com.ssafy.peopool.webrtc.UserRegistry;
 @SpringBootApplication
 @RestController
 @EnableWebSocket
-@CrossOrigin("*")
+@CrossOrigin(origins="*", allowedHeaders = "*")
 public class PeopoolApplication implements WebSocketConfigurer {
 
 	@GetMapping("/peopool")
