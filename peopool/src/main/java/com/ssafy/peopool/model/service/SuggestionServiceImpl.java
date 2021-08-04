@@ -33,6 +33,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 		// TODO Auto-generated method stub
 		return suggestionRepo.rejectSuggestion(index) == 1;
 	}
+	
+	@Override
+	public boolean cancelSuggestion(int index) {
+		// TODO Auto-generated method stub
+		return suggestionRepo.cancelSuggestion(index) == 1;
+	}
 
 	@Override
 	public boolean deleteSuggestion(int index) {
@@ -45,5 +51,13 @@ public class SuggestionServiceImpl implements SuggestionService {
 		// TODO Auto-generated method stub
 		return suggestionRepo.getSuggestion(index);
 	}
+
+	@Override
+	public List<Suggestion> getEntSuggestion(int index) {
+		// TODO Auto-generated method stub
+		return suggestionRepo.getEntSuggestion(index);
+	}
+
+	
 
 }

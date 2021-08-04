@@ -4,9 +4,10 @@
 
 <mapper namespace="com.ssafy.peopool.model.repo.ProfileOfIndividualRepo">
 
-	<select id="getAllProfile" resultType="ProfileOfIndividual">
-		select * 
-		from ind_profile
+	<select id="getAllProfile" resultType="IndCard">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
+		from ind_profile p join individual i
+		on p.ind_index = i.ind_index
 	</select>
 	
 	<update id="modifyProfile" parameterType="ProfileOfIndividual">
@@ -27,10 +28,11 @@
 		where ind_index = #{ind_index}
 	</update>
 	
-	<select id="getProfile" parameterType="int" resultType="ProfileOfIndividual">
-		select * 
-		from ind_profile 
-		where ind_index = #{index}
+	<select id="getProfile" parameterType="int" resultType="IndCard">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
+		from ind_profile p join individual i
+		on p.ind_index = i.ind_index
+		where i.ind_index = #{index}
 	</select>
 	
 	<delete id="deleteProfile" parameterType="int">
