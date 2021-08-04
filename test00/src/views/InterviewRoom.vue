@@ -8,7 +8,7 @@
           <div id="wrapper">
             <div id="join" class="animate join">
               <h1>Join a Room</h1>
-              <el-form onsubmit="this.register" accept-charset="UTF-8">
+              <el-form v-on:submit.prevent="onSubmit" accept-charset="UTF-8">
                 <p>
                   <input
                     type="text"
@@ -30,7 +30,7 @@
                   />
                 </p>
                 <p class="submit">
-                  <input type="submit" name="commit" value="Join!" />
+                  <input type="submit" name="commit" value="Join!" v-on:click="register" />
                 </p>
               </el-form>
             </div>
