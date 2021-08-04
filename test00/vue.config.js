@@ -1,4 +1,4 @@
-const { useFormValues } = require('vee-validate');
+const { useFormValues } = require('vue-validate');
 
 module.exports = {
   outputDir: "../peopool/src/main/resources/static",
