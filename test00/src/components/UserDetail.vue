@@ -2,7 +2,24 @@
   <el-button type="text" @click="dialogVisible = true" style="color:black"
     >{{ user.name }}
   </el-button>
-  <el-button circle><i class="far fa-heart"></i></el-button>
+
+  <!-- 팔로우가 되어있을때 -->
+  <span v-if="follow" style="color: Tomato;">
+    <i
+      class="fas fa-heart fa-2x"
+      size:7x
+      @click="clickfollowBtn"
+      style="cursor:pointer"
+    ></i>
+  </span>
+  <!-- 팔로우가 안되어있을때 -->
+  <span v-if="follow == false" style="color: Tomato;">
+    <i
+      @click="clickfollowBtn"
+      class="far fa-heart fa-2x"
+      style="cursor:pointer"
+    ></i>
+  </span>
 
   <div>
     <el-dialog
@@ -133,6 +150,8 @@
 
 <script>
 import webviewer from "@/components/MainCompany/webviewer.vue";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 export default {
   name: "UserDetail",
   components: {
@@ -140,7 +159,28 @@ export default {
   },
   mounted() {},
   data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 팔로우했는지 체크해보기
+    axios
+      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+        fol_type: 1,
+        follower: this.user.ind_index,
+        following: index,
+      })
+      .then((res) => {
+        // 팔로우가 되어있는것
+        console.log(res), (this.follow = true);
+      })
+      .catch((err) => {
+        // 팔로우가 안되어있는것
+        console.log(err), (this.follow = false);
+      });
     return {
+      follow: false,
+      company_index: index,
       dialogVisible: false,
       activeNames: ["1"],
       activeName: "1",
@@ -158,6 +198,37 @@ export default {
     user: Object,
   },
   methods: {
+    clickfollowBtn() {
+      if (this.follow) {
+        console.log("팔로우 해제");
+        axios
+          .delete("https://i5d206.p.ssafy.io:8443/fol", {
+            data: {
+              fol_type: 1,
+              following: this.company_index,
+              follower: this.user.ind_index,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            this.follow = false;
+          })
+          .catch((err) => console.log(err));
+      } else if (this.follow == false) {
+        console.log("팔로잉");
+        axios
+          .post("https://i5d206.p.ssafy.io:8443/fol", {
+            fol_type: 1,
+            following: this.company_index,
+            follower: this.user.ind_index,
+          })
+          .then((res) => {
+            console.log(res);
+            this.follow = true;
+          })
+          .catch();
+      }
+    },
     handleClose(done) {
       this.$confirm("창을 닫으시겠습니까?")
         .then(() => {

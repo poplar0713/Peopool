@@ -4,8 +4,8 @@
       <el-main>
         <el-card
           class="box-card"
-          style="width: 250px"
-          v-for="fd in followData"
+          style="width: 200px"
+          v-for="fd in followers"
           :key="fd"
         >
           <template #header>
@@ -27,14 +27,40 @@
 
 <script>
 import UserDetail from "@/components/UserDetail.vue";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
   components: {
     UserDetail,
   },
-  name: "HelloWorld",
   props: {
     followData: Array,
+  },
+  data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 내정보 가져오기
+    this.company_index = index;
+    //팔로워정보 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
+        params: {
+          index: index,
+          type: 1,
+        },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.followers = res.data;
+      })
+      .catch((err) => console.log(err));
+    return {
+      followers: [],
+    };
   },
 };
 </script>
