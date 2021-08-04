@@ -39,7 +39,7 @@ stages {
 							| xargs -r docker rmi'
 						
             sh 'docker run -d --name peopoolbe -p 8443:8443 -e JAVA_TOOL_OPTIONS="-Dkms.url=ws://52.79.162.52:8888/kurento" --network peopoolnet peopoolbe:latest '
-						sh 'docker run -d --name peopoolfe -p 80:80 --network peopoolnet peopoolfe:latest'
+						sh 'docker run -d --name peopoolfe -p 443:443 -v /home/ubuntu/yh/sslkey/:/var/empty/ --network peopoolnet peopoolfe:latest'
 
         }
     }
