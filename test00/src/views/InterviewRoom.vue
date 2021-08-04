@@ -37,7 +37,7 @@
             <div id="room" style="display: none;">
               <h2 id="room-header"></h2>
               <div id="participants"></div>
-              <input type="button" id="button-leave" onmouseup="leaveRoom();" value="Leave room" />
+              <input type="button" id="button-leave" v-on:click="leaveRoom" value="Leave room" />
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default {
     headerSearchCompany,
   },
   name: "InterviewRoom",
-  created: function() {
+  mounted: function() {
     console.log(adapter.browserDetails.browser);
     this.ws = new WebSocket("wss://localhost:8443/groupcall");
 
@@ -113,7 +113,6 @@ export default {
       document.getElementById("room-header").innerText = "ROOM " + this.room;
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
-      console.log(this.room);
       var message = {
         id: "joinRoom",
         name: this.username,

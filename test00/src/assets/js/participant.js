@@ -15,9 +15,6 @@
  *
  */
 
-const PARTICIPANT_MAIN_CLASS = 'participant main';
-const PARTICIPANT_CLASS = 'participant';
-
 /**
  * Creates a video element for a new participant
  *
@@ -27,6 +24,10 @@ const PARTICIPANT_CLASS = 'participant';
  * @return
  */
 function Participant(name, sendMessage) {
+
+    const PARTICIPANT_MAIN_CLASS = 'participant main';
+    const PARTICIPANT_CLASS = 'participant';
+
 	this.name = name;
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
