@@ -1,13 +1,14 @@
 package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 
 public interface ProfileOfEnterpriseService {
 	
 	// 전체 프로필 조회
-	ProfileOfEnterprise getAllProfile() throws SQLException;
+	List<ProfileOfEnterprise> getAllProfile() throws SQLException;
 
 	// 프로필 수정
 	boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
