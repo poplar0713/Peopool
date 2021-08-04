@@ -22,7 +22,7 @@ export default {
     // const index = decoded.index;
     // 기업 전체프로필 가져오기
     axios
-      .get("/poe")
+      .get("https://i5d206.p.ssafy.io:8443/poe")
       .then((res) => {
         console.log(res);
         this.ents = res.data;

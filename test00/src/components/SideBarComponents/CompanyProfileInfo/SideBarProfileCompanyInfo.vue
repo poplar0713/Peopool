@@ -63,7 +63,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`/poe/index/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`)
       .then((res) => {
         this.ruleForm.ent_index = res.data.ent_index;
         this.ruleForm.ent_image = res.data.ent_image;
@@ -158,7 +158,7 @@ export default {
         if (valid) {
           // 기업정보수정
           axios
-            .put("/poe", {
+            .put("https://i5d206.p.ssafy.io:8443/poe", {
               ent_index: this.ruleForm.ent_index,
               ent_image: this.ruleForm.ent_image,
               ent_ceo: this.ruleForm.ent_ceo,

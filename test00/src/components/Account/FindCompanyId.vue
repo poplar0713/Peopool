@@ -72,7 +72,7 @@ export default {
           this.openFullScreen2();
           // axios.get 아이디찾기
           axios
-            .get("/ent/findid", {
+            .get("https://i5d206.p.ssafy.io:8443/ent/findid", {
               params: {
                 name: this.ruleForm.companyname,
                 email: this.ruleForm.companyemail,

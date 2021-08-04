@@ -23,7 +23,7 @@ export default {
       const index = decoded.index;
       // 회원정보 가져오기
       axios
-        .delete(`/ent/${index}`)
+        .delete(`https://i5d206.p.ssafy.io:8443/ent/${index}`)
         .then((res) => {
           this.openFullScreen2();
           console.log(res);
