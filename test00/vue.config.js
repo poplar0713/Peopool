@@ -1,3 +1,5 @@
+const { useFormValues } = require('vee-validate');
+
 module.exports = {
   outputDir: "../peopool/src/main/resources/static",
   indexPath: "../static/index.html",

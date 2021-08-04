@@ -23,6 +23,10 @@ const beforeDestroy = () => {
 	ws.close();
 }
 
+ws.onopen = function () {
+	console.log("websocket is connected");
+}
+
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 	console.info('Received message: ' + message.data);
@@ -84,11 +88,11 @@ const callResponse = (message) => {
 	if (message.response != 'accepted') {
 		console.info('Call not accepted by peer. Closing call');
 		stop();
-	} else {
-		webRtcPeer.processAnswer(message.sdpAnswer, function (error) {
-			if (error) return console.error (error);
-		});
-	}
+	} //else {
+		//webRtcPeer.processAnswer(message.sdpAnswer, function (error) {
+		//	if (error) return console.error (error);
+		//});
+	//}
 }
 
 const onExistingParticipants = () => {

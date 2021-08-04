@@ -15,7 +15,6 @@
  *
  */
 
-
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
 
@@ -27,15 +26,14 @@ const PARTICIPANT_CLASS = 'participant';
  *                        The tag of the new element will be 'video<name>'
  * @return
  */
-
-const Participant = (name) => {
+function Participant(name, sendMessage) {
 	this.name = name;
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
 	container.id = name;
 	var span = document.createElement('span');
 	var video = document.createElement('video');
-	var rtcPeer;
+	var rtcPeer = null;
 
 	container.appendChild(video);
 	container.appendChild(span);
@@ -47,7 +45,6 @@ const Participant = (name) => {
 	video.id = 'video-' + name;
 	video.autoplay = true;
 	video.controls = false;
-
 
 	this.getElement = function() {
 		return container;
@@ -75,8 +72,9 @@ const Participant = (name) => {
 	}
 
 	this.offerToReceiveVideo = function(error, offerSdp, wp){
-		if (error) return console.error ("sdp offer error")
+		if (error) return console.error("sdp offer error")
 		console.log('Invoking SDP offer callback function');
+		console.log(wp)
 		var msg =  { id : "receiveVideoFrom",
 				sender : name,
 				sdpOffer : offerSdp
@@ -86,17 +84,19 @@ const Participant = (name) => {
 
 
 	this.onIceCandidate = function (candidate, wp) {
-		  console.log("Local candidate" + JSON.stringify(candidate));
+		console.log("Local candidate" + JSON.stringify(candidate));
+		console.log(wp)
 
-		  var message = {
-		    id: 'onIceCandidate',
-		    candidate: candidate,
-		    name: name
-		  };
-		  sendMessage(message);
+		var message = {
+		id: 'onIceCandidate',
+		candidate: candidate,
+		name: name
+		};
+		sendMessage(message);
 	}
 
-	Object.defineProperty(this, 'rtcPeer', { writable: true});
+	Object.defineProperty(this, 'rtcPeer', { writable: true });
+	console.log(rtcPeer)
 
 	this.dispose = function() {
 		console.log('Disposing participant ' + this.name);

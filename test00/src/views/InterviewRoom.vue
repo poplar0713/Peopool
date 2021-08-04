@@ -8,12 +8,12 @@
           <div id="wrapper">
             <div id="join" class="animate join">
               <h1>Join a Room</h1>
-              <form onsubmit="this.register" accept-charset="UTF-8">
+              <el-form onsubmit="this.register" accept-charset="UTF-8">
                 <p>
                   <input
                     type="text"
                     name="name"
-                    value=""
+                    v-model="username"
                     id="name"
                     placeholder="Username"
                     required
@@ -23,7 +23,7 @@
                   <input
                     type="text"
                     name="room"
-                    value=""
+                    v-model="room"
                     id="roomName"
                     placeholder="Room"
                     required
@@ -32,7 +32,7 @@
                 <p class="submit">
                   <input type="submit" name="commit" value="Join!" />
                 </p>
-              </form>
+              </el-form>
             </div>
             <div id="room" style="display: none;">
               <h2 id="room-header"></h2>
@@ -51,14 +51,15 @@ import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import Participant from "@/assets/js/participant.js";
 import kurentoUtils from "kurento-utils";
-import conferenceroom from "@/assets/js/conferenceroom.js";
+import adapter from "webrtc-adapter";
 
 export default {
   data() {
     return {
-      ws: "",
+      ws: null,
       participants: [],
-      room: "",
+      room: null,
+      username: null,
     };
   },
   components: {
@@ -66,50 +67,13 @@ export default {
     headerSearchCompany,
   },
   name: "InterviewRoom",
-  methods: {
-    beforeCreate() {
-      this.ws = new WebSocket("wss://localhost:8443/groupcall");
-    },
-    receiveVideo(sender) {
-      var participant = new Participant(sender);
-      this.participants[sender] = participant;
-      var video = participant.getVideoElement();
+  created: function() {
+    console.log(adapter.browserDetails.browser);
+    this.ws = new WebSocket("wss://localhost:8443/groupcall");
 
-      var options = {
-        remoteVideo: video,
-        onicecandidate: participant.onIceCandidate.bind(participant),
-      };
-
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
-        }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
-    },
-    leaveRoom() {
-      this.sendMessage({
-        id: "leaveRoom",
-      });
-
-      for (var key in this.participants) {
-        this.participants[key].dispose();
-      }
-
-      document.getElementById("join").style.display = "block";
-      document.getElementById("room").style.display = "none";
-
-      this.ws.close();
-    },
-    destroyed() {
-      this.ws.close();
-    },
-
-    onmessage(message) {
+    this.ws.onmessage = function(message) {
       var parsedMessage = JSON.parse(message.data);
-      console.info("Received message: " + message.data);
+      console.info("Received message: " + message);
 
       switch (parsedMessage.id) {
         case "existingParticipants":
@@ -138,30 +102,46 @@ export default {
         default:
           console.error("Unrecognized message", parsedMessage);
       }
-    },
+    };
+
+    this.ws.onopen = function() {
+      console.log("Websocket is connected!");
+    };
+  },
+  methods: {
     register() {
+      document.getElementById("room-header").innerText = "ROOM " + this.room;
+      document.getElementById("join").style.display = "none";
+      document.getElementById("room").style.display = "block";
+      console.log(this.room);
       var message = {
         id: "joinRoom",
-        name: this.name,
+        name: this.username,
         room: this.room,
       };
+
       this.sendMessage(message);
     },
-    sendMessage(message) {
-      var jsonMessage = JSON.stringify(message);
-      console.log("Sending message: " + jsonMessage);
-      this.ws.send(jsonMessage);
+
+    onNewParticipant(request) {
+      this.receiveVideo(request.name);
     },
-    onParticipantLeft(request) {
-      console.log("Participant " + request.name + " left");
-      var participant = this.participants[request.name];
-      participant.dispose();
-      delete this.participants[request.name];
-    },
+
     receiveVideoResponse(result) {
       this.participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
         if (error) return console.error(error);
       });
+    },
+
+    callResponse(message) {
+      if (message.response != "accepted") {
+        console.info("Call not accepted by peer. Closing call");
+        stop();
+      } else {
+        //webRtcPeer.processAnswer(message.sdpAnswer, function(error) {
+        //  if (error) return console.error(error);
+        //});
+      }
     },
 
     onExistingParticipants(msg) {
@@ -175,9 +155,9 @@ export default {
           },
         },
       };
-      console.log(this.name + " registered in room " + this.room);
-      var participant = new Participant(this.name);
-      this.participants[this.name] = participant;
+      console.log(this.username + " registered in room " + this.room);
+      var participant = new Participant(this.username, this.sendMessage);
+      this.participants[this.username] = participant;
       var video = participant.getVideoElement();
 
       var options = {
@@ -196,8 +176,53 @@ export default {
 
       msg.data.forEach(this.receiveVideo);
     },
-    onNewParticipant(request) {
-      this.receiveVideo(request.name);
+
+    leaveRoom() {
+      this.sendMessage({
+        id: "leaveRoom",
+      });
+
+      for (var key in this.participants) {
+        this.participants[key].dispose();
+      }
+
+      document.getElementById("join").style.display = "block";
+      document.getElementById("room").style.display = "none";
+
+      this.ws.close();
+    },
+
+    receiveVideo(sender) {
+      var participant = new Participant(sender);
+      this.participants[sender] = participant;
+      var video = participant.getVideoElement();
+
+      var options = {
+        remoteVideo: video,
+        onicecandidate: participant.onIceCandidate.bind(participant),
+      };
+
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
+        }
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
+    },
+
+    onParticipantLeft(request) {
+      console.log("Participant " + request.name + " left");
+      var participant = this.participants[request.name];
+      participant.dispose();
+      delete this.participants[request.name];
+    },
+
+    sendMessage(message) {
+      var jsonMessage = JSON.stringify(message);
+      console.log("Sending message: " + jsonMessage);
+      this.ws.send(jsonMessage);
     },
   },
 };
