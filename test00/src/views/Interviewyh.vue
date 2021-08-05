@@ -1,5 +1,11 @@
 <template>
-  <join-form></join-form>
+  <!-- <join-form></join-form> -->
+  <div>
+    asldkfja;lksdjfa;kldj
+    <input v-model="name" placeholder="nameadfasd" />
+    <input v-model="room" placeholder="roomadasdf" />
+    <button @click="register">join</button>
+  </div>
   <div id="room" style="display: none;">
     <h2 id="room-header"></h2>
     <div id="participants"></div>
@@ -14,34 +20,37 @@
 
 <script>
 // import { socket } from "../components/utils/socket.js";
-import JoinForm from "@/components/InterviewRoom/Interviewroomyh.vue";
-import Participant from "./participant.js";
+// import JoinForm from "@/components/InterviewRoom/Interviewroomyh.vue";
+import Participant from "../components/utils/participant.js";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
 var ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
 var participants = {};
-var name;
+// var name;
 export default {
   components: {
-    JoinForm,
+    // JoinForm,
   },
   created() {},
   data() {
-    return {};
+    return {
+      name: "",
+      room: "",
+    };
   },
   methods: {
     register() {
-      name = document.getElementById("name").value;
-      var room = document.getElementById("roomName").value;
+      // this.name = document.getElementById("name").value;
+      // var room = document.getElementById("roomName").value;
 
-      document.getElementById("room-header").innerText = "ROOM " + room;
+      document.getElementById("room-header").innerText = "ROOM " + this.room;
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
 
       var message = {
         id: "joinRoom",
-        name: name,
-        room: room,
+        name: this.name,
+        room: this.room,
       };
       this.sendMessage(message);
     },
