@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.IntCard;
 import com.ssafy.peopool.model.Interview;
 import com.ssafy.peopool.model.repo.InterviewRepo;
 
@@ -23,13 +24,13 @@ public class InterviewServiceImpl implements InterviewService{
 	}
 
 	@Override
-	public List<Interview> getInterviews(int index) throws SQLException {
+	public List<IntCard> getInterviews(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.getInterviews(index);
 	}
 
 	@Override
-	public List<Interview> getLastInterviews(int index) throws SQLException {
+	public List<IntCard> getLastInterviews(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.getLastInterviews(index);
 	}
@@ -50,6 +51,18 @@ public class InterviewServiceImpl implements InterviewService{
 	public boolean registerInterview(Interview interview) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.registerInterview(interview) == 1;
+	}
+
+	@Override
+	public List<IntCard> getEInterviews(int index) throws SQLException {
+		// TODO Auto-generated method stub
+		return interviewRepo.getEInterviews(index);
+	}
+
+	@Override
+	public List<IntCard> getELastInterviews(int index) throws SQLException {
+		// TODO Auto-generated method stub
+		return interviewRepo.getELastInterviews(index);
 	}
 
 }

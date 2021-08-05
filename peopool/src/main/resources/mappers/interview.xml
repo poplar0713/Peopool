@@ -10,17 +10,34 @@
 		where int_index = #{int_index}
 	</update>
 	
-	<select id="getInterviews" parameterType="int" resultType="Interview">
-		select *
-		from interview
-		where ind_index=#{ind_index} and int_start > now()
+	<select id="getInterviews" parameterType="int" resultType="IntCard">
+		select int_index, ind_index, e.ent_index, int_start, int_roomnumber, e.ent_name name
+		from interview join enterprise e
+		on interview.ent_index = e.ent_index
+		where ind_index=#{index} and int_start > now()
 	</select>
 	
-	<select id="getLastInterviews" parameterType="int" resultType="Interview">
-		select *
-		from interview
-		where ind_index=#{ind_index} and now() > int_end
+	<select id="getLastInterviews" parameterType="int" resultType="IntCard">
+		select int_index, ind_index, e.ent_index, int_start, int_end, int_roomnumber, int_show, e.ent_name name
+		from interview join enterprise e
+		on interview.ent_index = e.ent_index
+		where ind_index=#{index} and now() > int_end
 	</select>
+	
+	<select id="getEInterviews" parameterType="int" resultType="IntCard">
+		select int_index, i.ind_index, ent_index, int_start, int_roomnumber, i.ind_name name
+		from interview join individual i
+		on interview.ind_index = i.ind_index
+		where ent_index=#{index} and int_start > now()
+	</select>
+	
+	<select id="getELastInterviews" parameterType="int" resultType="IntCard">
+		select int_index, i.ind_index, ent_index, int_start, int_end, int_roomnumber, int_show, i.ind_name name
+		from interview join individual i
+		on interview.ind_index = i.ind_index
+		where ent_index=#{index} and now() > int_end
+	</select>
+	
 	
 	<update id="finishInterview" parameterType="Interview">
 		update interview
