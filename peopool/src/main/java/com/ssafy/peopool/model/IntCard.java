@@ -1,16 +1,7 @@
 package com.ssafy.peopool.model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-// 면접 일정
-public class Interview {
-
+public class IntCard {
+	
 	int int_index; // 일정 인덱스
 	int ind_index; // 회원 인덱스
 	int ent_index; // 기업 인덱스
@@ -18,8 +9,10 @@ public class Interview {
 	String int_end; // 면접 종료 시간
 	String int_roomnumber; // 면접 room number
 	String int_show; // 진행 여부 (show / now show)
-
-	public Interview() {
+	String name; // 개인  or 기업 이름
+	
+	public IntCard() {
+		
 	}
 
 	public int getInt_index() {
@@ -78,15 +71,26 @@ public class Interview {
 		this.int_show = int_show;
 	}
 
-	@Override
-	public String toString() {
-		return "Interview [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
-				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_roomnumber=" + int_roomnumber
-				+ ", int_show=" + int_show + "]";
+	public String getName() {
+		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "IntCard [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
+				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_roomnumber=" + int_roomnumber
+				+ ", int_show=" + int_show + ", name=" + name + ", getInt_index()=" + getInt_index()
+				+ ", getInd_index()=" + getInd_index() + ", getEnt_index()=" + getEnt_index() + ", getInt_start()="
+				+ getInt_start() + ", getInt_end()=" + getInt_end() + ", getInt_roomnumber()=" + getInt_roomnumber()
+				+ ", getInt_show()=" + getInt_show() + ", getName()=" + getName() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
 	
 
-	
-	
 }
