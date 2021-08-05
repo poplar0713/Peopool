@@ -4,7 +4,7 @@
   </p>
   <div>
     <el-dialog title="관심 피플인" v-model="dialogVisible" width="50%">
-      <totalList :followData="followData" />
+      <totalList :userdata="follower" />
     </el-dialog>
   </div>
 </template>
@@ -19,39 +19,11 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      followData: [
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "문영화",
-          tag: ["#java", "#javascript"],
-        },
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "여정동",
-          tag: ["#java", "#javascript"],
-        },
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "조영우",
-          tag: ["#vue.js", "#javascript"],
-        },
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "여정동",
-          tag: ["#java", "#javascript"],
-        },
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "여정동",
-          tag: ["#java", "#javascript"],
-        },
-      ],
+      followData: [],
     };
+  },
+  props: {
+    follower: Object,
   },
   methods: {},
 };

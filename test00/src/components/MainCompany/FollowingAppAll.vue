@@ -4,7 +4,7 @@
   </p>
   <div>
     <el-dialog title="관심 피플인" v-model="dialogVisible" width="50%">
-      <totalList :followData="followData" />
+      <totalList :userdata="following" />
     </el-dialog>
   </div>
 </template>
@@ -52,6 +52,9 @@ export default {
         },
       ],
     };
+  },
+  props:{
+    following:Object
   },
   methods: {},
 };

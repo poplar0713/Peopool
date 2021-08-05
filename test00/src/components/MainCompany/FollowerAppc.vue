@@ -5,7 +5,7 @@
         <el-col :span="6">
           <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
         >
-        <el-col :span="6" :offset="12"><FollowerAppcAll /></el-col>
+        <el-col :span="6" :offset="12"><FollowerAppcAll :follower="follower" /></el-col>
       </el-row>
     </div>
     <el-main>
