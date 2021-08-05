@@ -50,13 +50,13 @@ import CompanyCard from "../components/search/CompanyCard.vue";
 import Pagination from "../components/Pagination.vue";
 
 export default {
+  name: "SearchCompany",
   components: {
     SideBarUser,
     headerSearchCompany,
     CompanyCard,
     Pagination,
   },
-
   data() {
     return {
       keyword: "삼성",

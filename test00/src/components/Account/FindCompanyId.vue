@@ -5,13 +5,13 @@
     ref="ruleForm"
     style="text-align:center"
   >
-    <!-- 개인회원 이름 -->
-    <el-form-item label="이름" prop="username">
-      <el-input v-model="ruleForm.username"></el-input>
+    <!-- 기업회원이름 -->
+    <el-form-item label="회사명" prop="companyname">
+      <el-input v-model="ruleForm.companyname"></el-input>
     </el-form-item>
-    <!-- 개인회원 PW -->
-    <el-form-item label="연락처" prop="userphone">
-      <el-input type="password" v-model="ruleForm.userphone"></el-input>
+    <!-- 기업회원 이메일 -->
+    <el-form-item label="이메일" prop="companyemail">
+      <el-input type="email" v-model="ruleForm.companyemail"></el-input>
     </el-form-item>
 
     <el-form-item>
@@ -29,6 +29,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "FindCompanyId",
   components: {},
   data() {
     return {
@@ -36,22 +37,27 @@ export default {
       fullscreenLoading: false,
       foundId: "",
       ruleForm: {
-        username: "",
-        userphone: "",
+        companyname: "",
+        companyemail: "",
       },
       rules: {
-        username: [
+        companyname: [
           {
             required: true,
-            message: "이름을 입력해주세요",
+            message: "회사명을 입력해주세요",
             trigger: "blur",
           },
         ],
-        userphone: [
+        companyemail: [
           {
             required: true,
-            message: "연락처를 입력해주세요",
+            message: "이메일을 입력해주세요",
             trigger: "blur",
+          },
+          {
+            type: "email",
+            message: "이메일형식을 바르게 입력해주세요",
+            trigger: "change",
           },
         ],
       },
@@ -66,14 +72,14 @@ export default {
           this.openFullScreen2();
           // axios.get 아이디찾기
           axios
-            .get("https://i5d206.p.ssafy.io:8443/ind/findid", {
+            .get("https://i5d206.p.ssafy.io:8443/ent/findid", {
               params: {
-                name: this.ruleForm.username,
-                phone: this.ruleForm.userphone,
+                name: this.ruleForm.companyname,
+                email: this.ruleForm.companyemail,
               },
             })
             .then((result) => {
-              this.foundId = result.data.ind_id;
+              this.foundId = result.data.ent_id;
               setTimeout(() => {
                 this.$notify({
                   title: "아이디 찾기 결과",
@@ -85,7 +91,7 @@ export default {
               console.log(err);
             });
           //
-          this.$store.state.findUserId = false;
+          this.$store.state.findCompanyId = false;
         } else {
           console.log("error submit!!");
           return false;

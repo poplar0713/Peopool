@@ -7,35 +7,23 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-      <!-- 개인회원이름 -->
-      <el-form-item label="Name" prop="UserName">
-        <strong>{{ this.ruleForm.UserName }}</strong>
+      <!-- 기업이름 -->
+      <el-form-item label="Name" prop="CompanyName">
+        <strong>{{ this.ruleForm.CompanyName }}</strong>
       </el-form-item>
-      <!-- 개인회원 생년월일 -->
-      <el-form-item label="Birth" prop="UserBirth">
-        <strong>{{ this.ruleForm.UserBirth }}</strong>
-      </el-form-item>
-      <!-- 공개여부 -->
-      <el-form-item label="Open to the public" prop="open">
-        <el-switch v-model="ruleForm.open"></el-switch>
-      </el-form-item>
-      <!-- 성별 -->
-      <el-form-item label="Gender" prop="Gender">
-        <strong>{{ this.ruleForm.Gender }}</strong>
-      </el-form-item>
-      <!-- 연락처 -->
+      <!-- 기업연락처 -->
       <el-form-item label="Tel" prop="UserTel">
-        <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
+        <el-input type="tel" v-model="ruleForm.CompanyTel"></el-input>
       </el-form-item>
-      <!-- 이메일 -->
+      <!-- 기업이메일 -->
       <el-form-item label="Email" prop="UserEmail">
-        <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
+        <el-input type="email" v-model="ruleForm.CompanyEmail"></el-input>
       </el-form-item>
-      <!-- 개인회원 PW -->
+      <!-- 기업회원 PW -->
       <el-form-item label="Password" prop="Password">
         <el-input type="password" v-model="ruleForm.Password"></el-input>
       </el-form-item>
-      <!-- 개인회원 PW 확인 -->
+      <!-- 기업회원 PW 확인 -->
       <el-form-item label="Password Confirmation" prop="PasswordConfirm">
         <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
@@ -58,6 +46,26 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
+  components: {},
+  mounted() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 회원정보 가져오기
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/ent/${index}`)
+      .then((res) => {
+        this.ruleForm.CompanyName = res.data.ent_name;
+        this.ruleForm.CompanyTel = res.data.ent_contact;
+        this.ruleForm.CompanyEmail = res.data.ent_email;
+        this.ruleForm.CompanyId = res.data.ent_id;
+        this.ruleForm.CompanyIndex = res.data.ent_index;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   data() {
     // 비밀번호확인 체크(비어있거나 비밀번호랑 다르면)
     const checkPWCF = (rule, value, callback) => {
@@ -71,18 +79,15 @@ export default {
     };
     return {
       loading: false,
-      userpw: "",
       ruleForm: {
         Password: "",
         PasswordConfirm: "",
-        UserName: "",
-        UserBirth: "",
+        CompanyName: "",
         open: false,
-        Gender: "",
-        UserTel: "",
-        UserEmail: "",
-        UserId: "",
-        UserIndex: 0,
+        CompanyTel: "",
+        CompanyEmail: "",
+        CompanyId: "",
+        CompanyIndex: 0,
       },
       rules: {
         Password: [
@@ -112,14 +117,14 @@ export default {
           },
           { validator: checkPWCF, trigger: "blur" },
         ],
-        UserTel: [
+        CompanyTel: [
           {
             required: true,
             message: "연락처를 입력해주세요",
             trigger: "change",
           },
         ],
-        UserEmail: [
+        CompanyEmail: [
           {
             required: true,
             message: "이메일을 입력해주세요",
@@ -135,53 +140,19 @@ export default {
       fullscreenLoading: false,
     };
   },
-  mounted() {
-    // 토큰가져오기
-    const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
-    // 회원정보 가져오기
-    axios
-      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
-      .then((res) => {
-        this.ruleForm.UserName = res.data.ind_name;
-        this.ruleForm.UserBirth = res.data.ind_birth;
-        this.ruleForm.Gender = res.data.ind_gender;
-        this.ruleForm.UserTel = res.data.ind_phone;
-        this.ruleForm.UserEmail = res.data.ind_email;
-        this.ruleForm.UserIndex = res.data.ind_index;
-        this.ruleForm.UserId = res.data.ind_id;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    //public 상태확인
-    axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
-      .then((res) => {
-        if (res.data.ind_switch == "T") {
-          this.ruleForm.open = true;
-        } else {
-          this.ruleForm.open = false;
-        }
-      })
-      .catch();
-  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 회원정보 수정
           axios
-            .put("https://i5d206.p.ssafy.io:8443/ind", {
-              ind_birth: this.ruleForm.UserBirth,
-              ind_email: this.ruleForm.UserEmail,
-              ind_gender: this.ruleForm.Gender,
-              ind_id: this.ruleForm.UserId,
-              ind_index: this.ruleForm.UserIndex,
-              ind_name: this.ruleForm.UserName,
-              ind_password: this.ruleForm.Password,
-              ind_phone: this.ruleForm.UserTel,
+            .put("https://i5d206.p.ssafy.io:8443/ent", {
+              ent_email: this.ruleForm.CompanyEmail,
+              ent_id: this.ruleForm.CompanyId,
+              ent_index: this.ruleForm.CompanyIndex,
+              ent_name: this.ruleForm.CompanyName,
+              ent_password: this.ruleForm.Password,
+              ent_contact: this.ruleForm.CompanyTel,
             })
             .then((res) => {
               console.log(res);
@@ -196,32 +167,6 @@ export default {
             .catch((err) => {
               console.log(err);
             });
-          // switch off
-          if (this.ruleForm.open == false) {
-            axios
-              .put("https://i5d206.p.ssafy.io:8443/poi/switchOff", {
-                ind_index: this.ruleForm.UserIndex,
-              })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-          // switch on
-          if (this.ruleForm.open == true) {
-            axios
-              .put("https://i5d206.p.ssafy.io:8443/poi/switchOn", {
-                ind_index: this.ruleForm.UserIndex,
-              })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
         } else {
           console.log("error submit!!");
           this.failed();

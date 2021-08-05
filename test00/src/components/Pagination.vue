@@ -31,6 +31,18 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "Pagination",
+  props: ["pageSetting"],
+  methods: {
+    sendPage(page) {
+      this.$emit("paging", page);
+    },
+  },
+};
+</script>
+
 <style>
 .paginition {
   text-align: center;
@@ -40,14 +52,3 @@ span {
   margin: 0.3%;
 }
 </style>
-
-<script>
-export default {
-  props: ["pageSetting"],
-  methods: {
-    sendPage(page) {
-      this.$emit("paging", page);
-    },
-  },
-};
-</script>

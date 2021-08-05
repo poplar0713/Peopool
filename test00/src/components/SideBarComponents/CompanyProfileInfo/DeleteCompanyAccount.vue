@@ -4,7 +4,7 @@
   고객님의 정보는 즉시 폐기됩니다.<br />
   탈퇴 후 재가입하신 다음 서비스를 이용하실 수 있습니다.<br />
   <div style="text-align:center">
-    <el-button type="danger" @click="deleteaccountuser">회원탈퇴</el-button>
+    <el-button type="danger" @click="deleteaccountcompany">회원탈퇴</el-button>
   </div>
 </template>
 
@@ -16,14 +16,14 @@ export default {
     return {};
   },
   methods: {
-    deleteaccountuser() {
+    deleteaccountcompany() {
       // 토큰가져오기
       const token = localStorage.getItem("token");
       const decoded = jwt_decode(token);
       const index = decoded.index;
       // 회원정보 가져오기
       axios
-        .delete(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
+        .delete(`https://i5d206.p.ssafy.io:8443/ent/${index}`)
         .then((res) => {
           this.openFullScreen2();
           console.log(res);

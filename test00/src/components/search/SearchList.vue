@@ -47,19 +47,19 @@
       id="result"
       class="box-card"
       style="width: 250px; height: 400px"
-      v-for="fd in followData"
-      :key="fd"
+      v-for="user in followData"
+      :key="user"
     >
       <template #header>
         <div class="card-header">
-          <img :src="fd.img" style="width: 150px" />
+          <img :src="user.img" style="width: 150px" />
           <br />
         </div>
       </template>
 
-      <UserDetail :user="fd" />
+      <UserDetail :user="user" />
 
-      <div v-for="tag in fd.tag.slice(0, 3)" :key="tag" class="text item tags">
+      <div v-for="tag in user.tag.slice(0, 3)" :key="tag" class="text item tags">
         {{ tag }}
       </div>
     </el-card>
