@@ -45,7 +45,6 @@
     </el-container>
   </el-container>
 </template>
-
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";

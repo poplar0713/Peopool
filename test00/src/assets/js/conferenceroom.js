@@ -95,7 +95,7 @@ const callResponse = (message) => {
 	//}
 }
 
-const onExistingParticipants = () => {
+const onExistingParticipants = (msg) => {
 	var constraints = {
 		audio : true,
 		video : {

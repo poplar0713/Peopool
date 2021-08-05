@@ -1,5 +1,3 @@
-const { useFormValues } = require('vue-validate');
-
 module.exports = {
   outputDir: "../peopool/src/main/resources/static",
   indexPath: "../static/index.html",
