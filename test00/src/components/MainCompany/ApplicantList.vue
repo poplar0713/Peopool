@@ -13,8 +13,8 @@
         <el-card
           class="box-card"
           style="width: 250px"
-          v-for="fd in follower"
-          :key="fd"
+          v-for="user in follower"
+          :key="user"
         >
           <template #header>
             <div class="card-header">
@@ -22,8 +22,8 @@
               <br />
             </div>
           </template>
-          <UserDetail :user="fd" />
-          <div v-for="tag in fd.tag" :key="tag" class="text item">
+          <UserDetail :user="user" :userindex="user.follower" />
+          <div v-for="tag in user.tag" :key="tag" class="text item">
             {{ tag }}
           </div>
         </el-card>
