@@ -1,13 +1,14 @@
 package com.ssafy.peopool.model;
 
-// 팔로우
-public class Follow {
+public class FolCard {
 	int fol_index; // 팔로우인덱스
 	int follower; // 팔로우 당한 인덱스
 	int following; // 팔로우 한 인덱스
 	int fol_type; // 팔로잉 타입
-
-	public Follow() {
+	String name; // 이름
+	
+	public FolCard() {
+		
 	}
 
 	public int getFol_index() {
@@ -42,10 +43,18 @@ public class Follow {
 		this.fol_type = fol_type;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "Follow [fol_index=" + fol_index + ", follower=" + follower + ", following=" + following + ", fol_type="
-				+ fol_type + "]";
+		return "FolCard [fol_index=" + fol_index + ", follower=" + follower + ", following=" + following + ", fol_type="
+				+ fol_type + ", name=" + name + "]";
 	}
 	
 	
