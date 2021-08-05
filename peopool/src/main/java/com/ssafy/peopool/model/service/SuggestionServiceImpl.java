@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.SugCard;
 import com.ssafy.peopool.model.Suggestion;
 import com.ssafy.peopool.model.repo.SuggestionRepo;
 
@@ -47,13 +48,13 @@ public class SuggestionServiceImpl implements SuggestionService {
 	}
 
 	@Override
-	public List<Suggestion> getSuggestion(int index){
+	public List<SugCard> getSuggestion(int index){
 		// TODO Auto-generated method stub
 		return suggestionRepo.getSuggestion(index);
 	}
 
 	@Override
-	public List<Suggestion> getEntSuggestion(int index) {
+	public List<SugCard> getEntSuggestion(int index) {
 		// TODO Auto-generated method stub
 		return suggestionRepo.getEntSuggestion(index);
 	}
