@@ -1,8 +1,9 @@
 <template>
   <!-- <join-form></join-form> -->
-  <div id="join">
-    <input v-model="name" placeholder="name" />
-    <input v-model="room" placeholder="room" />
+  <div>
+    asldkfja;lksdjfa;kldj
+    <input v-model="name" placeholder="nameadfasd" />
+    <input v-model="room" placeholder="roomadasdf" />
     <button @click="register">join</button>
   </div>
   <div id="room" style="display: none;">
