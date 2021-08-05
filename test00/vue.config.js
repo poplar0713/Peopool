@@ -1,8 +1,18 @@
 const fs = require("fs");
+const webpack = require("webpack");
 
 module.exports = {
   // outputDir: "../peopool/src/main/resources/static",
   // indexPath: "../static/index.html",
+  configureWebpack: {
+    plugins: [
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1,
+      }),
+    ],
+  },
+  filenameHashing: false,
+  productionSourceMap: false,
   devServer: {
     open: process.platform === "darwin",
     host: "0.0.0.0",
