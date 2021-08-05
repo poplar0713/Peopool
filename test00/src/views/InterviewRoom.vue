@@ -148,8 +148,8 @@ export default {
         audio: true,
         video: {
           mandatory: {
-            maxWidth: 320,
-            maxFrameRate: 15,
+            maxWidth: 1200,
+            maxFrameRate: 60,
             minFrameRate: 15,
           },
         },
@@ -229,9 +229,10 @@ export default {
       var container = document.createElement("div");
       container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
       container.id = name;
+      container.class = "videoBlock";
       var span = document.createElement("span");
       var video = document.createElement("video");
-      // var rtcPeer;
+      var rtcPeer;
 
       container.appendChild(video);
       container.appendChild(span);
@@ -293,6 +294,7 @@ export default {
 
       this.dispose = function() {
         console.log("Disposing participant " + this.name);
+        console.log(rtcPeer);
         this.rtcPeer.dispose();
         container.parentNode.removeChild(container);
       };
@@ -301,4 +303,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.videoBlock {
+  border-width: 1px;
+  border-style: solid;
+  border-color: blanchedalmond;
+  width: auto;
+}
+</style>
