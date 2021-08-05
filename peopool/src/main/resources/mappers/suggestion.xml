@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.peopool.model.repo.SuggestionRepo">
 
 	<insert id="registerSuggestion" parameterType="Suggestion">
-		insert into suggestion(sug_send, sug_timeone, sug_timetwo, sug_timethree, ind_index, ent_index, sug_state, sug_duty) 
-		values(now(), #{sug_timeone}, #{sug_timetwo}, #{sug_timethree}, #{ind_index}, #{ent_index}, "W", #{sug_duty})
+		insert into suggestion(sug_send, sug_timeone, sug_timetwo, sug_timethree, ind_index, ent_index, sug_state, sug_duty, sug_message) 
+		values(now(), #{sug_timeone}, #{sug_timetwo}, #{sug_timethree}, #{ind_index}, #{ent_index}, "W", #{sug_duty}, #{sug_message})
 	</insert>
 	
 	<update id="acceptSuggestion" parameterType="Suggestion">
