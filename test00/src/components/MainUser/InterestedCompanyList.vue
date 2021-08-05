@@ -21,13 +21,16 @@ export default {
     const index = decoded.index;
     // 팔로잉기업 가져오기
     axios
-      .get("/fol/followings", {
+      .get("https://i5d206.p.ssafy.io:8443/fol/followings", {
         params: {
           index: index,
           type: 1,
         },
       })
-      .then((res) => console.log(res)((this.ents = res.data)))
+      .then((res) => {
+        console.log(res);
+        this.ents = res.data;
+      })
       .catch();
     return {
       ents: [],

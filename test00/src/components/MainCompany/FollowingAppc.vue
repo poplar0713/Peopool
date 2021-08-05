@@ -13,7 +13,7 @@
         <el-card
           class="box-card"
           style="width: 250px"
-          v-for="user in follower"
+          v-for="user in following"
           :key="user"
         >
           <template #header>
@@ -39,12 +39,10 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name: "HelloWorld",
   components: {
     UserDetail,
     FollowAppc,
   },
-
   mounted() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
@@ -53,26 +51,27 @@ export default {
     this.company_index = index;
     //팔로잉정보 가져오기
     axios
-      .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
+      .get("https://i5d206.p.ssafy.io:8443/fol/following", {
         params: {
           index: index,
-          type: 1,
+          type: 0,
         },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
-        this.follower = res.data;
+        this.following = res.data;
       })
       .catch((err) => console.log(err));
   },
+
   props: {
     msg: String,
     title: String,
   },
   data() {
     return {
-      follower: [],
+      following: [],
       company_index: "",
     };
   },

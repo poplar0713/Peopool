@@ -81,23 +81,19 @@ export default {
     const index = decoded.index;
     // 팔로우했는지 체크해보기
     axios
-      .post("/fol/check", {
+      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         fol_type: 0,
         follower: this.item.ent_index,
         following: index,
       })
-      .then(
-        (res) =>
-          // 팔로우가 되어있는것
-          console.log(res),
-        (this.follow = true)
-      )
-      .catch(
-        (err) =>
-          // 팔로우가 안되어있는것
-          console.log(err),
-        (this.follow = false)
-      );
+      .then((res) => {
+        // 팔로우가 되어있는것
+        console.log(res), (this.follow = true);
+      })
+      .catch((err) => {
+        // 팔로우가 안되어있는것
+        console.log(err), (this.follow = false);
+      });
     return {
       dialogVisible: false,
       follow: false,
@@ -109,30 +105,33 @@ export default {
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
+        console.log(this.user_index, this.item.ent_index);
         axios
-          .delete("/fol", {
-            fol_type: 0,
-            following: this.user_index,
-            follower: this.item.ent_index,
+          .delete("https://i5d206.p.ssafy.io:8443/fol", {
+            data: {
+              fol_type: 0,
+              following: this.user_index,
+              follower: this.item.ent_index,
+            },
           })
           .then((res) => {
             console.log(res);
+            this.follow = false;
           })
-          .catch();
-        this.follow = false;
+          .catch((err) => console.log(err));
       } else if (this.follow == false) {
         console.log("팔로잉");
         axios
-          .post("/fol", {
+          .post("https://i5d206.p.ssafy.io:8443/fol", {
             fol_type: 0,
             following: this.user_index,
             follower: this.item.ent_index,
           })
           .then((res) => {
             console.log(res);
+            this.follow = true;
           })
           .catch();
-        this.follow = true;
       }
     },
     handleClose() {

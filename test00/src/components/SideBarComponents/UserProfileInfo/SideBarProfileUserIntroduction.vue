@@ -37,9 +37,13 @@ export default {
     const index = decoded.index;
     this.userindex = index;
     axios
-      .get(`poi/${index}`)
-      .then((res) => (this.ruleForm.Introduction = res.data.ind_introduce))
-      .catch((err) => console.log(err));
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
+      .then((res) => {
+        this.ruleForm.Introduction = res.data.ind_introduce;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   data() {
     return {
@@ -67,7 +71,7 @@ export default {
           this.openFullScreen2();
           // 저장하는 방법 찾아보기
           axios
-            .put("/poi", {
+            .put("https://i5d206.p.ssafy.io:8443/poi", {
               ind_index: this.userindex,
               ind_introduce: this.ruleForm.Introduction,
               ind_photo: "string",

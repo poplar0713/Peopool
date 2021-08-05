@@ -142,7 +142,7 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
       .then((res) => {
         this.ruleForm.UserName = res.data.ind_name;
         this.ruleForm.UserBirth = res.data.ind_birth;
@@ -157,7 +157,7 @@ export default {
       });
     //public 상태확인
     axios
-      .get(`/poi/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
       .then((res) => {
         if (res.data.ind_switch == "T") {
           this.ruleForm.open = true;
@@ -173,7 +173,7 @@ export default {
         if (valid) {
           // 회원정보 수정
           axios
-            .put("/ind", {
+            .put("https://i5d206.p.ssafy.io:8443/ind", {
               ind_birth: this.ruleForm.UserBirth,
               ind_email: this.ruleForm.UserEmail,
               ind_gender: this.ruleForm.Gender,
@@ -199,20 +199,28 @@ export default {
           // switch off
           if (this.ruleForm.open == false) {
             axios
-              .put("/poi/switchOff", {
+              .put("https://i5d206.p.ssafy.io:8443/poi/switchOff", {
                 ind_index: this.ruleForm.UserIndex,
               })
-              .then((res) => console.log(res))
-              .catch((err) => console.log(err));
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
           // switch on
           if (this.ruleForm.open == true) {
             axios
-              .put("/poi/switchOn", {
+              .put("https://i5d206.p.ssafy.io:8443/poi/switchOn", {
                 ind_index: this.ruleForm.UserIndex,
               })
-              .then((res) => console.log(res))
-              .catch((err) => console.log(err));
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
         } else {
           console.log("error submit!!");

@@ -11,6 +11,7 @@
 
 <script>
 import totalList from "@/components/totalList.vue";
+
 export default {
   components: {
     totalList,
