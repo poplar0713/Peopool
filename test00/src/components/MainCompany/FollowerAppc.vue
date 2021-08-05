@@ -5,7 +5,7 @@
         <el-col :span="6">
           <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
         >
-        <el-col :span="6" :offset="12"><follow-appc /></el-col>
+        <el-col :span="6" :offset="12"><FollowerAppcAll :follower="follower" /></el-col>
       </el-row>
     </div>
     <el-main>
@@ -18,11 +18,11 @@
         >
           <template #header>
             <div class="card-header">
-              <img src="a.jpg" style="width: 150px" />
+              <img src="images/a.jpg" style="width: 150px" />
               <br />
             </div>
           </template>
-          <UserDetail :user="user" :userindex="user.follower" />
+          <UserDetail :user="user" :userindex="user.following" />
           <div v-for="tag in user.tag" :key="tag" class="text item">
             {{ tag }}
           </div>
@@ -34,7 +34,7 @@
 
 <script>
 import UserDetail from "@/components/UserDetail.vue";
-import FollowAppc from "@/components/MainCompany/FollowAppc.vue";
+import FollowerAppcAll from "@/components/MainCompany/FollowerAppcAll.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
@@ -42,7 +42,7 @@ export default {
   name: "HelloWorld",
   components: {
     UserDetail,
-    FollowAppc,
+    FollowerAppcAll
   },
 
   mounted() {
@@ -51,7 +51,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.company_index = index;
-    //팔로잉정보 가져오기
+    //팔로워정보 가져오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
         params: {

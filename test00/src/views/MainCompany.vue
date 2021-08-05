@@ -6,7 +6,7 @@
 
       <el-main>
         <check-annc />
-        <ApplicantList
+        <FollowerAppc
           title="Today 우리회사 관심 피풀인"
         />
         <FollowingAppc
@@ -20,7 +20,7 @@
 
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
-import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
+import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import FollowingAppc from "@/components/MainCompany/FollowingAppc.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 // import webviewer from "@/components/MainCompany/webviewer.vue";
@@ -34,7 +34,7 @@ export default {
   components: {
     SideBarCompany,
     CheckAnnc,
-    ApplicantList,
+    FollowerAppc,
     FollowingAppc,
     // webviewer,
     headerSearchUser,
