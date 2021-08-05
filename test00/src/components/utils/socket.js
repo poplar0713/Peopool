@@ -1,7 +1,7 @@
 var ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
 var participants = {};
 var name;
-import kurentoUtils from "kurentoUtils";
+import kurentoUtils from "kurento-utils";
 import Participant from "./participant.js";
 import adapter from "webrtc-adapter";
 
