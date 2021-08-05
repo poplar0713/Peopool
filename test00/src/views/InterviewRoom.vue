@@ -48,15 +48,16 @@
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
-import Participant from "@/assets/js/participant.js";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
+const PARTICIPANT_MAIN_CLASS = "participant main";
+const PARTICIPANT_CLASS = "participant";
+var ws = null;
+var participants = {};
 
 export default {
   data() {
     return {
-      ws: null,
-      participants: [],
       room: null,
       username: null,
     };
@@ -68,9 +69,9 @@ export default {
   name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    this.ws = new WebSocket("wss://localhost:8443/groupcall");
+    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
 
-    this.ws.onmessage = function(message) {
+    ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
       console.info("Received message: " + message);
 
@@ -88,7 +89,7 @@ export default {
           this.receiveVideoResponse(parsedMessage);
           break;
         case "iceCandidate":
-          this.participants[parsedMessage.name].rtcPeer.addIceCandidate(
+          participants[parsedMessage.name].rtcPeer.addIceCandidate(
             parsedMessage.candidate,
             function(error) {
               if (error) {
@@ -103,7 +104,7 @@ export default {
       }
     };
 
-    this.ws.onopen = function() {
+    ws.onopen = function() {
       console.log("Websocket is connected!");
     };
   },
@@ -126,7 +127,7 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      this.participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
+      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
         if (error) return console.error(error);
       });
     },
@@ -154,8 +155,8 @@ export default {
         },
       };
       console.log(this.username + " registered in room " + this.room);
-      var participant = new Participant(this.username, this.sendMessage);
-      this.participants[this.username] = participant;
+      var participant = new this.Participant(this.username, this.sendMessage);
+      participants[this.username] = participant;
       var video = participant.getVideoElement();
 
       var options = {
@@ -180,19 +181,19 @@ export default {
         id: "leaveRoom",
       });
 
-      for (var key in this.participants) {
-        this.participants[key].dispose();
+      for (var key in participants) {
+        participants[key].dispose();
       }
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
 
-      this.ws.close();
+      ws.close();
     },
 
     receiveVideo(sender) {
-      var participant = new Participant(sender);
-      this.participants[sender] = participant;
+      var participant = new this.Participant(sender);
+      participants[sender] = participant;
       var video = participant.getVideoElement();
 
       var options = {
@@ -212,15 +213,89 @@ export default {
 
     onParticipantLeft(request) {
       console.log("Participant " + request.name + " left");
-      var participant = this.participants[request.name];
+      var participant = participants[request.name];
       participant.dispose();
-      delete this.participants[request.name];
+      delete participants[request.name];
     },
 
     sendMessage(message) {
       var jsonMessage = JSON.stringify(message);
       console.log("Sending message: " + jsonMessage);
-      this.ws.send(jsonMessage);
+      ws.send(jsonMessage);
+    },
+
+    Participant(name) {
+      this.name = name;
+      var container = document.createElement("div");
+      container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+      container.id = name;
+      var span = document.createElement("span");
+      var video = document.createElement("video");
+      // var rtcPeer;
+
+      container.appendChild(video);
+      container.appendChild(span);
+      container.onclick = switchContainerClass;
+      document.getElementById("participants").appendChild(container);
+
+      span.appendChild(document.createTextNode(name));
+
+      video.id = "video-" + name;
+      video.autoplay = true;
+      video.controls = false;
+
+      this.getElement = function() {
+        return container;
+      };
+
+      this.getVideoElement = function() {
+        return video;
+      };
+
+      function switchContainerClass() {
+        if (container.className === PARTICIPANT_CLASS) {
+          var elements = Array.prototype.slice.call(
+            document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)
+          );
+          elements.forEach(function(item) {
+            item.className = PARTICIPANT_CLASS;
+          });
+
+          container.className = PARTICIPANT_MAIN_CLASS;
+        } else {
+          container.className = PARTICIPANT_CLASS;
+        }
+      }
+
+      function isPresentMainParticipant() {
+        return document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0;
+      }
+
+      this.offerToReceiveVideo = function(error, offerSdp) {
+        if (error) return console.error("sdp offer error");
+        console.log("Invoking SDP offer callback function");
+        var msg = { id: "receiveVideoFrom", sender: name, sdpOffer: offerSdp };
+        this.sendMessage(msg);
+      };
+
+      this.onIceCandidate = function(candidate) {
+        console.log("Local candidate" + JSON.stringify(candidate));
+
+        var message = {
+          id: "onIceCandidate",
+          candidate: candidate,
+          name: name,
+        };
+        this.sendMessage(message);
+      };
+
+      Object.defineProperty(this, "rtcPeer", { writable: true });
+
+      this.dispose = function() {
+        console.log("Disposing participant " + this.name);
+        this.rtcPeer.dispose();
+        container.parentNode.removeChild(container);
+      };
     },
   },
 };
