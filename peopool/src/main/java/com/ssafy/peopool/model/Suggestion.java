@@ -12,6 +12,7 @@ public class Suggestion {
 	String sug_decision; // 결정시간
 	String sug_state; // 요청 상태
 	String sug_duty;// 직무
+	String sug_message;// 메세지
 
 	public Suggestion() {
 	}
@@ -96,13 +97,22 @@ public class Suggestion {
 		this.sug_duty = sug_duty;
 	}
 
+	public String getSug_message() {
+		return sug_message;
+	}
+
+	public void setSug_message(String sug_message) {
+		this.sug_message = sug_message;
+	}
+
 	@Override
 	public String toString() {
 		return "Suggestion [sug_index=" + sug_index + ", sug_send=" + sug_send + ", sug_timeone=" + sug_timeone
 				+ ", sug_timetwo=" + sug_timetwo + ", sug_timethree=" + sug_timethree + ", ind_index=" + ind_index
 				+ ", ent_index=" + ent_index + ", sug_decision=" + sug_decision + ", sug_state=" + sug_state
-				+ ", sug_duty=" + sug_duty + "]";
+				+ ", sug_duty=" + sug_duty + ", sug_message=" + sug_message + "]";
 	}
+	
 
 	
 }
