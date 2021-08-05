@@ -192,7 +192,7 @@ export default {
     },
 
     receiveVideo(sender) {
-      var participant = new this.Participant(sender);
+      var participant = new this.Participant(sender, this.sendMessage);
       participants[sender] = participant;
       var video = participant.getVideoElement();
 
@@ -224,7 +224,7 @@ export default {
       ws.send(jsonMessage);
     },
 
-    Participant(name) {
+    Participant(name, sendMessage) {
       this.name = name;
       var container = document.createElement("div");
       container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
@@ -275,7 +275,7 @@ export default {
         if (error) return console.error("sdp offer error");
         console.log("Invoking SDP offer callback function");
         var msg = { id: "receiveVideoFrom", sender: name, sdpOffer: offerSdp };
-        this.sendMessage(msg);
+        sendMessage(msg);
       };
 
       this.onIceCandidate = function(candidate) {
@@ -286,7 +286,7 @@ export default {
           candidate: candidate,
           name: name,
         };
-        this.sendMessage(message);
+        sendMessage(message);
       };
 
       Object.defineProperty(this, "rtcPeer", { writable: true });
