@@ -5,7 +5,7 @@
         <el-col :span="6">
           <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
         >
-        <el-col :span="6" :offset="12"><follow-appc /></el-col>
+        <el-col :span="6" :offset="12"><FollowingAppAll :following="following"/></el-col>
       </el-row>
     </div>
     <el-main>
@@ -18,7 +18,7 @@
         >
           <template #header>
             <div class="card-header">
-              <img src="a.jpg" style="width: 150px" />
+              <img src="images/a.jpg" style="width: 150px" />
               <br />
             </div>
           </template>
@@ -34,15 +34,16 @@
 
 <script>
 import UserDetail from "@/components/UserDetail.vue";
-import FollowAppc from "@/components/MainCompany/FollowAppc.vue";
+import FollowingAppAll from "@/components/MainCompany/FollowingAppAll.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
   components: {
     UserDetail,
-    FollowAppc,
+    FollowingAppAll
   },
+
   mounted() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
@@ -54,7 +55,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/fol/following", {
         params: {
           index: index,
-          type: 0,
+          type: 1,
         },
       })
       // 팔로워데이터 넣어주기
@@ -64,7 +65,6 @@ export default {
       })
       .catch((err) => console.log(err));
   },
-
   props: {
     msg: String,
     title: String,
