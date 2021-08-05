@@ -67,7 +67,7 @@ const routes = [
     // },
   },
   {
-    path: "/user/interviewroom/:company/:user",
+    path: "/user/interviewroom/:company/:url",
     name: "InterviewRoom",
     component: InterviewRoom,
     // 링크공유로 로그인안해도 들어올수있도록

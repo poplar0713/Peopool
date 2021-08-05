@@ -51,82 +51,37 @@
           </el-collapse-item>
           <el-collapse-item title="reservation" name="5">
             <div>
-              <el-row>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple">
-                    <span class="demonstration"></span>
-                    <el-date-picker
-                      v-model="reservationdata.date1"
-                      type="date"
-                      placeholder="Pick a date"
-                      :default-value="new Date(2021, 7, 20)"
-                    >
-                    </el-date-picker></div
-                ></el-col>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple-light">
-                    <el-time-select
-                      v-model="reservationdata.time1"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="Select time"
-                    >
-                    </el-time-select></div
-                ></el-col>
-              </el-row>
+              <el-input v-model="reservationdata.sug_duty"></el-input>
             </div>
             <div>
-              <el-row>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple">
-                    <span class="demonstration"></span>
-                    <el-date-picker
-                      v-model="reservationdata.date2"
-                      type="date"
-                      placeholder="Pick a date"
-                      :default-value="new Date(2021, 7, 20)"
-                    >
-                    </el-date-picker></div
-                ></el-col>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple-light">
-                    <el-time-select
-                      v-model="reservationdata.time2"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="Select time"
-                    >
-                    </el-time-select></div
-                ></el-col>
-              </el-row>
+              <el-input v-model="reservationdata.sug_message"></el-input>
             </div>
             <div>
-              <el-row>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple">
-                    <span class="demonstration"></span>
-                    <el-date-picker
-                      v-model="reservationdata.date3"
-                      type="date"
-                      placeholder="Pick a date"
-                      :default-value="new Date(2021, 7, 20)"
-                    >
-                    </el-date-picker></div
-                ></el-col>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple-light">
-                    <el-time-select
-                      v-model="reservationdata.time3"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="Select time"
-                    >
-                    </el-time-select></div
-                ></el-col>
-              </el-row>
+              <el-date-picker
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="reservationdata.sug_timeone"
+                type="datetime"
+                placeholder="Select date and time"
+              >
+              </el-date-picker>
+            </div>
+            <div>
+              <el-date-picker
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="reservationdata.sug_timetwo"
+                type="datetime"
+                placeholder="Select date and time"
+              >
+              </el-date-picker>
+            </div>
+            <div>
+              <el-date-picker
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="reservationdata.sug_timethree"
+                type="datetime"
+                placeholder="Select date and time"
+              >
+              </el-date-picker>
             </div>
             <el-button
               @click="(dialogVisible = false), interviewrequest()"
@@ -213,12 +168,17 @@ export default {
         { ind_introduce: "" },
       ],
       reservationdata: [
-        { date1: "" },
-        { time1: "" },
-        { date2: "" },
-        { time2: "" },
-        { date3: "" },
-        { time3: "" },
+        { ent_index: 0 },
+        { ind_index: 0 },
+        { sug_decision: "string" },
+        { sug_duty: "string" },
+        { sug_index: 0 },
+        { sug_send: "string" },
+        { sug_state: "string" },
+        { sug_timeone: "string" },
+        { sug_timethree: "string" },
+        { sug_timetwo: "string" },
+        { sug_message: "string" },
       ],
     };
   },
@@ -273,12 +233,35 @@ export default {
       });
     },
     interviewrequest() {
-      this.$message({
-        showClose: true,
-        message: "Success",
-        type: "success",
-      });
-      return this.reservationdata;
+      console.log(this.company_index);
+      console.log(this.userindex);
+      console.log(this.reservationdata.sug_duty);
+      console.log(this.reservationdata.sug_timeone);
+      console.log(this.reservationdata.sug_timetwo);
+      console.log(this.reservationdata.sug_timethree);
+      console.log(this.reservationdata.sug_message);
+      //요청보내기
+      axios
+        .post("https://i5d206.p.ssafy.io:8443/sug", {
+          ent_index: this.company_index,
+          ind_index: this.userindex,
+          sug_duty: this.reservationdata.sug_duty,
+          sug_timeone: this.reservationdata.sug_timeone,
+          sug_timetwo: this.reservationdata.sug_timetwo,
+          sug_timethree: this.reservationdata.sug_timethree,
+          sug_message: this.reservationdata.sug_message,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$message({
+            showClose: true,
+            message: "면접요청이 발송되었습니다",
+            type: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
