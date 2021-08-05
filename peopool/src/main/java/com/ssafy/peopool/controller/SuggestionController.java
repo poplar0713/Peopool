@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.SugCard;
 import com.ssafy.peopool.model.Suggestion;
 import com.ssafy.peopool.model.service.SuggestionService;
 
@@ -32,14 +33,14 @@ public class SuggestionController {
 
 	@ApiOperation(value = "개인회원의 인덱스로 면접 요청 기록 조회", response = String.class)
 	@GetMapping("{index}")
-	public ResponseEntity<List<Suggestion>> getSuggestion(@PathVariable("index") int index) {
+	public ResponseEntity<List<SugCard>> getSuggestion(@PathVariable("index") int index) {
 		return new ResponseEntity<>(suggestionService.getSuggestion(index), HttpStatus.OK);
 
 	}
 	
 	@ApiOperation(value = "기업회원의 인덱스로 면접 요청 기록 조회", response = String.class)
 	@GetMapping("/ent/{index}")
-	public ResponseEntity<List<Suggestion>> getEntSuggestion(@PathVariable("index") int index) {
+	public ResponseEntity<List<SugCard>> getEntSuggestion(@PathVariable("index") int index) {
 		return new ResponseEntity<>(suggestionService.getEntSuggestion(index), HttpStatus.OK);
 
 	}
