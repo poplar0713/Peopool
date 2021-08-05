@@ -13,8 +13,8 @@
         <el-card
           class="box-card"
           style="width: 250px"
-          v-for="fd in followData"
-          :key="fd"
+          v-for="user in follower"
+          :key="user"
         >
           <template #header>
             <div class="card-header">
@@ -22,10 +22,8 @@
               <br />
             </div>
           </template>
-
-          <UserDetail :user="fd" />
-
-          <div v-for="tag in fd.tag" :key="tag" class="text item">
+          <UserDetail :user="user" :userindex="user.follower" />
+          <div v-for="tag in user.tag" :key="tag" class="text item">
             {{ tag }}
           </div>
         </el-card>
@@ -37,39 +35,54 @@
 <script>
 import UserDetail from "@/components/UserDetail.vue";
 import FollowAppc from "@/components/MainCompany/FollowAppc.vue";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
+  name: "HelloWorld",
   components: {
     UserDetail,
     FollowAppc,
   },
-  name: "HelloWorld",
+
+  mounted() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.company_index = index;
+    //팔로잉정보 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
+        params: {
+          index: index,
+          type: 1,
+        },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.follower = res.data;
+      })
+      .catch((err) => console.log(err));
+  },
   props: {
     msg: String,
     title: String,
-    followData: Array,
+  },
+  data() {
+    return {
+      follower: [],
+      company_index: "",
+    };
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 img {
   display: block;
   margin: 0px auto;
 }
-/* h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-} */
 </style>

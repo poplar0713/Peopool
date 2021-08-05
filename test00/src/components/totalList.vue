@@ -4,9 +4,9 @@
       <el-main>
         <el-card
           class="box-card"
-          style="width: 250px"
-          v-for="fd in followData"
-          :key="fd"
+          style="width: 200px"
+          v-for="user in followers"
+          :key="user"
         >
           <template #header>
             <div class="card-header">
@@ -14,11 +14,11 @@
               <br />
             </div>
           </template>
-          <h1>{{ fd.title }}</h1>
-          <div v-for="tag in fd.tag" :key="tag" class="text item">
+          <h1>{{ user.title }}</h1>
+          <div v-for="tag in user.tag" :key="tag" class="text item">
             {{ tag }}
           </div>
-          <UserDetail :user="fd" />
+          <UserDetail :user="user" />
         </el-card>
       </el-main>
     </div>
@@ -27,14 +27,40 @@
 
 <script>
 import UserDetail from "@/components/UserDetail.vue";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
   components: {
     UserDetail,
   },
-  name: "HelloWorld",
   props: {
     followData: Array,
+  },
+  data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 내정보 가져오기
+    this.company_index = index;
+    //팔로워정보 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
+        params: {
+          index: index,
+          type: 1,
+        },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.followers = res.data;
+      })
+      .catch((err) => console.log(err));
+    return {
+      followers: [],
+    };
   },
 };
 </script>

@@ -202,8 +202,12 @@ export default {
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOff", {
                 ind_index: this.ruleForm.UserIndex,
               })
-              .then((res) => console.log(res))
-              .catch((err) => console.log(err));
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
           // switch on
           if (this.ruleForm.open == true) {
@@ -211,8 +215,12 @@ export default {
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOn", {
                 ind_index: this.ruleForm.UserIndex,
               })
-              .then((res) => console.log(res))
-              .catch((err) => console.log(err));
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
         } else {
           console.log("error submit!!");
