@@ -1,6 +1,6 @@
 <template>
   <el-button type="text" @click="dialogVisible = true" style="color:black"
-    >{{ this.userdetailinfo }}
+    >{{ this.userdetailinfo.ind_name }}
   </el-button>
 
   <!-- 팔로우가 되어있을때 -->
@@ -156,7 +156,7 @@ export default {
   components: {
     webviewer,
   },
-  mounted() {
+  created() {
     // 유저정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`)
