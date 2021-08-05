@@ -1,36 +1,96 @@
 <template>
-  <el-table :data="tableData" height="300">
-    <el-table-column type="expand">
-      <template #header> </template>
-      <template #default="props">
-        <div style="text-align:center;">
-          <div>
-            <el-radio v-model="radio" label="1" border style=""
-              >{{ props.row.date1 }} {{ props.row.time1 }}</el-radio
+  <el-table
+    :data="
+      InterviewReq.filter(
+        (data) =>
+          !search ||
+          data.company_name.toLowerCase().includes(search.toLowerCase())
+      )
+    "
+    style="width: 100%"
+    height="250"
+  >
+    <el-table-column label="Company" prop="name"> </el-table-column>
+    <el-table-column label="직무" prop="sug_duty"> </el-table-column>
+    <!-- <el-table-column label="choice_2" prop="date"> </el-table-column>
+    <el-table-column label="choice_2" prop="date"> </el-table-column> -->
+    <el-table-column>
+      <template #header>
+        <el-input v-model="search" size="mini" placeholder="Type to search" />
+      </template>
+      <template #default="scope">
+        <el-button type="text" @click="dialogVisible = true" style="color:blue"
+          >응답하기</el-button
+        >
+
+        <el-dialog
+          title="시간설정"
+          v-model="dialogVisible"
+          width="30%"
+          :before-close="handleClose"
+        >
+          <div style="text-align:center">
+            <el-button
+              size="mini"
+              type="primary"
+              style="margin:5px"
+              @click="
+                select(
+                  scope.$index,
+                  scope.row,
+                  scope.row.sug_timeone,
+                  scope.row.sug_index
+                )
+              "
+              >{{ scope.row.sug_timeone }}</el-button
+            ><br>
+            <el-button
+              size="mini"
+              type="primary"
+              style="margin:5px"
+              @click="
+                select(
+                  scope.$index,
+                  scope.row,
+                  scope.row.sug_timetwo,
+                  scope.row.sug_index
+                )
+              "
+              >{{ scope.row.sug_timetwo }}</el-button
+            ><br>
+            <el-button
+              size="mini"
+              type="primary"
+              style="margin:5px"
+              @click="
+                select(
+                  scope.$index,
+                  scope.row,
+                  scope.row.sug_timethree,
+                  scope.row.sug_index
+                )
+              "
+              >{{ scope.row.sug_timethree }}</el-button
+            ><br>
+            <el-button
+              size="mini"
+              type="danger"
+              style="margin:5px"
+              @click="reject(scope.$index, scope.row)"
+              >거절하기</el-button
             >
           </div>
-          <div>
-            <el-radio v-model="radio" label="2" border style=" margin:10px"
-              >{{ props.row.date2 }} {{ props.row.time2 }}</el-radio
-            >
-          </div>
-          <div>
-            <el-radio
-              v-model="radio"
-              label="3"
-              border
-              style="margin-bottom:10px"
-              >{{ props.row.date3 }} {{ props.row.time3 }}</el-radio
-            >
-          </div>
-          <div>
-            <el-button @click="submit(props.row, radio)">제출</el-button>
-            <el-button type="danger" @click="reject(props.row)">거절</el-button>
-          </div>
-        </div>
+          <!-- <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogVisible = false">Cancel</el-button>
+              <el-button type="primary" @click="dialogVisible = false"
+                >Confirm</el-button
+              >
+            </span>
+          </template> -->
+        </el-dialog>
       </template>
     </el-table-column>
-    <el-table-column label="" prop="company_name"></el-table-column>
   </el-table>
 </template>
 
@@ -40,131 +100,48 @@ import axios from "axios";
 
 export default {
   data() {
-    // 토큰가져오기
+    // 토큰으로 유저index 가져오기
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    // 요청받은 인터뷰
+    // 요청받은 면접일정 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`, {
-        params: {
-          index: index,
-        },
-      })
+      .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`)
       .then((res) => {
-        console.log(res.data);
-        this.tableData = res.data;
+        console.log(res);
+        this.InterviewReq = res.data;
       })
       .catch((err) => {
         console.log(err);
       });
     return {
-      radio: "1",
-      submitteddate: "",
-      submittedtime: "",
-      responseform: [{ submitteddate: "" }, { submittedtime: "" }],
-      tableData: [
-        // {
-        //   company_id: 1,
-        //   company_name: "삼성피자",
-        //   company_field: "??????????",
-        //   date1: "2021-08-30",
-        //   time1: "13:00-14:00",
-        //   date2: "2021-08-31",
-        //   time2: "13:00-14:00",
-        //   date3: "2021-08-32",
-        //   time3: "13:00-14:00",
-        // },
-        // {
-        //   company_id: 2,
-        //   company_name: "삼성햄버거",
-        //   company_field: "??????????",
-        //   date1: "2021-04-30",
-        //   time1: "13:00-14:00",
-        //   date2: "2021-03-30",
-        //   time2: "13:00-14:00",
-        //   date3: "2021-02-30",
-        //   time3: "13:00-14:00",
-        // },
-        // {
-        //   company_id: 3,
-        //   company_name: "삼성양말",
-        //   company_field: "??????????",
-        //   date1: "2021-02-30",
-        //   time1: "13:00-14:00",
-        //   date2: "2021-03-30",
-        //   time2: "13:00-14:00",
-        //   date3: "2021-04-30",
-        //   time3: "13:00-14:00",
-        // },
-        // {
-        //   company_id: 4,
-        //   company_name: "삼성볶음밥",
-        //   company_field: "??????????",
-        //   date1: "2021-02-30",
-        //   time1: "13:00-14:00",
-        //   date2: "2021-03-30",
-        //   time2: "13:00-14:00",
-        //   date3: "2021-04-30",
-        //   time3: "13:00-14:00",
-        // },
-        // {
-        //   company_id: 5,
-        //   company_name: "삼성정장",
-        //   company_field: "??????????",
-        //   date1: "2021-02-30",
-        //   time1: "13:00-14:00",
-        //   date2: "2021-03-30",
-        //   time2: "13:00-14:00",
-        //   date3: "2021-04-30",
-        //   time3: "13:00-14:00",
-        // },
-        // {
-        //   company_id: 5,
-        //   company_name: "삼성신발",
-        //   company_field: "??????????",
-        //   date1: "2021-02-30",
-        //   time1: "13:00-14:00",
-        //   date2: "2021-03-30",
-        //   time2: "13:00-14:00",
-        //   date3: "2021-04-30",
-        //   time3: "13:00-14:00",
-        // },
-      ],
+      InterviewReq: [],
+      dialogVisible: false,
     };
   },
   methods: {
-    submit(row, radio) {
-      this.tableData.splice(this.tableData.indexOf(row), 1);
-      this.$message({
-        message: "면접일정이 확정되었습니다.",
-        type: "success",
-      });
-      // console.log(row.date);
-      // console.log(radio1);
-      const date = eval(`row.date${radio}`);
-      this.submitteddate = date;
-      console.log(this.submitteddate);
-      const time = eval(`row.time${radio}`);
-      this.submittedtime = time;
-      console.log(this.submittedtime);
-      // 면접수락요청
-      axios.put("https://i5d206.p.ssafy.io:8443/sug/accept", {
-        index: this.index,
-        time: this.submittedtime,
-      });
-
-      return row;
+    select(index, row, decision, sugindex) {
+      console.log(index);
+      console.log(decision);
+      console.log(sugindex);
+      axios
+        .put("https://i5d206.p.ssafy.io:8443/sug/accept", {
+          sug_decision: decision,
+          sug_index: sugindex,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$message({
+            message: "수락되었습니다",
+            type: "success",
+          });
+          this.InterviewReq.splice(this.InterviewReq.indexOf(row), 1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    reject(row) {
-      console.log(row);
-      // 삭제
-      this.tableData.splice(this.tableData.indexOf(row), 1);
-      this.$message({
-        message: "면접일정이 거부되었습니다.",
-        type: "warning",
-      });
-    },
+    reject() {},
   },
 };
 </script>
