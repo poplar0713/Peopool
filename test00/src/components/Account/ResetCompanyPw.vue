@@ -26,12 +26,12 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button @click="resetForm('ruleForm')">Reset</el-button>
+      <el-button @click="resetForm('ruleForm')">입력값 초기화</el-button>
       <el-button
         type="warning"
         @click="submitForm('ruleForm')"
         v-loading.fullscreen.lock="fullscreenLoading"
-        >Find</el-button
+        >비밀번호 초기화</el-button
       >
     </el-form-item>
   </el-form>

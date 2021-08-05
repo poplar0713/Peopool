@@ -12,16 +12,13 @@
   >
     <el-table-column label="Company" prop="name"> </el-table-column>
     <el-table-column label="직무" prop="sug_duty"> </el-table-column>
-    <!-- <el-table-column label="choice_2" prop="date"> </el-table-column>
-    <el-table-column label="choice_2" prop="date"> </el-table-column> -->
     <el-table-column>
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-button type="text" @click="dialogVisible = true" style="color:blue"
-          >응답하기</el-button
-        >
+        <el-button v-if="scope.row.sug_state=='W'" @click="dialogVisible = true" >응답하기</el-button>
+        <el-button v-if="scope.row.sug_state!=='W'" disabled >응답완료</el-button>
 
         <el-dialog
           title="시간설정"
@@ -29,6 +26,8 @@
           width="30%"
           :before-close="handleClose"
         >
+        <div style="text-align:center">{{scope.row.sug_message}}</div>
+        <br>
           <div style="text-align:center">
             <el-button
               size="mini"

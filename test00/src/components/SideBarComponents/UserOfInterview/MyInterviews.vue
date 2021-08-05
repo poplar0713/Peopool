@@ -10,7 +10,7 @@
     height="300"
   >
     <el-table-column label="Date" prop="int_start" sortable> </el-table-column>
-    <el-table-column label="Company" prop="ent_index"> </el-table-column>
+    <el-table-column label="Company" prop="name"> </el-table-column>
     <el-table-column align="right">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
