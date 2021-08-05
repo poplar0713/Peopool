@@ -63,9 +63,7 @@
                                 <el-button
                                   size="mini"
                                   type="danger"
-                                  @click="
-                                    GoToInteriewRoom(scope.row.p_name)
-                                  "
+                                  @click="GoToInteriewRoom(scope.row.p_name)"
                                   >Interview Room</el-button
                                 >
                                 <!-- {{scope.row.url}} -->
@@ -125,6 +123,7 @@ import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
 
 export default {
+  name: "Recruiting",
   components: {
     SideBarCompany,
     headerSearchUser,
@@ -132,11 +131,16 @@ export default {
     ExamineCard,
     InterviewCalender,
   },
+  computed: {
+    getExaiminingLength() {
+      return this.exaimining.length;
+    },
+  },
   data() {
     return {
       now: new Date(),
       tabposition: "right",
-      company:"로그인된기업",
+      company: "로그인된기업",
       waitinglist: [
         {
           p_name: "천서진",
@@ -294,12 +298,8 @@ export default {
       exaiminingtotal: this.getExaiminingLength,
     };
   },
-  computed: {
-    getExaiminingLength() {
-      return this.exaimining.length;
-    },
-  },
   methods: {
+    // 인터뷰룸으로 이동
     GoToInteriewRoom(row) {
       // console.log(p_ind);
       this.$router.push({

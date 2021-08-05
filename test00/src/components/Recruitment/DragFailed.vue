@@ -130,7 +130,7 @@ export default {
       window.console.log(evt);
     },
     handleClose(done) {
-      this.$confirm("Are you sure to close this dialog?")
+      this.$confirm("창을 닫으시겠습니까?")
         .then(() => {
           done();
           this.dialogVisible = false;

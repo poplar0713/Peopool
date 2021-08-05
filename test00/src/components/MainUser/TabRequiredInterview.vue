@@ -46,7 +46,7 @@ export default {
     const index = decoded.index;
     // 요청받은 인터뷰
     axios
-      .get(`https://localhost:8443/sug/${index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`, {
         params: {
           index: index,
         },
@@ -149,7 +149,7 @@ export default {
       this.submittedtime = time;
       console.log(this.submittedtime);
       // 면접수락요청
-      axios.put("https://localhost:8443/sug/accept", {
+      axios.put("https://i5d206.p.ssafy.io:8443/sug/accept", {
         index: this.index,
         time: this.submittedtime,
       });

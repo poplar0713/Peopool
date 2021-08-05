@@ -44,7 +44,7 @@ export default {
     // const decoded = jwt_decode(token);
     // const index = decoded.index;
     // // 면접일정조회
-    // axios.get(`https://localhost:8443/int/${index}`)
+    // axios.get(`https://i5d206.p.ssafy.io:8443/int/${index}`)
     // .then((res)=> {
     // console.log(res)
     // this.tableData=res.data

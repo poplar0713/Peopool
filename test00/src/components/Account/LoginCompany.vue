@@ -1,5 +1,10 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" style="text-align:center">
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    style="text-align:center"
+  >
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="LoginCompanyID">
       <el-input v-model="ruleForm.LoginCompanyID"></el-input>
@@ -61,6 +66,7 @@ export default {
             .then((result) => {
               localStorage.setItem("token", result.data.accessToken);
               this.$store.state.type = "1";
+              this.$store.state.type = "0";
               setTimeout(() => {
                 this.$router.push("company");
               }, 3000);
@@ -88,9 +94,6 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-        this.$store.state.LoginDialog = false;
-        this.$router.push("company");
-        this.Hello();
       }, 3000);
     },
   },

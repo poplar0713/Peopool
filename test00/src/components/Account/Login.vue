@@ -18,6 +18,7 @@
           <LoginIndiv />
           <!-- 회원가입했니? -->
           <div style="text-align:center">
+            <!-- 회원가입 -->
             <el-button
               @click="$store.state.SignupDialogIndiv = true"
               style="color:black"
@@ -32,6 +33,35 @@
               <!-- 개인회원가입 -->
               <SignupIndiv />
             </el-dialog>
+            <br /><br />
+            <!-- 아이디찾기 -->
+            <el-button
+              @click="$store.state.findUserId = true"
+              style="color:black"
+              >아이디찾기</el-button
+            >
+            <el-dialog
+              title="아이디 찾기"
+              v-model="$store.state.findUserId"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <FindUserId />
+            </el-dialog>
+            <!-- 비밀번호찾기 -->
+            <el-button
+              @click="$store.state.findUserPw = true"
+              style="color:black"
+              >비밀번호 초기화</el-button
+            >
+            <el-dialog
+              title="비밀번호 초기화"
+              v-model="$store.state.findUserPw"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <ResetUserPw />
+            </el-dialog>
           </div>
           <br />
           <!-- 카카오톡로그인 -->
@@ -39,6 +69,9 @@
           <!-- 구글로그인 -->
           <!--  -->
         </el-tab-pane>
+        <!-- 기업 -->
+        <!--  -->
+        <!--  -->
         <el-tab-pane label="기업회원" name="second">
           <LoginCompany />
           <div style="text-align:center">
@@ -55,6 +88,35 @@
             >
               <SignupCompany />
             </el-dialog>
+            <br /><br />
+            <!-- 아이디찾기 -->
+            <el-button
+              @click="$store.state.findCompanyId = true"
+              style="color:black"
+              >아이디찾기</el-button
+            >
+            <el-dialog
+              title="아이디 찾기"
+              v-model="$store.state.findCompanyId"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <FindCompanyId />
+            </el-dialog>
+            <!-- 비밀번호찾기 -->
+            <el-button
+              @click="$store.state.findCompanyPw = true"
+              style="color:black"
+              >비밀번호 초기화</el-button
+            >
+            <el-dialog
+              title="비밀번호 초기화"
+              v-model="$store.state.findCompanyPw"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <ResetCompanyPw />
+            </el-dialog>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -68,6 +130,10 @@ import SignupIndiv from "@/components/Account/SignupIndiv.vue";
 import LoginIndiv from "@/components/Account/LoginIndiv.vue";
 import LoginCompany from "@/components/Account/LoginCompany.vue";
 import KakaoLogin from "./KakaoLogin.vue";
+import FindUserId from "./FindUserId.vue";
+import ResetUserPw from "./ResetUserPw.vue";
+import FindCompanyId from "./FindCompanyId.vue";
+import ResetCompanyPw from "./ResetCompanyPw.vue";
 export default {
   components: {
     SignupIndiv,
@@ -75,6 +141,10 @@ export default {
     LoginIndiv,
     LoginCompany,
     KakaoLogin,
+    FindUserId,
+    ResetUserPw,
+    FindCompanyId,
+    ResetCompanyPw,
   },
   data() {
     return {
