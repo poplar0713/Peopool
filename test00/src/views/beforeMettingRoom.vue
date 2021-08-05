@@ -1,9 +1,129 @@
 <template>
-  <div></div>
+  <el-container>
+    <el-aside width="200px">
+      <div class="header name">{{ name }}님!</div>
+      <div class="header company">{{ company }}</div>
+      <div class="header">면접장입니다.</div>
+      <div class="header">준비되셨나요?</div>
+    </el-aside>
+    <el-main>
+      <div>
+        <p class="manner">매너 있는 면접수칙 먼저 알아볼까요?</p>
+        <p class="check">
+          <i class="fas fa-check"></i>
+          단정한 복장을 갖춰주세요.
+        </p>
+        <p class="check">
+          <i class="fas fa-check"></i>
+          안정적인 네트워크를 유지해주세요.
+        </p>
+        <p class="check">
+          <i class="fas fa-check"></i>
+          마이크와 카메라 확인!
+        </p>
+        <p class="check">
+          <i class="fas fa-check"></i>
+          NoShow는 절대 안돼요!
+        </p>
+      </div>
+      <div id="testzone">
+        <div id="webcam">
+          <video autoplay="true" id="videotag"></video>
+        </div>
+
+        <el-button plain id="camerabtn" @click="cameraCheck"
+          ><i class="fas fa-video"></i>카메라 확인</el-button
+        >
+        <el-button plain id="micbtn" @click="micCheck"
+          ><i class="fas fa-microphone"></i>마이크 확인</el-button
+        >
+        <div class="block">
+          <span class="demonstration">마이크 감도</span>
+          <el-slider v-model="decibals" max="30"></el-slider>
+        </div>
+        <el-button type="warning" id="go">입장하기</el-button>
+      </div></el-main
+    >
+  </el-container>
 </template>
 
 <script>
-export default {};
+import DecibelMeter from "decibel-meter";
+export default {
+  data() {
+    return {
+      company: "싸피",
+      name: "조영우",
+      decibals: 0,
+      color1: "black",
+      color2: "#5f2d9a",
+    };
+  },
+  methods: {
+    micCheck() {
+      const meter = new DecibelMeter("mictest");
+      meter.sources.then((sources) => {
+        meter.connect(sources[0]);
+        meter.listenTo(
+          0,
+          (percent) => (this.decibals = Number(`${percent}`) + 100)
+        );
+      });
+    },
+    cameraCheck() {
+      var video = document.querySelector("#videotag");
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then(function(stream) {
+            video.srcObject = stream;
+          })
+          .catch(() => {
+            <el-alert
+              title="카메라를 확인해주세요"
+              type="warning"
+              show-icon
+            ></el-alert>;
+          });
+      }
+    },
+  },
+};
 </script>
 
-<style></style>
+<style scoped>
+#go {
+  width: 200px;
+  border-radius: 100px;
+}
+.demonstration {
+  widows: 300px;
+}
+#testzone {
+  margin-top: 40px;
+}
+#webcam {
+  text-align: center;
+}
+#videotag {
+  width: 600px;
+}
+.manner {
+  font-size: 20px;
+}
+i {
+  margin-right: 10px;
+}
+.title {
+  font-size: 20px;
+}
+.header {
+  font-size: 25px;
+}
+.el-aside {
+  margin: 20px;
+}
+.check:hover {
+  color: #ffc000;
+}
+</style>

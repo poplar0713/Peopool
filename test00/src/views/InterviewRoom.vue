@@ -4,6 +4,7 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
+        <before-meeting></before-meeting>
         <div id="container">
           <div id="wrapper">
             <div id="join" class="animate join">
@@ -30,16 +31,36 @@
                   />
                 </p>
                 <p class="submit">
-                  <input type="submit" name="commit" value="Join!" v-on:click="register" />
+                  <input
+                    type="submit"
+                    name="commit"
+                    value="Join!"
+                    v-on:click="register"
+                  />
                 </p>
               </el-form>
             </div>
             <div id="room" style="display: none;">
               <h2 id="room-header"></h2>
               <div id="participants"></div>
-              <input type="button" id="button-leave" v-on:click="leaveRoom" value="Leave room" />
-              <input type="button" id="button-audio" v-on:click="AudioOnOff" value="Audio Off" />
-              <input type="button" id="button-video" v-on:click="VideoOnOff" value="Video Off" />
+              <input
+                type="button"
+                id="button-leave"
+                v-on:click="leaveRoom"
+                value="Leave room"
+              />
+              <input
+                type="button"
+                id="button-audio"
+                v-on:click="AudioOnOff"
+                value="Audio Off"
+              />
+              <input
+                type="button"
+                id="button-video"
+                v-on:click="VideoOnOff"
+                value="Video Off"
+              />
             </div>
           </div>
         </div>
@@ -48,6 +69,7 @@
   </el-container>
 </template>
 <script>
+import BeforeMeeting from "./beforeMettingRoom.vue";
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import kurentoUtils from "kurento-utils";
@@ -67,6 +89,7 @@ export default {
   components: {
     SideBarUser,
     headerSearchCompany,
+    BeforeMeeting,
   },
   name: "InterviewRoom",
   mounted: function() {
@@ -129,9 +152,12 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
-        if (error) return console.error(error);
-      });
+      participants[result.name].rtcPeer.processAnswer(
+        result.sdpAnswer,
+        function(error) {
+          if (error) return console.error(error);
+        }
+      );
     },
 
     callResponse(message) {
@@ -166,14 +192,15 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -203,14 +230,15 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
     },
 
     onParticipantLeft(request) {
@@ -229,7 +257,9 @@ export default {
     Participant(name, sendMessage) {
       this.name = name;
       var container = document.createElement("div");
-      container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+      container.className = isPresentMainParticipant()
+        ? PARTICIPANT_CLASS
+        : PARTICIPANT_MAIN_CLASS;
       container.id = name;
       var span = document.createElement("span");
       var video = document.createElement("video");
@@ -270,7 +300,9 @@ export default {
       }
 
       function isPresentMainParticipant() {
-        return document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0;
+        return (
+          document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0
+        );
       }
 
       this.offerToReceiveVideo = function(error, offerSdp) {
@@ -299,26 +331,22 @@ export default {
         container.parentNode.removeChild(container);
       };
     },
-    AudioOnOff(){
+    AudioOnOff() {
       var audiobutton = document.getElementById("button-audio");
-      if(audiobutton.value == "Audio Off")
-      {
+      if (audiobutton.value == "Audio Off") {
         participants[this.username].rtcPeer.audioEnabled = false;
         audiobutton.value = "Audio On";
-      }
-      else{
+      } else {
         participants[this.username].rtcPeer.audioEnabled = true;
         audiobutton.value = "Audio Off";
       }
     },
-    VideoOnOff(){
-    var videobutton = document.getElementById("button-video");
-      if(videobutton.value == "Video Off")
-      {
+    VideoOnOff() {
+      var videobutton = document.getElementById("button-video");
+      if (videobutton.value == "Video Off") {
         participants[this.username].rtcPeer.videoEnabled = false;
         videobutton.value = "Video On";
-      }
-      else{
+      } else {
         participants[this.username].rtcPeer.videoEnabled = true;
         videobutton.value = "Video Off";
       }
