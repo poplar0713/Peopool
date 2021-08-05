@@ -4,22 +4,22 @@
   </el-button>
 
   <!-- 팔로우가 되어있을때 -->
-  <span v-if="follow" style="color: Tomato;">
+  <div v-if="follow" style="color: Tomato;">
     <i
       class="fas fa-heart fa-2x"
       size:7x
       @click="clickfollowBtn"
       style="cursor:pointer"
     ></i>
-  </span>
+  </div>
   <!-- 팔로우가 안되어있을때 -->
-  <span v-if="follow == false" style="color: Tomato;">
+  <div v-if="follow == false" style="color: Tomato;">
     <i
       @click="clickfollowBtn"
       class="far fa-heart fa-2x"
       style="cursor:pointer"
     ></i>
-  </span>
+  </div>
 
   <div>
     <el-dialog
@@ -156,7 +156,27 @@ export default {
   components: {
     webviewer,
   },
-  created() {
+  created() {},
+  data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 팔로우했는지 체크해보기
+    axios
+      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+        fol_type: 1,
+        follower: this.userindex,
+        following: index,
+      })
+      .then((res) => {
+        // 팔로우가 되어있는것
+        console.log(res), (this.follow = true);
+      })
+      .catch((err) => {
+        // 팔로우가 안되어있는것
+        console.log(err), (this.follow = false);
+      });
     // 유저정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`)
@@ -174,27 +194,6 @@ export default {
         this.userdetailinfo.ind_introduce = res.data.ind_introduce;
       })
       .catch();
-  },
-  data() {
-    // 토큰가져오기
-    const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
-    // 팔로우했는지 체크해보기
-    axios
-      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-        fol_type: 1,
-        follower: this.user.ind_index,
-        following: index,
-      })
-      .then((res) => {
-        // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
-      })
-      .catch((err) => {
-        // 팔로우가 안되어있는것
-        console.log(err), (this.follow = false);
-      });
     return {
       follow: false,
       company_index: index,
@@ -225,7 +224,7 @@ export default {
   },
   props: {
     user: Object,
-    userindex: Number,
+    userindex: Object,
   },
   methods: {
     clickfollowBtn() {
@@ -236,7 +235,7 @@ export default {
             data: {
               fol_type: 1,
               following: this.company_index,
-              follower: this.user.ind_index,
+              follower: this.userindex,
             },
           })
           .then((res) => {
@@ -250,7 +249,7 @@ export default {
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             fol_type: 1,
             following: this.company_index,
-            follower: this.user.ind_index,
+            follower: this.userindex,
           })
           .then((res) => {
             console.log(res);

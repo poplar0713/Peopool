@@ -16,7 +16,7 @@
 
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
-// // import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
+// // import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 // // import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
 // import WebViewer from "@/components/MainCompany/WebViewer.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
