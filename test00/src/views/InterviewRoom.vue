@@ -38,6 +38,8 @@
               <h2 id="room-header"></h2>
               <div id="participants"></div>
               <input type="button" id="button-leave" v-on:click="leaveRoom" value="Leave room" />
+              <input type="button" id="button-audio" v-on:click="AudioOnOff" value="Audio Off" />
+              <input type="button" id="button-video" v-on:click="VideoOnOff" value="Video Off" />
             </div>
           </div>
         </div>
@@ -298,6 +300,30 @@ export default {
         this.rtcPeer.dispose();
         container.parentNode.removeChild(container);
       };
+    },
+    AudioOnOff(){
+      var audiobutton = document.getElementById("button-audio");
+      if(audiobutton.value == "Audio Off")
+      {
+        participants[this.username].rtcPeer.audioEnabled = false;
+        audiobutton.value = "Audio On";
+      }
+      else{
+        participants[this.username].rtcPeer.audioEnabled = true;
+        audiobutton.value = "Audio Off";
+      }
+    },
+    VideoOnOff(){
+    var videobutton = document.getElementById("button-video");
+      if(videobutton.value == "Video Off")
+      {
+        participants[this.username].rtcPeer.videoEnabled = false;
+        videobutton.value = "Video On";
+      }
+      else{
+        participants[this.username].rtcPeer.videoEnabled = true;
+        videobutton.value = "Video Off";
+      }
     },
   },
 };
