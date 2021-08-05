@@ -10,7 +10,7 @@
         >
           <template #header>
             <div class="card-header">
-              <img src="a.jpg" style="width: 150px" />
+              <img src="images/a.jpg" style="width: 150px" />
               <br />
             </div>
           </template>
