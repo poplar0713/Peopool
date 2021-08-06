@@ -7,39 +7,34 @@
         <div id="container">
           <div id="wrapper">
             <div id="join" class="animate join">
-              <h1>Join a Room</h1>
-              <el-form v-on:submit.prevent="onSubmit" accept-charset="UTF-8">
-                <p>
-                  <input
-                    type="text"
-                    name="name"
-                    v-model="username"
-                    id="name"
-                    placeholder="Username"
-                    required
-                  />
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    name="room"
-                    v-model="room"
-                    id="roomName"
-                    placeholder="Room"
-                    required
-                  />
-                </p>
-                <p class="submit">
-                  <input type="submit" name="commit" value="Join!" v-on:click="register" />
-                </p>
-              </el-form>
+              <before-meeting></before-meeting>
+              <div style="text-align:center">
+                <el-button type="warning" id="go" @click="register"
+                  >입장하기</el-button
+                >
+              </div>
             </div>
             <div id="room" style="display: none;">
               <h2 id="room-header"></h2>
               <div id="participants"></div>
-              <input type="button" id="button-leave" v-on:click="leaveRoom" value="Leave room" />
-              <input type="button" id="button-audio" v-on:click="AudioOnOff" value="Audio Off" />
-              <input type="button" id="button-video" v-on:click="VideoOnOff" value="Video Off" />
+              <input
+                type="button"
+                id="button-leave"
+                v-on:click="leaveRoom"
+                value="Leave room"
+              />
+              <input
+                type="button"
+                id="button-audio"
+                v-on:click="AudioOnOff"
+                value="Audio Off"
+              />
+              <input
+                type="button"
+                id="button-video"
+                v-on:click="VideoOnOff"
+                value="Video Off"
+              />
             </div>
           </div>
         </div>
@@ -48,6 +43,7 @@
   </el-container>
 </template>
 <script>
+import BeforeMeeting from "./beforeMettingRoom.vue";
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import kurentoUtils from "kurento-utils";
@@ -67,12 +63,14 @@ export default {
   components: {
     SideBarUser,
     headerSearchCompany,
+    BeforeMeeting,
   },
   name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
     ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
-
+    this.username = localStorage.getItem("username");
+    this.room = this.$route.params.url;
     ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
       console.info("Received message: " + message);
@@ -129,9 +127,12 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
-        if (error) return console.error(error);
-      });
+      participants[result.name].rtcPeer.processAnswer(
+        result.sdpAnswer,
+        function(error) {
+          if (error) return console.error(error);
+        }
+      );
     },
 
     callResponse(message) {
@@ -166,14 +167,15 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -203,14 +205,15 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
     },
 
     onParticipantLeft(request) {
@@ -229,7 +232,9 @@ export default {
     Participant(name, sendMessage) {
       this.name = name;
       var container = document.createElement("div");
-      container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
+      container.className = isPresentMainParticipant()
+        ? PARTICIPANT_CLASS
+        : PARTICIPANT_MAIN_CLASS;
       container.id = name;
       var span = document.createElement("span");
       var video = document.createElement("video");
@@ -270,7 +275,9 @@ export default {
       }
 
       function isPresentMainParticipant() {
-        return document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0;
+        return (
+          document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0
+        );
       }
 
       this.offerToReceiveVideo = function(error, offerSdp) {
@@ -299,26 +306,22 @@ export default {
         container.parentNode.removeChild(container);
       };
     },
-    AudioOnOff(){
+    AudioOnOff() {
       var audiobutton = document.getElementById("button-audio");
-      if(audiobutton.value == "Audio Off")
-      {
+      if (audiobutton.value == "Audio Off") {
         participants[this.username].rtcPeer.audioEnabled = false;
         audiobutton.value = "Audio On";
-      }
-      else{
+      } else {
         participants[this.username].rtcPeer.audioEnabled = true;
         audiobutton.value = "Audio Off";
       }
     },
-    VideoOnOff(){
-    var videobutton = document.getElementById("button-video");
-      if(videobutton.value == "Video Off")
-      {
+    VideoOnOff() {
+      var videobutton = document.getElementById("button-video");
+      if (videobutton.value == "Video Off") {
         participants[this.username].rtcPeer.videoEnabled = false;
         videobutton.value = "Video On";
-      }
-      else{
+      } else {
         participants[this.username].rtcPeer.videoEnabled = true;
         videobutton.value = "Video Off";
       }
@@ -327,4 +330,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#go {
+  width: 200px;
+  border-radius: 100px;
+}
+</style>
