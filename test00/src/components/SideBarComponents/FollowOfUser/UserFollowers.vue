@@ -23,7 +23,7 @@
       height="250px"
     >
       <el-table-column label="Company" prop="name"> </el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
@@ -32,17 +32,19 @@
             size="mini"
             type="primary"
             @click="
-              (dialogVisible_company = true), companydetail(scope.row.following)
+              (dialogVisible_company = true),
+                companydetail(scope.row.following, this.user_index)
             "
             >정보보러가기</el-button
           >
+          <!-- 회사 정보보러가기 -->
           <el-dialog v-model="dialogVisible_company" class="info">
             <el-container>
               <el-header>
                 <h2>
                   {{ this.ent_info.ent_name }}
                   <!-- 팔로우일경우 -->
-                  <span v-if="follow" style="color: Tomato;">
+                  <span v-if="follow == true" style="color: Tomato;">
                     <i
                       class="fas fa-heart fa-2x"
                       size:7x
@@ -87,11 +89,12 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  data() {
+  mounted() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    console.log(index);
     this.user_index = index;
     //팔로워정보 가져오기
     axios
@@ -107,13 +110,15 @@ export default {
         this.followers = res.data;
       })
       .catch((err) => console.log(err));
+  },
+  data() {
     return {
       dialogVisible: false,
       dialogVisible_company: false,
       user_index: "",
       followers: [],
       search: "",
-      follow: "",
+      follow: false,
       ent_info: {
         ent_index: "",
         ent_name: "",
@@ -129,8 +134,24 @@ export default {
     };
   },
   methods: {
-    companydetail(ent) {
+    companydetail(ent, user) {
       console.log(ent);
+      console.log(user);
+      // 팔로우했는지 체크해보기
+      axios
+        .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+          fol_type: 0,
+          follower: ent,
+          following: user,
+        })
+        .then((res) => {
+          // 팔로우가 되어있는것
+          console.log(res), (this.follow = true);
+        })
+        .catch((err) => {
+          // 팔로우가 안되어있는것
+          console.log(err), (this.follow = false);
+        });
       //기업정보 가져오기
       axios
         .get(`https://i5d206.p.ssafy.io:8443/poe/index/${ent}`)
@@ -147,21 +168,6 @@ export default {
           this.ent_info.ent_introduce = res.data.ent_introduce;
         })
         .catch();
-      // 팔로우했는지 체크해보기
-      axios
-        .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-          fol_type: 0,
-          follower: this.ent,
-          following: this.user_index,
-        })
-        .then((res) => {
-          // 팔로우가 되어있는것
-          console.log(res), (this.follow = true);
-        })
-        .catch((err) => {
-          // 팔로우가 안되어있는것
-          console.log(err), (this.follow = false);
-        });
     },
     clickfollowBtn() {
       if (this.follow) {
