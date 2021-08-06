@@ -1,8 +1,13 @@
 <template>
   <el-scrollbar>
-    <div style="width:100%;">
+    <div
+      style="width:100%;"
+      v-loading="loading"
+      element-loading-text="Loading..."
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-        <!-- 개인회원이름 -->
         <el-form-item label="" prop="Introduction">
           <el-input type="textarea" v-model="ruleForm.Introduction"></el-input>
         </el-form-item>
@@ -23,9 +28,27 @@
 </template>
 
 <script>
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 export default {
+  mounted() {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.userindex = index;
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
+      .then((res) => {
+        this.ruleForm.Introduction = res.data.ind_introduce;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   data() {
     return {
+      loading: false,
+      userindex: "",
       ruleForm: {
         Introduction: "",
       },
@@ -47,6 +70,26 @@ export default {
         if (valid) {
           this.openFullScreen2();
           // 저장하는 방법 찾아보기
+          axios
+            .put("https://i5d206.p.ssafy.io:8443/poi", {
+              ind_index: this.userindex,
+              ind_introduce: this.ruleForm.Introduction,
+              ind_photo: "string",
+              ind_resume: "string",
+              ind_switch: "string",
+              ind_video: "string",
+            })
+            .then((res) => {
+              console.log(res);
+              this.loading = true;
+              setTimeout(() => {
+                this.loading = false;
+                this.successmessage();
+              }, 3000);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           this.failed();
@@ -66,17 +109,16 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-        this.successmessage();
       }, 3000);
     },
     successmessage() {
       this.$message({
-        message: "Success",
+        message: "수정완료 되었습니다",
         type: "success",
       });
     },
     failed() {
-      this.$message.error("Oops, Input your Introduction");
+      this.$message.error("양식을 확인해주세요");
     },
   },
 };

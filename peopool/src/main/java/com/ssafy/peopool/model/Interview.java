@@ -16,7 +16,7 @@ public class Interview {
 	int ent_index; // 기업 인덱스
 	String int_start; // 면접 시작 시간
 	String int_end; // 면접 종료 시간
-	String int_url; // 면접 URL
+	String int_roomnumber; // 면접 room number
 	String int_show; // 진행 여부 (show / now show)
 
 	public Interview() {
@@ -62,12 +62,12 @@ public class Interview {
 		this.int_end = int_end;
 	}
 
-	public String getInt_url() {
-		return int_url;
+	public String getInt_roomnumber() {
+		return int_roomnumber;
 	}
 
-	public void setInt_url(String int_url) {
-		this.int_url = int_url;
+	public void setInt_roomnumber(String int_roomnumber) {
+		this.int_roomnumber = int_roomnumber;
 	}
 
 	public String getInt_show() {
@@ -81,9 +81,11 @@ public class Interview {
 	@Override
 	public String toString() {
 		return "Interview [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
-				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_url=" + int_url + ", int_show="
-				+ int_show + "]";
-	}	
+				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_roomnumber=" + int_roomnumber
+				+ ", int_show=" + int_show + "]";
+	}
+
+	
 
 	
 	

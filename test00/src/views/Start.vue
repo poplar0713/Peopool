@@ -25,7 +25,7 @@
             <Login />
           </el-col>
           <el-col :span="2">
-            <img src="main1.png" style="width:500px" />
+            <img src="images/main1.png" style="width:500px" />
           </el-col>
         </el-row>
       </div>
@@ -33,7 +33,7 @@
     <div class="sec">
       <el-row :gutter="20">
         <el-col :span="6" :offset="4">
-          <img src="main3.png" style="width:500px" />
+          <img src="images/main3.png" style="width:500px" />
         </el-col>
         <el-col :span="6" :offset="5" id="font">
           <div id="mainBox2">
@@ -63,6 +63,7 @@
 import Login from "@/components/Account/Login.vue";
 import NotLoginMain from "@/components/MainBasic/NotLoginMain.vue";
 export default {
+  name: "start",
   components: {
     Login,
     NotLoginMain,

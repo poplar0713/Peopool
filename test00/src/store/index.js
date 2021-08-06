@@ -9,38 +9,22 @@ export default createStore({
     SignupDialogCompany: false,
     findUserId: false,
     findUserPw: false,
+    findCompanyId: false,
+    findCompanyPw: false,
     type: 0,
     othertype: 0,
-    secretkey: "",
-    fileList: [
-      {
-        name: "자소서",
-        url:
-          "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-      },
-      {
-        name: "이력서",
-        url:
-          "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-      },
-      {
-        name: "인턴보고서",
-        url:
-          "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-      },
-    ],
   },
   mutations: {},
   actions: {
     requestLoginind({ state }, payload) {
       console.log("requestLoginind", state, payload);
-      const url = "/auth/login";
+      const url = "https://i5d206.p.ssafy.io:8443/auth/login";
       let body = payload;
       return $axios.post(url, body);
     },
     requestLoginent({ state }, payload) {
       console.log("requestLoginent", state, payload);
-      const url = "/auth/loginent";
+      const url = "https://i5d206.p.ssafy.io:8443/auth/loginent";
       let body = payload;
       return $axios.post(url, body);
     },

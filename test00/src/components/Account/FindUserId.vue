@@ -5,7 +5,7 @@
     ref="ruleForm"
     style="text-align:center"
   >
-    <!-- 개인회원 ID -->
+    <!-- 개인회원 이름 -->
     <el-form-item label="이름" prop="username">
       <el-input v-model="ruleForm.username"></el-input>
     </el-form-item>
@@ -34,6 +34,7 @@ export default {
     return {
       loading: true,
       fullscreenLoading: false,
+      foundId: "",
       ruleForm: {
         username: "",
         userphone: "",
@@ -65,21 +66,23 @@ export default {
           this.openFullScreen2();
           // axios.get 아이디찾기
           axios
-            .get("/ind/findid", {
+            .get("https://i5d206.p.ssafy.io:8443/ind/findid", {
               params: {
                 name: this.ruleForm.username,
                 phone: this.ruleForm.userphone,
               },
             })
             .then((result) => {
-              console.log(result)
+              this.foundId = result.data.ind_id;
               setTimeout(() => {
-                this.$router.push("user");
+                this.$notify({
+                  title: "아이디 찾기 결과",
+                  message: this.foundId,
+                });
               }, 3000);
             })
             .catch((err) => {
-              
-              alert(err);
+              console.log(err);
             });
           //
           this.$store.state.findUserId = false;

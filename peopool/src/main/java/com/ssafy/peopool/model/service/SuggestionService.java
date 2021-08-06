@@ -3,6 +3,7 @@ package com.ssafy.peopool.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ssafy.peopool.model.SugCard;
 import com.ssafy.peopool.model.Suggestion;
 
 public interface SuggestionService {
@@ -23,9 +24,9 @@ public interface SuggestionService {
 	boolean deleteSuggestion(int index);
 
 	// 면접 제안 조회
-	List<Suggestion> getSuggestion(int index);
+	List<SugCard> getSuggestion(int index);
 	
 	// 기업의 면접요청 기록 조회
-	List<Suggestion> getEntSuggestion(int index);
+	List<SugCard> getEntSuggestion(int index);
 
 }

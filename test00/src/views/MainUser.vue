@@ -29,7 +29,7 @@
         <el-divider content-position="left">기업 정보</el-divider>
         <CompanyList />
         <el-divider content-position="left">관심기업 정보</el-divider>
-        <CompanyList />
+        <FollowingEntsList />
       </el-footer>
     </el-container>
   </el-container>
@@ -40,6 +40,7 @@ import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue
 import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
+import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
 import jwt_decode from "jwt-decode";
@@ -47,9 +48,11 @@ import axios from "axios";
 import server_url from "@/server.js";
 
 export default {
+  name: "MainUser",
   components: {
     SideBarUser,
     CompanyList,
+    FollowingEntsList,
     TabRequiredInterview,
     TabSchedule,
     MyInfo,
@@ -65,10 +68,11 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;
+        localStorage.setItem("username", res.data.ind_name);
       })
       .catch((err) => {
         console.log(err);

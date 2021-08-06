@@ -3,9 +3,9 @@ package com.ssafy.peopool.model;
 // 팔로우
 public class Follow {
 	int fol_index; // 팔로우인덱스
-	int follower; // 기업인덱스
-	int following; // 회원인덱스
-	int fol_type; // 팔로워 타입
+	int follower; // 팔로우 당한 인덱스
+	int following; // 팔로우 한 인덱스
+	int fol_type; // 팔로잉 타입
 
 	public Follow() {
 	}

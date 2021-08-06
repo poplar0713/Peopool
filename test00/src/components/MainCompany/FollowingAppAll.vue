@@ -4,13 +4,14 @@
   </p>
   <div>
     <el-dialog title="관심 피플인" v-model="dialogVisible" width="50%">
-      <totalList :followData="followData" />
+      <totalList :userdata="following" />
     </el-dialog>
   </div>
 </template>
 
 <script>
 import totalList from "@/components/totalList.vue";
+
 export default {
   components: {
     totalList,
@@ -18,7 +19,6 @@ export default {
   data() {
     return {
       dialogVisible: false,
-
       followData: [
         {
           img: "",
@@ -52,6 +52,9 @@ export default {
         },
       ],
     };
+  },
+  props:{
+    following:Object
   },
   methods: {},
 };

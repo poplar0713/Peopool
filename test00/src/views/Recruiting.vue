@@ -63,9 +63,7 @@
                                 <el-button
                                   size="mini"
                                   type="danger"
-                                  @click="
-                                    GoToInteriewRoom(scope.row.p_name)
-                                  "
+                                  @click="GoToInteriewRoom(scope.row.p_name)"
                                   >Interview Room</el-button
                                 >
                                 <!-- {{scope.row.url}} -->
@@ -101,7 +99,7 @@
         </div>
       </el-main>
       <el-main>
-        <applicant-list
+        <FollowerAppc
           title="현재 팔로우 중인 지원자"
           :followData="followData"
         />
@@ -120,23 +118,29 @@
 <script>
 import SideBarCompany from "../components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "../components/SideBarComponents/headerSearchUser.vue";
-import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
+import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
 
 export default {
+  name: "Recruiting",
   components: {
     SideBarCompany,
     headerSearchUser,
-    ApplicantList,
+    FollowerAppc,
     ExamineCard,
     InterviewCalender,
+  },
+  computed: {
+    getExaiminingLength() {
+      return this.exaimining.length;
+    },
   },
   data() {
     return {
       now: new Date(),
       tabposition: "right",
-      company:"로그인된기업",
+      company: "로그인된기업",
       waitinglist: [
         {
           p_name: "천서진",
@@ -294,12 +298,8 @@ export default {
       exaiminingtotal: this.getExaiminingLength,
     };
   },
-  computed: {
-    getExaiminingLength() {
-      return this.exaimining.length;
-    },
-  },
   methods: {
+    // 인터뷰룸으로 이동
     GoToInteriewRoom(row) {
       // console.log(p_ind);
       this.$router.push({
