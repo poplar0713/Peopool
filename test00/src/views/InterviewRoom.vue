@@ -15,32 +15,12 @@
         <div id="container">
           <div>
             <div id="join" class="animate join">
-              <h1>Join a Room</h1>
-              <el-form v-on:submit.prevent="onSubmit" accept-charset="UTF-8">
-                <p>
-                  <input
-                    type="text"
-                    name="name"
-                    v-model="username"
-                    id="name"
-                    placeholder="Username"
-                    required
-                  />
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    name="room"
-                    v-model="room"
-                    id="roomName"
-                    placeholder="Room"
-                    required
-                  />
-                </p>
-                <p class="submit">
-                  <input type="submit" name="commit" value="Join!" v-on:click="register" />
-                </p>
-              </el-form>
+              <before-meeting></before-meeting>
+              <div style="text-align:center">
+                <el-button type="warning" id="go" @click="register"
+                  >입장하기</el-button
+                >
+              </div>
             </div>
             <div id="room" style="display: none;">
               <div>
@@ -104,8 +84,18 @@
         ></span
       >
       <span
+<<<<<<< HEAD
         ><el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
           X</el-button
+=======
+        ><el-button
+          round
+          type="danger"
+          id="button-leave"
+          v-on:click="leaveRoom"
+        >
+          나가기</el-button
+>>>>>>> 86730b5b8e2c8846befe0119a0d96c92a26dc68e
         ></span
       >
     </el-footer>
@@ -131,6 +121,7 @@
   </el-dialog>
 </template>
 <script>
+import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
@@ -150,11 +141,15 @@ export default {
       exitDiaVisible: false,
     };
   },
+  components: {
+    BeforeMeeting,
+  },
   name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
     ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
-
+    this.username = localStorage.getItem("username");
+    this.room = this.$route.params.url;
     ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
       console.info("Received message: " + message);
@@ -212,9 +207,12 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
-        if (error) return console.error(error);
-      });
+      participants[result.name].rtcPeer.processAnswer(
+        result.sdpAnswer,
+        function(error) {
+          if (error) return console.error(error);
+        }
+      );
     },
 
     callResponse(message) {
@@ -250,14 +248,15 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -289,14 +288,15 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
     },
 
     onParticipantLeft(request) {
@@ -416,6 +416,10 @@ export default {
 </script>
 
 <style>
+#go {
+  width: 200px;
+  border-radius: 100px;
+}
 .footer {
   background-color: whitesmoke;
   position: fixed;
