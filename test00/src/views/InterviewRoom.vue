@@ -1,11 +1,19 @@
 <template>
-  <el-container>
-    <el-aside width="200px"><SideBarUser /></el-aside>
+  <el-container class="base">
+    <el-header class="titleBox">
+      <div class="title">
+        <div>
+          <span class="f">P</span>
+          <span class="s">eo</span>
+          <span class="s">P</span>
+          <span class="f">ool</span>
+        </div>
+      </div>
+    </el-header>
     <el-container>
-      <el-header><headerSearchCompany /></el-header>
       <el-main>
         <div id="container">
-          <div id="wrapper">
+          <div>
             <div id="join" class="animate join">
               <before-meeting></before-meeting>
               <div style="text-align:center">
@@ -15,41 +23,94 @@
               </div>
             </div>
             <div id="room" style="display: none;">
-              <h2 id="room-header"></h2>
-              <div id="participants"></div>
-              <input
-                type="button"
-                id="button-leave"
-                v-on:click="leaveRoom"
-                value="Leave room"
-              />
-              <input
-                type="button"
-                id="button-audio"
-                v-on:click="AudioOnOff"
-                value="Audio Off"
-              />
-              <input
-                type="button"
-                id="button-video"
-                v-on:click="VideoOnOff"
-                value="Video Off"
-              />
+              <div>
+                <span id="room-header"></span>
+              </div>
+              <el-divider></el-divider>
+              <div id="participants" class="wrapper"></div>
             </div>
           </div>
         </div>
       </el-main>
     </el-container>
+    <el-footer v-if="this.options" class="footer">
+      <span>
+        <el-button
+          round
+          v-if="this.audioOn"
+          type="warning"
+          id="button-audio"
+          v-on:click="AudioOnOff"
+          value="Audio Off"
+          >음소거 하기</el-button
+        >
+        <el-button
+          round
+          v-else
+          type="success"
+          id="button-audio"
+          v-on:click="AudioOnOff"
+          value="Audio On"
+          >음소거 해제</el-button
+        ></span
+      >
+      <span
+        ><el-button
+          round
+          v-if="this.videoOn"
+          type="warning"
+          id="button-video"
+          v-on:click="VideoOnOff"
+          value="Video Off"
+          >비디오 끄기</el-button
+        >
+        <el-button
+          round
+          v-else
+          type="success"
+          id="button-video"
+          v-on:click="VideoOnOff"
+          value="Video On"
+          >비디오 켜기</el-button
+        ></span
+      ><span>
+        <el-button
+          round
+          type="success"
+          id="button-setting"
+          @click="this.dialogVisible = true"
+          value="Setting"
+          >설정</el-button
+        ></span
+      >
+      <span
+        ><el-button
+          round
+          type="danger"
+          id="button-leave"
+          v-on:click="leaveRoom"
+        >
+          나가기</el-button
+        ></span
+      >
+    </el-footer>
   </el-container>
+
+  <el-dialog
+    v-model="this.dialogVisible"
+    style="width: 100%; height:100%"
+    title="설정"
+    :before-close="handleClose"
+  >
+    설정을 할 수 있는 곳이 될 것
+  </el-dialog>
 </template>
 <script>
 import BeforeMeeting from "./beforeMettingRoom.vue";
-import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
-const PARTICIPANT_MAIN_CLASS = "participant main";
-const PARTICIPANT_CLASS = "participant";
+//const PARTICIPANT_MAIN_CLASS = "participant main";
+//const PARTICIPANT_CLASS = "participant";
 var ws = null;
 var participants = {};
 
@@ -58,11 +119,13 @@ export default {
     return {
       room: null,
       username: null,
+      audioOn: true,
+      videoOn: true,
+      options: false,
+      dialogVisible: false,
     };
   },
   components: {
-    SideBarUser,
-    headerSearchCompany,
     BeforeMeeting,
   },
   name: "InterviewRoom",
@@ -110,9 +173,10 @@ export default {
   },
   methods: {
     register() {
-      document.getElementById("room-header").innerText = "ROOM " + this.room;
+      document.getElementById("room-header").innerText = this.room;
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
+      this.options = true;
       var message = {
         id: "joinRoom",
         name: this.username,
@@ -151,8 +215,9 @@ export default {
         audio: true,
         video: {
           mandatory: {
-            maxWidth: 320,
-            maxFrameRate: 15,
+            maxWidth: 650,
+            maxHeight: 650,
+            maxFrameRate: 60,
             minFrameRate: 15,
           },
         },
@@ -191,6 +256,7 @@ export default {
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
+      this.options = false;
 
       ws.close();
     },
@@ -232,20 +298,15 @@ export default {
     Participant(name, sendMessage) {
       this.name = name;
       var container = document.createElement("div");
-      container.className = isPresentMainParticipant()
-        ? PARTICIPANT_CLASS
-        : PARTICIPANT_MAIN_CLASS;
+      container.className = "participant";
+      //container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
       container.id = name;
-      var span = document.createElement("span");
+      container.className = "videoBlock";
       var video = document.createElement("video");
-      // var rtcPeer;
-
+      var rtcPeer;
       container.appendChild(video);
-      container.appendChild(span);
-      container.onclick = switchContainerClass;
+      //container.onclick = switchContainerClass;
       document.getElementById("participants").appendChild(container);
-
-      span.appendChild(document.createTextNode(name));
 
       video.id = "video-" + name;
       video.autoplay = true;
@@ -259,26 +320,24 @@ export default {
         return video;
       };
 
-      function switchContainerClass() {
-        if (container.className === PARTICIPANT_CLASS) {
-          var elements = Array.prototype.slice.call(
-            document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)
-          );
-          elements.forEach(function(item) {
-            item.className = PARTICIPANT_CLASS;
-          });
+      // function switchContainerClass() {
+      //   if (container.className === PARTICIPANT_CLASS) {
+      //     var elements = Array.prototype.slice.call(
+      //       document.getElementsByClassName(PARTICIPANT_MAIN_CLASS)
+      //     );
+      //     elements.forEach(function(item) {
+      //       item.className = PARTICIPANT_CLASS;
+      //     });
 
-          container.className = PARTICIPANT_MAIN_CLASS;
-        } else {
-          container.className = PARTICIPANT_CLASS;
-        }
-      }
+      //     container.className = PARTICIPANT_MAIN_CLASS;
+      //   } else {
+      //     container.className = PARTICIPANT_CLASS;
+      //   }
+      // }
 
-      function isPresentMainParticipant() {
-        return (
-          document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0
-        );
-      }
+      // function isPresentMainParticipant() {
+      //   return document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length != 0;
+      // }
 
       this.offerToReceiveVideo = function(error, offerSdp) {
         if (error) return console.error("sdp offer error");
@@ -302,6 +361,7 @@ export default {
 
       this.dispose = function() {
         console.log("Disposing participant " + this.name);
+        console.log(rtcPeer);
         this.rtcPeer.dispose();
         container.parentNode.removeChild(container);
       };
@@ -310,21 +370,29 @@ export default {
       var audiobutton = document.getElementById("button-audio");
       if (audiobutton.value == "Audio Off") {
         participants[this.username].rtcPeer.audioEnabled = false;
-        audiobutton.value = "Audio On";
+        this.audioOn = false;
       } else {
         participants[this.username].rtcPeer.audioEnabled = true;
-        audiobutton.value = "Audio Off";
+        this.audioOn = true;
       }
     },
     VideoOnOff() {
       var videobutton = document.getElementById("button-video");
       if (videobutton.value == "Video Off") {
         participants[this.username].rtcPeer.videoEnabled = false;
-        videobutton.value = "Video On";
+        this.videoOn = false;
       } else {
         participants[this.username].rtcPeer.videoEnabled = true;
-        videobutton.value = "Video Off";
+        this.videoOn = true;
       }
+    },
+    handleClose(done) {
+      this.$confirm("설정을 완료 하시겠습니까?")
+        .then(() => {
+          done();
+          this.dialogVisible = false;
+        })
+        .catch(() => {});
     },
   },
 };
@@ -334,5 +402,48 @@ export default {
 #go {
   width: 200px;
   border-radius: 100px;
+}
+.footer {
+  background-color: whitesmoke;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper {
+  display: grid;
+  grid: ". . .";
+  gap: 2%;
+  justify-content: center;
+  align-items: center;
+}
+.videoBlock {
+  justify-content: center;
+  align-items: center;
+  border-width: 3px;
+  border-style: solid;
+  border-color: whitesmoke;
+  margin: 1%;
+  border-radius: 3% 3% 3% 3%;
+  overflow: hidden;
+}
+.videoBlock:hover {
+  box-shadow: 5px 5px 5px gray;
+}
+.titleBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  top: 10px;
+}
+.title span {
+  font-family: "Work Sans", sans-serif;
+  font-size: 60px;
+}
+.f {
+  color: #ffc000;
 }
 </style>

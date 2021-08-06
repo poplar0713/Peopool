@@ -37,7 +37,7 @@
             <!-- 아이디찾기 -->
             <el-button
               @click="$store.state.findUserId = true"
-              style="color:black"
+              style="color:black; margin:10px"
               >아이디찾기</el-button
             >
             <el-dialog
@@ -51,7 +51,7 @@
             <!-- 비밀번호찾기 -->
             <el-button
               @click="$store.state.findUserPw = true"
-              style="color:black"
+              style="color:black; margin:10px"
               >비밀번호 초기화</el-button
             >
             <el-dialog
@@ -92,7 +92,7 @@
             <!-- 아이디찾기 -->
             <el-button
               @click="$store.state.findCompanyId = true"
-              style="color:black"
+              style="color:black; margin:10px"
               >아이디찾기</el-button
             >
             <el-dialog
@@ -106,7 +106,7 @@
             <!-- 비밀번호찾기 -->
             <el-button
               @click="$store.state.findCompanyPw = true"
-              style="color:black"
+              style="color:black; margin:10px"
               >비밀번호 초기화</el-button
             >
             <el-dialog

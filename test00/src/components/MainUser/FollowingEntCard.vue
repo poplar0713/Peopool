@@ -4,7 +4,7 @@
     <el-row>
       <el-col :span="21" @click="dialogVisible = true"
         ><div>
-          <h4>{{ item.ent_name }}</h4>
+          <h4>{{ item.name }}</h4>
         </div></el-col
       >
       <el-col :span="3">
@@ -33,7 +33,7 @@
     <el-container>
       <el-header>
         <h2>
-          {{ item.ent_name }}
+          {{ this.ent_info.ent_name }}
           <!-- 팔로우일경우 -->
           <span v-if="follow" style="color: Tomato;">
             <i
@@ -61,8 +61,8 @@
           ></el-image
         ></el-aside>
         <el-main>
-          <h4>기업 대표 : {{ item.ent_ceo }}</h4>
-          {{ item.ent_info }}</el-main
+          <h4>기업 대표 : {{ this.ent_info.ent_ceo }}</h4>
+          {{ this.ent_info.ent_info }}</el-main
         >
       </el-container>
       <el-footer> </el-footer>
@@ -83,7 +83,7 @@ export default {
     axios
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         fol_type: 0,
-        follower: this.item.ent_index,
+        follower: this.item.follower,
         following: index,
       })
       .then((res) => {
@@ -94,14 +94,42 @@ export default {
         // 팔로우가 안되어있는것
         console.log(err), (this.follow = false);
       });
+    //기업정보 가져오기
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.item.follower}`)
+      .then((res) => {
+        this.ent_info.ent_name = res.data.ent_name;
+        this.ent_info.ent_contact = res.data.ent_contact;
+        this.ent_info.ent_email = res.data.ent_email;
+        this.ent_info.ent_image = res.data.ent_image;
+        this.ent_info.ent_ceo = res.data.ent_ceo;
+        this.ent_info.ent_history = res.data.ent_history;
+        this.ent_info.ent_address = res.data.ent_address;
+        this.ent_info.ent_website = res.data.ent_website;
+        this.ent_info.ent_introduce = res.data.ent_introduce;
+      })
+      .catch();
     return {
       dialogVisible: false,
       follow: false,
       user_index: index,
+      ent_index: this.item.follower,
+      ent_info: {
+        ent_name: "",
+        ent_contact: "",
+        ent_email: "",
+        ent_image: "",
+        ent_ceo: "",
+        ent_history: "",
+        ent_address: "",
+        ent_website: "",
+        ent_introduce: "",
+      },
     };
   },
   props: { item: Object },
   methods: {
+    // 팔로우버튼
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
@@ -111,7 +139,7 @@ export default {
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.item.ent_index,
+              follower: this.ent_index,
             },
           })
           .then((res) => {
@@ -136,10 +164,13 @@ export default {
           .catch();
       }
     },
+    // 창닫기
     handleClose() {
       this.dialogVisible = false;
     },
   },
+  // company 정보 저장하기
+  GetFollowingCompany() {},
 };
 </script>
 
