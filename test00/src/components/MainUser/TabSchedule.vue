@@ -25,7 +25,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="GoToInteriewRoom(scope.row.ent_index, scope.row.int_url)"
+          @click="GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)"
           >Interview Room</el-button
         >
         <!-- {{scope.row.url}} -->

@@ -72,6 +72,7 @@ export default {
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;
+        localStorage.setItem("username", res.data.ind_name);
       })
       .catch((err) => {
         console.log(err);
