@@ -22,52 +22,52 @@ const routes = [
     path: "/user",
     name: "MainUser",
     component: MainUser,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
   {
     path: "/company",
     name: "MainCompany",
     component: MainCompany,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
   {
     path: "/searchDetail",
     name: "SearchDetail",
     component: SearchDetail,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
   {
     path: "/searchcompany/:keyword",
     name: "SearchCompany",
     component: SearchCompany,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
   {
-    path: "/user/interviewroom/:company/:user",
+    path: "/user/interviewroom/:company/:url",
     name: "InterviewRoom",
     component: InterviewRoom,
     // 링크공유로 로그인안해도 들어올수있도록
@@ -76,37 +76,37 @@ const routes = [
     path: "/searchuser/:keyword",
     name: "searchuser",
     component: SearchUser,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
   {
     path: "/searchcompany",
     name: "searchcompany",
     component: SearchCompany,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
   {
     path: "/recruiting",
     name: "recruiting",
     component: Recruiting,
-    // beforeEnter: function(to, from, next) {
-    //   if (localStorage.getItem("token") == null) {
-    //     alert("로그인이 필요한 서비스입니다");
-    //     return next("/");
-    //   }
-    //   next();
-    // },
+    beforeEnter: function(to, from, next) {
+      if (localStorage.getItem("token") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
 ];
 

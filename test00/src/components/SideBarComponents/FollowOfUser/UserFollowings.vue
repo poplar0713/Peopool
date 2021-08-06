@@ -22,7 +22,7 @@
       width="100%"
       height="250px"
     >
-      <el-table-column label="Company" prop="follower"> </el-table-column>
+      <el-table-column label="Company" prop="name"> </el-table-column>
       <el-table-column align="right">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
@@ -92,6 +92,15 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    handleClose(done) {
+      this.$confirm("창을 닫으시겠습니까?")
+        .then(() => {
+          done();
+          this.dialogVisible = false;
+          location.reload()
+        })
+        .catch(() => {});
     },
   },
 };

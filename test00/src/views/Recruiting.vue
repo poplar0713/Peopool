@@ -99,7 +99,7 @@
         </div>
       </el-main>
       <el-main>
-        <applicant-list
+        <FollowerAppc
           title="현재 팔로우 중인 지원자"
           :followData="followData"
         />
@@ -118,7 +118,7 @@
 <script>
 import SideBarCompany from "../components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "../components/SideBarComponents/headerSearchUser.vue";
-import ApplicantList from "@/components/MainCompany/ApplicantList.vue";
+import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
 
@@ -127,7 +127,7 @@ export default {
   components: {
     SideBarCompany,
     headerSearchUser,
-    ApplicantList,
+    FollowerAppc,
     ExamineCard,
     InterviewCalender,
   },

@@ -20,10 +20,6 @@
           ></i>
           <span><ProfileCompany /></span>
         </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-camera"></i>
-          <span>Interview List</span>
-        </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-right"></i>
           <i class="el-icon-user-solid"></i>

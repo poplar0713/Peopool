@@ -5,20 +5,24 @@
         <el-card
           class="box-card"
           style="width: 200px"
-          v-for="user in followers"
+          v-for="user in userdata"
           :key="user"
         >
           <template #header>
             <div class="card-header">
-              <img src="a.jpg" style="width: 150px" />
-              <br />
+              <img src="images/a.jpg" style="width: 150px" />
             </div>
           </template>
-          <h1>{{ user.title }}</h1>
-          <div v-for="tag in user.tag" :key="tag" class="text item">
+          <!-- <h1>{{ user.title }}</h1> -->
+          <!-- <div v-for="tag in user.tag" :key="tag" class="text item">
             {{ tag }}
+          </div> -->
+          <div v-if="user.fol_type == 0">
+            <UserDetail :user="user" :userindex="user.following" />
           </div>
-          <UserDetail :user="user" />
+          <div v-if="user.fol_type == 1">
+            <UserDetail :user="user" :userindex="user.follower" />
+          </div>
         </el-card>
       </el-main>
     </div>
@@ -35,7 +39,7 @@ export default {
     UserDetail,
   },
   props: {
-    followData: Array,
+    userdata: Object,
   },
   data() {
     // 토큰가져오기

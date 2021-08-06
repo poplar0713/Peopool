@@ -1,25 +1,25 @@
 <template>
   <el-button type="text" @click="dialogVisible = true" style="color:black"
-    >{{ this.userdetailinfo }}
+    >{{ this.userdetailinfo.ind_name }}
   </el-button>
 
   <!-- 팔로우가 되어있을때 -->
-  <span v-if="follow" style="color: Tomato;">
+  <div v-if="follow" style="color: Tomato;">
     <i
       class="fas fa-heart fa-2x"
       size:7x
       @click="clickfollowBtn"
       style="cursor:pointer"
     ></i>
-  </span>
+  </div>
   <!-- 팔로우가 안되어있을때 -->
-  <span v-if="follow == false" style="color: Tomato;">
+  <div v-if="follow == false" style="color: Tomato;">
     <i
       @click="clickfollowBtn"
       class="far fa-heart fa-2x"
       style="cursor:pointer"
     ></i>
-  </span>
+  </div>
 
   <div>
     <el-dialog
@@ -50,83 +50,44 @@
             </div>
           </el-collapse-item>
           <el-collapse-item title="reservation" name="5">
-            <div>
-              <el-row>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple">
-                    <span class="demonstration"></span>
-                    <el-date-picker
-                      v-model="reservationdata.date1"
-                      type="date"
-                      placeholder="Pick a date"
-                      :default-value="new Date(2021, 7, 20)"
-                    >
-                    </el-date-picker></div
-                ></el-col>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple-light">
-                    <el-time-select
-                      v-model="reservationdata.time1"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="Select time"
-                    >
-                    </el-time-select></div
-                ></el-col>
-              </el-row>
+            <div style="text-align:center; width:50%; margin: 0 auto;">
+              <el-input
+                v-model="reservationdata.sug_duty"
+                placeholder="채용직군을 입력해주세요"
+              ></el-input>
+            </div>
+            <div style="text-align:center; margin:10px">
+              <el-date-picker
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="reservationdata.sug_timeone"
+                type="datetime"
+                placeholder="Select date and time"
+              >
+              </el-date-picker>
+            </div>
+            <div style="text-align:center; margin:5px">
+              <el-date-picker
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="reservationdata.sug_timetwo"
+                type="datetime"
+                placeholder="Select date and time"
+              >
+              </el-date-picker>
+            </div>
+            <div style="text-align:center; margin:10px">
+              <el-date-picker
+                value-format="YYYY-MM-DD HH:mm:ss"
+                v-model="reservationdata.sug_timethree"
+                type="datetime"
+                placeholder="Select date and time"
+              >
+              </el-date-picker>
             </div>
             <div>
-              <el-row>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple">
-                    <span class="demonstration"></span>
-                    <el-date-picker
-                      v-model="reservationdata.date2"
-                      type="date"
-                      placeholder="Pick a date"
-                      :default-value="new Date(2021, 7, 20)"
-                    >
-                    </el-date-picker></div
-                ></el-col>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple-light">
-                    <el-time-select
-                      v-model="reservationdata.time2"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="Select time"
-                    >
-                    </el-time-select></div
-                ></el-col>
-              </el-row>
-            </div>
-            <div>
-              <el-row>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple">
-                    <span class="demonstration"></span>
-                    <el-date-picker
-                      v-model="reservationdata.date3"
-                      type="date"
-                      placeholder="Pick a date"
-                      :default-value="new Date(2021, 7, 20)"
-                    >
-                    </el-date-picker></div
-                ></el-col>
-                <el-col :span="12"
-                  ><div class="grid-content bg-purple-light">
-                    <el-time-select
-                      v-model="reservationdata.time3"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="Select time"
-                    >
-                    </el-time-select></div
-                ></el-col>
-              </el-row>
+              <el-input
+                v-model="reservationdata.sug_message"
+                placeholder="전하고싶은 메시지를 입력해주세요"
+              ></el-input>
             </div>
             <el-button
               @click="(dialogVisible = false), interviewrequest()"
@@ -156,7 +117,27 @@ export default {
   components: {
     webviewer,
   },
-  mounted() {
+  created() {},
+  data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 팔로우했는지 체크해보기
+    axios
+      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+        fol_type: 1,
+        follower: this.userindex,
+        following: index,
+      })
+      .then((res) => {
+        // 팔로우가 되어있는것
+        console.log(res), (this.follow = true);
+      })
+      .catch((err) => {
+        // 팔로우가 안되어있는것
+        console.log(err), (this.follow = false);
+      });
     // 유저정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`)
@@ -174,27 +155,6 @@ export default {
         this.userdetailinfo.ind_introduce = res.data.ind_introduce;
       })
       .catch();
-  },
-  data() {
-    // 토큰가져오기
-    const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
-    // 팔로우했는지 체크해보기
-    axios
-      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-        fol_type: 1,
-        follower: this.user.ind_index,
-        following: index,
-      })
-      .then((res) => {
-        // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
-      })
-      .catch((err) => {
-        // 팔로우가 안되어있는것
-        console.log(err), (this.follow = false);
-      });
     return {
       follow: false,
       company_index: index,
@@ -214,18 +174,23 @@ export default {
         { ind_introduce: "" },
       ],
       reservationdata: [
-        { date1: "" },
-        { time1: "" },
-        { date2: "" },
-        { time2: "" },
-        { date3: "" },
-        { time3: "" },
+        { ent_index: 0 },
+        { ind_index: 0 },
+        { sug_decision: "string" },
+        { sug_duty: "string" },
+        { sug_index: 0 },
+        { sug_send: "string" },
+        { sug_state: "string" },
+        { sug_timeone: "string" },
+        { sug_timethree: "string" },
+        { sug_timetwo: "string" },
+        { sug_message: "string" },
       ],
     };
   },
   props: {
     user: Object,
-    userindex: Number,
+    userindex: Object,
   },
   methods: {
     clickfollowBtn() {
@@ -236,7 +201,7 @@ export default {
             data: {
               fol_type: 1,
               following: this.company_index,
-              follower: this.user.ind_index,
+              follower: this.userindex,
             },
           })
           .then((res) => {
@@ -250,7 +215,7 @@ export default {
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             fol_type: 1,
             following: this.company_index,
-            follower: this.user.ind_index,
+            follower: this.userindex,
           })
           .then((res) => {
             console.log(res);
@@ -274,12 +239,35 @@ export default {
       });
     },
     interviewrequest() {
-      this.$message({
-        showClose: true,
-        message: "Success",
-        type: "success",
-      });
-      return this.reservationdata;
+      console.log(this.company_index);
+      console.log(this.userindex);
+      console.log(this.reservationdata.sug_duty);
+      console.log(this.reservationdata.sug_timeone);
+      console.log(this.reservationdata.sug_timetwo);
+      console.log(this.reservationdata.sug_timethree);
+      console.log(this.reservationdata.sug_message);
+      //요청보내기
+      axios
+        .post("https://i5d206.p.ssafy.io:8443/sug", {
+          ent_index: this.company_index,
+          ind_index: this.userindex,
+          sug_duty: this.reservationdata.sug_duty,
+          sug_timeone: this.reservationdata.sug_timeone,
+          sug_timetwo: this.reservationdata.sug_timetwo,
+          sug_timethree: this.reservationdata.sug_timethree,
+          sug_message: this.reservationdata.sug_message,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$message({
+            showClose: true,
+            message: "면접요청이 발송되었습니다",
+            type: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

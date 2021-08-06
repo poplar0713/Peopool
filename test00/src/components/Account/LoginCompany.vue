@@ -72,7 +72,8 @@ export default {
               }, 3000);
             })
             .catch((err) => {
-              alert(err);
+              console.log(err);
+              this.$message.error("아이디와 비밀번호를 확인해주세요");
             });
           //
           this.$store.state.LoginDialog = false;
