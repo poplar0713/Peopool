@@ -4,41 +4,15 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
-        <before-meeting></before-meeting>
         <div id="container">
           <div id="wrapper">
             <div id="join" class="animate join">
-              <h1>Join a Room</h1>
-              <el-form v-on:submit.prevent="onSubmit" accept-charset="UTF-8">
-                <p>
-                  <input
-                    type="text"
-                    name="name"
-                    v-model="username"
-                    id="name"
-                    placeholder="Username"
-                    required
-                  />
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    name="room"
-                    v-model="room"
-                    id="roomName"
-                    placeholder="Room"
-                    required
-                  />
-                </p>
-                <p class="submit">
-                  <input
-                    type="submit"
-                    name="commit"
-                    value="Join!"
-                    v-on:click="register"
-                  />
-                </p>
-              </el-form>
+              <before-meeting></before-meeting>
+              <div style="text-align:center">
+                <el-button type="warning" id="go" @click="register"
+                  >입장하기</el-button
+                >
+              </div>
             </div>
             <div id="room" style="display: none;">
               <h2 id="room-header"></h2>
@@ -95,7 +69,8 @@ export default {
   mounted: function() {
     console.log(adapter.browserDetails.browser);
     ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
-
+    this.username = localStorage.getItem("username");
+    this.room = this.$route.params.url;
     ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
       console.info("Received message: " + message);
@@ -355,4 +330,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#go {
+  width: 200px;
+  border-radius: 100px;
+}
+</style>

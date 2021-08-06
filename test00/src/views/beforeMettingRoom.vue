@@ -37,13 +37,11 @@
         <el-button plain id="micbtn" @click="micCheck"
           ><i class="fas fa-microphone"></i>마이크 확인</el-button
         >
-        <div class="block">
+        <div class="block" id="micdiv">
           <span class="demonstration">마이크 감도</span>
-          <el-slider v-model="decibals" max="30"></el-slider>
-        </div>
-        <el-button type="warning" id="go">입장하기</el-button>
-      </div></el-main
-    >
+          <el-slider v-model="decibals" max="50"></el-slider>
+        </div></div
+    ></el-main>
   </el-container>
 </template>
 
@@ -52,8 +50,8 @@ import DecibelMeter from "decibel-meter";
 export default {
   data() {
     return {
-      company: "싸피",
-      name: "조영우",
+      company: this.$route.params.company,
+      name: localStorage.getItem("username"),
       decibals: 0,
       color1: "black",
       color2: "#5f2d9a",
@@ -92,10 +90,10 @@ export default {
 </script>
 
 <style scoped>
-#go {
-  width: 200px;
-  border-radius: 100px;
+#micdiv {
+  width: 300px;
 }
+
 .demonstration {
   widows: 300px;
 }
