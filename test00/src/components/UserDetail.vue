@@ -50,13 +50,13 @@
             </div>
           </el-collapse-item>
           <el-collapse-item title="reservation" name="5">
-            <div>
-              <el-input v-model="reservationdata.sug_duty"></el-input>
+            <div style="text-align:center; width:50%; margin: 0 auto;">
+              <el-input
+                v-model="reservationdata.sug_duty"
+                placeholder="채용직군을 입력해주세요"
+              ></el-input>
             </div>
-            <div>
-              <el-input v-model="reservationdata.sug_message"></el-input>
-            </div>
-            <div>
+            <div style="text-align:center; margin:10px">
               <el-date-picker
                 value-format="YYYY-MM-DD HH:mm:ss"
                 v-model="reservationdata.sug_timeone"
@@ -65,7 +65,7 @@
               >
               </el-date-picker>
             </div>
-            <div>
+            <div style="text-align:center; margin:5px">
               <el-date-picker
                 value-format="YYYY-MM-DD HH:mm:ss"
                 v-model="reservationdata.sug_timetwo"
@@ -74,7 +74,7 @@
               >
               </el-date-picker>
             </div>
-            <div>
+            <div style="text-align:center; margin:10px">
               <el-date-picker
                 value-format="YYYY-MM-DD HH:mm:ss"
                 v-model="reservationdata.sug_timethree"
@@ -82,6 +82,12 @@
                 placeholder="Select date and time"
               >
               </el-date-picker>
+            </div>
+            <div>
+              <el-input
+                v-model="reservationdata.sug_message"
+                placeholder="전하고싶은 메시지를 입력해주세요"
+              ></el-input>
             </div>
             <el-button
               @click="(dialogVisible = false), interviewrequest()"

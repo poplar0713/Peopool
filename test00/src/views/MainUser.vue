@@ -29,7 +29,7 @@
         <el-divider content-position="left">기업 정보</el-divider>
         <CompanyList />
         <el-divider content-position="left">관심기업 정보</el-divider>
-        <InterestedCompanyList />
+        <FollowingEntsList />
       </el-footer>
     </el-container>
   </el-container>
@@ -40,7 +40,7 @@ import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue
 import MyInfo from "@/components/MainUser/MyInfo.vue";
 import TabSchedule from "@/components/MainUser/TabSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
-import InterestedCompanyList from "@/components/MainUser/InterestedCompanyList.vue";
+import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
 import jwt_decode from "jwt-decode";
@@ -52,7 +52,7 @@ export default {
   components: {
     SideBarUser,
     CompanyList,
-    InterestedCompanyList,
+    FollowingEntsList,
     TabRequiredInterview,
     TabSchedule,
     MyInfo,

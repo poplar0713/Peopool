@@ -61,7 +61,7 @@ export default {
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    // 회원정보 가져오기
+    // 기업정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`)
       .then((res) => {
@@ -159,8 +159,8 @@ export default {
           // 기업정보수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/poe", {
-              ent_index: this.ruleForm.ent_index,
               ent_image: this.ruleForm.ent_image,
+              ent_index: this.ruleForm.ent_index,
               ent_ceo: this.ruleForm.ent_ceo,
               ent_history: this.ruleForm.ent_history,
               ent_address: this.ruleForm.ent_address,
