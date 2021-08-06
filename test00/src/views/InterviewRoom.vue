@@ -17,9 +17,7 @@
             <div id="join" class="animate join">
               <before-meeting></before-meeting>
               <div style="text-align:center">
-                <el-button type="warning" id="go" @click="register"
-                  >입장하기</el-button
-                >
+                <el-button type="warning" id="go" @click="register">입장하기</el-button>
               </div>
             </div>
             <div id="room" style="display: none;">
@@ -84,18 +82,8 @@
         ></span
       >
       <span
-<<<<<<< HEAD
         ><el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
           X</el-button
-=======
-        ><el-button
-          round
-          type="danger"
-          id="button-leave"
-          v-on:click="leaveRoom"
-        >
-          나가기</el-button
->>>>>>> 86730b5b8e2c8846befe0119a0d96c92a26dc68e
         ></span
       >
     </el-footer>
@@ -207,12 +195,9 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(
-        result.sdpAnswer,
-        function(error) {
-          if (error) return console.error(error);
-        }
-      );
+      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
+        if (error) return console.error(error);
+      });
     },
 
     callResponse(message) {
@@ -248,15 +233,14 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -288,15 +272,14 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
     },
 
     onParticipantLeft(request) {
