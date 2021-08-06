@@ -93,6 +93,15 @@ export default {
           console.log(err);
         });
     },
+    handleClose(done) {
+      this.$confirm("창을 닫으시겠습니까?")
+        .then(() => {
+          done();
+          this.dialogVisible = false;
+          location.reload()
+        })
+        .catch(() => {});
+    },
   },
 };
 </script>

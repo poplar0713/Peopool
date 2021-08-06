@@ -6,7 +6,7 @@
   <el-dialog
     title="면접관리"
     v-model="dialogVisible"
-    width="70%"
+    width="40%"
     :before-close="handleClose"
   >
     <!--  -->
