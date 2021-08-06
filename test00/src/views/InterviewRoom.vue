@@ -62,7 +62,7 @@
           id="button-audio"
           v-on:click="AudioOnOff"
           value="Audio Off"
-          >음소거 하기</el-button
+          >음소거</el-button
         >
         <el-button
           round
@@ -82,7 +82,7 @@
           id="button-video"
           v-on:click="VideoOnOff"
           value="Video Off"
-          >비디오 끄기</el-button
+          >비디오 Off</el-button
         >
         <el-button
           round
@@ -91,7 +91,7 @@
           id="button-video"
           v-on:click="VideoOnOff"
           value="Video On"
-          >비디오 켜기</el-button
+          >비디오 On</el-button
         ></span
       ><span>
         <el-button
@@ -104,8 +104,8 @@
         ></span
       >
       <span
-        ><el-button round type="danger" id="button-leave" v-on:click="leaveRoom">
-          나가기</el-button
+        ><el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
+          X</el-button
         ></span
       >
     </el-footer>
@@ -118,6 +118,16 @@
     :before-close="handleClose"
   >
     설정을 할 수 있는 곳이 될 것
+  </el-dialog>
+
+  <el-dialog v-model="exitDiaVisible" width="30%">
+    <span>면접장에서 나가시겠습니까?</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="exitDiaVisible = false">아니요</el-button>
+        <el-button type="danger" @click="leaveRoom">퇴장하기</el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 <script>
@@ -137,6 +147,7 @@ export default {
       videoOn: true,
       options: false,
       dialogVisible: false,
+      exitDiaVisible: false,
     };
   },
   name: "InterviewRoom",
@@ -262,6 +273,7 @@ export default {
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
+      this.exitDiaVisible = false;
       this.options = false;
 
       ws.close();
