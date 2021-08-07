@@ -41,7 +41,7 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	}
 
 	@Override
-	public EntCard getNameOfEnterprise(String name) throws SQLException {
+	public List<EntCard> getNameOfEnterprise(String name) throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getNameOfEnterprise(name);
 	}

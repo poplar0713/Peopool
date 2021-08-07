@@ -53,7 +53,7 @@ public class ProfileOfEnterpriseController {
 	
 	@ApiOperation(value = "name에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/name/{name}")
-	public ResponseEntity<EntCard> getNameOfEnterprise(@PathVariable("name")String name) throws SQLException{
+	public ResponseEntity<List<EntCard>> getNameOfEnterprise(@PathVariable("name")String name) throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getNameOfEnterprise(name), HttpStatus.OK);
 		
 	}
