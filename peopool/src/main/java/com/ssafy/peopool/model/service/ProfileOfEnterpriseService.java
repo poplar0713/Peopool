@@ -21,6 +21,6 @@ public interface ProfileOfEnterpriseService {
 	EntCard getProfileOfEnterprise(int index) throws SQLException;
 
 	// 이름으로 회사 검색
-	EntCard getNameOfEnterprise(String name) throws SQLException;
+	List<EntCard> getNameOfEnterprise(String name) throws SQLException;
 
 }
