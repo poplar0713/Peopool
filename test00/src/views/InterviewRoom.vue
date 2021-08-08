@@ -302,13 +302,19 @@ export default {
       container.classList.add("video-block");
       var video = document.createElement("video");
       var rtcPeer;
+      var username = document.createElement("div");
+      username.InnerText = this.username;
+
       container.appendChild(video);
+      container.appendChild(username);
+
       //container.onclick = switchContainerClass;
       document.getElementById("participants").appendChild(container);
-      container.classList.add("animation-init");
-      setTimeout(function() {
-        container.classList.add("animation-fade");
-      }, 30);
+      container.classList.add("scale-in-center");
+      // container.classList.add("animation-init");
+      // setTimeout(function() {
+      //   container.classList.add("animation-fade"); //
+      // }, 30);
 
       video.id = "video-" + name;
       video.autoplay = true;
@@ -434,8 +440,8 @@ export default {
   box-shadow: 5px 5px 5px gray;
 }
 .video-block video {
-  width: 30rem;
-  height: 30rem;
+  width: 36rem;
+  height: 27rem;
 }
 .animation-init {
   opacity: 0;
@@ -459,5 +465,18 @@ export default {
 }
 .f {
   color: #ffc000;
+}
+.scale-in-center {
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>
