@@ -30,30 +30,37 @@ public class JwtUserDetails implements UserDetails {
     public Individual getUser() {
     		return this.individual;
     }
+    
 	@Override
 	public String getPassword() {
 		return this.individual.getInd_password();
 	}
+	
 	@Override
 	public String getUsername() {
 		return this.individual.getInd_id();
 	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return this.accountNonExpired;
 	}
+	
 	@Override
 	public boolean isAccountNonLocked() {
 		return this.accountNonLocked;
 	}
+	
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return this.credentialNonExpired;
 	}
+	
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
 	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles;
