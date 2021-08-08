@@ -14,9 +14,7 @@
       :data="
         followers.filter(
           (data) =>
-            !search ||
-            data.company_name.toLowerCase().includes(search.toLowerCase()) ||
-            data.company_field.toLowerCase().includes(search.toLowerCase())
+            !search || data.name.toLowerCase().includes(search.toLowerCase())
         )
       "
       width="100%"

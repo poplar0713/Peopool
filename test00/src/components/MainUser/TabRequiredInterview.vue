@@ -4,21 +4,42 @@
       InterviewReq.filter(
         (data) =>
           !search ||
-          data.company_name.toLowerCase().includes(search.toLowerCase())
+          data.name.toLowerCase().includes(search.toLowerCase()) ||
+          data.sug_duty.toLowerCase().includes(search.toLowerCase())
       )
     "
     style="width: 100%"
-    height="250"
+    ref="filterTable"
   >
-    <el-table-column label="Company" prop="name"> </el-table-column>
-    <el-table-column label="직무" prop="sug_duty"> </el-table-column>
-    <el-table-column>
+    <el-table-column
+      label="상태"
+      prop="sug_state"
+      :filters="[
+        { text: '대기', value: 'W' },
+        { text: '확정', value: 'T' },
+        { text: '거절', value: 'F' },
+        { text: '취소', value: 'C' },
+      ]"
+      :filter-method="filterHandler"
+      width="60%"
+    >
+    </el-table-column>
+    <el-table-column align="center" label="Company" prop="name"> </el-table-column>
+    <el-table-column align="center" label="직무" prop="sug_duty"> </el-table-column>
+    <el-table-column align="center">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-button v-if="scope.row.sug_state=='W'" @click="dialogVisible = true" >응답하기</el-button>
-        <el-button v-if="scope.row.sug_state!=='W'" disabled >응답완료</el-button>
+        <el-button
+          v-if="scope.row.sug_state == 'W'"
+          @click="dialogVisible = true"
+          size="mini"
+          >응답하기</el-button
+        >
+        <el-button v-if="scope.row.sug_state !== 'W'" disabled size="mini"
+          >응답완료</el-button
+        >
 
         <el-dialog
           title="시간설정"
@@ -26,8 +47,8 @@
           width="30%"
           :before-close="handleClose"
         >
-        <div style="text-align:center">{{scope.row.sug_message}}</div>
-        <br>
+          <div style="text-align:center">{{ scope.row.sug_message }}</div>
+          <br />
           <div style="text-align:center">
             <el-button
               size="mini"
@@ -42,7 +63,7 @@
                 )
               "
               >{{ scope.row.sug_timeone }}</el-button
-            ><br>
+            ><br />
             <el-button
               size="mini"
               type="primary"
@@ -56,7 +77,7 @@
                 )
               "
               >{{ scope.row.sug_timetwo }}</el-button
-            ><br>
+            ><br />
             <el-button
               size="mini"
               type="primary"
@@ -70,7 +91,7 @@
                 )
               "
               >{{ scope.row.sug_timethree }}</el-button
-            ><br>
+            ><br />
             <el-button
               size="mini"
               type="danger"
@@ -116,6 +137,7 @@ export default {
     return {
       InterviewReq: [],
       dialogVisible: false,
+      search: "",
     };
   },
   methods: {
@@ -141,6 +163,10 @@ export default {
         });
     },
     reject() {},
+    filterHandler(value, row, column) {
+      const property = column["property"];
+      return row[property] === value;
+    },
   },
 };
 </script>

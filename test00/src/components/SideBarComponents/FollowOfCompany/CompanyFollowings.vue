@@ -14,9 +14,7 @@
       :data="
         followings.filter(
           (data) =>
-            !search ||
-            data.company_name.toLowerCase().includes(search.toLowerCase()) ||
-            data.company_field.toLowerCase().includes(search.toLowerCase())
+            !search || data.name.toLowerCase().includes(search.toLowerCase())
         )
       "
       width="100%"
@@ -28,10 +26,7 @@
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="unfollow(scope.row)"
+          <el-button size="mini" type="primary" @click="unfollow(scope.row)"
             >following</el-button
           >
           <!-- {{scope.row.company_name}} -->

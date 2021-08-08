@@ -3,24 +3,19 @@
     :data="
       myinterview.filter(
         (data) =>
-          !search || data.company.toLowerCase().includes(search.toLowerCase())
+          !search || data.name.toLowerCase().includes(search.toLowerCase())
       )
     "
-    :default-sort="{ prop: 'date', order: 'ascending' }"
+    :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="300"
   >
-    <el-table-column label="Date" prop="int_start" sortable> </el-table-column>
-    <el-table-column label="Company" prop="name"> </el-table-column>
-    <el-table-column align="right">
+    <el-table-column align="center" label="Date" prop="int_start" sortable> </el-table-column>
+    <el-table-column align="center" label="Company" prop="name"> </el-table-column>
+    <el-table-column align="center">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-button
-          size="mini"
-          @click="Cancel(scope.$index, scope.row, scope.row.int_index)"
-          >Cancel</el-button
-        >
         <!-- {{scope.row.company}} -->
         <el-button
           size="mini"
@@ -58,9 +53,6 @@ export default {
     };
   },
   methods: {
-    Cancel(index, row, company) {
-      console.log(index, row, company);
-    },
     GoToInteriewRoom(company, url) {
       console.log(company, url);
       const loading = this.$loading({

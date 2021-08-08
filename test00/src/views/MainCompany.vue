@@ -5,13 +5,17 @@
       <el-header><headerSearchUser /></el-header>
 
       <el-main>
-        <check-annc />
-        <FollowerAppc
-          title="Today 우리회사 관심 피풀인"
-        />
-        <FollowingAppc
-          title="Today 눈여겨보는 관심 피풀인"
-        />
+        <el-row :gutter="20">
+          <el-col :span="12"
+            ><div class="grid-content bg-purple"><CompanySugInterview /></div
+          ></el-col>
+          <el-col :span="12"
+            ><div class="grid-content bg-purple"><check-annc /></div
+          ></el-col>
+        </el-row>
+
+        <FollowerAppc title="Today 우리회사 관심 피풀인" />
+        <FollowingAppc title="Today 눈여겨보는 관심 피풀인" />
         <!-- <webviewer initialDoc="파이팅 프런트.docx" /> -->
       </el-main>
     </el-container>
@@ -23,6 +27,7 @@ import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import FollowingAppc from "@/components/MainCompany/FollowingAppc.vue";
 import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
+import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 // import webviewer from "@/components/MainCompany/webviewer.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 
@@ -38,6 +43,7 @@ export default {
     FollowingAppc,
     // webviewer,
     headerSearchUser,
+    CompanySugInterview,
   },
   mounted() {
     // 토큰가져오기

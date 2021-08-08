@@ -3,7 +3,7 @@
     :data="
       myinterview.filter(
         (data) =>
-          !search || data.company.toLowerCase().includes(search.toLowerCase())
+          !search || data.name.toLowerCase().includes(search.toLowerCase())
       )
     "
     :default-sort="{ prop: 'date', order: 'ascending' }"
