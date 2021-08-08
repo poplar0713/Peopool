@@ -29,13 +29,13 @@
         <el-input v-model="ruleForm.ent_website"></el-input>
       </el-form-item>
       <!-- 기업회원 PW -->
-      <el-form-item label="Password" prop="Password">
+      <!-- <el-form-item label="Password" prop="Password">
         <el-input type="password" v-model="ruleForm.Password"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <!-- 기업회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
+      <!-- <el-form-item label="Password Confirmation" prop="PasswordConfirm">
         <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <div style="float:right">
         <el-form-item>
           <el-button
@@ -78,7 +78,7 @@ export default {
         console.log("token error");
         console.log(err.response.data.status);
         if (err.response.data.status == 401) {
-          alert("로그인세션이이 만료 되었습니다.");
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -189,7 +189,7 @@ export default {
               console.log("token error");
               console.log(err.response.data.status);
               if (err.response.data.status == 401) {
-                alert("로그인세션이이 만료 되었습니다.");
+                this.$message.error("로그인세션이 만료되었습니다");
                 localStorage.clear();
                 this.$router.push("/");
               }

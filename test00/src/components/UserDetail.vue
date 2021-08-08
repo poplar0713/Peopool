@@ -141,7 +141,7 @@ export default {
         console.log(err);
         this.follow = false;
         if (err.response.data.status == 401) {
-          alert("로그인세션이이 만료 되었습니다.");
+          this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();
           this.$router.push("/");
         }
@@ -168,7 +168,7 @@ export default {
         console.log("token error");
         console.log(err.response.data.status);
         if (err.response.data.status == 401) {
-          alert("로그인세션이이 만료 되었습니다.");
+          this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();
           this.$router.push("/");
         }
@@ -231,7 +231,7 @@ export default {
             console.log("token error");
             console.log(err.response.data.status);
             if (err.response.data.status == 401) {
-              alert("로그인세션이이 만료 되었습니다.");
+              this.$message.error('로그인세션이 만료되었습니다');
               localStorage.clear();
               this.$router.push("/");
             }
@@ -253,7 +253,7 @@ export default {
             console.log("token error");
             console.log(err.response.data.status);
             if (err.response.data.status == 401) {
-              alert("로그인세션이이 만료 되었습니다.");
+              this.$message.error('로그인세션이 만료되었습니다');
               localStorage.clear();
               this.$router.push("/");
             }
@@ -270,7 +270,7 @@ export default {
           console.log("token error");
           console.log(err.response.data.status);
           if (err.response.data.status == 401) {
-            alert("로그인세션이이 만료 되었습니다.");
+            this.$message.error('로그인세션이 만료되었습니다');
             localStorage.clear();
             this.$router.push("/");
           }
@@ -314,7 +314,7 @@ export default {
           console.log("token error");
           console.log(err.response.data.status);
           if (err.response.data.status == 401) {
-            alert("로그인세션이이 만료 되었습니다.");
+            this.$message.error('로그인세션이 만료되었습니다');
             localStorage.clear();
             this.$router.push("/");
           }
