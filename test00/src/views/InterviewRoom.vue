@@ -47,8 +47,18 @@
                 </div>
               </div>
             </el-scrollbar>
-            <input type="text" v-model="chattext" @keyup.enter="sendchat" />
-            <button @click="sendchat">send</button>
+            <div style="margin-top: 15px;">
+              <el-input v-model="chattext" @keyup.enter="sendchat">
+                <template #append @click="sendchat">전송</template>
+              </el-input>
+            </div>
+            <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
+            <el-button
+              type="warning"
+              icon="el-icon-chat-round"
+              circle
+              @click="sendchat"
+            ></el-button> -->
           </div>
         </div>
       </el-main>
