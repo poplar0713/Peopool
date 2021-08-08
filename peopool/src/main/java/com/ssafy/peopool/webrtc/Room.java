@@ -31,6 +31,7 @@ import org.kurento.client.Continuation;
 import org.kurento.client.MediaPipeline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.google.gson.JsonArray;
@@ -63,7 +64,17 @@ public class Room implements Closeable {
   private void shutdown() {
     this.close();
   }
-
+  
+  public void chatall(JsonObject message) {
+	  for (final UserSession participant : participants.values()) {
+	      try {
+	        participant.sendMessage(message);
+	      } catch (final IOException e) {
+	        log.debug("chatting false");
+	      }
+	    }
+  }
+  
   public UserSession join(String userName, WebSocketSession session) throws IOException {
     log.info("ROOM {}: adding participant {}", this.name, userName);
     final UserSession participant = new UserSession(userName, this.name, session, this.pipeline);
