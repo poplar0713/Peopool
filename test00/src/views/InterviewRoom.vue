@@ -177,7 +177,6 @@ export default {
   },
   methods: {
     register() {
-      document.getElementById("room-header").innerText = this.room;
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
       this.options = true;
@@ -216,8 +215,8 @@ export default {
         audio: true,
         video: {
           mandatory: {
-            maxWidth: 650,
-            maxHeight: 650,
+            maxWidth: 500,
+            maxHeight: 500,
             maxFrameRate: 60,
             minFrameRate: 15,
           },
@@ -298,15 +297,18 @@ export default {
     Participant(name, sendMessage) {
       this.name = name;
       var container = document.createElement("div");
-      container.className = "participant";
       //container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
       container.id = name;
-      container.className = "videoBlock";
+      container.classList.add("video-block");
       var video = document.createElement("video");
       var rtcPeer;
       container.appendChild(video);
       //container.onclick = switchContainerClass;
       document.getElementById("participants").appendChild(container);
+      container.classList.add("animation-init");
+      setTimeout(function() {
+        container.classList.add("animation-fade");
+      }, 30);
 
       video.id = "video-" + name;
       video.autoplay = true;
@@ -367,8 +369,7 @@ export default {
       };
     },
     AudioOnOff() {
-      var audiobutton = document.getElementById("button-audio");
-      if (audiobutton.value == "Audio Off") {
+      if (this.audioOn) {
         participants[this.username].rtcPeer.audioEnabled = false;
         this.audioOn = false;
       } else {
@@ -377,8 +378,7 @@ export default {
       }
     },
     VideoOnOff() {
-      var videobutton = document.getElementById("button-video");
-      if (videobutton.value == "Video Off") {
+      if (this.videoOn) {
         participants[this.username].rtcPeer.videoEnabled = false;
         this.videoOn = false;
       } else {
@@ -415,22 +415,36 @@ export default {
 .wrapper {
   display: grid;
   grid: ". . .";
-  gap: 2%;
+  gap: 1%;
   justify-content: center;
   align-items: center;
 }
-.videoBlock {
+.video-block {
+  transition: all 1s;
   justify-content: center;
   align-items: center;
   border-width: 3px;
   border-style: solid;
   border-color: whitesmoke;
-  margin: 1%;
   border-radius: 3% 3% 3% 3%;
   overflow: hidden;
+  background-color: black;
 }
-.videoBlock:hover {
+.video-block:hover {
   box-shadow: 5px 5px 5px gray;
+}
+.video-block video {
+  width: 30rem;
+  height: 30rem;
+}
+.animation-init {
+  opacity: 0;
+  padding-top: 1em;
+}
+.animation-fade {
+  opacity: 1;
+  padding-top: 0;
+  transition: all 1s;
 }
 .titleBox {
   display: flex;
