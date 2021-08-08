@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.FolCard;
 import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.service.FollowService;
 
@@ -26,6 +28,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/fol")
+@CrossOrigin(origins="*",allowedHeaders = "*")
 public class FollowController {
 	
 
@@ -87,14 +90,14 @@ public class FollowController {
 	
 	@ApiOperation(value = "팔로잉 조회", response = String.class)
 	@GetMapping("/following")
-	public ResponseEntity<List<Follow>> getEFollowing(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
+	public ResponseEntity<List<FolCard>> getFollowing(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
 		return new ResponseEntity<>(followService.getFollowing(index, type), HttpStatus.OK);
 		
 	}
 	
 	@ApiOperation(value = "팔로워 조회", response = String.class)
 	@GetMapping("/follower")
-	public ResponseEntity<List<Follow>> getEFollower(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
+	public ResponseEntity<List<FolCard>> getFollower(@RequestParam("index")String index, @RequestParam("type")String type) throws SQLException{
 		String temp = "";
 		if(type.equals("0")) {
 			temp = "1";

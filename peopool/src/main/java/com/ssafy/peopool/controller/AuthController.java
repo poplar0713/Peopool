@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiResponse;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins="*", allowedHeaders = "*")
+@CrossOrigin(origins="*",allowedHeaders = "*")
 public class AuthController {
 	@Autowired
 	IndividualService individualService;

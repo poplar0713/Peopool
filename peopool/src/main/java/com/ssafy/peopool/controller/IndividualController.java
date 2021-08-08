@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,9 +46,9 @@ import springfox.documentation.annotations.ApiIgnore;
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
-@Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequestMapping("/ind")
+@CrossOrigin(origins="*",allowedHeaders = "*")
 public class IndividualController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);

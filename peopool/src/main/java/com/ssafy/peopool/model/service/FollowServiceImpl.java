@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.FolCard;
 import com.ssafy.peopool.model.Follow;
 
 import com.ssafy.peopool.model.repo.FollowRepo;
@@ -42,13 +43,13 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public List<Follow> getFollowing(String index, String type) throws SQLException {
+	public List<FolCard> getFollowing(String index, String type) throws SQLException {
 		// TODO Auto-generated method stub
 		return followRepo.getFollowing(index, type);
 	}
 
 	@Override
-	public List<Follow> getFollower(String index, String type) throws SQLException {
+	public List<FolCard> getFollower(String index, String type) throws SQLException {
 		// TODO Auto-generated method stub
 		return followRepo.getFollower(index, type);
 	}

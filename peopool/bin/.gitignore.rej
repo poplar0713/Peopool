@@ -1,0 +1,9 @@
+diff a/peopool/.gitignore b/peopool/.gitignore	(rejected hunks)
+@@ -12,7 +12,7 @@
+ .settings
+ .springBeans
+ .sts4-cache
+
+ ### IntelliJ IDEA ###
+ .idea
+ *.iws
