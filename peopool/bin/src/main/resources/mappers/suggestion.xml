@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.peopool.model.repo.SuggestionRepo">
 
 	<insert id="registerSuggestion" parameterType="Suggestion">
-		insert into suggestion(sug_send, sug_timeone, sug_timetwo, sug_timethree, ind_index, ent_index, sug_state, sug_duty) 
-		values(now(), #{sug_timeone}, #{sug_timetwo}, #{sug_timethree}, #{ind_index}, #{ent_index}, "W", #{sug_duty})
+		insert into suggestion(sug_send, sug_timeone, sug_timetwo, sug_timethree, ind_index, ent_index, sug_state, sug_duty, sug_message) 
+		values(now(), #{sug_timeone}, #{sug_timetwo}, #{sug_timethree}, #{ind_index}, #{ent_index}, "W", #{sug_duty}, #{sug_message})
 	</insert>
 	
 	<update id="acceptSuggestion" parameterType="Suggestion">
@@ -32,15 +32,17 @@
 		where sug_index = #{index}
 	</delete>
 	
-	<select id="getSuggestion" parameterType="int" resultType="Suggestion">
-		select * 
-		from suggestion 
+	<select id="getSuggestion" parameterType="int" resultType="SugCard">
+		select sug_index, sug_send, sug_timeone, sug_timetwo, sug_timethree, ind_index, e.ent_index, sug_decision, sug_state, sug_duty, sug_message, e.ent_name name
+		from suggestion join enterprise e
+		on suggestion.ent_index = e.ent_index
 		where ind_index = #{index}
 	</select>
 	
-	<select id="getEntSuggestion" parameterType="int" resultType="Suggestion">
-		select * 
-		from suggestion 
+	<select id="getEntSuggestion" parameterType="int" resultType="SugCard">
+		select sug_index, sug_send, sug_timeone, sug_timetwo, sug_timethree, i.ind_index, ent_index, sug_decision, sug_state, sug_duty, sug_message, i.ind_name name
+		from suggestion join individual i
+		on suggestion.ind_index = i.ind_index
 		where ent_index = #{index}
 	</select>
 </mapper>
