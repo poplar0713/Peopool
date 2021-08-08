@@ -104,6 +104,14 @@
   >
     설정을 할 수 있는 곳이 될 것
   </el-dialog>
+
+  <div v-for="(item, index) in chatlist" :key="index" id="chatdiv">
+    <p v-if="item.name == username">나:{{ item.text }}</p>
+    <p v-else>{{ item.name }}:{{ item.text }}</p>
+  </div>
+
+  <input type="text" v-model="chattext" @keyup.enter="sendchat" />
+  <button @click="sendchat">send</button>
 </template>
 <script>
 import BeforeMeeting from "./beforeMettingRoom.vue";
@@ -123,6 +131,8 @@ export default {
       videoOn: true,
       options: false,
       dialogVisible: false,
+      chattext: "",
+      chatlist: [],
     };
   },
   components: {
@@ -131,14 +141,18 @@ export default {
   name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    // ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    ws = new WebSocket("wss://localhost:8443/groupcall");
     this.username = localStorage.getItem("username");
     this.room = this.$route.params.url;
     ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
       console.info("Received message: " + message);
-
       switch (parsedMessage.id) {
+        case "chatting":
+          this.chatlist.push(parsedMessage);
+          console.log(parsedMessage.name + ":" + parsedMessage.text);
+          break;
         case "existingParticipants":
           this.onExistingParticipants(parsedMessage);
           break;
@@ -172,6 +186,20 @@ export default {
     };
   },
   methods: {
+    testx() {
+      this.chatlist.push(5);
+      console.log(this.chatlist);
+    },
+    sendchat() {
+      let chat = {
+        id: "chatting",
+        name: this.username,
+        room: this.room,
+        text: this.chattext,
+      };
+      this.sendMessage(chat);
+      this.chattext = "";
+    },
     register() {
       document.getElementById("room-header").innerText = this.room;
       document.getElementById("join").style.display = "none";
