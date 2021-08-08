@@ -2,6 +2,25 @@
   <el-container>
     <h2>'{{ $route.params.keyword }}' 검색결과</h2>
   </el-container>
+
+  <el-carousel :interval="4000" type="card" height="200px">
+    <el-carousel-item v-for="item in result" :key="item">
+      <el-row @click="dialogUser = true">
+        <el-col :span="8"
+          ><div class="grid-content bg-purple">
+            <img src="images/a.jpg" alt="" /></div
+        ></el-col>
+        <el-col :span="16"
+          ><div class="grid-content bg-purple-light"></div
+        ></el-col>
+      </el-row>
+      <UserDetail :userindex="item.ind_index" />
+    </el-carousel-item>
+  </el-carousel>
+  <!--  -->
+
+  <!--  -->
+  목록
   <el-row :gutter="24">
     <el-col :span="6" v-for="item in nowPageData" :key="item">
       <UserCard :item="item"></UserCard>
@@ -19,32 +38,33 @@
     >
     </el-pagination>
   </div>
-  <!-- <UserDetail/> -->
 </template>
 
 <script>
 import { ref } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import UserCard from "@/components/search/UserCard.vue";
+import UserDetail from "@/components/UserDetail.vue";
 
 export default {
   name: "SearchUser",
   components: {
     UserCard,
+    UserDetail,
   },
+
   setup() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
-    const route = useRoute();
-    const keyword = route.params.keyword;
+    // const route = useRoute();
+    // const keyword = route.params.keyword;
     // 데이터저장 비동기방식
     const result = ref([]);
     (async () => {
-      const res = await axios.get(
-        `https://i5d206.p.ssafy.io:8443/poi/name/${keyword}`,
-        { headers: { Authorization: token } }
-      );
+      const res = await axios.get(`https://i5d206.p.ssafy.io:8443/poi/`, {
+        headers: { Authorization: token },
+      });
       result.value = res.data;
       console.log(res);
       initData();

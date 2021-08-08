@@ -2,9 +2,6 @@
   <div>
     <div>
       <el-row :gutter="24">
-        <el-col :span="6">
-          <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
-        >
         <el-col :span="6" :offset="12"
           ><FollowerAppcAll :follower="follower"
         /></el-col>
@@ -25,9 +22,6 @@
             </div>
           </template>
           <UserDetail :user="user" :userindex="user.following" />
-          <div v-for="tag in user.tag" :key="tag" class="text item">
-            {{ tag }}
-          </div>
         </el-card>
       </el-space>
     </el-main>
@@ -79,7 +73,6 @@ export default {
   },
   props: {
     msg: String,
-    title: String,
   },
   data() {
     return {

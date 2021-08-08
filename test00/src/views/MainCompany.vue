@@ -7,15 +7,30 @@
       <el-main>
         <el-row :gutter="20">
           <el-col :span="12"
-            ><div class="grid-content bg-purple"><CompanySugInterview /></div
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">제안한 면접</el-divider
+              ><CompanySugInterview /></div
           ></el-col>
           <el-col :span="12"
-            ><div class="grid-content bg-purple"><check-annc /></div
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">인터뷰 스케줄</el-divider
+              ><CompanySchedule /></div
           ></el-col>
         </el-row>
-
-        <FollowerAppc title="Today 우리회사 관심 피풀인" />
-        <FollowingAppc title="Today 눈여겨보는 관심 피풀인" />
+        <el-row :gutter="20">
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left"
+                ><i class="el-icon-s-grid"></i> 지원자리스트1</el-divider
+              ><FollowerAppc /></div
+          ></el-col>
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left"
+                ><i class="el-icon-s-grid"></i> 지원자리스트2</el-divider
+              ><FollowingAppc /></div
+          ></el-col>
+        </el-row>
         <!-- <webviewer initialDoc="파이팅 프런트.docx" /> -->
       </el-main>
     </el-container>
@@ -26,7 +41,7 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import FollowingAppc from "@/components/MainCompany/FollowingAppc.vue";
-import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
+import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 // import webviewer from "@/components/MainCompany/webviewer.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
@@ -38,7 +53,7 @@ export default {
   name: "MainCompany",
   components: {
     SideBarCompany,
-    CheckAnnc,
+    CompanySchedule,
     FollowerAppc,
     FollowingAppc,
     // webviewer,

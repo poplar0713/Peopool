@@ -1,5 +1,5 @@
 <template>
-  <!-- TabSchedule -->
+  <!-- UserSchedule -->
   <el-container>
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
@@ -16,12 +16,12 @@
           <el-col :span="6"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">요청받은 인터뷰</el-divider
-              ><TabRequiredInterview /></div
+              ><UserSugInterview /></div
           ></el-col>
           <el-col :span="7"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">인터뷰 일정</el-divider
-              ><TabSchedule /></div
+              ><UserSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
@@ -36,9 +36,9 @@
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
+import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import MyInfo from "@/components/MainUser/MyInfo.vue";
-import TabSchedule from "@/components/MainUser/TabSchedule.vue";
+import UserSchedule from "@/components/MainUser/UserSchedule.vue";
 import CompanyList from "@/components/MainUser/CompanyList.vue";
 import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
@@ -53,8 +53,8 @@ export default {
     SideBarUser,
     CompanyList,
     FollowingEntsList,
-    TabRequiredInterview,
-    TabSchedule,
+    UserSugInterview,
+    UserSchedule,
     MyInfo,
     headerSearchCompany,
   },

@@ -20,16 +20,27 @@
       width="100%"
       height="250px"
     >
-      <el-table-column label="User" prop="name"> </el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <el-button size="mini" type="primary" @click="unfollow(scope.row)"
-            >following</el-button
-          >
-          <!-- {{scope.row.company_name}} -->
+          <el-row>
+            <el-col :span="12"
+              ><div class="grid-content bg-purple">
+                <UserDetail :userindex="scope.row.follower" /></div
+            ></el-col>
+            <el-col :span="12"
+              ><div class="grid-content bg-purple-light">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="unfollow(scope.row)"
+                  >following</el-button
+                >
+              </div></el-col
+            >
+          </el-row>
         </template>
       </el-table-column>
     </el-table>
@@ -40,6 +51,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import UserDetail from "@/components/UserDetail.vue";
 
 export default {
   mounted() {
@@ -72,6 +84,7 @@ export default {
         }
       });
   },
+  components: { UserDetail },
   data() {
     return {
       dialogVisible: false,

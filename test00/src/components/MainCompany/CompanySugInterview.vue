@@ -26,7 +26,7 @@
     </el-table-column>
     <el-table-column align="center" label="피풀인" prop="name" width="100%">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="70%">
+    <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
