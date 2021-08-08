@@ -22,7 +22,7 @@
       width="100%"
       height="250px"
     >
-      <el-table-column label="User" prop="following"> </el-table-column>
+      <el-table-column label="User" prop="name"> </el-table-column>
       <el-table-column align="right">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />

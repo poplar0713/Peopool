@@ -61,10 +61,6 @@ export default {
     ProfileCompany,
   },
   methods: {
-    ch(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
-    },
     Logout() {
       // 깔끔하게 비우기
       localStorage.clear();

@@ -74,19 +74,11 @@ export default {
     UserFollowers,
   },
   methods: {
-    ch(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
-    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },
-    search(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
     },
     // 로그아웃
     Logout() {
