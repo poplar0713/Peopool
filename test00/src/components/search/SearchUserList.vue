@@ -34,13 +34,16 @@ export default {
     UserCard,
   },
   setup() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
     const route = useRoute();
     const keyword = route.params.keyword;
     // 데이터저장 비동기방식
     const result = ref([]);
     (async () => {
       const res = await axios.get(
-        `https://i5d206.p.ssafy.io:8443/poi/name/${keyword}`
+        `https://i5d206.p.ssafy.io:8443/poi/name/${keyword}`,
+        { headers: { Authorization: token } }
       );
       result.value = res.data;
       console.log(res);

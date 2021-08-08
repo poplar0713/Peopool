@@ -68,14 +68,22 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;
         localStorage.setItem("username", res.data.ind_name);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     return {
       mainsearch: "",

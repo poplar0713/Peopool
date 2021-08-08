@@ -24,8 +24,10 @@
       width="60%"
     >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name"> </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty"> </el-table-column>
+    <el-table-column align="center" label="Company" prop="name">
+    </el-table-column>
+    <el-table-column align="center" label="직무" prop="sug_duty">
+    </el-table-column>
     <el-table-column align="center">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
@@ -126,13 +128,21 @@ export default {
     const index = decoded.index;
     // 요청받은 면접일정 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         console.log(res);
         this.InterviewReq = res.data;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     return {
       InterviewReq: [],
@@ -147,6 +157,7 @@ export default {
       console.log(sugindex);
       axios
         .put("https://i5d206.p.ssafy.io:8443/sug/accept", {
+          headers: { Authorization: this.token },
           sug_decision: decision,
           sug_index: sugindex,
         })
@@ -159,7 +170,13 @@ export default {
           this.InterviewReq.splice(this.InterviewReq.indexOf(row), 1);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            alert("로그인세션이이 만료 되었습니다.");
+            localStorage.clear();
+            this.$router.push("/");
+          }
         });
     },
     reject() {},

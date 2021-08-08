@@ -58,13 +58,22 @@ export default {
           index: index,
           type: 1,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.followers = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       dialogVisible: false,
       followers: [],

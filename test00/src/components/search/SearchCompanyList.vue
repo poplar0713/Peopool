@@ -4,7 +4,7 @@
   </el-container>
   <el-row :gutter="24">
     <el-col :span="6" v-for="item in nowPageData" :key="item">
-      <CompanyCard :item="item"/>
+      <CompanyCard :item="item" />
     </el-col>
   </el-row>
   <div style="text-align:center">
@@ -33,6 +33,8 @@ export default {
     CompanyCard,
   },
   setup() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
     const route = useRoute();
     const keyword = route.params.keyword;
 
@@ -40,7 +42,8 @@ export default {
     const result = ref([]);
     (async () => {
       const res = await axios.get(
-        `https://i5d206.p.ssafy.io:8443/poe/name/${keyword}`
+        `https://i5d206.p.ssafy.io:8443/poe/name/${keyword}`,
+        { headers: { Authorization: token } }
       );
       result.value = res.data;
       console.log(res);

@@ -126,21 +126,31 @@ export default {
     // 팔로우했는지 체크해보기
     axios
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+        headers: { Authorization: token },
         fol_type: 1,
         follower: this.userindex,
         following: index,
       })
+
       .then((res) => {
         // 팔로우가 되어있는것
         console.log(res), (this.follow = true);
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
-        console.log(err), (this.follow = false);
+        console.log(err);
+        this.follow = false;
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     // 유저정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         console.log(res);
         this.userdetailinfo.ind_index = res.data.ind_index;
@@ -154,7 +164,15 @@ export default {
         this.userdetailinfo.ind_switch = res.data.ind_switch;
         this.userdetailinfo.ind_introduce = res.data.ind_introduce;
       })
-      .catch();
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       follow: false,
       company_index: index,
@@ -203,16 +221,26 @@ export default {
               following: this.company_index,
               follower: this.userindex,
             },
+            headers: { Authorization: this.token },
           })
           .then((res) => {
             console.log(res);
             this.follow = false;
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log("token error");
+            console.log(err.response.data.status);
+            if (err.response.data.status == 401) {
+              alert("로그인세션이이 만료 되었습니다.");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
       } else if (this.follow == false) {
         console.log("팔로잉");
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
+            headers: { Authorization: this.token },
             fol_type: 1,
             following: this.company_index,
             follower: this.userindex,
@@ -221,7 +249,15 @@ export default {
             console.log(res);
             this.follow = true;
           })
-          .catch();
+          .catch((err) => {
+            console.log("token error");
+            console.log(err.response.data.status);
+            if (err.response.data.status == 401) {
+              alert("로그인세션이이 만료 되었습니다.");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
       }
     },
     handleClose(done) {
@@ -230,7 +266,15 @@ export default {
           done();
           this.dialogVisible = false;
         })
-        .catch(() => {});
+        .catch((err) => {
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            alert("로그인세션이이 만료 되었습니다.");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
     },
     successmessage() {
       this.$message({
@@ -249,6 +293,7 @@ export default {
       //요청보내기
       axios
         .post("https://i5d206.p.ssafy.io:8443/sug", {
+          headers: { Authorization: this.token },
           ent_index: this.company_index,
           ind_index: this.userindex,
           sug_duty: this.reservationdata.sug_duty,
@@ -266,7 +311,13 @@ export default {
           });
         })
         .catch((err) => {
-          console.log(err);
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            alert("로그인세션이이 만료 되었습니다.");
+            localStorage.clear();
+            this.$router.push("/");
+          }
         });
     },
   },

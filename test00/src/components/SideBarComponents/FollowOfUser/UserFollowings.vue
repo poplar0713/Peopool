@@ -63,13 +63,22 @@ export default {
           index: index,
           type: 0,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.followings = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   methods: {
     unfollow(row) {
@@ -82,13 +91,20 @@ export default {
             follower: row.follower,
             following: row.following,
           },
+          headers: { Authorization: this.token },
         })
         .then((res) => {
           console.log(res),
             this.followings.splice(this.followings.indexOf(row), 1);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            alert("로그인세션이이 만료 되었습니다.");
+            localStorage.clear();
+            this.$router.push("/");
+          }
         });
     },
     handleClose(done) {
@@ -98,7 +114,15 @@ export default {
           this.dialogVisible = false;
           location.reload();
         })
-        .catch(() => {});
+        .catch((err) => {
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            alert("로그인세션이이 만료 되었습니다.");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
     },
   },
 };

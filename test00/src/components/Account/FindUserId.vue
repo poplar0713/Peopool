@@ -71,6 +71,7 @@ export default {
                 name: this.ruleForm.username,
                 phone: this.ruleForm.userphone,
               },
+              headers: { Authorization: this.token },
             })
             .then((result) => {
               this.foundId = result.data.ind_id;
@@ -82,7 +83,13 @@ export default {
               }, 3000);
             })
             .catch((err) => {
-              console.log(err);
+              console.log("token error");
+              console.log(err.response.data.status);
+              if (err.response.data.status == 401) {
+                alert("로그인세션이이 만료 되었습니다.");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
           //
           this.$store.state.findUserId = false;

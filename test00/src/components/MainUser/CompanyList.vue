@@ -22,12 +22,22 @@ export default {
     // const index = decoded.index;
     // 기업 전체프로필 가져오기
     axios
-      .get("https://i5d206.p.ssafy.io:8443/poe")
+      .get("https://i5d206.p.ssafy.io:8443/poe", {
+        headers: { Authorization: this.token },
+      })
       .then((res) => {
         console.log(res);
         this.ents = res.data;
       })
-      .catch();
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       ents: [],
     };

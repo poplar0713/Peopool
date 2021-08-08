@@ -63,7 +63,13 @@ export default {
         this.ruleForm.CompanyIndex = res.data.ent_index;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
   },
   data() {
@@ -147,6 +153,7 @@ export default {
           // 회원정보 수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/ent", {
+              headers: { Authorization: this.token },
               ent_email: this.ruleForm.CompanyEmail,
               ent_id: this.ruleForm.CompanyId,
               ent_index: this.ruleForm.CompanyIndex,
@@ -165,7 +172,13 @@ export default {
               }, 2000);
             })
             .catch((err) => {
-              console.log(err);
+              console.log("token error");
+              console.log(err.response.data.status);
+              if (err.response.data.status == 401) {
+                alert("로그인세션이이 만료 되었습니다.");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
         } else {
           console.log("error submit!!");

@@ -45,12 +45,21 @@ export default {
     const index = decoded.index;
     // 면접일정조회
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/int/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/int/${index}`,{headers : {"Authorization" : token}})
       .then((res) => {
         console.log(res);
         this.myinterview = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err)=>{
+        console.log("token error");
+        console.log(err.response.data.status);
+        if(err.response.data.status == 401)
+        {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       user: "김백수",
       myinterview: [],

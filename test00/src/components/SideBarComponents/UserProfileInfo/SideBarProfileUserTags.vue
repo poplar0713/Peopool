@@ -27,16 +27,27 @@
 
 <script>
 import axios from "axios";
+// 토큰가져오기
+const token = localStorage.getItem("token");
 export default {
   data() {
     // 태그목록 불러오기
     axios
-      .get("https://i5d206.p.ssafy.io:8443/taglist/")
+      .get("https://i5d206.p.ssafy.io:8443/taglist/", {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         this.options = res.data;
       })
-      .catch((err) => {
-        console.log(err);
+  .catch((err)=>{
+        console.log("token error");
+        console.log(err.response.data.status);
+        if(err.response.data.status == 401)
+        {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     return {
       // 불러온 태그들

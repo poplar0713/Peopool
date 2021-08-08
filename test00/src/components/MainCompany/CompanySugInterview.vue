@@ -66,13 +66,21 @@ export default {
     const index = decoded.index;
     // 요청받은 면접일정 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/sug/ent/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/sug/ent/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         console.log(res);
         this.InterviewSug = res.data;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     return {
       InterviewSug: [],
@@ -85,7 +93,7 @@ export default {
       axios
         .put(
           "https://i5d206.p.ssafy.io:8443/sug/cancel",
-          {},
+          { headers: { Authorization: this.token } },
           {
             params: {
               index: sugindex,
@@ -100,7 +108,13 @@ export default {
           });
         })
         .catch((err) => {
-          console.log(err);
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            alert("로그인세션이이 만료 되었습니다.");
+            localStorage.clear();
+            this.$router.push("/");
+          }
         });
     },
     filterHandler(value, row, column) {

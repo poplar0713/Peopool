@@ -76,12 +76,17 @@ export default {
           .then(function(stream) {
             video.srcObject = stream;
           })
-          .catch(() => {
+          .catch((err) => {
             <el-alert
               title="카메라를 확인해주세요"
               type="warning"
               show-icon
             ></el-alert>;
+            if (err.response.data.status == 401) {
+              alert("로그인세션이이 만료 되었습니다.");
+              localStorage.clear();
+              this.$router.push("/");
+            }
           });
       }
     },

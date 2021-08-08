@@ -5,7 +5,9 @@
         <el-col :span="6">
           <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
         >
-        <el-col :span="6" :offset="12"><FollowingAppAll :following="following"/></el-col>
+        <el-col :span="6" :offset="12"
+          ><FollowingAppAll :following="following"
+        /></el-col>
       </el-row>
     </div>
     <el-main>
@@ -41,7 +43,7 @@ import axios from "axios";
 export default {
   components: {
     UserDetail,
-    FollowingAppAll
+    FollowingAppAll,
   },
 
   mounted() {
@@ -57,13 +59,22 @@ export default {
           index: index,
           type: 1,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.following = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   props: {
     msg: String,

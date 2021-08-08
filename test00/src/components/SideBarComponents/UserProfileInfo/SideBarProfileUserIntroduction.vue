@@ -37,12 +37,20 @@ export default {
     const index = decoded.index;
     this.userindex = index;
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         this.ruleForm.Introduction = res.data.ind_introduce;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          alert("로그인세션이이 만료 되었습니다.");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
   },
   data() {
@@ -72,6 +80,7 @@ export default {
           // 저장하는 방법 찾아보기
           axios
             .put("https://i5d206.p.ssafy.io:8443/poi", {
+              headers: { Authorization: this.token },
               ind_index: this.userindex,
               ind_introduce: this.ruleForm.Introduction,
               ind_photo: "string",
@@ -88,7 +97,13 @@ export default {
               }, 3000);
             })
             .catch((err) => {
-              console.log(err);
+              console.log("token error");
+              console.log(err.response.data.status);
+              if (err.response.data.status == 401) {
+                alert("로그인세션이이 만료 되었습니다.");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
         } else {
           console.log("error submit!!");
