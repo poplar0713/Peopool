@@ -232,6 +232,7 @@ export default {
     register() {
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
+      this.username = localStorage.getItem("username");
       this.options = true;
       var message = {
         id: "joinRoom",
@@ -355,11 +356,11 @@ export default {
       container.classList.add("video-block");
       var video = document.createElement("video");
       var rtcPeer;
-      var username = document.createElement("div");
-      username.InnerText = this.username;
+      var usernameArea = document.createElement("div");
+      usernameArea.innerText = this.name;
 
       container.appendChild(video);
-      container.appendChild(username);
+      container.appendChild(usernameArea);
 
       //container.onclick = switchContainerClass;
       document.getElementById("participants").appendChild(container);
@@ -540,14 +541,13 @@ export default {
 .video-block {
   transition: all 1s;
   justify-content: center;
-  align-items: center;
+  align-content: center;
   border-width: 3px;
   border-style: solid;
   border-color: whitesmoke;
   border-radius: 3% 3% 3% 3%;
   overflow: hidden;
   background-color: black;
-  z-index: 9990;
 }
 .video-block:hover {
   box-shadow: 5px 5px 5px gray;
@@ -555,19 +555,22 @@ export default {
 .video-block video {
   width: 36rem;
   height: 27rem;
-  z-index: 9994;
+  z-index: -2;
+  position: relative;
 }
+
 .video-block div {
-  z-index: 9997;
-}
-.animation-init {
-  opacity: 0;
-  padding-top: 1em;
-}
-.animation-fade {
-  opacity: 1;
-  padding-top: 0;
-  transition: all 1s;
+  position: absolute;
+  background-color: black;
+  color: white;
+  z-index: 200;
+  text-align: center;
+  opacity: 0.75;
+  bottom: 0;
+  right: 0;
+  padding: 0.3rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
 }
 .titleBox {
   display: flex;
