@@ -22,6 +22,9 @@ public interface ProfileOfIndividualService {
 	
 	// 프로필 삭제
 	boolean deleteProfile(int index);
+	
+	// 이력서 등록
+	boolean modifyResume(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
 	IndCard getProfile(int index);

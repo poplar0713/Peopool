@@ -35,5 +35,8 @@
 		delete from ent_profile
 		where ent_index = #{index}
 	</delete>
+	
+	
+	
 
 </mapper>

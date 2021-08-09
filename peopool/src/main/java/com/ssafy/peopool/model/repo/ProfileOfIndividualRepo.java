@@ -25,6 +25,9 @@ public interface ProfileOfIndividualRepo {
 	
 	// 프로필 삭제
 	int deleteProfile(int index);
+	
+	// 파일 등록
+	int modifyResume(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
 	IndCard getProfile(int index);
