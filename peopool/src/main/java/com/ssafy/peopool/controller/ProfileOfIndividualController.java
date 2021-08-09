@@ -99,8 +99,8 @@ public class ProfileOfIndividualController {
 	
 	
 	@ApiOperation(value = "index에 해당하는 이력서을 수정한다.", response = String.class)
-	@PostMapping("/resume")
-	public ResponseEntity<String> modifyResume(@RequestParam("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
+	@PostMapping("/resume/{index}")
+	public ResponseEntity<String> modifyResume(@PathVariable("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
 		ProfileOfIndividual profileOfIndividual = new ProfileOfIndividual();
 		if(!files[0].isEmpty()) {
 //			String realPath = servletContext.getRealPath("/upload");
