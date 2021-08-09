@@ -27,6 +27,37 @@
               <el-divider></el-divider>
               <div id="participants" class="wrapper"></div>
             </div>
+
+            <el-scrollbar height="100px" id="chatdiv" ref="scrollbar">
+              <div ref="inner">
+                <div
+                  v-for="(item, index) in chatlist"
+                  :key="index"
+                  :class="[item.name == username ? 'itemright' : 'itemleft']"
+                  :scroll="scrolldown()"
+                >
+                  <p v-if="item.name == username" class="speech-bubble">
+                    {{ item.text }}
+                  </p>
+                  <p v-else class="speech-bubble-left">
+                    {{ item.name }}<br />
+                    {{ item.text }}
+                  </p>
+                </div>
+              </div>
+            </el-scrollbar>
+
+            <div style="margin-top: 15px;">
+              <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
+            </div>
+
+            <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
+            <el-button
+              type="warning"
+              icon="el-icon-chat-round"
+              circle
+              @click="sendchat"
+            ></el-button> -->
           </div>
         </div>
       </el-main>
@@ -126,6 +157,9 @@ export default {
       videoOn: true,
       options: false,
       dialogVisible: false,
+      chattext: "",
+      chatlist: [],
+      drawer: false,
       exitDiaVisible: false,
     };
   },
@@ -141,8 +175,12 @@ export default {
     ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
       console.info("Received message: " + message);
-
       switch (parsedMessage.id) {
+        case "chatting":
+          this.chatlist.push(parsedMessage);
+          // console.log(parsedMessage.name + ":" + parsedMessage.text);
+          this.scrolldown();
+          break;
         case "existingParticipants":
           this.onExistingParticipants(parsedMessage);
           break;
@@ -176,6 +214,21 @@ export default {
     };
   },
   methods: {
+    scrolldown() {
+      this.$refs.scrollbar.setScrollTop(this.$refs.inner.clientHeight + 380);
+      console.log(this.$refs.inner.clientHeight);
+    },
+    sendchat() {
+      if (this.chattext == "" || this.chattext == null) return;
+      let chat = {
+        id: "chatting",
+        name: this.username,
+        room: this.room,
+        text: this.chattext,
+      };
+      this.sendMessage(chat);
+      this.chattext = "";
+    },
     register() {
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
@@ -405,6 +458,65 @@ export default {
 </script>
 
 <style>
+.itemright {
+  text-align: right;
+  padding-right: 10px;
+  justify-content: flex-end;
+  display: flex;
+}
+.itemleft {
+  text-align: left;
+  padding-left: 10px;
+}
+.speech-bubble-left {
+  position: relative;
+  background: #f2f3f4;
+  border-radius: 0.4em;
+  width: 200px;
+  margin-right: 20px;
+  word-break: break-all;
+  padding: 5px;
+}
+
+.speech-bubble-left:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-right-color: #f2f3f4;
+  border-left: 0;
+  border-top: 0;
+  margin-top: -5px;
+  margin-left: -10px;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #ffc000;
+  border-radius: 0.4em;
+  width: 200px;
+  margin-left: 20px;
+  word-break: break-all;
+  padding: 5px;
+}
+
+.speech-bubble:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-left-color: #ffc000;
+  border-right: 0;
+  border-top: 0;
+  margin-top: -5px;
+  margin-right: -10px;
+}
 #go {
   width: 200px;
   border-radius: 100px;
