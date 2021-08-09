@@ -10,14 +10,16 @@
         </div>
       </div>
     </el-header>
-    <el-container>
+    <el-container height="100%">
       <el-main>
         <div id="container">
           <div>
             <div id="join" class="animate join">
               <before-meeting></before-meeting>
               <div style="text-align:center">
-                <el-button type="warning" id="go" @click="register">입장하기</el-button>
+                <el-button type="warning" id="go" @click="register"
+                  >입장하기</el-button
+                >
               </div>
             </div>
             <div id="room" style="display: none;">
@@ -26,29 +28,6 @@
               </div>
               <el-divider></el-divider>
               <div id="participants" class="wrapper"></div>
-            </div>
-
-            <el-scrollbar height="100px" id="chatdiv" ref="scrollbar">
-              <div ref="inner">
-                <div
-                  v-for="(item, index) in chatlist"
-                  :key="index"
-                  :class="[item.name == username ? 'itemright' : 'itemleft']"
-                  :scroll="scrolldown()"
-                >
-                  <p v-if="item.name == username" class="speech-bubble">
-                    {{ item.text }}
-                  </p>
-                  <p v-else class="speech-bubble-left">
-                    {{ item.name }}<br />
-                    {{ item.text }}
-                  </p>
-                </div>
-              </div>
-            </el-scrollbar>
-
-            <div style="margin-top: 15px;">
-              <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
             </div>
 
             <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
@@ -61,6 +40,30 @@
           </div>
         </div>
       </el-main>
+      <el-aside width="300px">
+        <el-scrollbar height="100%" id="chatdiv" ref="scrollbar">
+          <div ref="inner">
+            <div
+              v-for="(item, index) in chatlist"
+              :key="index"
+              :class="[item.name == username ? 'itemright' : 'itemleft']"
+              :scroll="scrolldown()"
+            >
+              <p v-if="item.name == username" class="speech-bubble">
+                {{ item.text }}
+              </p>
+              <p v-else class="speech-bubble-left">
+                {{ item.name }}<br />
+                {{ item.text }}
+              </p>
+            </div>
+          </div>
+        </el-scrollbar>
+
+        <div style="margin-top: 15px;">
+          <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
+        </div>
+      </el-aside>
     </el-container>
     <el-footer v-if="this.options" class="footer">
       <span>
@@ -113,7 +116,12 @@
         ></span
       >
       <span
-        ><el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
+        ><el-button
+          round
+          type="danger"
+          id="button-leave"
+          @click="exitDiaVisible = true"
+        >
           X</el-button
         ></span
       >
@@ -247,9 +255,12 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
-        if (error) return console.error(error);
-      });
+      participants[result.name].rtcPeer.processAnswer(
+        result.sdpAnswer,
+        function(error) {
+          if (error) return console.error(error);
+        }
+      );
     },
 
     callResponse(message) {
@@ -285,14 +296,15 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -324,14 +336,15 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
     },
 
     onParticipantLeft(request) {
@@ -455,7 +468,7 @@ export default {
           console.log("token error");
           console.log(err.response.data.status);
           if (err.response.data.status == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }
