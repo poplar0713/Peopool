@@ -29,13 +29,13 @@
         <el-input v-model="ruleForm.ent_website"></el-input>
       </el-form-item>
       <!-- 기업회원 PW -->
-      <el-form-item label="Password" prop="Password">
+      <!-- <el-form-item label="Password" prop="Password">
         <el-input type="password" v-model="ruleForm.Password"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <!-- 기업회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
+      <!-- <el-form-item label="Password Confirmation" prop="PasswordConfirm">
         <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <div style="float:right">
         <el-form-item>
           <el-button
@@ -63,7 +63,9 @@ export default {
     const index = decoded.index;
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         this.ruleForm.ent_index = res.data.ent_index;
         this.ruleForm.ent_image = res.data.ent_image;
@@ -73,7 +75,13 @@ export default {
         this.ruleForm.ent_website = res.data.ent_website;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
   },
   data() {
@@ -159,6 +167,7 @@ export default {
           // 기업정보수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/poe", {
+              headers: { Authorization: this.token },
               ent_image: this.ruleForm.ent_image,
               ent_index: this.ruleForm.ent_index,
               ent_ceo: this.ruleForm.ent_ceo,
@@ -177,7 +186,13 @@ export default {
               }, 2000);
             })
             .catch((err) => {
-              console.log(err);
+              console.log("token error");
+              console.log(err.response.data.status);
+              if (err.response.data.status == 401) {
+                this.$message.error("로그인세션이 만료되었습니다");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
         } else {
           console.log("error submit!!");

@@ -14,27 +14,33 @@
       :data="
         followings.filter(
           (data) =>
-            !search ||
-            data.company_name.toLowerCase().includes(search.toLowerCase()) ||
-            data.company_field.toLowerCase().includes(search.toLowerCase())
+            !search || data.name.toLowerCase().includes(search.toLowerCase())
         )
       "
       width="100%"
       height="250px"
     >
-      <el-table-column label="User" prop="name"> </el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="unfollow(scope.row)"
-            >following</el-button
-          >
-          <!-- {{scope.row.company_name}} -->
+          <el-row>
+            <el-col :span="12"
+              ><div class="grid-content bg-purple">
+                <UserDetail :userindex="scope.row.follower" /></div
+            ></el-col>
+            <el-col :span="12"
+              ><div class="grid-content bg-purple-light">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="unfollow(scope.row)"
+                  >following</el-button
+                >
+              </div></el-col
+            >
+          </el-row>
         </template>
       </el-table-column>
     </el-table>
@@ -45,6 +51,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import UserDetail from "@/components/UserDetail.vue";
 
 export default {
   mounted() {
@@ -60,14 +67,24 @@ export default {
           index: index,
           type: 1,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.followings = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
+  components: { UserDetail },
   data() {
     return {
       dialogVisible: false,
@@ -87,13 +104,20 @@ export default {
             follower: row.follower,
             following: row.following,
           },
+          headers: { Authorization: this.token },
         })
         .then((res) => {
           console.log(res),
             this.followings.splice(this.followings.indexOf(row), 1);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("token error");
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            this.$message.error('로그인세션이 만료되었습니다');
+            localStorage.clear();
+            this.$router.push("/");
+          }
         });
     },
   },

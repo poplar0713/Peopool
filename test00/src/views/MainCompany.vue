@@ -5,13 +5,32 @@
       <el-header><headerSearchUser /></el-header>
 
       <el-main>
-        <check-annc />
-        <FollowerAppc
-          title="Today 우리회사 관심 피풀인"
-        />
-        <FollowingAppc
-          title="Today 눈여겨보는 관심 피풀인"
-        />
+        <el-row :gutter="20">
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">제안한 면접</el-divider
+              ><CompanySugInterview /></div
+          ></el-col>
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">인터뷰 스케줄</el-divider
+              ><CompanySchedule /></div
+          ></el-col>
+        </el-row>
+        <!-- <el-row :gutter="20">
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left"
+                ><i class="el-icon-s-grid"></i> 지원자리스트1</el-divider
+              ><FollowerAppc /></div
+          ></el-col>
+          <el-col :span="12"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left"
+                ><i class="el-icon-s-grid"></i> 지원자리스트2</el-divider
+              ><FollowingAppc /></div
+          ></el-col>
+        </el-row> -->
         <!-- <webviewer initialDoc="파이팅 프런트.docx" /> -->
       </el-main>
     </el-container>
@@ -20,11 +39,12 @@
 
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
-import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
-import FollowingAppc from "@/components/MainCompany/FollowingAppc.vue";
-import CheckAnnc from "@/components/MainCompany/CheckAnnc.vue";
-// import webviewer from "@/components/MainCompany/webviewer.vue";
+// import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
+// import FollowingAppc from "@/components/MainCompany/FollowingAppc.vue";
+import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
+import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
+// import webviewer from "@/components/MainCompany/webviewer.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -33,11 +53,12 @@ export default {
   name: "MainCompany",
   components: {
     SideBarCompany,
-    CheckAnnc,
-    FollowerAppc,
-    FollowingAppc,
-    // webviewer,
+    CompanySchedule,
+    // FollowerAppc,
+    // FollowingAppc,
     headerSearchUser,
+    CompanySugInterview,
+    // webviewer,
   },
   mounted() {
     // 토큰가져오기
@@ -52,13 +73,22 @@ export default {
           index: index,
           type: 1,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.follower = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   data() {
     return {

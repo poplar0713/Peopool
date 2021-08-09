@@ -1,87 +1,100 @@
 <template>
-  <div>
-    <div>
-      <el-row :gutter="24">
-        <el-col :span="6">
-          <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
-        >
-        <el-col :span="6" :offset="12"><FollowingAppAll :following="following"/></el-col>
-      </el-row>
-    </div>
-    <el-main>
-      <el-space>
-        <el-card
-          class="box-card"
-          style="width: 250px"
-          v-for="user in following"
-          :key="user"
-        >
-          <template #header>
-            <div class="card-header">
-              <img src="images/a.jpg" style="width: 150px" />
-              <br />
-            </div>
-          </template>
-          <UserDetail :user="user" :userindex="user.follower" />
-          <div v-for="tag in user.tag" :key="tag" class="text item">
-            {{ tag }}
-          </div>
-        </el-card>
-      </el-space>
-    </el-main>
-  </div>
+  <!-- <FollowingAppAll :userdata="result" /> -->
+  <el-table :data="nowPageData" style="width: 100%">
+    <el-table-column prop="ind_photo" label="" width="50%"
+      ><img src="images/a.jpg" alt="" height="20"
+    /></el-table-column>
+    <el-table-column prop="ind_index" label="이름" width="100%">
+      <template #default="scope">
+        <UserDetail :userindex="scope.row.ind_index" />
+      </template>
+    </el-table-column>
+    <el-table-column prop="ind_gender" label="성별" sortable width="70%">
+    </el-table-column>
+    <el-table-column prop="ind_introduce" label="자기소개"> </el-table-column>
+  </el-table>
+
+  <el-pagination
+    style="text-align:center"
+    layout="prev, pager, next"
+    :total="result.length"
+    :page-size="5"
+    :page-sizes="[5, 10, 15, 20]"
+    v-model:currentPage="nowPage"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+  >
+  </el-pagination>
 </template>
 
 <script>
-import UserDetail from "@/components/UserDetail.vue";
-import FollowingAppAll from "@/components/MainCompany/FollowingAppAll.vue";
-import jwt_decode from "jwt-decode";
+import { ref } from "vue";
 import axios from "axios";
+import UserDetail from "@/components/UserDetail.vue";
+// import FollowingAppAll from "@/components/MainCompany/FollowingAppAll.vue";
 
 export default {
-  components: {
-    UserDetail,
-    FollowingAppAll
-  },
-
-  mounted() {
+  components: { UserDetail },
+  setup() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
-    this.company_index = index;
-    //팔로잉정보 가져오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/fol/following", {
-        params: {
-          index: index,
-          type: 1,
-        },
-      })
-      // 팔로워데이터 넣어주기
-      .then((res) => {
-        console.log(res);
-        this.following = res.data;
-      })
-      .catch((err) => console.log(err));
-  },
-  props: {
-    msg: String,
-    title: String,
-  },
-  data() {
+
+    // 데이터저장 비동기방식
+    const result = ref([]);
+    (async () => {
+      const res = await axios.get(`https://i5d206.p.ssafy.io:8443/poi`, {
+        headers: { Authorization: token },
+      });
+      result.value = res.data;
+      console.log(res);
+      initData();
+    })();
+    //
+    console.log(result);
+    //
+
+    let tableSize = 5;
+    let nowPage = ref(1);
+    let nowPageData = ref(result.value);
+    console.log(nowPageData);
+
+    function initData() {
+      console.log(1);
+      sliceData();
+    }
+
+    function handleSizeChange(val) {
+      console.log(2);
+      tableSize = val;
+      sliceData();
+    }
+
+    function handleCurrentChange(val) {
+      console.log(3);
+      nowPage.value = val;
+      sliceData();
+    }
+
+    function sliceData() {
+      console.log(4);
+      nowPageData.value = result.value.slice(
+        tableSize * nowPage.value - tableSize,
+        tableSize * nowPage.value
+      );
+    }
+    function userdetail() {}
+
     return {
-      following: [],
-      company_index: "",
+      nowPage,
+      result,
+      handleSizeChange,
+      handleCurrentChange,
+      userdetail,
+      tableSize,
+      nowPageData,
     };
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-img {
-  display: block;
-  margin: 0px auto;
-}
-</style>
+<style></style>

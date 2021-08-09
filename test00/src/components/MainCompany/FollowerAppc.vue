@@ -2,10 +2,9 @@
   <div>
     <div>
       <el-row :gutter="24">
-        <el-col :span="6">
-          <h1><i class="el-icon-s-grid"></i> {{ title }}</h1></el-col
-        >
-        <el-col :span="6" :offset="12"><FollowerAppcAll :follower="follower" /></el-col>
+        <el-col :span="6" :offset="12"
+          ><FollowerAppcAll :follower="follower"
+        /></el-col>
       </el-row>
     </div>
     <el-main>
@@ -23,9 +22,6 @@
             </div>
           </template>
           <UserDetail :user="user" :userindex="user.following" />
-          <div v-for="tag in user.tag" :key="tag" class="text item">
-            {{ tag }}
-          </div>
         </el-card>
       </el-space>
     </el-main>
@@ -42,7 +38,7 @@ export default {
   name: "HelloWorld",
   components: {
     UserDetail,
-    FollowerAppcAll
+    FollowerAppcAll,
   },
 
   mounted() {
@@ -58,17 +54,25 @@ export default {
           index: index,
           type: 1,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.follower = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   props: {
     msg: String,
-    title: String,
   },
   data() {
     return {

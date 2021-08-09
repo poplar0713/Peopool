@@ -33,7 +33,7 @@
         </el-menu-item>
         <el-menu-item index="4">
           <i class="el-icon-star-on"></i>
-          <span @click="GoToRecruit">RECRIT</span>
+          <span @click="GoToRecruit">Recruitment</span>
         </el-menu-item>
         <el-menu-item index="5">
           <i class="el-icon-setting"></i>
@@ -61,10 +61,6 @@ export default {
     ProfileCompany,
   },
   methods: {
-    ch(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
-    },
     Logout() {
       // 깔끔하게 비우기
       localStorage.clear();

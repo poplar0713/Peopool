@@ -26,12 +26,21 @@ export default {
           index: index,
           type: 0,
         },
+        headers: { Authorization: token },
       })
       .then((res) => {
         console.log(res);
         this.followingents = res.data;
       })
-      .catch();
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       followingents: [],
     };

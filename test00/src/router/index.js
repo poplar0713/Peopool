@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MainUser from "../views/MainUser.vue";
-import SearchDetail from "../views/SearchDetail.vue";
 import Start from "../views/Start.vue";
 import MainCompany from "../views/MainCompany.vue";
 import InterviewRoom from "../views/InterviewRoom.vue";
@@ -43,9 +42,9 @@ const routes = [
     },
   },
   {
-    path: "/searchDetail",
-    name: "SearchDetail",
-    component: SearchDetail,
+    path: "/searchcompany/:keyword",
+    name: "SearchCompany",
+    component: SearchCompany,
     beforeEnter: function(to, from, next) {
       if (localStorage.getItem("token") == null) {
         alert("로그인이 필요한 서비스입니다");
@@ -55,9 +54,9 @@ const routes = [
     },
   },
   {
-    path: "/searchcompany/:keyword",
-    name: "SearchCompany",
-    component: SearchCompany,
+    path: "/searchuser/:keyword",
+    name: "searchuser",
+    component: SearchUser,
     beforeEnter: function(to, from, next) {
       if (localStorage.getItem("token") == null) {
         alert("로그인이 필요한 서비스입니다");
@@ -71,18 +70,6 @@ const routes = [
     name: "InterviewRoom",
     component: InterviewRoom,
     // 링크공유로 로그인안해도 들어올수있도록
-  },
-  {
-    path: "/searchuser/:keyword",
-    name: "searchuser",
-    component: SearchUser,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
   },
   {
     path: "/searchcompany",

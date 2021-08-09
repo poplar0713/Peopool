@@ -121,12 +121,14 @@ export default {
                 email: this.ruleForm.companyemail,
                 id: this.ruleForm.companyid,
               },
+              headers: { Authorization: this.token },
             })
             .then((result) => {
               console.log(result);
               // 비밀번호 변경
               axios
                 .put("https://i5d206.p.ssafy.io:8443/ent", {
+                  headers: { Authorization: this.token },
                   ent_contact: result.data.ent_contact,
                   ent_email: result.data.ent_email,
                   ent_id: result.data.ent_id,
@@ -146,12 +148,23 @@ export default {
                   }, 3000);
                 })
                 .catch((err) => {
-                  console.log(err);
+                  console.log("token error");
+                  console.log(err.response.data.status);
+                  if (err.response.data.status == 401) {
+                    this.$message.error('로그인세션이 만료되었습니다');
+                    localStorage.clear();
+                    this.$router.push("/");
+                  }
                 });
             })
             .catch((err) => {
-              console.log("error submit");
-              console.log(err);
+              console.log("token error");
+              console.log(err.response.data.status);
+              if (err.response.data.status == 401) {
+                this.$message.error('로그인세션이 만료되었습니다');
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
           //
           this.$store.state.findCompanyPw = false;
