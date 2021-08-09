@@ -15,19 +15,12 @@
           <el-main>
             <el-row :gutter="24">
               <el-col :span="6" v-for="(item, i) in listData" :key="i">
-                <company-card :item="item"></company-card>
+                <company-card ompany-card :item="item"></company-card>
               </el-col>
             </el-row>
             <br />
             <pagination
-              :pageSetting="
-                pageDataSetting(
-                  this.getLength(),
-                  this.limit,
-                  this.block,
-                  this.page
-                )
-              "
+              :pageSetting="pageDataSetting(this.getLength(), this.limit, this.block, this.page)"
               @paging="pagingMethod"
           /></el-main>
         </div>
@@ -185,26 +178,18 @@ export default {
       this.pagingMethod(this.page);
     },
     pagingMethod(page) {
-      this.listData = this.ents.slice(
-        (page - 1) * this.limit,
-        page * this.limit
-      );
+      this.listData = this.ents.slice((page - 1) * this.limit, page * this.limit);
       this.page = page;
       this.pageDataSetting(this.getLength(), this.limit, this.block, page);
     },
     pageDataSetting(total, limit, block, page) {
       const totalPage = Math.ceil(total / limit);
       let currentPage = page;
-      const first =
-        currentPage > 1 ? parseInt(currentPage, 10) - parseInt(1, 10) : null;
-      const end =
-        totalPage !== currentPage
-          ? parseInt(currentPage, 10) + parseInt(1, 10)
-          : null;
+      const first = currentPage > 1 ? parseInt(currentPage, 10) - parseInt(1, 10) : null;
+      const end = totalPage !== currentPage ? parseInt(currentPage, 10) + parseInt(1, 10) : null;
 
       let startIndex = (Math.ceil(currentPage / block) - 1) * block + 1;
-      let endIndex =
-        startIndex + block > totalPage ? totalPage : startIndex + block - 1;
+      let endIndex = startIndex + block > totalPage ? totalPage : startIndex + block - 1;
       let list = [];
       for (let index = startIndex; index <= endIndex; index++) {
         list.push(index);

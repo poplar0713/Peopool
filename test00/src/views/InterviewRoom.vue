@@ -17,9 +17,7 @@
             <div id="join" class="animate join">
               <before-meeting></before-meeting>
               <div style="text-align:center">
-                <el-button type="warning" id="go" @click="register"
-                  >입장하기</el-button
-                >
+                <el-button type="warning" id="go" @click="register">입장하기</el-button>
               </div>
             </div>
             <div id="room" style="display: none;">
@@ -42,7 +40,7 @@
           id="button-audio"
           v-on:click="AudioOnOff"
           value="Audio Off"
-          >음소거 하기</el-button
+          >음소거</el-button
         >
         <el-button
           round
@@ -62,7 +60,7 @@
           id="button-video"
           v-on:click="VideoOnOff"
           value="Video Off"
-          >비디오 끄기</el-button
+          >비디오 Off</el-button
         >
         <el-button
           round
@@ -71,7 +69,7 @@
           id="button-video"
           v-on:click="VideoOnOff"
           value="Video On"
-          >비디오 켜기</el-button
+          >비디오 On</el-button
         ></span
       ><span>
         <el-button
@@ -84,13 +82,8 @@
         ></span
       >
       <span
-        ><el-button
-          round
-          type="danger"
-          id="button-leave"
-          v-on:click="leaveRoom"
-        >
-          나가기</el-button
+        ><el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
+          X</el-button
         ></span
       >
     </el-footer>
@@ -103,6 +96,16 @@
     :before-close="handleClose"
   >
     설정을 할 수 있는 곳이 될 것
+  </el-dialog>
+
+  <el-dialog v-model="exitDiaVisible" width="30%">
+    <span>면접장에서 나가시겠습니까?</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="exitDiaVisible = false">아니요</el-button>
+        <el-button type="danger" @click="leaveRoom">퇴장하기</el-button>
+      </span>
+    </template>
   </el-dialog>
 </template>
 <script>
@@ -123,6 +126,7 @@ export default {
       videoOn: true,
       options: false,
       dialogVisible: false,
+      exitDiaVisible: false,
     };
   },
   components: {
@@ -173,7 +177,6 @@ export default {
   },
   methods: {
     register() {
-      document.getElementById("room-header").innerText = this.room;
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
       this.options = true;
@@ -191,12 +194,9 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(
-        result.sdpAnswer,
-        function(error) {
-          if (error) return console.error(error);
-        }
-      );
+      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
+        if (error) return console.error(error);
+      });
     },
 
     callResponse(message) {
@@ -215,8 +215,8 @@ export default {
         audio: true,
         video: {
           mandatory: {
-            maxWidth: 650,
-            maxHeight: 650,
+            maxWidth: 500,
+            maxHeight: 500,
             maxFrameRate: 60,
             minFrameRate: 15,
           },
@@ -232,15 +232,14 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -256,6 +255,7 @@ export default {
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
+      this.exitDiaVisible = false;
       this.options = false;
 
       ws.close();
@@ -271,15 +271,14 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
     },
 
     onParticipantLeft(request) {
@@ -298,15 +297,24 @@ export default {
     Participant(name, sendMessage) {
       this.name = name;
       var container = document.createElement("div");
-      container.className = "participant";
       //container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
       container.id = name;
-      container.className = "videoBlock";
+      container.classList.add("video-block");
       var video = document.createElement("video");
       var rtcPeer;
+      var username = document.createElement("div");
+      username.InnerText = this.username;
+
       container.appendChild(video);
+      container.appendChild(username);
+
       //container.onclick = switchContainerClass;
       document.getElementById("participants").appendChild(container);
+      container.classList.add("scale-in-center");
+      // container.classList.add("animation-init");
+      // setTimeout(function() {
+      //   container.classList.add("animation-fade"); //
+      // }, 30);
 
       video.id = "video-" + name;
       video.autoplay = true;
@@ -367,8 +375,7 @@ export default {
       };
     },
     AudioOnOff() {
-      var audiobutton = document.getElementById("button-audio");
-      if (audiobutton.value == "Audio Off") {
+      if (this.audioOn) {
         participants[this.username].rtcPeer.audioEnabled = false;
         this.audioOn = false;
       } else {
@@ -377,8 +384,7 @@ export default {
       }
     },
     VideoOnOff() {
-      var videobutton = document.getElementById("button-video");
-      if (videobutton.value == "Video Off") {
+      if (this.videoOn) {
         participants[this.username].rtcPeer.videoEnabled = false;
         this.videoOn = false;
       } else {
@@ -415,22 +421,36 @@ export default {
 .wrapper {
   display: grid;
   grid: ". . .";
-  gap: 2%;
+  gap: 1%;
   justify-content: center;
   align-items: center;
 }
-.videoBlock {
+.video-block {
+  transition: all 1s;
   justify-content: center;
   align-items: center;
   border-width: 3px;
   border-style: solid;
   border-color: whitesmoke;
-  margin: 1%;
   border-radius: 3% 3% 3% 3%;
   overflow: hidden;
+  background-color: black;
 }
-.videoBlock:hover {
+.video-block:hover {
   box-shadow: 5px 5px 5px gray;
+}
+.video-block video {
+  width: 36rem;
+  height: 27rem;
+}
+.animation-init {
+  opacity: 0;
+  padding-top: 1em;
+}
+.animation-fade {
+  opacity: 1;
+  padding-top: 0;
+  transition: all 1s;
 }
 .titleBox {
   display: flex;
@@ -445,5 +465,36 @@ export default {
 }
 .f {
   color: #ffc000;
+}
+.scale-in-center {
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.slit-out-vertical {
+  animation: slit-out-vertical 0.5s ease-in both;
+}
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slit-out-vertical {
+  0% {
+    transform: translateZ(0) rotateY(0);
+    opacity: 1;
+  }
+  54% {
+    transform: translateZ(-160px) rotateY(87deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(-800px) rotateY(90deg);
+    opacity: 0;
+  }
 }
 </style>
