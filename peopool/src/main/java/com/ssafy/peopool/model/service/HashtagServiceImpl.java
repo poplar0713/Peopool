@@ -17,15 +17,15 @@ public class HashtagServiceImpl implements HashtagService {
 	HashtagRepo hashtagRepo;
 
 	@Override
-	public List<Map<String, Object>> tagByUser(int index) {
+	public List<Map<String, Object>> tagByUser(int index, int type) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.tagByUser(index);
+		return hashtagRepo.tagByUser(index, type);
 	}
 	
 	@Override
-	public List<Hashtag> userByTag(String name) {
+	public List<Hashtag> userByTag(String name, int type) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.userByTag(name);
+		return hashtagRepo.userByTag(name, type);
 	}
 
 	@Override
