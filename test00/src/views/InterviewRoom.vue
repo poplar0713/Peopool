@@ -29,6 +29,7 @@
               <el-divider></el-divider>
               <div id="participants" class="wrapper"></div>
             </div>
+
             <el-scrollbar height="100px" id="chatdiv" ref="scrollbar">
               <div ref="inner">
                 <div
@@ -47,11 +48,11 @@
                 </div>
               </div>
             </el-scrollbar>
+
             <div style="margin-top: 15px;">
-              <el-input v-model="chattext" @keyup.enter="sendchat">
-                <template #append @click="sendchat">전송</template>
-              </el-input>
+              <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
             </div>
+
             <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
             <el-button
               type="warning"
@@ -155,7 +156,7 @@ export default {
       dialogVisible: false,
       chattext: "",
       chatlist: [],
-      heightinner: 39,
+      drawer: false,
     };
   },
   components: {
