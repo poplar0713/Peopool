@@ -98,8 +98,9 @@ public class ProfileOfIndividualController {
 	
 	
 	@ApiOperation(value = "index에 해당하는 이력서을 수정한다.", response = String.class)
-	@PutMapping("/resume")
-	public ResponseEntity<String> modifyResume(@RequestBody ProfileOfIndividual profileOfIndividual, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
+	@PutMapping("/resume/{index}")
+	public ResponseEntity<String> modifyResume(@PathVariable("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
+		ProfileOfIndividual profileOfIndividual = new ProfileOfIndividual();
 		if(!files[0].isEmpty()) {
 //			String realPath = servletContext.getRealPath("/upload");
 //			String realPath = servletContext.getRealPath("/resources/img");
@@ -125,6 +126,8 @@ public class ProfileOfIndividualController {
 				}
 				fileInfos.add(fileInfo);
 			}
+			
+			profileOfIndividual.setInd_index(index);
 			profileOfIndividual.setFileInfos(fileInfos);
 		}
 		
