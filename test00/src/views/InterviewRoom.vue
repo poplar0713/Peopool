@@ -10,44 +10,112 @@
         </div>
       </div>
     </el-header>
-    <el-container height="100%">
-      <el-main>
-        <div id="container">
-          <div>
-            <div id="join" class="animate join">
-              <before-meeting></before-meeting>
-              <div style="text-align:center">
-                <el-button type="warning" id="go" @click="register"
-                  >입장하기</el-button
-                >
+    <el-container>
+      <el-container>
+        <el-main>
+          <div id="container">
+            <div>
+              <div id="join" class="animate join">
+                <before-meeting></before-meeting>
+                <div style="text-align:center">
+                  <el-button type="warning" id="go" @click="register"
+                    >입장하기</el-button
+                  >
+                </div>
               </div>
-            </div>
-            <div id="room" style="display: none;">
-              <div>
-                <span id="room-header"></span>
+              <div id="room" style="display: none;">
+                <div>
+                  <span id="room-header"></span>
+                </div>
+                <el-divider></el-divider>
+                <div id="participants" class="wrapper"></div>
               </div>
-              <el-divider></el-divider>
-              <div id="participants" class="wrapper"></div>
-            </div>
 
-            <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
+              <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
             <el-button
               type="warning"
               icon="el-icon-chat-round"
               circle
               @click="sendchat"
             ></el-button> -->
+            </div>
           </div>
-        </div>
-      </el-main>
-      <el-aside width="300px">
-        <el-scrollbar height="100%" id="chatdiv" ref="scrollbar">
+        </el-main>
+        <el-footer v-if="this.options" class="footer">
+          <span>
+            <el-button
+              round
+              v-if="this.audioOn"
+              type="warning"
+              id="button-audio"
+              v-on:click="AudioOnOff"
+              value="Audio Off"
+              >음소거</el-button
+            >
+            <el-button
+              round
+              v-else
+              type="success"
+              id="button-audio"
+              v-on:click="AudioOnOff"
+              value="Audio On"
+              >음소거 해제</el-button
+            ></span
+          >
+          <span
+            ><el-button
+              round
+              v-if="this.videoOn"
+              type="warning"
+              id="button-video"
+              v-on:click="VideoOnOff"
+              value="Video Off"
+              >비디오 Off</el-button
+            >
+            <el-button
+              round
+              v-else
+              type="success"
+              id="button-video"
+              v-on:click="VideoOnOff"
+              value="Video On"
+              >비디오 On</el-button
+            ></span
+          ><span>
+            <el-button
+              round
+              type="success"
+              id="button-setting"
+              @click="this.dialogVisible = true"
+              value="Setting"
+              >설정</el-button
+            ></span
+          >
+          <span
+            ><el-button
+              round
+              type="danger"
+              id="button-leave"
+              @click="exitDiaVisible = true"
+            >
+              X</el-button
+            ></span
+          >
+        </el-footer>
+      </el-container>
+      <div style="margin-top:20px; width:250px">
+        <el-scrollbar
+          height="500px"
+          id="chatdiv"
+          ref="scrollbar"
+          style="margin:0;"
+        >
           <div ref="inner">
             <div
               v-for="(item, index) in chatlist"
               :key="index"
               :class="[item.name == username ? 'itemright' : 'itemleft']"
-              :scroll="scrolldown()"
+              :scroll="scrolldown"
             >
               <p v-if="item.name == username" class="speech-bubble">
                 {{ item.text }}
@@ -59,73 +127,11 @@
             </div>
           </div>
         </el-scrollbar>
-
-        <div style="margin-top: 15px;">
+        <div>
           <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
         </div>
-      </el-aside>
+      </div>
     </el-container>
-    <el-footer v-if="this.options" class="footer">
-      <span>
-        <el-button
-          round
-          v-if="this.audioOn"
-          type="warning"
-          id="button-audio"
-          v-on:click="AudioOnOff"
-          value="Audio Off"
-          >음소거</el-button
-        >
-        <el-button
-          round
-          v-else
-          type="success"
-          id="button-audio"
-          v-on:click="AudioOnOff"
-          value="Audio On"
-          >음소거 해제</el-button
-        ></span
-      >
-      <span
-        ><el-button
-          round
-          v-if="this.videoOn"
-          type="warning"
-          id="button-video"
-          v-on:click="VideoOnOff"
-          value="Video Off"
-          >비디오 Off</el-button
-        >
-        <el-button
-          round
-          v-else
-          type="success"
-          id="button-video"
-          v-on:click="VideoOnOff"
-          value="Video On"
-          >비디오 On</el-button
-        ></span
-      ><span>
-        <el-button
-          round
-          type="success"
-          id="button-setting"
-          @click="this.dialogVisible = true"
-          value="Setting"
-          >설정</el-button
-        ></span
-      >
-      <span
-        ><el-button
-          round
-          type="danger"
-          id="button-leave"
-          @click="exitDiaVisible = true"
-        >
-          X</el-button
-        ></span
-      >
-    </el-footer>
   </el-container>
 
   <el-dialog
@@ -235,6 +241,7 @@ export default {
         text: this.chattext,
       };
       this.sendMessage(chat);
+      this.scrolldown();
       this.chattext = "";
     },
     register() {
@@ -479,6 +486,10 @@ export default {
 </script>
 
 <style>
+.el-scrollbar {
+  margin: 0 !important;
+  padding: 0 !important;
+}
 .itemright {
   text-align: right;
   padding-right: 10px;
