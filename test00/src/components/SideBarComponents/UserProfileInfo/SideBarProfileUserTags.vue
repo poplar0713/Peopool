@@ -2,9 +2,13 @@
   <div v-if="this.mytags.length > 0">
     <el-tag
       v-for="item in mytags"
+      style="margin:5px"
       :key="item.taglist_index"
       :type="warning"
       effect="plain"
+      closable
+      :disable-transitions="false"
+      @close="handleClose(tag, item.tag_index)"
       @click="GetTagCompany(item.taglist_name)"
     >
       {{ item.taglist_name }}
@@ -109,6 +113,7 @@ export default {
         })
         .then((res) => {
           console.log(res);
+          this.mytags.push(res.data);
         })
         .catch((err) => {
           console.log(err.response.data.status);
@@ -137,6 +142,21 @@ export default {
       setTimeout(() => {
         location.reload();
       }, 2001);
+    },
+    handleClose(tag, tag_index) {
+      console.log(tag);
+      console.log(tag_index);
+      axios
+        .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
+          headers: { Authorization: this.token },
+        })
+        .then(() => {
+          console.log();
+          this.mytags.splice(this.mytags.indexOf(tag), 1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

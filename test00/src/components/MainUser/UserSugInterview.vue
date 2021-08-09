@@ -8,7 +8,7 @@
           data.sug_duty.toLowerCase().includes(search.toLowerCase())
       )
     "
-    style="width: 100%"
+    height="200"
     ref="filterTable"
   >
     <el-table-column

@@ -7,7 +7,7 @@
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
-    height="300"
+    height="200"
   >
     <el-table-column align="center" label="Date" prop="int_start" sortable>
     </el-table-column>

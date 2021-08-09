@@ -21,7 +21,7 @@
       height="250px"
     >
       <el-table-column label="Company" prop="name"> </el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>

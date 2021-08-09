@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.mytags.length > 0">
+  <!-- <div v-if="this.mytags.length > 0">
     <el-tag
       v-for="item in mytags"
       :key="item.taglist_index"
@@ -11,9 +11,9 @@
   </div>
   <div v-else>
     선택된 태그가 없습니다
-  </div>
+  </div> -->
   <div>
-    <el-select v-model="value" clearable placeholder="Select">
+    <el-select v-model="value" multiple placeholder="Select">
       <el-option
         v-for="item in options"
         :key="item.taglist_index"
@@ -88,7 +88,7 @@ export default {
       // 불러온 태그들
       options: [],
       // 선택한 태그들
-      value: "",
+      value: [],
       //나의 태그들
       mytags: [],
     };

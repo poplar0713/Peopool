@@ -40,7 +40,7 @@
             <el-container>
               <el-header>
                 <h2>
-                  {{ this.ent_info.ent_name }}
+                  {{ this.ent_info.ent_name }}&nbsp; &nbsp; 
                   <!-- 팔로우일경우 -->
                   <span v-if="follow == true" style="color: Tomato;">
                     <i
@@ -60,6 +60,7 @@
                   </span>
                 </h2>
               </el-header>
+              <br>
               <el-container>
                 <el-aside width="300px"
                   ><el-image

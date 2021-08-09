@@ -1,39 +1,18 @@
 <template>
   <!-- 카드 -->
-  <el-card shadow="hover" style="margin-bottom:20px">
-    <el-row>
-      <el-col :span="21" @click="dialogVisible = true"
-        ><div>
-          <h4>{{ item.ent_name }}</h4>
-        </div></el-col
-      >
-      <el-col :span="3">
-        <!-- 팔로우가 되어있을때 -->
-        <span v-if="follow" style="color: Tomato;">
-          <i
-            class="fas fa-heart fa-2x"
-            size:7x
-            @click="clickfollowBtn"
-            style="cursor:pointer"
-          ></i>
-        </span>
-        <!-- 팔로우가 안되어있을때 -->
-        <span v-if="follow == false" style="color: Tomato;">
-          <i
-            @click="clickfollowBtn"
-            class="far fa-heart fa-2x"
-            style="cursor:pointer"
-          ></i>
-        </span>
-      </el-col>
-    </el-row>
+  <el-card
+    shadow="hover"
+    style="margin-bottom:20px; text-align:center"
+    @click="dialogVisible = true"
+  >
+    <h1>{{ item.ent_name }}</h1>
   </el-card>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
-    <el-container>
+    <el-container style="text-align:center">
       <el-header>
         <h2>
-          {{ item.ent_name }}
+          {{ item.ent_name }}&nbsp;&nbsp;
           <!-- 팔로우일경우 -->
           <span v-if="follow" style="color: Tomato;">
             <i
@@ -53,6 +32,7 @@
           </span>
         </h2>
       </el-header>
+      <br />
       <el-container>
         <el-aside width="300px"
           ><el-image
@@ -96,7 +76,7 @@ export default {
         console.log(err);
         this.follow = false;
         if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -131,7 +111,7 @@ export default {
             console.log("token error");
             console.log(err.response.data.status);
             if (err.response.data.status == 401) {
-              this.$message.error('로그인세션이 만료되었습니다');
+              this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -154,7 +134,7 @@ export default {
             console.log("token error");
             console.log(err.response.data.status);
             if (err.response.data.status == 401) {
-              this.$message.error('로그인세션이 만료되었습니다');
+              this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
             }

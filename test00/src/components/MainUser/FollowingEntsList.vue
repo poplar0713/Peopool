@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="24">
-    <el-col :span="6" v-for="(item, i) in followingents.slice(0, 8)" :key="i">
+    <el-col :span="4" v-for="(item, i) in followingents.slice(0, 6)" :key="i">
       <FollowingEntCard :item="item" />
     </el-col>
   </el-row>
