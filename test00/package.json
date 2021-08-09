@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.0.0",
-    "@types/jwt-decode": "^3.1.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "decibel-meter": "^2.0.0",
