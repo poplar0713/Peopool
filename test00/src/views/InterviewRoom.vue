@@ -285,6 +285,7 @@ export default {
       console.log("Participant " + request.name + " left");
       var participant = participants[request.name];
       participant.dispose();
+      var out = document.getElementsByName();
       delete participants[request.name];
     },
 
@@ -469,6 +470,9 @@ export default {
 .scale-in-center {
   animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
+.slit-out-vertical {
+  animation: slit-out-vertical 0.5s ease-in both;
+}
 @keyframes scale-in-center {
   0% {
     transform: scale(0);
@@ -477,6 +481,21 @@ export default {
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes slit-out-vertical {
+  0% {
+    transform: translateZ(0) rotateY(0);
+    opacity: 1;
+  }
+  54% {
+    transform: translateZ(-160px) rotateY(87deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(-800px) rotateY(90deg);
+    opacity: 0;
   }
 }
 </style>
