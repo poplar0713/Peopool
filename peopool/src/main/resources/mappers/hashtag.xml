@@ -11,7 +11,7 @@
 		where tag_target = #{index} and tag_type = #{type}
 	</select>
 	
-	<select id="userByTag" parameterType="String" resultType="Individual">
+	<select id="userByTag" parameterType="String" resultType="HashMap">
 		<choose>
 			<when test="type == 0">
 				select ind_index, ind_name
