@@ -14,26 +14,19 @@
       :data="
         followers.filter(
           (data) =>
-            !search ||
-            data.company_name.toLowerCase().includes(search.toLowerCase()) ||
-            data.company_field.toLowerCase().includes(search.toLowerCase())
+            !search || data.name.toLowerCase().includes(search.toLowerCase())
         )
       "
       width="100%"
       height="250px"
     >
-      <el-table-column label="User" prop="following"> </el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="unfollow(scope.row.company_name, this.user)"
-            >정보보러가기</el-button
-          >
+          <UserDetail :userindex="scope.row.following" />
+          <!-- 유저정보 -->
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +38,10 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
+import UserDetail from "@/components/UserDetail.vue";
+
 export default {
+  components: { UserDetail },
   data() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
@@ -60,25 +56,31 @@ export default {
           index: index,
           type: 1,
         },
+        headers: { Authorization: token },
       })
       // 팔로워데이터 넣어주기
       .then((res) => {
         console.log(res);
         this.followers = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       dialogVisible: false,
+      dialogVisible_user: false,
       followers: [],
       search: "",
       company_index: "",
     };
   },
-  methods: {
-    unfollow(company, user) {
-      console.log(company, user);
-    },
-  },
+  methods: {},
 };
 </script>
 

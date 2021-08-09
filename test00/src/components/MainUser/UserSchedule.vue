@@ -6,21 +6,18 @@
           !search || data.name.toLowerCase().includes(search.toLowerCase())
       )
     "
-    :default-sort="{ prop: 'date', order: 'ascending' }"
+    :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="300"
   >
-    <el-table-column label="Date" prop="int_start" sortable> </el-table-column>
-    <el-table-column label="Company" prop="name"> </el-table-column>
-    <el-table-column align="right">
+    <el-table-column align="center" label="Date" prop="int_start" sortable>
+    </el-table-column>
+    <el-table-column align="center" label="Company" prop="name">
+    </el-table-column>
+    <el-table-column align="center">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-button
-          size="mini"
-          @click="Cancel(scope.$index, scope.row, scope.row.int_index)"
-          >Cancel</el-button
-        >
         <!-- {{scope.row.company}} -->
         <el-button
           size="mini"
@@ -45,16 +42,17 @@ export default {
     const index = decoded.index;
     // 면접일정조회
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/int/${index}`,{headers : {"Authorization" : token}})
+      .get(`https://i5d206.p.ssafy.io:8443/int/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         console.log(res);
         this.myinterview = res.data;
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log("token error");
         console.log(err.response.data.status);
-        if(err.response.data.status == 401)
-        {
+        if (err.response.data.status == 401) {
           this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();
           this.$router.push("/");
@@ -67,9 +65,6 @@ export default {
     };
   },
   methods: {
-    Cancel(index, row, company) {
-      console.log(index, row, company);
-    },
     GoToInteriewRoom(company, url) {
       console.log(company, url);
       const loading = this.$loading({

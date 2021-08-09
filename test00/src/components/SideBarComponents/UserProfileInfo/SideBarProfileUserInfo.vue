@@ -142,7 +142,9 @@ export default {
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         this.ruleForm.UserName = res.data.ind_name;
         this.ruleForm.UserBirth = res.data.ind_birth;
@@ -153,11 +155,19 @@ export default {
         this.ruleForm.UserId = res.data.ind_id;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     //public 상태확인
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         if (res.data.ind_switch == "T") {
           this.ruleForm.open = true;
@@ -165,7 +175,15 @@ export default {
           this.ruleForm.open = false;
         }
       })
-      .catch();
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   methods: {
     submitForm(formName) {
@@ -174,6 +192,7 @@ export default {
           // 회원정보 수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/ind", {
+              headers: { Authorization: this.token },
               ind_birth: this.ruleForm.UserBirth,
               ind_email: this.ruleForm.UserEmail,
               ind_gender: this.ruleForm.Gender,
@@ -194,32 +213,52 @@ export default {
               }, 2000);
             })
             .catch((err) => {
-              console.log(err);
+              console.log("token error");
+              console.log(err.response.data.status);
+              if (err.response.data.status == 401) {
+                this.$message.error('로그인세션이 만료되었습니다');
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
           // switch off
           if (this.ruleForm.open == false) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOff", {
+                headers: { Authorization: this.token },
                 ind_index: this.ruleForm.UserIndex,
               })
               .then((res) => {
                 console.log(res);
               })
               .catch((err) => {
-                console.log(err);
+                console.log("token error");
+                console.log(err.response.data.status);
+                if (err.response.data.status == 401) {
+                  this.$message.error('로그인세션이 만료되었습니다');
+                  localStorage.clear();
+                  this.$router.push("/");
+                }
               });
           }
           // switch on
           if (this.ruleForm.open == true) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOn", {
+                headers: { Authorization: this.token },
                 ind_index: this.ruleForm.UserIndex,
               })
               .then((res) => {
                 console.log(res);
               })
               .catch((err) => {
-                console.log(err);
+                console.log("token error");
+                console.log(err.response.data.status);
+                if (err.response.data.status == 401) {
+                  this.$message.error('로그인세션이 만료되었습니다');
+                  localStorage.clear();
+                  this.$router.push("/");
+                }
               });
           }
         } else {

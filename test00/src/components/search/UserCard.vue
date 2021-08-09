@@ -2,80 +2,26 @@
   <!-- 카드 -->
   <el-card shadow="hover" style="margin-bottom:20px">
     <el-row>
-      <el-col :span="21" @click="dialogVisible = true"
+      <el-col :span="21"
         ><div>
-          <h4>{{ item.ent_name }}</h4>
-        </div></el-col
-      >
-      <el-col :span="3">
-        <!-- 팔로우가 되어있을때 -->
-        <span v-if="follow" style="color: Tomato;">
-          <i
-            class="fas fa-heart fa-2x"
-            size:7x
-            @click="clickfollowBtn"
-            style="cursor:pointer"
-          ></i>
-        </span>
-        <!-- 팔로우가 안되어있을때 -->
-        <span v-if="follow == false" style="color: Tomato;">
-          <i
-            @click="clickfollowBtn"
-            class="far fa-heart fa-2x"
-            style="cursor:pointer"
-          ></i>
-        </span>
-      </el-col>
+          <UserDetail :user="item" :userindex="item.ind_index" /></div
+      ></el-col>
     </el-row>
   </el-card>
-  <!-- 모달창 -->
-  <el-dialog v-model="dialogVisible" class="info">
-    <el-container>
-      <el-header>
-        <h2>
-          {{ item.ent_name }}
-          <!-- 팔로우일경우 -->
-          <span v-if="follow" style="color: Tomato;">
-            <i
-              class="fas fa-heart fa-2x"
-              size:7x
-              @click="clickfollowBtn"
-              style="cursor:pointer"
-            ></i>
-          </span>
-          <!-- 언팔로우일경우 -->
-          <span v-if="follow == false" style="color: Tomato;">
-            <i
-              @click="clickfollowBtn"
-              class="far fa-heart fa-2x"
-              style="cursor:pointer"
-            ></i>
-          </span>
-        </h2>
-      </el-header>
-      <el-container>
-        <el-aside width="300px"
-          ><el-image
-            style="width: 300px; height: 300px"
-            :src="ent_img"
-          ></el-image
-        ></el-aside>
-        <el-main>
-          <h4>기업 대표 : {{ item.ent_ceo }}</h4>
-          {{ item.ent_info }}</el-main
-        >
-      </el-container>
-      <el-footer> </el-footer>
-    </el-container>
-  </el-dialog>
 </template>
 
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+
+import UserDetail from "@/components/UserDetail.vue";
 export default {
+  components: {
+    UserDetail,
+  },
+  props: { item: Object },
   data() {
-    // 토큰가져오기
+    // 본인(기업)토큰가져오기
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     const index = decoded.index;
@@ -83,8 +29,8 @@ export default {
     axios
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
-        fol_type: 0,
-        follower: this.item.ent_index,
+        fol_type: 1,
+        follower: this.item.ind_index,
         following: index,
       })
       .then((res) => {
@@ -102,25 +48,24 @@ export default {
         }
       });
     return {
-      dialogVisible: false,
       follow: false,
       user_index: index,
     };
   },
-  props: { item: Object },
+
   methods: {
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
-        console.log(this.user_index, this.item.ent_index);
+        console.log(this.user_index, this.item.ind_index);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
             data: {
-              fol_type: 0,
+              fol_type: 1,
               following: this.user_index,
-              follower: this.item.ent_index,
+              follower: this.item.ind_index,
             },
+            headers: { Authorization: this.token },
           })
           .then((res) => {
             console.log(res);
@@ -141,9 +86,9 @@ export default {
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.token },
-            fol_type: 0,
+            fol_type: 1,
             following: this.user_index,
-            follower: this.item.ent_index,
+            follower: this.item.ind_index,
           })
           .then((res) => {
             console.log(res);
@@ -160,9 +105,6 @@ export default {
             }
           });
       }
-    },
-    handleClose() {
-      this.dialogVisible = false;
     },
   },
 };

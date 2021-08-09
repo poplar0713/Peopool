@@ -23,7 +23,9 @@ export default {
       const index = decoded.index;
       // 회원정보 가져오기
       axios
-        .delete(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
+        .delete(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
+          headers: { Authorization: token },
+        })
         .then((res) => {
           this.openFullScreen2();
           console.log(res);
@@ -42,9 +44,14 @@ export default {
           this.openFullScreen2();
           console.log(err);
           this.$message({
-              message: "회원탈퇴에 실패했습니다, 다시 시도해주세요",
-              type: "warning",
-            });
+            message: "회원탈퇴에 실패했습니다, 다시 시도해주세요",
+            type: "warning",
+          });
+          if (err.response.data.status == 401) {
+            this.$message.error('로그인세션이 만료되었습니다');
+            localStorage.clear();
+            this.$router.push("/");
+          }
         });
     },
     // 스크린로딩
