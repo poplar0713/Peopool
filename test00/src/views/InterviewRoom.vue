@@ -285,7 +285,6 @@ export default {
       console.log("Participant " + request.name + " left");
       var participant = participants[request.name];
       participant.dispose();
-      var out = document.getElementsByName();
       delete participants[request.name];
     },
 
