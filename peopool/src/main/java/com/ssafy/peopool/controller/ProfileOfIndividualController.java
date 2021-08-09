@@ -104,7 +104,7 @@ public class ProfileOfIndividualController {
 //			String realPath = servletContext.getRealPath("/upload");
 //			String realPath = servletContext.getRealPath("/resources/img");
 			// 이미지 저장 경로
-			String realPath = "<image-save-path>";
+			String realPath = "/home/ubuntu/yh/sslkey/";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
 			logger.debug("저장 폴더 : {}", saveFolder);
