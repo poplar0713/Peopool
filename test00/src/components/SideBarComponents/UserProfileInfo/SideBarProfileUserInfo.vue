@@ -155,7 +155,13 @@ export default {
         this.ruleForm.UserId = res.data.ind_id;
       })
       .catch((err) => {
-        console.log(err);
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error('로그인세션이 만료되었습니다');
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     //public 상태확인
     axios
