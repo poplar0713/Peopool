@@ -547,6 +547,7 @@ export default {
   border-radius: 3% 3% 3% 3%;
   overflow: hidden;
   background-color: black;
+  z-index: 9990;
 }
 .video-block:hover {
   box-shadow: 5px 5px 5px gray;
@@ -554,6 +555,10 @@ export default {
 .video-block video {
   width: 36rem;
   height: 27rem;
+  z-index: 9994;
+}
+.video-block div {
+  z-index: 9997;
 }
 .animation-init {
   opacity: 0;
