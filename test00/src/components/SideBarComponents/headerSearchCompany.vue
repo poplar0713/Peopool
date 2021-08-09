@@ -1,5 +1,5 @@
 <template>
-  <div style="float:right; margin-top:5px; width:50%;">
+  <div style="float:right; margin-top:15px; width:30%;">
     <el-input
       placeholder="Please input"
       v-model="keyword"
@@ -23,8 +23,23 @@ export default {
 
   methods: {
     search() {
-      console.log(this.keyword);
-      this.$router.push(`/searchcompany/${this.keyword}`);
+      // console.log(this.keyword);
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          params: { keyword: `${this.keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };

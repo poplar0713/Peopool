@@ -5,6 +5,7 @@
       :key="item.taglist_index"
       :type="warning"
       effect="plain"
+      @click="GetTagCompany(item.taglist_name)"
     >
       {{ item.taglist_name }}
     </el-tag>
@@ -118,6 +119,24 @@ export default {
             this.$router.push("/");
           }
         });
+    },
+    GetTagCompany(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          params: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };

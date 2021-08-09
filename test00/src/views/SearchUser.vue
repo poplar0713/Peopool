@@ -16,6 +16,8 @@ import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vu
 import SearchUserList from "@/components/search/SearchUserList.vue";
 
 export default {
+  mounted(){
+  },
   name: "SearchCompany",
   components: {
     SideBarCompany,

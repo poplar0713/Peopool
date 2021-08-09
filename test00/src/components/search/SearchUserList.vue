@@ -1,7 +1,9 @@
 <template>
-  <h3 style="text-align:center">해당 태그에 다음 피풀인이 기업의 많은 관심을 받고 있어요!</h3>
-  <br>
-  <el-carousel :interval="4000" type="card" height="200px">
+  <h3 style="text-align:center">
+    해당 태그에 다음 피풀인이 기업의 많은 관심을 받고 있어요!
+  </h3>
+  <br />
+  <!-- <el-carousel :interval="4000" type="card" height="200px">
     <el-carousel-item v-for="item in result" :key="item">
       <el-row @click="(dialogUser = true), getuserdata(item)">
         <el-col :span="8"
@@ -15,7 +17,7 @@
         >
       </el-row>
     </el-carousel-item>
-  </el-carousel>
+  </el-carousel> -->
   <!--  -->
   <div style="text-align:center">
     <el-dialog
@@ -144,7 +146,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-// import { useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import UserCard from "@/components/search/UserCard.vue";
 
 export default {
@@ -297,13 +299,17 @@ export default {
   setup() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
-    // const route = useRoute();
-    // const keyword = route.params.keyword;
+    const route = useRoute();
+    const keyword = route.params.keyword;
     // 데이터저장 비동기방식
     const result = ref([]);
     (async () => {
-      const res = await axios.get(`https://i5d206.p.ssafy.io:8443/poi/`, {
+      const res = await axios.get(`https://i5d206.p.ssafy.io:8443/has/user`, {
         headers: { Authorization: token },
+        params: {
+          name: keyword,
+          type: 0,
+        },
       });
       result.value = res.data;
       console.log(res);
