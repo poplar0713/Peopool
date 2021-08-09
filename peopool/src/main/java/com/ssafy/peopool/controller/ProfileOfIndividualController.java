@@ -1,8 +1,11 @@
 package com.ssafy.peopool.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
 import com.ssafy.peopool.model.service.ProfileOfIndividualService;
 
@@ -18,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/poi")
+@CrossOrigin(origins="*",allowedHeaders = "*")
 public class ProfileOfIndividualController {
 
 	private static final String SUCCESS = "success";
@@ -26,9 +31,16 @@ public class ProfileOfIndividualController {
 	@Autowired
 	ProfileOfIndividualService profileOfIndividualService;
 
+	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
+	@GetMapping()
+	public ResponseEntity<List<IndCard>> getAllProfile() {
+		return new ResponseEntity<>(profileOfIndividualService.getAllProfile(), HttpStatus.OK);
+
+	}
+	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<ProfileOfIndividual> getProfile(@PathVariable("index")int index) {
+	public ResponseEntity<IndCard> getProfile(@PathVariable("index")int index) {
 		return new ResponseEntity<>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
 
 	}
@@ -61,7 +73,7 @@ public class ProfileOfIndividualController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiOperation(value = "프로필을 삭제한다.", response = String.class)
+	@ApiOperation(value = "프로필을 삭제한다.(사용안함)", response = String.class)
 	@DeleteMapping("/{index}")
 	public ResponseEntity<String> deleteProfile(@PathVariable("index")int index) {
 		if (profileOfIndividualService.deleteProfile(index)) {

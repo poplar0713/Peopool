@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -21,6 +22,7 @@ import com.ssafy.peopool.webrtc.UserRegistry;
 @SpringBootApplication
 @RestController
 @EnableWebSocket
+@CrossOrigin(origins="*",allowedHeaders = "*")
 public class PeopoolApplication implements WebSocketConfigurer {
 
 	@GetMapping("/peopool")
@@ -74,6 +76,6 @@ public class PeopoolApplication implements WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(groupCallHandler(), "/groupcall");
+		registry.addHandler(groupCallHandler(), "/groupcall").setAllowedOrigins("*");
 	}
 }

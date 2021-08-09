@@ -70,11 +70,11 @@ public class ProfileOfEnterprise {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ProfileOfEnterprise [ent_index=").append(ent_index).append(", ent_image=").append(ent_image)
-				.append(", ent_ceo=").append(ent_ceo).append(", ent_history=").append(ent_history)
-				.append(", ent_address=").append(ent_address).append(", ent_website=").append(ent_website)
-				.append(", ent_introduce=").append(ent_introduce).append("]");
-		return builder.toString();
+		return "ProfileOfEnterprise [ent_index=" + ent_index + ", ent_image=" + ent_image + ", ent_ceo=" + ent_ceo
+				+ ", ent_history=" + ent_history + ", ent_address=" + ent_address + ", ent_website=" + ent_website
+				+ ", ent_introduce=" + ent_introduce + "]";
 	}
+
+
+	
 }

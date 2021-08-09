@@ -1,11 +1,16 @@
 package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
 
 public interface ProfileOfIndividualService {
 
+	// 프로필 조회
+	List<IndCard> getAllProfile();
+	
 	// 프로필 수정
 	boolean modifyProfile(ProfileOfIndividual profileOfIndividual);
 
@@ -19,6 +24,6 @@ public interface ProfileOfIndividualService {
 	boolean deleteProfile(int index);
 
 	// 프로필 조회
-	ProfileOfIndividual getProfile(int index);
+	IndCard getProfile(int index);
 
 }

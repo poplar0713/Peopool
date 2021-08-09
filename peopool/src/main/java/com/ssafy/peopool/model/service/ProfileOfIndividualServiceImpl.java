@@ -1,10 +1,12 @@
 package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
 import com.ssafy.peopool.model.repo.ProfileOfIndividualRepo;
 
@@ -14,6 +16,12 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	@Autowired
 	ProfileOfIndividualRepo profileOfIndividualRepo;
 
+	@Override
+	public List<IndCard> getAllProfile() {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.getAllProfile();
+	}
+	
 	@Override
 	public boolean modifyProfile(ProfileOfIndividual profileOfIndividual) {
 		// TODO Auto-generated method stub
@@ -33,7 +41,7 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	}
 
 	@Override
-	public ProfileOfIndividual getProfile(int index) {
+	public IndCard getProfile(int index) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.getProfile(index);
 	}
@@ -43,5 +51,7 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.deleteProfile(index) == 1;
 	}
+
+	
 
 }
