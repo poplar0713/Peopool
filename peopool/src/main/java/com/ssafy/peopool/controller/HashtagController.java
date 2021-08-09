@@ -34,15 +34,15 @@ public class HashtagController {
 
 	@ApiOperation(value = "사용자별 등록한 태그목록", response = String.class)
 	@GetMapping("/tag")
-	public ResponseEntity<List<Map<String, Object>>> tagByUser(@RequestParam("index")int index) {
-		return new ResponseEntity<>(hashtagService.tagByUser(index), HttpStatus.OK);
+	public ResponseEntity<List<Map<String, Object>>> tagByUser(@RequestParam("index")int index, @RequestParam("type")int type ) {
+		return new ResponseEntity<>(hashtagService.tagByUser(index, type), HttpStatus.OK);
 
 	}
 	
 	@ApiOperation(value = "태그별 등록한 사용자목록", response = String.class)
 	@GetMapping("/user")
-	public ResponseEntity<List<Hashtag>> userByTag(@RequestParam("name")String name) {
-		return new ResponseEntity<>(hashtagService.userByTag(name), HttpStatus.OK);
+	public ResponseEntity<List<Hashtag>> userByTag(@RequestParam("name")String name, @RequestParam("type")int type ) {
+		return new ResponseEntity<>(hashtagService.userByTag(name, type), HttpStatus.OK);
 
 	}
 
