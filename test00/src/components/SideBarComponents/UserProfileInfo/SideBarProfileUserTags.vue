@@ -2,11 +2,11 @@
   <div v-if="this.mytags.length > 0">
     <el-tag
       v-for="item in mytags"
-      :key="item.taglist_name"
+      :key="item.taglist_index"
       :type="warning"
       effect="plain"
     >
-      {{ item }}
+      {{ item.taglist_name }}
     </el-tag>
   </div>
   <div v-else>
@@ -18,7 +18,7 @@
         v-for="item in options"
         :key="item.taglist_index"
         :label="item.taglist_name"
-        :value="item.taglist_name"
+        :value="item.taglist_index"
       >
         <!--  -->
       </el-option>
@@ -36,12 +36,13 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 export default {
-  mounted() {},
-  data() {
+  mounted() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    this.user_index = index;
+
     // 태그목록 불러오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/taglist/", {
@@ -65,6 +66,7 @@ export default {
         headers: { Authorization: token },
         params: {
           index: index,
+          type: 0,
         },
       })
       .then((res) => {
@@ -72,7 +74,6 @@ export default {
         this.mytags = res.data;
       })
       .catch((err) => {
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
@@ -80,7 +81,10 @@ export default {
           this.$router.push("/");
         }
       });
+  },
+  data() {
     return {
+      user_index: "",
       // 불러온 태그들
       options: [],
       // 선택한 태그들
@@ -90,7 +94,31 @@ export default {
     };
   },
   methods: {
-    plustag() {},
+    plustag() {
+      // 유저본인 태그추가
+      console.log(this.value);
+      console.log(this.user_index);
+      axios
+        .post("https://i5d206.p.ssafy.io:8443/has", {
+          headers: { Authorization: this.token },
+
+          tag_target: this.user_index,
+          tag_type: 0,
+          taglist_index: this.value,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.response.data.status);
+          if (err.response.data.status == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
   },
 };
 </script>
