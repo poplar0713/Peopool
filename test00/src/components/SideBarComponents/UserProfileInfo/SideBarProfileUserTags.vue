@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.mytags.length > 0">
+  <div v-if="this.mytags > 0">
     <el-tag
       v-for="item in mytags"
       :key="item.taglist_name"
@@ -20,6 +20,7 @@
         :label="item.taglist_name"
         :value="item.taglist_name"
       >
+      <!--  -->
       </el-option>
     </el-select>
     <i
