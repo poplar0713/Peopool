@@ -1,5 +1,5 @@
 <template>
-  <div style="float:right; margin-top:15px; width:30%;">
+  <div style="float:right; margin-top:15px; width:50%;">
     <el-input
       placeholder="Please input"
       v-model="keyword"
@@ -39,9 +39,6 @@ export default {
           params: { keyword: `${this.keyword}` },
         });
       }, 2000);
-      setTimeout(() => {
-        location.reload();
-      }, 2001);
     },
   },
 };

@@ -1,15 +1,40 @@
 <template>
+  <!-- 면접메모 -->
   <el-dialog v-model="InterviewDialogVisible">
     <el-container>
       <el-main>
-        <el-input type="textarea" :rows="10" placeholder="Please input" v-model="memo"> </el-input
+        <el-input
+          type="textarea"
+          :rows="10"
+          placeholder="Please input"
+          v-model="memo"
+        >
+        </el-input
       ></el-main>
       <el-footer>
         <el-button @click="clickSaveBtn" type="info">저장</el-button>
       </el-footer>
     </el-container>
   </el-dialog>
-  <el-space class="examineCard">
+<el-card class="box-card" style="margin-bottom:25px">
+  <template #header>
+    <div class="card-header">
+      <span>{{item.p_name}}</span>&nbsp;&nbsp;&nbsp;
+      <el-button class="button" type="text">상세보기</el-button>
+    </div>
+  </template>
+  <div>
+    <el-image :src="p_img" :fit="fill"></el-image>
+    &nbsp;
+    <el-button type="text" @click="openInterviewMemo(item.p_ind)">메모</el-button>
+    &nbsp;
+    <el-button type="text">입사제안</el-button>
+    &nbsp;
+    <el-button type="text">탈락</el-button>
+
+  </div>
+</el-card>
+  <!-- <el-space class="examineCard">
     <el-container>
       <el-aside>
         <el-image :src="p_img" :fit="fill"></el-image>
@@ -20,7 +45,9 @@
           <h4>{{ p_name }} ({{ part }})</h4>
           <el-button-group>
             <el-button @click="openUserprofile">프로필</el-button>
-            <el-button type="warning" @click="openInterviewMemo(p_ind)">면접 메모</el-button>
+            <el-button type="warning" @click="openInterviewMemo(p_ind)"
+              >면접 메모</el-button
+            >
           </el-button-group>
         </el-main>
         <el-footer>
@@ -31,21 +58,8 @@
         </el-footer>
       </el-container>
     </el-container>
-  </el-space>
+  </el-space> -->
 </template>
-
-<style>
-.examineCard {
-  padding: 1%;
-  border-width: 3px;
-  border-radius: 10px 10px 10px 10px;
-  border-color: #ffc000;
-  border-style: solid;
-  margin: 1%;
-  width: 39%;
-  box-shadow: 5px 5px 5px 5px wheat;
-}
-</style>
 
 <script>
 import webviewer from "../MainCompany/webviewer.vue";
@@ -59,7 +73,8 @@ export default {
       memo: "",
     };
   },
-  props: ["p_ind", "p_name", "app_url", "part", "p_img", "interviewTime"],
+  props: {item:Object},
+  // props: ["p_ind", "p_name", "app_url", "part", "p_img", "interviewTime"],
   methods: {
     openUserprofile() {},
     openViewer(app_url) {
@@ -79,3 +94,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.box-card {
+  border-width: 3px;
+  border-radius: 10px 10px 10px 10px;
+  border-color: #ffc000;
+  border-style: solid;
+  box-shadow: 5px 5px 5px 5px wheat;
+}
+</style>

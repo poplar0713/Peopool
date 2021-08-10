@@ -4,7 +4,7 @@
     @click="dialogVisible = true"
     style="color:black; text-align:center; cursor:pointer"
     size="mini"
-    >{{ this.userdetailinfo.ind_name }}
+    >상세보기
   </el-text>
   <div style="text-align:center">
     <el-dialog
