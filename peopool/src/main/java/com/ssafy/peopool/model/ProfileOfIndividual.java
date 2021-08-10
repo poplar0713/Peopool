@@ -1,5 +1,7 @@
 package com.ssafy.peopool.model;
 
+import java.util.List;
+
 public class ProfileOfIndividual {
 	int ind_index; // 회원 인덱스
 	String ind_resume; // 회원 이력서
@@ -7,6 +9,7 @@ public class ProfileOfIndividual {
 	String ind_photo; // 회원 사진
 	String ind_switch; // On-Off 스위치
 	String ind_introduce; // 회원 자기소개
+	List<FileInfo> fileInfos; // 파일정보
 
 	public ProfileOfIndividual() {
 	}
@@ -59,11 +62,22 @@ public class ProfileOfIndividual {
 		this.ind_introduce = ind_introduce;
 	}
 
+	public List<FileInfo> getFileInfos() {
+		return fileInfos;
+	}
+
+	public void setFileInfos(List<FileInfo> fileInfos) {
+		this.fileInfos = fileInfos;
+	}
+
 	@Override
 	public String toString() {
 		return "ProfileOfIndividual [ind_index=" + ind_index + ", ind_resume=" + ind_resume + ", ind_video=" + ind_video
-				+ ", ind_photo=" + ind_photo + ", ind_switch=" + ind_switch + ", ind_introduce=" + ind_introduce + "]";
+				+ ", ind_photo=" + ind_photo + ", ind_switch=" + ind_switch + ", ind_introduce=" + ind_introduce
+				+ ", fileInfos=" + fileInfos + "]";
 	}
+
+	
 
 	
 }

@@ -8,14 +8,29 @@
 		select taglist_name, tag_index
 		from hashtag h left outer join taglist t 
 		on h.taglist_index = t.taglist_index
-		where tag_target = #{index}
+		where tag_target = #{index} and tag_type = #{type}
 	</select>
 	
-	<select id="userByTag" parameterType="String" resultType="Hashtag">
-		select *
-		from hashtag h left outer join taglist t 
-		on h.taglist_index = t.taglist_index
-		where taglist_name = #{name}
+	<select id="userByTag" parameterType="String" resultType="HashMap">
+		<choose>
+			<when test="type == 0">
+				select ind_index, ind_name
+				from individual
+				where ind_index = (select tag_target
+				from hashtag h left outer join taglist t 
+				on h.taglist_index = t.taglist_index
+				where taglist_name = #{name} and tag_type = #{type});
+			</when>
+			<otherwise>
+				select ent_index, ent_name
+				from enterprise
+				where ent_index = (select tag_target
+				from hashtag h left outer join taglist t 
+				on h.taglist_index = t.taglist_index
+				where taglist_name = #{name} and tag_type = #{type});
+			</otherwise>
+		</choose>
+		
 	</select>
 	
 	<select id="countByTag" resultType="HashMap">

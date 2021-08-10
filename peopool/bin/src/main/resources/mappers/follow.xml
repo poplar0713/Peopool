@@ -26,16 +26,38 @@
 		where follower =#{index} and fol_type =#{type}
 	</select>
 
-	<select id="getFollowing" parameterType="String" resultType="Follow">
-		select * 
-		from follow 
-		where following = #{index} and fol_type =#{type}
+	<select id="getFollowing" parameterType="String" resultType="FolCard">
+		<choose>
+			<when test="type == 0">
+				select fol_index, follower, following, fol_type, e.ent_name name
+				from follow join enterprise e
+				on follower = e.ent_index
+				where following = #{index} and fol_type = #{type}
+			</when>
+			<otherwise>
+				select fol_index, follower, following, fol_type, i.ind_name name
+				from follow join individual i
+				on follower = i.ind_index
+				where following = #{index} and fol_type = #{type}
+			</otherwise>
+		</choose>
 	</select>
 	
-	<select id="getFollower" parameterType="String" resultType="Follow">
-		select * 
-		from follow 
-		where follower = #{index} and fol_type =#{type}
+	<select id="getFollower" parameterType="String" resultType="FolCard">
+		<choose>
+			<when test="type == 0">
+				select fol_index, follower, following, fol_type, i.ind_name name
+				from follow join individual i
+				on following = i.ind_index
+				where follower = #{index} and fol_type = #{type}
+			</when>
+			<otherwise>
+				select fol_index, follower, following, fol_type, e.ent_name name
+				from follow join enterprise e
+				on following = e.ent_index
+				where follower = #{index} and fol_type = #{type}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="getCheck" parameterType="Follow" resultType="Follow">
