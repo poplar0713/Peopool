@@ -22,8 +22,16 @@
           <FollowingEntsList />
         </div>
         <div v-for="tag in mytags" :key="tag">
-          <el-divider content-position="left">#{{tag.taglist_name}} 관련 기업</el-divider>
-          <TagCompanyList :tag="tag.taglist_name"/>
+          <el-divider content-position="left"
+            >#{{ tag.taglist_name }} 관련 기업
+            <el-divider direction="vertical"></el-divider
+            ><span
+              @click="GetTagCompany(tag.taglist_name)"
+              style="cursor:pointer"
+              >전체보기</span
+            ></el-divider
+          >
+          <TagCompanyList :tag="tag.taglist_name" />
         </div>
       </el-main>
       <el-footer> </el-footer>
@@ -72,8 +80,8 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -93,7 +101,7 @@ export default {
         this.mytags = res.data;
       })
       .catch((err) => {
-        if (err.response.data.status == 401) {
+        if (err.response == 401) {
           console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -118,6 +126,25 @@ export default {
     },
     beforeRemove(file) {
       return this.$confirm(`Cancel the transfert of ${file.name} ?`);
+    },
+    // 해당 태그의 기업들 검색으로
+    GetTagCompany(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          params: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };

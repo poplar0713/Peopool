@@ -82,7 +82,7 @@ export default {
               type="warning"
               show-icon
             ></el-alert>;
-            if (err.response.data.status == 401) {
+            if (err.response == 401) {
               this.$message.error('로그인세션이 만료되었습니다');
               localStorage.clear();
               this.$router.push("/");

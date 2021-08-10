@@ -6,23 +6,6 @@
     size="mini"
     >{{ this.userdetailinfo.ind_name }}
   </el-button>
-  <!-- 팔로우가 되어있을때 -->
-  <!-- <div v-if="follow" style="color: Tomato;">
-    <i
-      class="fas fa-heart fa-2x"
-      size:7x
-      @click="clickfollowBtn"
-      style="cursor:pointer"
-    ></i>
-  </div> -->
-  <!-- 팔로우가 안되어있을때 -->
-  <!-- <div v-if="follow == false" style="color: Tomato;">
-    <i
-      @click="clickfollowBtn"
-      class="far fa-heart fa-2x"
-      style="cursor:pointer"
-    ></i>
-  </div> -->
   <div style="text-align:center">
     <el-dialog
       :title="this.userdetailinfo.ind_name"
@@ -46,6 +29,28 @@
           class="far fa-heart fa-2x"
           style="cursor:pointer"
         ></i>
+      </div>
+      <br />
+      <!-- 태그 -->
+      <div
+        v-if="this.user_tags.length > 0"
+        style="width:100%; word-break:break-all;word-wrap:break-word;"
+      >
+        <el-tag
+          v-for="item in user_tags"
+          style="margin:5px"
+          :key="item.taglist_index"
+          :type="warning"
+          effect="plain"
+          closable
+          :disable-transitions="true"
+          @click="GetTagUser(item.taglist_name)"
+        >
+          {{ item.taglist_name }}
+        </el-tag>
+      </div>
+      <div v-else style="align-text:center">
+        선택된 태그가 없습니다
       </div>
       <br />
       <div>
@@ -138,6 +143,10 @@ export default {
     webviewer,
   },
   created() {},
+  props: {
+    user: Object,
+    userindex: Object,
+  },
   data() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
@@ -160,7 +169,7 @@ export default {
         // 팔로우가 안되어있는것
         console.log(err);
         this.follow = false;
-        if (err.response.data.status == 401) {
+        if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -186,8 +195,29 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 유저 태그목록 불러오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+        headers: { Authorization: token },
+        params: {
+          index: this.userindex,
+          type: 0,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.user_tags = res.data;
+      })
+      .catch((err) => {
+        if (err.response == 401) {
+          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -199,6 +229,7 @@ export default {
       dialogVisible: false,
       // activeNames: ["1"],
       activeName: "1",
+      user_tags: [],
       userdetailinfo: [
         { ind_index: 0 },
         { ind_name: "" },
@@ -226,10 +257,6 @@ export default {
       ],
     };
   },
-  props: {
-    user: Object,
-    userindex: Object,
-  },
   methods: {
     clickfollowBtn() {
       if (this.follow) {
@@ -249,8 +276,8 @@ export default {
           })
           .catch((err) => {
             console.log("token error");
-            console.log(err.response.data.status);
-            if (err.response.data.status == 401) {
+            console.log(err.response);
+            if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -271,8 +298,8 @@ export default {
           })
           .catch((err) => {
             console.log("token error");
-            console.log(err.response.data.status);
-            if (err.response.data.status == 401) {
+            console.log(err.response);
+            if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -288,8 +315,8 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
+          console.log(err.response);
+          if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
@@ -332,13 +359,32 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
+          console.log(err.response);
+          if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }
         });
+    },
+    // 해당 태그의 기업들 검색으로
+    GetTagUser(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "searchuser",
+          params: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };

@@ -28,7 +28,7 @@
           <el-row>
             <el-col :span="12"
               ><div class="grid-content bg-purple">
-                <UserDetail :userindex="scope.row.follower" /></div
+                <UserInfo :userindex="scope.row.follower" /></div
             ></el-col>
             <el-col :span="12"
               ><div class="grid-content bg-purple-light">
@@ -51,7 +51,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserDetail from "@/components/UserDetail.vue";
+import UserInfo from "./UserInfo.vue";
 
 export default {
   mounted() {
@@ -76,15 +76,15 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();
           this.$router.push("/");
         }
       });
   },
-  components: { UserDetail },
+  components: { UserInfo },
   data() {
     return {
       dialogVisible: false,
@@ -112,8 +112,8 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
+          console.log(err.response);
+          if (err.response == 401) {
             this.$message.error('로그인세션이 만료되었습니다');
             localStorage.clear();
             this.$router.push("/");

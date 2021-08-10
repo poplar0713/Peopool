@@ -33,19 +33,61 @@
         </h2>
       </el-header>
       <br />
-      <el-container>
-        <el-aside width="300px"
-          ><el-image
-            style="width: 300px; height: 300px"
-            :src="ent_img"
-          ></el-image
-        ></el-aside>
-        <el-main>
-          <h4>기업 대표 : {{ this.ent_info.ent_ceo }}</h4>
-          {{ this.ent_info.ent_info }}</el-main
-        >
-      </el-container>
-      <el-footer> </el-footer>
+      <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse-item title="기본정보" name="1">
+          <div>
+            <el-container>
+              <!-- 왼쪽 사진 -->
+              <el-aside width="300px"
+                ><el-image
+                  style="width: 300px; height: 300px"
+                  :src="ent_img"
+                ></el-image
+              ></el-aside>
+              <!--  -->
+              <el-main>
+                <h4>기업 대표 : {{ this.ent_info.ent_ceo }}</h4>
+                {{ this.ent_info.ent_info }}
+                <br />
+                {{ this.ent_info.ent_introduce }}</el-main
+              >
+            </el-container>
+          </div>
+        </el-collapse-item>
+        <el-collapse-item title="역사" name="2">
+          <div>
+            {{ this.ent_info.ent_history }}
+          </div>
+        </el-collapse-item>
+        <el-collapse-item title="태그" name="3">
+          <div
+            v-if="this.ent_tags.length > 0"
+            style="width:100%; word-break:break-all;word-wrap:break-word;"
+          >
+            <el-tag
+              v-for="item in ent_tags"
+              style="margin:5px"
+              :key="item.taglist_index"
+              :type="warning"
+              effect="plain"
+              closable
+              :disable-transitions="true"
+              @click="GetTagCompany(item.taglist_name)"
+            >
+              {{ item.taglist_name }}
+            </el-tag>
+          </div>
+          <div v-else style="align-text:center">
+            선택된 태그가 없습니다
+          </div>
+        </el-collapse-item>
+        <el-collapse-item title="연락처 및 찾아오는주소" name="4">
+          <div>Tel. {{ this.ent_info.ent_contact }}</div>
+          <div>email. {{ this.ent_info.ent_email }}</div>
+          <div>address. {{ this.ent_info.ent_address }}</div>
+          <div>website. {{ this.ent_info.ent_website }}</div>
+        </el-collapse-item>
+      </el-collapse>
     </el-container>
   </el-dialog>
 </template>
@@ -75,7 +117,7 @@ export default {
         // 팔로우가 안되어있는것
         console.log(err);
         this.follow = false;
-        if (err.response.data.status == 401) {
+        if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -99,18 +141,41 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 기업본인 태그목록 불러오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+        headers: { Authorization: token },
+        params: {
+          index: this.item.follower,
+          type: 1,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.ent_tags = res.data;
+      })
+      .catch((err) => {
+        if (err.response == 401) {
+          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
       });
     return {
+      activeNames: ["1"],
       dialogVisible: false,
       follow: false,
       user_index: index,
       ent_index: this.item.follower,
+      ent_tags: [],
       ent_info: {
         ent_name: "",
         ent_contact: "",
@@ -143,12 +208,11 @@ export default {
           .then((res) => {
             console.log(res);
             this.follow = false;
-            location.reload();
           })
           .catch((err) => {
             console.log("token error");
-            console.log(err.response.data.status);
-            if (err.response.data.status == 401) {
+            console.log(err.response);
+            if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -166,12 +230,11 @@ export default {
           .then((res) => {
             console.log(res);
             this.follow = true;
-            location.reload();
           })
           .catch((err) => {
             console.log("token error");
-            console.log(err.response.data.status);
-            if (err.response.data.status == 401) {
+            console.log(err.response);
+            if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -183,9 +246,26 @@ export default {
     handleClose() {
       this.dialogVisible = false;
     },
+    // 해당 태그의 기업들 검색으로
+    GetTagCompany(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          params: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
+    },
   },
-  // company 정보 저장하기
-  GetFollowingCompany() {},
 };
 </script>
 

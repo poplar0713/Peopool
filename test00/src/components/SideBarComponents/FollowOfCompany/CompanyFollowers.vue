@@ -25,7 +25,7 @@
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <UserDetail :userindex="scope.row.following" />
+          <UserInfo :userindex="scope.row.following" />
           <!-- 유저정보 -->
         </template>
       </el-table-column>
@@ -38,10 +38,10 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
-import UserDetail from "@/components/UserDetail.vue";
+import UserInfo from "./UserInfo.vue";
 
 export default {
-  components: { UserDetail },
+  components: { UserInfo },
   data() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
@@ -65,8 +65,8 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();
           this.$router.push("/");

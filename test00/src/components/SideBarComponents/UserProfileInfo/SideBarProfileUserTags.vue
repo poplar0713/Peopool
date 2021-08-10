@@ -1,5 +1,8 @@
 <template>
-  <div v-if="this.mytags.length > 0">
+  <div
+    v-if="this.mytags.length > 0"
+    style="width:100%; word-break:break-all;word-wrap:break-word;"
+  >
     <el-tag
       v-for="item in mytags"
       style="margin:5px"
@@ -7,27 +10,34 @@
       :type="warning"
       effect="plain"
       closable
-      :disable-transitions="false"
+      :disable-transitions="true"
       @close="handleClose(tag, item.tag_index)"
       @click="GetTagCompany(item.taglist_name)"
     >
       {{ item.taglist_name }}
     </el-tag>
   </div>
-  <div v-else>
+  <div v-else style="align-text:center">
     선택된 태그가 없습니다
   </div>
-  <div>
-    <el-select v-model="value" clearable placeholder="Select">
+  <div style="align-text:center">
+    <!-- select -->
+    <!-- 테스트 -->
+    <el-select
+      v-model="value"
+      filterable
+      placeholder="Choose tags"
+      style="align-text:center"
+    >
       <el-option
         v-for="item in options"
         :key="item.taglist_index"
         :label="item.taglist_name"
         :value="item.taglist_index"
       >
-        <!--  -->
       </el-option>
     </el-select>
+    <!--  -->
     <i
       class="far fa-plus-square fa-2x"
       @click="plustag"
@@ -57,8 +67,8 @@ export default {
         this.options = res.data;
       })
       .catch((err) => {
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           console.log("token error");
           localStorage.clear();
@@ -79,7 +89,7 @@ export default {
         this.mytags = res.data;
       })
       .catch((err) => {
-        if (err.response.data.status == 401) {
+        if (err.response == 401) {
           console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -103,28 +113,37 @@ export default {
       // 유저본인 태그추가
       console.log(this.value);
       console.log(this.user_index);
-      axios
-        .post("https://i5d206.p.ssafy.io:8443/has", {
-          headers: { Authorization: this.token },
-
-          tag_target: this.user_index,
-          tag_type: 0,
-          taglist_index: this.value,
-        })
-        .then((res) => {
-          console.log(res);
-          this.mytags.push(res.data);
-        })
-        .catch((err) => {
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
-            console.log("token error");
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
+      const mytaglist = [];
+      for (var i in this.mytags) {
+        mytaglist.push(this.mytags[i].taglist_index);
+      }
+      console.log(mytaglist);
+      if (mytaglist.includes(this.value)) {
+        this.$message.error("이미 추가된 태그입니다.");
+      } else {
+        axios
+          .post("https://i5d206.p.ssafy.io:8443/has", {
+            headers: { Authorization: this.token },
+            tag_target: this.user_index,
+            tag_type: 0,
+            taglist_index: this.value,
+          })
+          .then((res) => {
+            console.log(res);
+            this.mytags.push(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err.response == 401) {
+              console.log("token error");
+              this.$message.error("로그인세션이 만료되었습니다");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      }
     },
+
     GetTagCompany(keyword) {
       const loading = this.$loading({
         lock: true,

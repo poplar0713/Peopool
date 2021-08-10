@@ -2,7 +2,7 @@
   <div v-if="this.ents !== null">
     <el-row :gutter="24">
       <el-col :span="4" v-for="(item, i) in ents.slice(0, 6)" :key="i">
-        <TagCompanyCard :item="item" />
+        <TagCompanyCard :item="item.ent_index" />
       </el-col>
     </el-row>
   </div>
@@ -39,8 +39,8 @@ export default {
         this.ents = res.data;
       })
       .catch((err) => {
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();

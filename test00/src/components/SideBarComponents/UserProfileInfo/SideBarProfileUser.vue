@@ -1,7 +1,7 @@
 <template>
   <el-tabs :tab-position="tabPosition" style="height: 100%;">
     <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
-    <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane>
+    <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
     <el-tab-pane label="소개"><SideBarProfileUserIntroduction /></el-tab-pane>
     <el-tab-pane label="소개영상"><PRVideo /></el-tab-pane>
     <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
@@ -12,7 +12,6 @@
 
 <script>
 import SideBarProfileUserInfo from "./SideBarProfileUserInfo.vue";
-import SideBarProfileUserEducation from "./SideBarProfileUserEducation.vue";
 import SideBarProfileUserIntroduction from "./SideBarProfileUserIntroduction.vue";
 import SideBarProfileUserTags from "./SideBarProfileUserTags.vue";
 import PRVideo from "./PRVideo.vue";
@@ -21,7 +20,6 @@ import DeleteUserAccount from "./DeleteUserAccount.vue";
 export default {
   components: {
     SideBarProfileUserInfo,
-    SideBarProfileUserEducation,
     SideBarProfileUserIntroduction,
     SideBarProfileUserTags,
     PRVideo,
