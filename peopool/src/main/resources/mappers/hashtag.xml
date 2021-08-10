@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.peopool.model.repo.HashtagRepo">
 	
 	<select id="tagByUser" parameterType="int" resultType="HashMap">
-		select taglist_name, tag_index
+		select taglist_name, tag_index, h.taglist_index
 		from hashtag h left outer join taglist t 
 		on h.taglist_index = t.taglist_index
 		where tag_target = #{index} and tag_type = #{type}
