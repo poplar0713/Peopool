@@ -330,8 +330,6 @@ export default {
       document.getElementById("room").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
-
-      ws.close();
     },
 
     receiveVideo(sender) {
