@@ -112,7 +112,7 @@ public class ProfileOfIndividualController {
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 //			String saveFolder = realPath + File.separator + today;
 			String saveFolder = realPath + "/" + today;
-			logger.debug("저장 폴더 : {}", saveFolder);
+			logger.info("저장 폴더 : {}", saveFolder);
 			File folder = new File(saveFolder);
 			if(!folder.exists())
 				folder.mkdirs();
@@ -125,7 +125,7 @@ public class ProfileOfIndividualController {
 					fileInfo.setSaveFolder(today);
 					fileInfo.setOriginFile(originalFileName);
 					fileInfo.setSaveFile(saveFileName);
-					logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+					logger.info("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
 					mfile.transferTo(new File(folder, saveFileName));
 				}
 				fileInfos.add(fileInfo);
