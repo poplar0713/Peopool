@@ -106,7 +106,7 @@ public class ProfileOfIndividualController {
 //			String realPath = servletContext.getRealPath("/upload");
 //			String realPath = servletContext.getRealPath("/resources/img");
 			// 이미지 저장 경로
-			String realPath = "/home/ubuntu/yh/sslkey/";
+			String realPath = "/home/ubuntu/upload/";
 //			String realPath = "C:\\image\\";
 //			String realPath = "C:\\image";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
