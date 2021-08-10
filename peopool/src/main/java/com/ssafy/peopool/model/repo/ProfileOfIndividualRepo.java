@@ -26,8 +26,14 @@ public interface ProfileOfIndividualRepo {
 	// 프로필 삭제
 	int deleteProfile(int index);
 	
-	// 파일 등록
+	// 이력서 등록
 	int modifyResume(ProfileOfIndividual profileOfIndividual);
+	
+	// 사진 등록
+	int modifyPhoto(ProfileOfIndividual profileOfIndividual);
+	
+	// 영상 등록
+	int modifyVideo(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
 	IndCard getProfile(int index);
