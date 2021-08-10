@@ -71,6 +71,26 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 		
 	}
 
+	@Override
+	public boolean modifyPhoto(ProfileOfIndividual profileOfIndividual) {
+		if(profileOfIndividual.getFileInfos() != null) {
+			logger.debug("업로드 파일 수 : {}", profileOfIndividual.getFileInfos().size());
+			profileOfIndividualRepo.modifyPhoto(profileOfIndividual);
+			logger.debug("파일 번호 : {}", profileOfIndividual.getInd_photo());
+		}
+		return profileOfIndividualRepo.modifyProfile(profileOfIndividual) == 1;
+	}
+
+	@Override
+	public boolean modifyVideo(ProfileOfIndividual profileOfIndividual) {
+		if(profileOfIndividual.getFileInfos() != null) {
+			logger.debug("업로드 파일 수 : {}", profileOfIndividual.getFileInfos().size());
+			profileOfIndividualRepo.modifyVideo(profileOfIndividual);
+			logger.debug("파일 번호 : {}", profileOfIndividual.getInd_video());
+		}
+		return profileOfIndividualRepo.modifyProfile(profileOfIndividual) == 1;
+	}
+
 	
 
 }

@@ -147,4 +147,104 @@ public class ProfileOfIndividualController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
 	}
+	
+	@ApiOperation(value = "index에 해당하는 영상을 수정한다.", response = String.class)
+	@PostMapping("/video/{index}")
+	public ResponseEntity<String> modifVideo(@PathVariable("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
+		ProfileOfIndividual profileOfIndividual = new ProfileOfIndividual();
+		if(!files[0].isEmpty()) {
+//			String realPath = servletContext.getRealPath("/upload");
+//			String realPath = servletContext.getRealPath("/resources/img");
+			// 이미지 저장 경로
+			String realPath = "/home/ubuntu/upload";
+//			String realPath = "C:\\image\\";
+//			String realPath = "C:\\image";
+			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+//			String saveFolder = realPath + File.separator + today;
+			String saveFolder = realPath + "/" + today;
+			logger.info("저장 폴더 : {}", saveFolder);
+			File folder = new File(saveFolder);
+			if(!folder.exists())
+				folder.mkdirs();
+			List<FileInfo> fileInfos = new ArrayList<FileInfo>();
+			for (MultipartFile mfile : files) {
+				FileInfo fileInfo = new FileInfo();
+				String originalFileName = mfile.getOriginalFilename();
+				if (!originalFileName.isEmpty()) {
+					String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf('.'));
+					fileInfo.setSaveFolder(today);
+					fileInfo.setOriginFile(originalFileName);
+					fileInfo.setSaveFile(saveFileName);
+					logger.info("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+					mfile.transferTo(new File(folder, saveFileName));
+				}
+				fileInfos.add(fileInfo);
+			}
+			IndCard ind = profileOfIndividualService.getProfile(index);
+			profileOfIndividual.setInd_index(index);
+			profileOfIndividual.setInd_resume(ind.getInd_resume());
+			profileOfIndividual.setInd_switch(ind.getInd_switch());
+			profileOfIndividual.setInd_introduce(ind.getInd_introduce());
+			profileOfIndividual.setInd_photo(ind.getInd_photo());
+			profileOfIndividual.setFileInfos(fileInfos);
+		}
+		
+//		profileOfIndividual.setUserid(memberDto.getUserid());
+		
+		if(profileOfIndividualService.modifyVideo(profileOfIndividual)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
+	}
+	
+	@ApiOperation(value = "index에 해당하는 사진을 수정한다.", response = String.class)
+	@PostMapping("/photo/{index}")
+	public ResponseEntity<String> modifyPhoto(@PathVariable("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
+		ProfileOfIndividual profileOfIndividual = new ProfileOfIndividual();
+		if(!files[0].isEmpty()) {
+//			String realPath = servletContext.getRealPath("/upload");
+//			String realPath = servletContext.getRealPath("/resources/img");
+			// 이미지 저장 경로
+			String realPath = "/home/ubuntu/upload";
+//			String realPath = "C:\\image\\";
+//			String realPath = "C:\\image";
+			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+//			String saveFolder = realPath + File.separator + today;
+			String saveFolder = realPath + "/" + today;
+			logger.info("저장 폴더 : {}", saveFolder);
+			File folder = new File(saveFolder);
+			if(!folder.exists())
+				folder.mkdirs();
+			List<FileInfo> fileInfos = new ArrayList<FileInfo>();
+			for (MultipartFile mfile : files) {
+				FileInfo fileInfo = new FileInfo();
+				String originalFileName = mfile.getOriginalFilename();
+				if (!originalFileName.isEmpty()) {
+					String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf('.'));
+					fileInfo.setSaveFolder(today);
+					fileInfo.setOriginFile(originalFileName);
+					fileInfo.setSaveFile(saveFileName);
+					logger.info("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+					mfile.transferTo(new File(folder, saveFileName));
+				}
+				fileInfos.add(fileInfo);
+			}
+			IndCard ind = profileOfIndividualService.getProfile(index);
+			profileOfIndividual.setInd_index(index);
+			profileOfIndividual.setInd_video(ind.getInd_video());
+			profileOfIndividual.setInd_switch(ind.getInd_switch());
+			profileOfIndividual.setInd_introduce(ind.getInd_introduce());
+			profileOfIndividual.setInd_resume(ind.getInd_resume());
+			profileOfIndividual.setFileInfos(fileInfos);
+		}
+		
+//		profileOfIndividual.setUserid(memberDto.getUserid());
+		
+		if(profileOfIndividualService.modifyPhoto(profileOfIndividual)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
+	}
 }

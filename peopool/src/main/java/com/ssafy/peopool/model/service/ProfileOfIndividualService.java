@@ -25,6 +25,12 @@ public interface ProfileOfIndividualService {
 	
 	// 이력서 등록
 	boolean modifyResume(ProfileOfIndividual profileOfIndividual);
+	
+	// 사진 등록
+	boolean modifyPhoto(ProfileOfIndividual profileOfIndividual);
+	
+	// 영상 등록
+	boolean modifyVideo(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
 	IndCard getProfile(int index);
