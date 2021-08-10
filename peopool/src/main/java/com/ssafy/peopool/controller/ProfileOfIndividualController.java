@@ -106,11 +106,12 @@ public class ProfileOfIndividualController {
 //			String realPath = servletContext.getRealPath("/upload");
 //			String realPath = servletContext.getRealPath("/resources/img");
 			// 이미지 저장 경로
-			String realPath = "/home/ubuntu/upload/";
+			String realPath = "/home/ubuntu/upload";
 //			String realPath = "C:\\image\\";
 //			String realPath = "C:\\image";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-			String saveFolder = realPath + File.separator + today;
+//			String saveFolder = realPath + File.separator + today;
+			String saveFolder = realPath + "/" + today;
 			logger.debug("저장 폴더 : {}", saveFolder);
 			File folder = new File(saveFolder);
 			if(!folder.exists())
