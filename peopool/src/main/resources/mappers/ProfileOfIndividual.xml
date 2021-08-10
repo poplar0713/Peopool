@@ -46,7 +46,7 @@
 		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
 		(#{fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
 		</foreach>
-		<selectKey resultType="int" keyProperty="ind_resume" order="AFTER">
+		<selectKey resultType="String" keyProperty="ind_resume" order="AFTER">
         	SELECT LAST_INSERT_ID()
     	</selectKey>
 	</insert>

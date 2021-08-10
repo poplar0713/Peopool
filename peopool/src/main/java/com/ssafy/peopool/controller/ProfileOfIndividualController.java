@@ -107,6 +107,8 @@ public class ProfileOfIndividualController {
 //			String realPath = servletContext.getRealPath("/resources/img");
 			// 이미지 저장 경로
 			String realPath = "/home/ubuntu/yh/sslkey/";
+//			String realPath = "C:\\image\\";
+//			String realPath = "C:\\image";
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
 			logger.debug("저장 폴더 : {}", saveFolder);
@@ -127,8 +129,12 @@ public class ProfileOfIndividualController {
 				}
 				fileInfos.add(fileInfo);
 			}
-			
+			IndCard ind = profileOfIndividualService.getProfile(index);
 			profileOfIndividual.setInd_index(index);
+			profileOfIndividual.setInd_photo(ind.getInd_photo());
+			profileOfIndividual.setInd_switch(ind.getInd_switch());
+			profileOfIndividual.setInd_introduce(ind.getInd_introduce());
+			profileOfIndividual.setInd_video(ind.getInd_video());
 			profileOfIndividual.setFileInfos(fileInfos);
 		}
 		
