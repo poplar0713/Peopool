@@ -10,7 +10,7 @@
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
         {{ this.ruleForm.ent_image }}<br />
-        <el-input type="" v-model="ruleForm.ent_image"></el-input>
+        <el-input type="file" v-model="ruleForm.ent_image"></el-input>
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">

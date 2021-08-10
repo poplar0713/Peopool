@@ -33,14 +33,22 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
+        <CompanyInfo :item="scope.row.ent_index" :front="button" />
+        &nbsp;
         <el-button
           v-if="scope.row.sug_state == 'W'"
           @click="dialogVisible = true"
           size="mini"
           >응답하기</el-button
         >
-        <el-button v-if="scope.row.sug_state !== 'W'" disabled size="mini"
+        <el-button v-if="scope.row.sug_state == 'T'" disabled size="mini"
           >응답완료</el-button
+        >
+        <el-button v-if="scope.row.sug_state == 'F'" disabled size="mini"
+          >응답거절</el-button
+        >
+        <el-button v-if="scope.row.sug_state == 'C'" disabled size="mini"
+          >취소된 요청입니다</el-button
         >
 
         <el-dialog
@@ -102,14 +110,6 @@
               >거절하기</el-button
             >
           </div>
-          <!-- <template #footer>
-            <span class="dialog-footer">
-              <el-button @click="dialogVisible = false">Cancel</el-button>
-              <el-button type="primary" @click="dialogVisible = false"
-                >Confirm</el-button
-              >
-            </span>
-          </template> -->
         </el-dialog>
       </template>
     </el-table-column>
@@ -119,8 +119,10 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  components: { CompanyInfo },
   data() {
     // 토큰으로 유저index 가져오기
     const token = localStorage.getItem("token");
@@ -139,7 +141,7 @@ export default {
         console.log("token error");
         console.log(err.response);
         if (err.response == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -173,7 +175,7 @@ export default {
           console.log("token error");
           console.log(err.response);
           if (err.response == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }

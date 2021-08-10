@@ -75,7 +75,7 @@
           v-on:click="AudioOnOff"
           value="Audio Off"
           >음소거</el-button
-        >
+        >&nbsp;&nbsp;
         <el-button
           round
           v-else
@@ -85,7 +85,7 @@
           value="Audio On"
           >음소거 해제</el-button
         ></span
-      >
+      >&nbsp;&nbsp;
       <span
         ><el-button
           round
@@ -95,7 +95,7 @@
           v-on:click="VideoOnOff"
           value="Video Off"
           >비디오 Off</el-button
-        >
+        >&nbsp;&nbsp;
         <el-button
           round
           v-else
@@ -105,7 +105,7 @@
           value="Video On"
           >비디오 On</el-button
         ></span
-      ><span>
+      >&nbsp;&nbsp;<span>
         <el-button
           round
           type="success"
@@ -114,7 +114,7 @@
           value="Setting"
           >설정</el-button
         ></span
-      >
+      >&nbsp;&nbsp;
       <span
         ><el-button
           round
