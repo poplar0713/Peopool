@@ -1,11 +1,11 @@
 <template>
-  <el-button
+  <el-text
     type="text"
     @click="dialogVisible = true"
-    style="color:black; text-align:center"
+    style="color:black; text-align:center; cursor:pointer"
     size="mini"
-    >{{ this.userdetailinfo.ind_name }}
-  </el-button>
+    >상세보기
+  </el-text>
   <div style="text-align:center">
     <el-dialog
       :title="this.userdetailinfo.ind_name"

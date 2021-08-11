@@ -20,16 +20,27 @@
       width="100%"
       height="250px"
     >
-      <el-table-column label="Company" prop="name"> </el-table-column>
-      <el-table-column align="right">
+      <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <el-button size="mini" type="primary" @click="unfollow(scope.row)"
-            >following</el-button
-          >
-          <!-- {{scope.row.company_name}} -->
+          <el-row>
+            <el-col :span="12"
+              ><div class="grid-content bg-purple">
+                <CompanyInfo :item="scope.row.follower" /></div
+            ></el-col>
+            <el-col :span="12"
+              ><div class="grid-content bg-purple-light">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="unfollow(scope.row)"
+                  >following</el-button
+                >
+              </div></el-col
+            >
+          </el-row>
         </template>
       </el-table-column>
     </el-table>
@@ -40,8 +51,10 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  components: { CompanyInfo },
   data() {
     return {
       dialogVisible: false,
@@ -72,9 +85,9 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -99,9 +112,9 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+          console.log(err.response);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }
@@ -116,9 +129,9 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+          console.log(err.response);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }

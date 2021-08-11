@@ -1,11 +1,11 @@
 <template>
-  <el-button
-    type="text"
+  <el-card
+    shadow="hover"
+    style="margin-bottom:20px; text-align:center"
     @click="dialogVisible = true"
-    style="color:black; text-align:center"
-    size="mini"
-    >{{ this.userdetailinfo.ind_name }}
-  </el-button>
+  >
+    <h1>{{ this.userdetailinfo.ind_name }}</h1>
+  </el-card>
   <div style="text-align:center">
     <el-dialog
       :title="this.userdetailinfo.ind_name"
@@ -138,15 +138,11 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "UserDetail",
+  name: "SearchUserTagCard",
   components: {
     webviewer,
   },
-  created() {},
-  props: {
-    user: Object,
-    userindex: Object,
-  },
+  props: { item: Object },
   data() {
     // 토큰가져오기
     const token = localStorage.getItem("token");
@@ -157,7 +153,7 @@ export default {
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
         fol_type: 1,
-        follower: this.userindex,
+        follower: this.item.ind_index,
         following: index,
       })
 
@@ -177,7 +173,7 @@ export default {
       });
     // 유저정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.item.ind_index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -207,7 +203,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
         headers: { Authorization: token },
         params: {
-          index: this.userindex,
+          index: this.item.ind_index,
           type: 0,
         },
       })
@@ -227,9 +223,8 @@ export default {
       follow: false,
       company_index: index,
       dialogVisible: false,
-      // activeNames: ["1"],
-      activeName: "1",
       user_tags: [],
+      activeName: "1",
       userdetailinfo: [
         { ind_index: 0 },
         { ind_name: "" },
@@ -266,7 +261,7 @@ export default {
             data: {
               fol_type: 1,
               following: this.company_index,
-              follower: this.userindex,
+              follower: this.item.ind_index,
             },
             headers: { Authorization: this.token },
           })
@@ -290,7 +285,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 1,
             following: this.company_index,
-            follower: this.userindex,
+            follower: this.item.ind_index,
           })
           .then((res) => {
             console.log(res);
@@ -331,7 +326,7 @@ export default {
     },
     interviewrequest() {
       console.log(this.company_index);
-      console.log(this.userindex);
+      console.log(this.this.item.ind_index);
       console.log(this.reservationdata.sug_duty);
       console.log(this.reservationdata.sug_timeone);
       console.log(this.reservationdata.sug_timetwo);
@@ -342,7 +337,7 @@ export default {
         .post("https://i5d206.p.ssafy.io:8443/sug", {
           headers: { Authorization: this.token },
           ent_index: this.company_index,
-          ind_index: this.userindex,
+          ind_index: this.this.item.ind_index,
           sug_duty: this.reservationdata.sug_duty,
           sug_timeone: this.reservationdata.sug_timeone,
           sug_timetwo: this.reservationdata.sug_timetwo,

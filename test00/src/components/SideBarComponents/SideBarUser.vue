@@ -19,16 +19,24 @@
       >
         <!--  -->
         <el-menu-item index="1">
+          <i class="fas fa-home"></i>&nbsp;&nbsp;
+          <a href="/user" style="text-decoration: none; color:black">Home</a>
+        </el-menu-item>
+        <el-menu-item index="2">
           <i class="el-icon-user"></i>
-          <span><ProfileUser /></span>
+          <router-link
+            :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
+            style="text-decoration: none; color:black"
+            >User</router-link
+          >
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="5">
+        <el-menu-item index="3">
           <i class="el-icon-video-camera"></i>
           <span><UserInterviewManage /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="5">
+        <el-menu-item index="4">
           <i class="el-icon-right"></i>
           <i class="el-icon-office-building"></i>
           <span><UserFollowings /></span>
@@ -50,25 +58,36 @@
           <span>settings</span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="7">
+        <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
           <span @click="Logout">Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>
     </el-aside>
-    <router-view></router-view>
   </el-container>
+  <router-view></router-view>
 </template>
 
 <script>
-import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
+// import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
 import UserInterviewManage from "@/components/SideBarComponents/UserOfInterview/UserInterviewManage.vue";
 import UserFollowings from "@/components/SideBarComponents/FollowOfUser/UserFollowings.vue";
 import UserFollowers from "@/components/SideBarComponents/FollowOfUser/UserFollowers.vue";
+import jwt_decode from "jwt-decode";
 export default {
+  data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    return {
+      value: [],
+      userindex: index,
+    };
+  },
   components: {
-    ProfileUser,
+    // ProfileUser,
     UserInterviewManage,
     UserFollowings,
     UserFollowers,
@@ -98,13 +117,9 @@ export default {
           message: "로그아웃",
           type: "success",
         });
+        location.reload();
       }, 2000);
     },
-  },
-  data() {
-    return {
-      value: [],
-    };
   },
 };
 </script>
