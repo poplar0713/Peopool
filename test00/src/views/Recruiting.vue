@@ -30,10 +30,10 @@
                         :timestamp="days.date"
                       >
                         <el-card style="width: 80%; align-content: center;">
-                          <el-table :data="days.Interviewer" :default-sort="{ prop: 'time' }">
-                            <el-table-column prop="time" label="면접시간" sortable>
+                          <el-table :data="days.interviewers" :default-sort="{ prop: 'time' }">
+                            <el-table-column prop="int_start" label="면접시간" sortable>
                             </el-table-column>
-                            <el-table-column prop="p_name" label="성명"> </el-table-column>
+                            <el-table-column prop="name" label="성명"> </el-table-column>
                             <el-table-column prop="p_part" label="직무"> </el-table-column>
                             <el-table-column label="" prop="p_name">
                               <template #default="scope">
@@ -46,7 +46,7 @@
                                 <el-button
                                   size="mini"
                                   type="danger"
-                                  @click="GoToInteriewRoom(scope.row.p_name)"
+                                  @click="GoToInteriewRoom(scope.row.name)"
                                   >Interview Room</el-button
                                 >
                                 <!-- {{scope.row.url}} -->
@@ -166,8 +166,8 @@ export default {
         headers: { Authroization: token },
       })
       .then((res) => {
+        console.log("interview >> ");
         console.log(res.data);
-        console.log("okkkkkkkkkkk!");
         this.InterviewDays = res.data;
       })
       .catch((err) => {
