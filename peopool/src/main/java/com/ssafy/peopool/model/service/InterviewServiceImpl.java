@@ -104,5 +104,17 @@ public class InterviewServiceImpl implements InterviewService{
 		
 		return result;
 	}
+	
+	@Override
+	public boolean modifyPass(int index) throws SQLException {
+		// TODO Auto-generated method stub
+		return interviewRepo.modifyPass(index) == 1;
+	}
+
+	@Override
+	public boolean modifyFail(int index) throws SQLException {
+		// TODO Auto-generated method stub
+		return interviewRepo.modifyFail(index) == 1;
+	}
 
 }
