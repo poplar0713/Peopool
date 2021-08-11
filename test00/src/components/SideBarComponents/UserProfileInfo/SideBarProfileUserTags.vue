@@ -21,7 +21,7 @@
     >
       <el-tag
         v-for="item in mytags"
-        style="margin:5px"
+        style="margin: 0.1rem"
         :key="item.taglist_index"
         :type="warning"
         effect="plain"
@@ -121,7 +121,37 @@ export default {
       value: "",
       //나의 태그들
       mytags: [],
+      mytagLength: this.getMytagLength,
     };
+  },
+  computed: {
+    getMytagLength() {
+      return this.mytags.length;
+    },
+  },
+  watch: {
+    mytagLength: function() {
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+          headers: { Authorization: this.token },
+          params: {
+            index: this.index,
+            type: 0,
+          },
+        })
+        .then((res) => {
+          console.log("다시 불러오기 ");
+          this.mytags = res.data;
+        })
+        .catch((err) => {
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
   },
   methods: {
     plustag() {
@@ -143,9 +173,9 @@ export default {
             tag_type: 0,
             taglist_index: this.value,
           })
-          .then((res) => {
-            console.log(res);
-            this.mytags.push(res.data);
+          .then(() => {
+            this.$message.info("태그가 추가되었습니다");
+            this.mytagLength += 1;
           })
           .catch((err) => {
             console.log(err);
