@@ -10,57 +10,127 @@
         </div>
       </div>
     </el-header>
-    <el-container height="100%">
-      <el-main>
-        <div id="container">
-          <div>
-            <div id="join" class="animate join">
-              <before-meeting></before-meeting>
-              <div style="text-align:center">
-                <el-button type="warning" id="go" @click="register"
-                  >입장하기</el-button
-                >
+    <el-container>
+      <el-container>
+        <el-main>
+          <div id="container">
+            <div>
+              <div id="join" class="animate join">
+                <before-meeting></before-meeting>
+                <div style="text-align:center">
+                  <el-button type="warning" id="go" @click="register"
+                    >입장하기</el-button
+                  >
+                </div>
               </div>
-            </div>
-            <div id="room" style="display: none;">
-              <div>
-                <span id="room-header"></span>
+              <div id="room" style="display: none;">
+                <div>
+                  <span id="room-header"></span>
+                </div>
+                <el-divider></el-divider>
+                <div id="participants" class="wrapper"></div>
               </div>
-              <el-divider></el-divider>
-              <div id="participants" class="wrapper"></div>
-            </div>
 
-            <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
+              <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
             <el-button
               type="warning"
               icon="el-icon-chat-round"
               circle
               @click="sendchat"
             ></el-button> -->
-          </div>
-        </div>
-      </el-main>
-      <el-aside width="300px">
-        <el-scrollbar height="100%" id="chatdiv" ref="scrollbar">
-          <div ref="inner">
-            <div
-              v-for="(item, index) in chatlist"
-              :key="index"
-              :class="[item.name == username ? 'itemright' : 'itemleft']"
-              :scroll="scrolldown()"
-            >
-              <p v-if="item.name == username" class="speech-bubble">
-                {{ item.text }}
-              </p>
-              <p v-else class="speech-bubble-left">
-                {{ item.name }}<br />
-                {{ item.text }}
-              </p>
             </div>
           </div>
-        </el-scrollbar>
+        </el-main>
+        <el-footer v-if="this.options" class="footer">
+          <span>
+            <el-button
+              round
+              v-if="this.audioOn"
+              type="warning"
+              id="button-audio"
+              v-on:click="AudioOnOff"
+              value="Audio Off"
+              >음소거</el-button
+            >
+            <el-button
+              round
+              v-else
+              type="success"
+              id="button-audio"
+              v-on:click="AudioOnOff"
+              value="Audio On"
+              >음소거 해제</el-button
+            ></span
+          >
+          <span
+            ><el-button
+              round
+              v-if="this.videoOn"
+              type="warning"
+              id="button-video"
+              v-on:click="VideoOnOff"
+              value="Video Off"
+              >비디오 Off</el-button
+            >
+            <el-button
+              round
+              v-else
+              type="success"
+              id="button-video"
+              v-on:click="VideoOnOff"
+              value="Video On"
+              >비디오 On</el-button
+            ></span
+          ><span>
+            <el-button
+              round
+              type="success"
+              id="button-setting"
+              @click="this.dialogVisible = true"
+              value="Setting"
+              >설정</el-button
+            ></span
+          >
+          <span
+            ><el-button
+              round
+              type="danger"
+              id="button-leave"
+              @click="exitDiaVisible = true"
+            >
+              X</el-button
+            ></span
+          >
+          <el-button
+            type="warning"
+            icon="el-icon-chat-round"
+            circle
+            @click="visiblechat"
+          ></el-button>
+        </el-footer>
+      </el-container>
 
-        <div style="margin-top: 15px;">
+      <el-aside
+        v-if="visible"
+        id="chatdivtop"
+        style="margin-top:40px; width:300px; position:flexed"
+      >
+        <div class="scroll type1" id="chatdiv">
+          <div
+            v-for="(item, index) in chatlist"
+            :key="index"
+            :class="[item.name == username ? 'itemright' : 'itemleft']"
+          >
+            <p v-if="item.name == username" class="speech-bubble">
+              {{ item.text }}
+            </p>
+            <p v-else class="speech-bubble-left">
+              {{ item.name }}<br />
+              {{ item.text }}
+            </p>
+          </div>
+        </div>
+        <div>
           <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
         </div>
       </el-aside>
@@ -167,13 +237,15 @@ export default {
       dialogVisible: false,
       chattext: "",
       chatlist: [],
-      drawer: false,
+      visible: false,
       exitDiaVisible: false,
     };
   },
+  watch: {},
   components: {
     BeforeMeeting,
   },
+
   name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
@@ -186,8 +258,10 @@ export default {
       switch (parsedMessage.id) {
         case "chatting":
           this.chatlist.push(parsedMessage);
-          // console.log(parsedMessage.name + ":" + parsedMessage.text);
-          this.scrolldown();
+          setTimeout(function() {
+            var s = document.getElementById("chatdiv");
+            s.scrollTop = s.scrollHeight;
+          }, 100);
           break;
         case "existingParticipants":
           this.onExistingParticipants(parsedMessage);
@@ -222,9 +296,14 @@ export default {
     };
   },
   methods: {
-    scrolldown() {
-      this.$refs.scrollbar.setScrollTop(this.$refs.inner.clientHeight + 380);
-      console.log(this.$refs.inner.clientHeight);
+    visiblechat() {
+      var s = document.getElementById("chatdiv");
+      this.visible = !this.visible;
+      if (this.visible) {
+        // setTimeout(function() {
+        s.scrollTop = s.scrollHeight;
+        // }, 100);
+      }
     },
     sendchat() {
       if (this.chattext == "" || this.chattext == null) return;
@@ -240,6 +319,7 @@ export default {
     register() {
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
+      this.username = localStorage.getItem("username");
       this.options = true;
       var message = {
         id: "joinRoom",
@@ -322,8 +402,6 @@ export default {
       document.getElementById("room").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
-
-      ws.close();
     },
 
     receiveVideo(sender) {
@@ -368,11 +446,11 @@ export default {
       container.classList.add("video-block");
       var video = document.createElement("video");
       var rtcPeer;
-      var username = document.createElement("div");
-      username.InnerText = this.username;
+      var usernameArea = document.createElement("div");
+      usernameArea.innerText = this.name;
 
       container.appendChild(video);
-      container.appendChild(username);
+      container.appendChild(usernameArea);
 
       //container.onclick = switchContainerClass;
       document.getElementById("participants").appendChild(container);
@@ -479,6 +557,35 @@ export default {
 </script>
 
 <style>
+.scroll {
+  width: 300px;
+  padding: 0px 13px 0px 13px;
+  overflow-y: scroll;
+  height: 650px;
+  box-sizing: border-box;
+  color: black;
+  font-family: "Nanum Gothic";
+  margin-right: 50px;
+}
+
+/* 스크롤바 설정*/
+.type1::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* 스크롤바 막대 설정*/
+.type1::-webkit-scrollbar-thumb {
+  height: 17%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.type1::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .itemright {
   text-align: right;
   padding-right: 10px;
@@ -561,7 +668,7 @@ export default {
 .video-block {
   transition: all 1s;
   justify-content: center;
-  align-items: center;
+  align-content: center;
   border-width: 3px;
   border-style: solid;
   border-color: whitesmoke;
@@ -575,15 +682,22 @@ export default {
 .video-block video {
   width: 36rem;
   height: 27rem;
+  z-index: -2;
+  position: relative;
 }
-.animation-init {
-  opacity: 0;
-  padding-top: 1em;
-}
-.animation-fade {
-  opacity: 1;
-  padding-top: 0;
-  transition: all 1s;
+
+.video-block div {
+  position: absolute;
+  background-color: black;
+  color: white;
+  z-index: 200;
+  text-align: center;
+  opacity: 0.75;
+  bottom: 0;
+  right: 0;
+  padding: 0.3rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
 }
 .titleBox {
   display: flex;
