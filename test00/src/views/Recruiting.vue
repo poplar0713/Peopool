@@ -2,22 +2,21 @@
   <el-container class="mainLayout">
     <el-aside width="250px"><SideBarCompany /></el-aside>
     <el-container>
+      <!-- 검색 -->
       <el-header><headerSearchUser /></el-header>
+      <!--  -->
       <el-header><h2>채용 프로세스 관리</h2></el-header>
       <el-main>
         <div class="mainBoard">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="면접 제안 중" name="offerTab"
-              ><h3>면접 수락 대기</h3>
-              <el-table :data="waitinglist" :default-sort="{ prop: 'name' }">
-                <el-table-column prop="name" label="성명" fixed> </el-table-column>
-                <el-table-column prop="sug_duty" label="직무" fixed> </el-table-column>
-                <el-table-column prop="sug_timeone" label="면접 제안 시간"> </el-table-column>
-                <el-table-column prop="sug_timetwo" label=""> </el-table-column>
-                <el-table-column prop="sug_timethree" label=""> </el-table-column>
-                <el-table-column><el-button>면접 제안 취소</el-button></el-table-column>
-              </el-table>
+            <el-tab-pane label="미응답" name="offerTab">
+              <RecruitingBoardOfferTab />
             </el-tab-pane>
+            <!--  -->
+            <el-tab-pane label="거절된 면접" name="rejectedoffer">
+              <RecruitingBoardRejectOfferTab />
+            </el-tab-pane>
+            <!--  -->
             <el-tab-pane label="면접 진행" name="interviewTab">
               <el-tabs :tab-position="tabposition">
                 <el-tab-pane label="면접 대기자 관리">
@@ -63,34 +62,27 @@
                 </el-tab-pane>
               </el-tabs>
             </el-tab-pane>
+            <!-- 심사중  -->
             <el-tab-pane label="심사" name="third">
               <h3>심사 중인 면접자 : {{ getExaiminingLength }}명</h3>
+              <!--  -->
               <el-scrollbar height="720px">
-                <span v-for="(item, i) in exaimining" :key="i">
-                  <ExamineCard
-                    :p_name="item.p_name"
-                    :part="item.p_part"
-                    :p_img="item.p_img"
-                    :app_url="item.p_appurl"
-                    :interviewTime="item.interviewTime"
-                  />
-                </span>
+                <el-row :gutter="24">
+                  <el-col :span="8" v-for="(item, i) in exaimining" :key="i">
+                    <ExamineCard :item="item" />
+                  </el-col>
+                </el-row>
               </el-scrollbar>
             </el-tab-pane>
+            <!--  -->
             <el-tab-pane label="입사 제안 중" name="fourth"> </el-tab-pane>
           </el-tabs>
         </div>
-      </el-main>
-      <el-main>
-        <FollowerAppc title="현재 팔로우 중인 지원자" :followData="followData" />
       </el-main>
     </el-container>
   </el-container>
 </template>
 <style>
-.followList {
-  height: 20%;
-}
 .mainBoard {
   margin-right: 10%;
 }
@@ -98,20 +90,21 @@
 <script>
 import SideBarCompany from "../components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "../components/SideBarComponents/headerSearchUser.vue";
-import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
-import axios from "axios";
+import RecruitingBoardOfferTab from "../components/RecrutingBoard/RecruitingBoardOfferTab.vue";
+import RecruitingBoardRejectOfferTab from "../components/RecrutingBoard/RecruitingBoardRejectOfferTab.vue";
 import jwt_decode from "jwt-decode";
-
+import axios from "axios";
 export default {
   name: "Recruiting",
   components: {
     SideBarCompany,
     headerSearchUser,
-    FollowerAppc,
     ExamineCard,
     InterviewCalender,
+    RecruitingBoardOfferTab,
+    RecruitingBoardRejectOfferTab,
   },
   computed: {
     getExaiminingLength() {
@@ -125,7 +118,29 @@ export default {
     },
   },
   data() {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 면접일정조회
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/int/ent/${index}`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res);
+        this.exaimining = res.data;
+      })
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
+      activeName: "offerTab",
       now: new Date(),
       tabposition: "right",
       company: "로그인된기업",
@@ -133,6 +148,7 @@ export default {
       InterviewDays: [],
       exaimining: [],
       followData: [],
+
       exaiminingtotal: this.getExaiminingLength,
     };
   },

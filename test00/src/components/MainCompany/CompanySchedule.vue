@@ -18,14 +18,27 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <!-- {{scope.row.company}} -->
-        <el-button
-          size="mini"
-          type="danger"
-          @click="GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)"
-          >Interview Room</el-button
-        >
-        <!-- {{scope.row.url}} -->
+        <el-row>
+          <el-col :span="12"
+            ><div><UserInfo :userindex="scope.row.ind_index" /></div
+          ></el-col>
+          <el-col :span="12"
+            ><div>
+              <el-button
+                v-if="scope.row.int_end == null"
+                size="mini"
+                type="danger"
+                @click="
+                  GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)
+                "
+                >Interview Room</el-button
+              >
+              <el-button v-if="scope.row.int_end !== null" size="mini" disabled
+                >면접종료</el-button
+              >
+            </div></el-col
+          >
+        </el-row>
       </template>
     </el-table-column>
   </el-table>
@@ -34,8 +47,10 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import UserInfo from "./UserInfo.vue";
 
 export default {
+  components: { UserInfo },
   data() {
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
@@ -53,7 +68,7 @@ export default {
         console.log("token error");
         console.log(err.response.data.status);
         if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }

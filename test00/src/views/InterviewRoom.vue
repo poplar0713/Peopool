@@ -99,38 +99,42 @@
               @click="exitDiaVisible = true"
             >
               X</el-button
-            ></span
+            >
+            </span
           >
+          <el-button
+            type="warning"
+            icon="el-icon-chat-round"
+            circle
+            @click="visiblechat"
+          ></el-button>
         </el-footer>
       </el-container>
-      <div style="margin-top:20px; width:250px">
-        <el-scrollbar
-          height="500px"
-          id="chatdiv"
-          ref="scrollbar"
-          style="margin:0;"
-        >
-          <div ref="inner">
-            <div
-              v-for="(item, index) in chatlist"
-              :key="index"
-              :class="[item.name == username ? 'itemright' : 'itemleft']"
-              :scroll="scrolldown"
-            >
-              <p v-if="item.name == username" class="speech-bubble">
-                {{ item.text }}
-              </p>
-              <p v-else class="speech-bubble-left">
-                {{ item.name }}<br />
-                {{ item.text }}
-              </p>
-            </div>
+
+      <el-aside
+        v-if="visible"
+        id="chatdivtop"
+        style="margin-top:40px; width:300px; position:flexed"
+      >
+        <div class="scroll type1" id="chatdiv">
+          <div
+            v-for="(item, index) in chatlist"
+            :key="index"
+            :class="[item.name == username ? 'itemright' : 'itemleft']"
+          >
+            <p v-if="item.name == username" class="speech-bubble">
+              {{ item.text }}
+            </p>
+            <p v-else class="speech-bubble-left">
+              {{ item.name }}<br />
+              {{ item.text }}
+            </p>
           </div>
-        </el-scrollbar>
+        </div>
         <div>
           <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
         </div>
-      </div>
+      </el-aside>
     </el-container>
   </el-container>
 
@@ -173,13 +177,15 @@ export default {
       dialogVisible: false,
       chattext: "",
       chatlist: [],
-      drawer: false,
+      visible: false,
       exitDiaVisible: false,
     };
   },
+  watch: {},
   components: {
     BeforeMeeting,
   },
+
   name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
@@ -192,8 +198,10 @@ export default {
       switch (parsedMessage.id) {
         case "chatting":
           this.chatlist.push(parsedMessage);
-          // console.log(parsedMessage.name + ":" + parsedMessage.text);
-          this.scrolldown();
+          setTimeout(function() {
+            var s = document.getElementById("chatdiv");
+            s.scrollTop = s.scrollHeight;
+          }, 100);
           break;
         case "existingParticipants":
           this.onExistingParticipants(parsedMessage);
@@ -228,9 +236,14 @@ export default {
     };
   },
   methods: {
-    scrolldown() {
-      this.$refs.scrollbar.setScrollTop(this.$refs.inner.clientHeight + 380);
-      console.log(this.$refs.inner.clientHeight);
+    visiblechat() {
+      var s = document.getElementById("chatdiv");
+      this.visible = !this.visible;
+      if (this.visible) {
+        // setTimeout(function() {
+        s.scrollTop = s.scrollHeight;
+        // }, 100);
+      }
     },
     sendchat() {
       if (this.chattext == "" || this.chattext == null) return;
@@ -241,7 +254,6 @@ export default {
         text: this.chattext,
       };
       this.sendMessage(chat);
-      this.scrolldown();
       this.chattext = "";
     },
     register() {
@@ -330,8 +342,6 @@ export default {
       document.getElementById("room").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
-
-      ws.close();
     },
 
     receiveVideo(sender) {
@@ -474,8 +484,8 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
+          console.log(err.response);
+          if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
@@ -487,10 +497,35 @@ export default {
 </script>
 
 <style>
-.el-scrollbar {
-  margin: 0 !important;
-  padding: 0 !important;
+.scroll {
+  width: 300px;
+  padding: 0px 13px 0px 13px;
+  overflow-y: scroll;
+  height: 650px;
+  box-sizing: border-box;
+  color: black;
+  font-family: "Nanum Gothic";
+  margin-right: 50px;
 }
+
+/* 스크롤바 설정*/
+.type1::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* 스크롤바 막대 설정*/
+.type1::-webkit-scrollbar-thumb {
+  height: 17%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.type1::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .itemright {
   text-align: right;
   padding-right: 10px;
@@ -562,6 +597,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  
+}
+.footer span {
+  padding: 10px;
 }
 .wrapper {
   display: grid;

@@ -3,32 +3,41 @@
     :data="
       InterviewSug.filter(
         (data) =>
-          !search ||
-          data.name.toLowerCase().includes(search.toLowerCase()) ||
-          data.sug_duty.toLowerCase().includes(search.toLowerCase())
+          (!search ||
+            data.name.toLowerCase().includes(search.toLowerCase()) ||
+            data.sug_duty.toLowerCase().includes(search.toLowerCase())) &&
+          data.sug_state == 'C'
       )
     "
-    height="300"
-    ref="filterTable"
+    height="600"
+    width="100"
   >
-    <el-table-column
-      label="상태"
-      prop="sug_state"
-      :filters="[
-        { text: '대기', value: 'W' },
-        { text: '확정', value: 'T' },
-        { text: '거절', value: 'F' },
-        { text: '취소', value: 'C' },
-      ]"
-      :filter-method="filterHandler"
-      width="60%"
-    >
-    </el-table-column>
     <el-table-column align="center" label="요청일" prop="sug_send" width="160%">
     </el-table-column>
     <el-table-column align="center" label="피풀인" prop="name" width="100%">
     </el-table-column>
     <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
+    </el-table-column>
+    <el-table-column
+      align="center"
+      label="제안1"
+      prop="sug_timeone"
+      width="100%"
+    >
+    </el-table-column>
+    <el-table-column
+      align="center"
+      label="제안2"
+      prop="sug_timetwo"
+      width="100%"
+    >
+    </el-table-column>
+    <el-table-column
+      align="center"
+      label="제안3"
+      prop="sug_timethree"
+      width="100%"
+    >
     </el-table-column>
     <el-table-column
       align="center"
@@ -42,31 +51,7 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-row>
-          <el-col :span="6"
-            ><div><UserInfo :userindex="scope.row.ind_index" /></div
-          ></el-col>
-          <el-col :span="6"
-            ><div>
-              <el-button v-if="scope.row.sug_state == 'W'" size="mini"
-                >응답대기</el-button
-              >
-              <el-button v-if="scope.row.sug_state == 'T'" disabled size="mini"
-                >면접수락</el-button
-              >
-              <el-button
-                v-if="scope.row.sug_state !== 'C'"
-                size="mini"
-                type="danger"
-                @click="CancelInt(scope.row.sug_index)"
-                >요청취소</el-button
-              >
-              <el-button v-if="scope.row.sug_state == 'C'" disabled size="mini"
-                >취소된 요청입니다</el-button
-              >
-            </div></el-col
-          >
-        </el-row>
+        <UserInfo :userindex="scope.row.ind_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -75,7 +60,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfo from "./UserInfo.vue";
+import UserInfo from "@/components/MainCompany/UserInfo.vue";
 
 export default {
   components: { UserInfo },
