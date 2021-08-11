@@ -13,7 +13,7 @@ public interface HashtagService {
 	List<Map<String, Object>> tagByUser(int index, int type);
 
 	// 태그별 사용자 목록
-	List<Hashtag> userByTag(String name, int type);
+	List<Map<Object, Object>> userByTag(String name, int type);
 	
 	// 태그 별 사용자 수
 	List<Map<String, Object>> countByTag();
