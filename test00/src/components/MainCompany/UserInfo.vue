@@ -59,6 +59,11 @@
             <div>
               {{ this.userdetailinfo.ind_introduce }}
             </div>
+            <div>
+              <img
+                src="/home/ubuntu/upload/210810/e09462ab-c2e5-4c9b-8f3c-ae86bfcfc896.PNG"
+              />
+            </div>
           </el-collapse-item>
           <el-collapse-item title="자기소개영상" name="2">
             <div>
