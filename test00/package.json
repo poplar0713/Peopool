@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer",
-    "postinstall": "node tools/copy-webviewer-files.js"
+    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer"
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.0.0",
@@ -21,6 +20,7 @@
     "kurento-utils": "^6.16.0",
     "v-calendar": "^3.0.0-alpha.5",
     "vue": "^3.1.4",
+    "vue-cookies": "^1.7.4",
     "vue-router": "^4.0.0-0",
     "vue-webrtc": "^2.0.0",
     "vuedraggable": "^4.0.3",

@@ -3,6 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import installElementPlus from "./plugins/element";
+import cookies from "vue-cookies";
 import "./element-variables.scss";
 
 // import vueMoment from "vue-moment";
@@ -19,5 +20,9 @@ installElementPlus(app);
 app
   .use(router)
   .use(store)
+  .use(cookies)
   // .use(AxiosPlugin)
   .mount("#app");
+
+  //set default config
+app.$cookies.config("21600", "", "", true);

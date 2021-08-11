@@ -36,7 +36,7 @@ export default {
   },
   setup() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const route = useRoute();
     const keyword = route.params.keyword;
 

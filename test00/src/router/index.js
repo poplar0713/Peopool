@@ -9,6 +9,7 @@ import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
+import cookies from 'vue-cookies';
 const routes = [
   {
     path: "/meetinter",
@@ -24,7 +25,7 @@ const routes = [
     name: "MainUser",
     component: MainUser,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -36,7 +37,7 @@ const routes = [
     name: "ProfileUser",
     component: ProfileUser,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -48,7 +49,7 @@ const routes = [
     name: "MainCompany",
     component: MainCompany,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -60,7 +61,7 @@ const routes = [
     name: "ProfileCompany",
     component: ProfileCompany,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -72,7 +73,7 @@ const routes = [
     name: "SearchCompany",
     component: SearchCompany,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -84,7 +85,7 @@ const routes = [
     name: "searchuser",
     component: SearchUser,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -102,7 +103,7 @@ const routes = [
     name: "searchcompany",
     component: SearchCompany,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }
@@ -114,7 +115,7 @@ const routes = [
     name: "recruiting",
     component: Recruiting,
     beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
+      if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");
         return next("/");
       }

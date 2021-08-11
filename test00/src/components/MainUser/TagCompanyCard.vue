@@ -99,7 +99,7 @@ export default {
   props: { item: Number },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 팔로우했는지 체크해보기
