@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ssafy.peopool.model.IntCard;
 import com.ssafy.peopool.model.Interview;
+import com.ssafy.peopool.model.InterviewDays;
 import com.ssafy.peopool.model.repo.InterviewRepo;
 
 public interface InterviewService {
@@ -24,5 +25,7 @@ public interface InterviewService {
 	boolean isInterview(Interview interview) throws SQLException; // 면접 노쇼
 
 	boolean registerInterview(Interview interview) throws SQLException; // 면접 일정 등록
+
+	List<InterviewDays> getEDInterviewGroupByDays(int index) throws SQLException; // 기업의 면접 일정 날짜별로
 
 }
