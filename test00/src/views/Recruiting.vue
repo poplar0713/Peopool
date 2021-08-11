@@ -9,15 +9,13 @@
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="면접 제안 중" name="offerTab"
               ><h3>면접 수락 대기</h3>
-              <el-table :data="waitinglist" :default-sort="{ prop: 'p_name' }">
-                <el-table-column prop="p_name" label="성명" fixed>
-                </el-table-column>
-                <el-table-column prop="p_part" label="직무" fixed>
-                </el-table-column>
-                <el-table-column prop="date1" label="면접 제안 시간">
-                </el-table-column>
-                <el-table-column prop="date2" label=""> </el-table-column>
-                <el-table-column prop="date3" label=""> </el-table-column>
+              <el-table :data="waitinglist" :default-sort="{ prop: 'name' }">
+                <el-table-column prop="name" label="성명" fixed> </el-table-column>
+                <el-table-column prop="sug_duty" label="직무" fixed> </el-table-column>
+                <el-table-column prop="sug_timeone" label="면접 제안 시간"> </el-table-column>
+                <el-table-column prop="sug_timetwo" label=""> </el-table-column>
+                <el-table-column prop="sug_timethree" label=""> </el-table-column>
+                <el-table-column><el-button>면접 제안 취소</el-button></el-table-column>
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="면접 진행" name="interviewTab">
@@ -32,31 +30,16 @@
                         :timestamp="days.date"
                       >
                         <el-card style="width: 80%; align-content: center;">
-                          <el-table
-                            :data="days.Interviewer"
-                            :default-sort="{ prop: 'time' }"
-                          >
-                            <el-table-column
-                              prop="time"
-                              label="면접시간"
-                              sortable
-                            >
+                          <el-table :data="days.Interviewer" :default-sort="{ prop: 'time' }">
+                            <el-table-column prop="time" label="면접시간" sortable>
                             </el-table-column>
-                            <el-table-column prop="p_name" label="성명">
-                            </el-table-column>
-                            <el-table-column prop="p_part" label="직무">
-                            </el-table-column>
+                            <el-table-column prop="p_name" label="성명"> </el-table-column>
+                            <el-table-column prop="p_part" label="직무"> </el-table-column>
                             <el-table-column label="" prop="p_name">
                               <template #default="scope">
                                 <el-button
                                   size="mini"
-                                  @click="
-                                    Cancel(
-                                      scope.$index,
-                                      scope.row,
-                                      scope.row.p_name
-                                    )
-                                  "
+                                  @click="Cancel(scope.$index, scope.row, scope.row.p_name)"
                                   >Cancel</el-button
                                 >
                                 <!-- {{scope.row.company}} -->
@@ -99,10 +82,7 @@
         </div>
       </el-main>
       <el-main>
-        <FollowerAppc
-          title="현재 팔로우 중인 지원자"
-          :followData="followData"
-        />
+        <FollowerAppc title="현재 팔로우 중인 지원자" :followData="followData" />
       </el-main>
     </el-container>
   </el-container>
@@ -121,6 +101,8 @@ import headerSearchUser from "../components/SideBarComponents/headerSearchUser.v
 import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
 import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "Recruiting",
@@ -135,168 +117,66 @@ export default {
     getExaiminingLength() {
       return this.exaimining.length;
     },
+
+    getInterviewDays() {
+      var InterviewDays = {};
+
+      return InterviewDays;
+    },
   },
   data() {
     return {
       now: new Date(),
       tabposition: "right",
       company: "로그인된기업",
-      waitinglist: [
-        {
-          p_name: "천서진",
-          p_part: "광고",
-          date1: "2021-08-09 11:00",
-          date2: "2021-08-10 11:00",
-          date3: "2021-08-11 11:00",
-        },
-        {
-          p_name: "주단태",
-          p_part: "영업",
-          date1: "2021-08-09 11:00",
-          date2: "2021-08-10 11:00",
-          date3: "2021-08-11 11:00",
-        },
-        {
-          p_name: "심수련",
-          p_part: "영업",
-          date1: "2021-08-09 13:00",
-          date2: "2021-08-10 13:00",
-          date3: "2021-08-11 13:00",
-        },
-        {
-          p_name: "주석경",
-          p_part: "영업",
-          date1: "2021-08-09 14:00",
-          date2: "2021-08-10 14:00",
-          date3: "2021-08-11 14:00",
-        },
-        {
-          p_name: "배로나",
-          p_part: "영업",
-          date1: "2021-08-09 15:00",
-          date2: "2021-08-10 15:00",
-          date3: "2021-08-11 15:00",
-        },
-      ],
-      InterviewDays: [
-        {
-          date: "2021-08-01",
-          Interviewer: [
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "문영화",
-              p_part: "FrontEnd",
-            },
-            {
-              time: "14:00",
-              p_ind: 1,
-              p_name: "조영우",
-              p_part: "FrontEnd",
-            },
-            {
-              time: "15:00",
-              p_ind: 0,
-              p_name: "채승협",
-              p_part: "BackEnd",
-            },
-          ],
-        },
-        {
-          date: "2021-08-02",
-          Interviewer: [
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "여정동",
-              p_part: "FrontEnd",
-            },
-            {
-              time: "14:00",
-              p_ind: 0,
-              p_name: "허창환",
-              p_part: "BackEnd",
-            },
-          ],
-        },
-        {
-          date: "2021-08-03",
-          Interviewer: [
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "허창환",
-              p_part: "BackEnd",
-            },
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "채승협",
-              p_part: "BackEnd",
-            },
-          ],
-        },
-      ],
-      exaimining: [
-        {
-          p_ind: 0,
-          p_name: "이주빈",
-          p_part: "법무",
-          p_state: 0,
-          p_img: "../assets/jubin.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 13:00",
-        },
-        {
-          p_ind: 1,
-          p_name: "서주현",
-          p_part: "마케팅",
-          p_state: -1,
-          p_img: "../assets/seohyeon.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 14:00",
-        },
-        {
-          p_ind: 2,
-          p_name: "이제훈",
-          p_part: "개발",
-          p_state: -1,
-          p_img: "../assets/jeahoon.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 15:00",
-        },
-        {
-          p_ind: 3,
-          p_name: "김제니",
-          p_part: "마케팅",
-          p_state: 0,
-          p_img: "../assets/jennie.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 16:00",
-        },
-      ],
-      followData: [
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "문영화",
-          tag: ["#java", "#javascript"],
-        },
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "여정동",
-          tag: ["#java", "#javascript"],
-        },
-        {
-          img: "",
-          title: "항상 열정있는 자세",
-          name: "조영우",
-          tag: ["#vue.js", "#javascript"],
-        },
-      ],
+      waitinglist: [],
+      InterviewDays: [],
+      exaimining: [],
+      followData: [],
       exaiminingtotal: this.getExaiminingLength,
     };
+  },
+  mounted() {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.company_index = index;
+
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/sug/ent/${this.company_index}`, {
+        // 면접 수락 대기
+        headers: { Authroization: token },
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.waitinglist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    axios
+      .get(`https://localhost:8443/int/ent/iday/${this.company_index}`, {
+        // 면접 대기자
+        headers: { Authroization: token },
+      })
+      .then((res) => {
+        console.log(res.data);
+        console.log("okkkkkkkkkkk!");
+        this.InterviewDays = res.data;
+      })
+      .catch((err) => {
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   methods: {
     // 인터뷰룸으로 이동
