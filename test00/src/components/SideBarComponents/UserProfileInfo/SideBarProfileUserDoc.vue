@@ -1,24 +1,16 @@
 <template>
-  <el-upload
-    class="upload-demo"
-    action="https://jsonplaceholder.typicode.com/posts/"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    multiple
-    :limit="3"
-    :on-exceed="handleExceed"
-    :file-list="$store.state.fileList"
-  >
-    <el-button size="small">Upload</el-button>
-    jpg/png files with a size less than 500kb
-    <template #tip>
-      <div class="el-upload__tip"></div>
-    </template>
-  </el-upload>
+  <form v-on:submit.prevent enctype="multipart/form-data">
+    <input multiple="multiple" type="file" name="file" id="file" ref="file"  />
+    <button @click="upload">
+      Upload
+    </button>
+  </form>
 </template>
 
+
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 export default {
   data() {
     return {};
@@ -30,19 +22,31 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `The limit is 3, you selected ${
-          files.length
-        } files this time, add up to ${files.length + fileList.length} totally`
-      );
-    },
-    beforeRemove(file, fileList) {
-      console.log(fileList);
-      return this.$confirm(`Cancel the transfert of ${file.name} ?`);
+
+    upload() {
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
+
+      var frm = new FormData();
+      var Filedata = this.$refs.file.files[0];
+      frm.append("upfile", Filedata);
+
+      axios
+        .post(`https://i5d206.p.ssafy.io:8443/poi/resume/${index}`, frm, {
+          headers: { Authorization: token },
+          index: 30,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
 </script>
+
 
 <style></style>

@@ -77,7 +77,7 @@
                 </el-tab-pane>
               </el-tabs>
             </el-tab-pane>
-            <!--  -->
+            <!-- 심사중  -->
             <el-tab-pane label="심사" name="third">
               <h3>심사 중인 면접자 : {{ getExaiminingLength }}명</h3>
               <!--  -->
@@ -109,7 +109,8 @@ import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
 import RecruitingBoardOfferTab from "../components/RecrutingBoard/RecruitingBoardOfferTab.vue";
 import RecruitingBoardRejectOfferTab from "../components/RecrutingBoard/RecruitingBoardRejectOfferTab.vue";
-
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 export default {
   name: "Recruiting",
   components: {
@@ -126,6 +127,27 @@ export default {
     },
   },
   data() {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    // 면접일정조회
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/int/ent/${index}`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res);
+        this.exaimining = res.data;
+      })
+      .catch((err) => {
+        console.log("token error");
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
     return {
       activeName: "offerTab",
       now: new Date(),
@@ -227,45 +249,7 @@ export default {
           ],
         },
       ],
-      exaimining: [
-        {
-          p_ind: 0,
-          p_name: "이주빈",
-          p_part: "법무",
-          p_state: 0,
-          p_img: "../assets/jubin.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 13:00",
-        },
-        {
-          p_ind: 1,
-          p_name: "서주현",
-          p_part: "마케팅",
-          p_state: -1,
-          p_img: "../assets/seohyeon.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 14:00",
-        },
-        {
-          p_ind: 2,
-          p_name: "이제훈",
-          p_part: "개발",
-          p_state: -1,
-          p_img: "../assets/jeahoon.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 15:00",
-        },
-        {
-          p_ind: 3,
-          p_name: "김제니",
-          p_part: "마케팅",
-          p_state: 0,
-          p_img: "../assets/jennie.jpg",
-          p_appurl: "../assets/sample.pdf",
-          interviewTime: "2021-07-30 16:00",
-        },
-      ],
-
+      exaimining: [],
       exaiminingtotal: this.getExaiminingLength,
     };
   },

@@ -16,24 +16,26 @@
       </el-footer>
     </el-container>
   </el-dialog>
-<el-card class="box-card" style="margin-bottom:25px">
-  <template #header>
-    <div class="card-header">
-      <span>{{item.p_name}}</span>&nbsp;&nbsp;&nbsp;
-      <el-button class="button" type="text">상세보기</el-button>
+  <el-card class="box-card" style="margin-bottom:25px;" shadow="hover">
+    <template #header>
+      <div class="card-header">
+        <span>{{ item.name }}</span
+        >&nbsp;&nbsp;&nbsp;
+        <!-- <UserInfo :userindex="item.ind_index"/> -->
+      </div>
+    </template>
+    <div>
+      <el-image :src="p_img" :fit="fill"></el-image>
+      &nbsp;
+      <el-button type="text" @click="openInterviewMemo(item.p_ind)"
+        >메모</el-button
+      >
+      &nbsp;
+      <el-button type="text">입사제안</el-button>
+      &nbsp;
+      <el-button type="text">탈락</el-button>
     </div>
-  </template>
-  <div>
-    <el-image :src="p_img" :fit="fill"></el-image>
-    &nbsp;
-    <el-button type="text" @click="openInterviewMemo(item.p_ind)">메모</el-button>
-    &nbsp;
-    <el-button type="text">입사제안</el-button>
-    &nbsp;
-    <el-button type="text">탈락</el-button>
-
-  </div>
-</el-card>
+  </el-card>
   <!-- <el-space class="examineCard">
     <el-container>
       <el-aside>
@@ -63,9 +65,12 @@
 
 <script>
 import webviewer from "../MainCompany/webviewer.vue";
+// import UserInfo from "./UserInfo.vue";
+
 export default {
   component: {
     webviewer,
+    // UserInfo,
   },
   data() {
     return {
@@ -73,7 +78,7 @@ export default {
       memo: "",
     };
   },
-  props: {item:Object},
+  props: { item: Object },
   // props: ["p_ind", "p_name", "app_url", "part", "p_img", "interviewTime"],
   methods: {
     openUserprofile() {},
@@ -99,8 +104,8 @@ export default {
 .box-card {
   border-width: 3px;
   border-radius: 10px 10px 10px 10px;
-  border-color: #ffc000;
+  border-color: #fce08c;
   border-style: solid;
-  box-shadow: 5px 5px 5px 5px wheat;
+  /* box-shadow: 5px 5px 5px 5px wheat; */
 }
 </style>
