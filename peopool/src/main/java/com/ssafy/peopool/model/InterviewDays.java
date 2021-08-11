@@ -1,10 +1,15 @@
 package com.ssafy.peopool.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class InterviewDays {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class InterviewDays implements Comparable<InterviewDays> {
 	String date;
-	private ArrayList<IntCard> interviewers = new ArrayList<IntCard>();
+	
+	@JsonProperty("interviewers")
+	private List<IntCard> interviewers = new ArrayList<IntCard>();
 	
 	public void setDate(String date) {
 		this.date = date;
@@ -14,10 +19,10 @@ public class InterviewDays {
 		return this.date;
 	}
 	
-	public ArrayList<IntCard> getInterviewers() {
+	public List<IntCard> getInterviewers() {
 		return interviewers;
 	}
-	public void setInterviewers(ArrayList<IntCard> interviewers) {
+	public void setInterviewers(List<IntCard> interviewers) {
 		this.interviewers = interviewers;
 	}
 	
@@ -28,4 +33,11 @@ public class InterviewDays {
 		}
 		return st;
 	}
+
+	@Override
+	public int compareTo(InterviewDays o) {
+		return this.date.compareTo(o.date);
+	}
+	
+	
 }

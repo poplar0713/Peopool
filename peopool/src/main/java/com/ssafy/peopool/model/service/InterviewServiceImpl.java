@@ -3,6 +3,8 @@ package com.ssafy.peopool.model.service;
 import java.io.Console;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -74,12 +76,12 @@ public class InterviewServiceImpl implements InterviewService{
 	@Override
 	public List<InterviewDays> getEDInterviewGroupByDays(int index) throws SQLException {
 		HashMap<String, InterviewDays> map = new HashMap<>();
-		List<IntCard> tempList = interviewRepo.getELastInterviews(index);
+		List<IntCard> tempList = interviewRepo.getEInterviews(index);
 		List<InterviewDays> result = new ArrayList<InterviewDays>();
 		StringTokenizer st;
 		
 		for(int i = 0; i < tempList.size(); i++) {
-			st = new StringTokenizer(tempList.get(i).getInt_start());
+			st = new StringTokenizer(tempList.get(i).getInt_start()," ");
 			String date = st.nextToken();
 			if(map.containsKey(date)) {
 				map.get(date).getInterviewers().add(tempList.get(i));
@@ -97,6 +99,9 @@ public class InterviewServiceImpl implements InterviewService{
 		    String key = iter.next();
 		    result.add(map.get(key));
 		}
+		
+		Collections.sort(result);
+		
 		return result;
 	}
 
