@@ -23,7 +23,7 @@ public class HashtagServiceImpl implements HashtagService {
 	}
 	
 	@Override
-	public List<Hashtag> userByTag(String name, int type) {
+	public List<Map<Object, Object>> userByTag(String name, int type) {
 		// TODO Auto-generated method stub
 		return hashtagRepo.userByTag(name, type);
 	}

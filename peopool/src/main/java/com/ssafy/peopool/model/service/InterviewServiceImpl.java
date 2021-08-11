@@ -1,13 +1,21 @@
 package com.ssafy.peopool.model.service;
 
+import java.io.Console;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.peopool.model.IntCard;
 import com.ssafy.peopool.model.Interview;
+import com.ssafy.peopool.model.InterviewDays;
 import com.ssafy.peopool.model.repo.InterviewRepo;
 
 @Service
@@ -63,6 +71,38 @@ public class InterviewServiceImpl implements InterviewService{
 	public List<IntCard> getELastInterviews(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.getELastInterviews(index);
+	}
+
+	@Override
+	public List<InterviewDays> getEDInterviewGroupByDays(int index) throws SQLException {
+		HashMap<String, InterviewDays> map = new HashMap<>();
+		List<IntCard> tempList = interviewRepo.getEInterviews(index);
+		List<InterviewDays> result = new ArrayList<InterviewDays>();
+		StringTokenizer st;
+		
+		for(int i = 0; i < tempList.size(); i++) {
+			st = new StringTokenizer(tempList.get(i).getInt_start()," ");
+			String date = st.nextToken();
+			if(map.containsKey(date)) {
+				map.get(date).getInterviewers().add(tempList.get(i));
+			}
+			else {
+				InterviewDays temp = new InterviewDays();
+				temp.setDate(date);
+				temp.getInterviewers().add(tempList.get(i));
+				map.put(date, temp);
+			}
+		}
+		
+		Iterator<String> iter = map.keySet().iterator();
+		while(iter.hasNext()) {
+		    String key = iter.next();
+		    result.add(map.get(key));
+		}
+		
+		Collections.sort(result);
+		
+		return result;
 	}
 
 }
