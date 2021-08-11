@@ -4,8 +4,8 @@
     shadow="hover"
     style="margin-bottom:20px; text-align:center"
     @click="dialogVisible = true"
-  >
-    <h1>{{ this.company_info.ent_name }}</h1>
+    ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
+    <h3>{{ this.company_info.ent_name }}</h3>
   </el-card>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">

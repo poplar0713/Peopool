@@ -31,8 +31,8 @@
       tag
     }}</span>
   </div>
-  <el-divider content-position="left">기업목록</el-divider>
   <div v-for="tag in selected_tags" :key="tag">
+    <el-divider content-position="left">{{ tag }}</el-divider>
     <TagCompanyList :tag="tag" />
   </div>
 </template>
