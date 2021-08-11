@@ -22,6 +22,10 @@ public interface InterviewRepo {
 
 	int registerInterview(Interview interview) throws SQLException; // 면접 일정 등록
 	
+	int modifyPass(int index) throws SQLException; // 면접 합격
+
+	int modifyFail(int index) throws SQLException; // 면접 불합격
+	
 	List<IntCard> getEInterviews(int index) throws SQLException; // 기업의 면접 일정 조회
 
 	List<IntCard> getELastInterviews(int index) throws SQLException; // 기업의 지난 면접 일정 조회
