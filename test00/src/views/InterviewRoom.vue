@@ -135,6 +135,70 @@
         </div>
       </el-aside>
     </el-container>
+<<<<<<< HEAD
+=======
+    <el-footer v-if="this.options" class="footer">
+      <span>
+        <el-button
+          round
+          v-if="this.audioOn"
+          type="warning"
+          id="button-audio"
+          v-on:click="AudioOnOff"
+          value="Audio Off"
+          >음소거</el-button
+        >&nbsp;&nbsp;
+        <el-button
+          round
+          v-else
+          type="success"
+          id="button-audio"
+          v-on:click="AudioOnOff"
+          value="Audio On"
+          >음소거 해제</el-button
+        ></span
+      >&nbsp;&nbsp;
+      <span
+        ><el-button
+          round
+          v-if="this.videoOn"
+          type="warning"
+          id="button-video"
+          v-on:click="VideoOnOff"
+          value="Video Off"
+          >비디오 Off</el-button
+        >&nbsp;&nbsp;
+        <el-button
+          round
+          v-else
+          type="success"
+          id="button-video"
+          v-on:click="VideoOnOff"
+          value="Video On"
+          >비디오 On</el-button
+        ></span
+      >&nbsp;&nbsp;<span>
+        <el-button
+          round
+          type="success"
+          id="button-setting"
+          @click="this.dialogVisible = true"
+          value="Setting"
+          >설정</el-button
+        ></span
+      >&nbsp;&nbsp;
+      <span
+        ><el-button
+          round
+          type="danger"
+          id="button-leave"
+          @click="exitDiaVisible = true"
+        >
+          X</el-button
+        ></span
+      >
+    </el-footer>
+>>>>>>> front_cho
   </el-container>
 
   <el-dialog
@@ -483,8 +547,8 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
+          console.log(err.response);
+          if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");

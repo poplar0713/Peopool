@@ -2,7 +2,7 @@
   <div v-if="this.result.length > 0">
     <el-row :gutter="24">
       <el-col :span="4" v-for="item in nowPageData" :key="item">
-        <SearchCompanyCard :item="item" />
+        <SearchCompanyTagCard :item="item" />
       </el-col>
     </el-row>
     <div style="text-align:center">
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div v-if="this.result.length == 0" style="text-align:center">
-    검색 키워드에 해당하는 기업정보가 없습니다
+    태그에 해당하는 기업정보가 없습니다
   </div>
 </template>
 
@@ -27,12 +27,12 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
-import SearchCompanyCard from "@/components/search/SearchCompanyCard.vue";
+import SearchCompanyTagCard from "@/components/search/SearchCompanyTagCard.vue";
 
 export default {
   name: "SearchCompany",
   components: {
-    SearchCompanyCard,
+    SearchCompanyTagCard,
   },
   setup() {
     // 토큰가져오기
@@ -43,10 +43,13 @@ export default {
     // 데이터저장 비동기방식
     const result = ref([]);
     (async () => {
-      const res = await axios.get(
-        `https://i5d206.p.ssafy.io:8443/poe/name/${keyword}`,
-        { headers: { Authorization: token } }
-      );
+      const res = await axios.get("https://i5d206.p.ssafy.io:8443/has/user", {
+        headers: { Authorization: token },
+        params: {
+          name: keyword,
+          type: 1,
+        },
+      });
       result.value = res.data;
       console.log(res);
       initData();

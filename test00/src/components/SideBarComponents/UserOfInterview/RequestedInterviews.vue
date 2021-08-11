@@ -8,7 +8,7 @@
           data.sug_duty.toLowerCase().includes(search.toLowerCase())
       )
     "
-    style="width: 100%"
+    height="300"
     ref="filterTable"
   >
     <el-table-column
@@ -134,8 +134,8 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();
           this.$router.push("/");
@@ -168,8 +168,8 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
-          if (err.response.data.status == 401) {
+          console.log(err.response);
+          if (err.response == 401) {
             this.$message.error('로그인세션이 만료되었습니다');
             localStorage.clear();
             this.$router.push("/");

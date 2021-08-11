@@ -7,7 +7,7 @@
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
-    height="300"
+    height="200"
   >
     <el-table-column align="center" label="Date" prop="int_start" sortable>
     </el-table-column>
@@ -18,14 +18,17 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <!-- {{scope.row.company}} -->
         <el-button
+          v-if="scope.row.int_end !== 'null'"
           size="mini"
           type="danger"
           @click="GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)"
           >Interview Room</el-button
         >
-        <!-- {{scope.row.url}} -->
+
+        <el-button v-else size="mini" disabled
+          >인터뷰가 종료되었습니다</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
@@ -51,9 +54,9 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }

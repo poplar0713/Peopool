@@ -4,7 +4,14 @@
     <el-container>
       <el-header><headerSearchUser /></el-header>
       <el-main>
-        <SearchUserList />
+        <div>
+          <el-divider content-position="left"
+            ><h1>
+              # {{ $route.params.keyword }} 태그에 해당하는 피풀인
+            </h1></el-divider
+          >
+          <SearchUserTagList />
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -13,14 +20,15 @@
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
-import SearchUserList from "@/components/search/SearchUserList.vue";
+import SearchUserTagList from "@/components/search/SearchUserTagList.vue";
 
 export default {
+  mounted() {},
   name: "SearchCompany",
   components: {
     SideBarCompany,
     headerSearchUser,
-    SearchUserList,
+    SearchUserTagList,
   },
 };
 </script>

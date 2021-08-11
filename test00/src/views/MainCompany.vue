@@ -17,21 +17,6 @@
               ><CompanySchedule /></div
           ></el-col>
         </el-row>
-        <!-- <el-row :gutter="20">
-          <el-col :span="12"
-            ><div class="grid-content bg-purple">
-              <el-divider content-position="left"
-                ><i class="el-icon-s-grid"></i> 지원자리스트1</el-divider
-              ><FollowerAppc /></div
-          ></el-col>
-          <el-col :span="12"
-            ><div class="grid-content bg-purple">
-              <el-divider content-position="left"
-                ><i class="el-icon-s-grid"></i> 지원자리스트2</el-divider
-              ><FollowingAppc /></div
-          ></el-col>
-        </el-row> -->
-        <!-- <webviewer initialDoc="파이팅 프런트.docx" /> -->
       </el-main>
     </el-container>
   </el-container>
@@ -39,12 +24,9 @@
 
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
-// import FollowerAppc from "@/components/MainCompany/FollowerAppc.vue";
-// import FollowingAppc from "@/components/MainCompany/FollowingAppc.vue";
 import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
-// import webviewer from "@/components/MainCompany/webviewer.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -54,11 +36,8 @@ export default {
   components: {
     SideBarCompany,
     CompanySchedule,
-    // FollowerAppc,
-    // FollowingAppc,
     headerSearchUser,
     CompanySugInterview,
-    // webviewer,
   },
   mounted() {
     // 토큰가져오기

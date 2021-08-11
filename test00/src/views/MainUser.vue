@@ -6,40 +6,43 @@
       <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-row :gutter="20">
-          <el-col :span="11"
-            ><div class="grid-content bg-purple">
-              <el-divider content-position="left">{{
-                this.username
-              }}</el-divider
-              ><MyInfo /></div
-          ></el-col>
-          <el-col :span="6"
+          <el-col :span="12"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">요청받은 인터뷰</el-divider
               ><UserSugInterview /></div
           ></el-col>
-          <el-col :span="7"
+          <el-col :span="12"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">인터뷰 일정</el-divider
               ><UserSchedule /></div
           ></el-col>
         </el-row>
+        <div>
+          <el-divider content-position="left">관심기업 정보</el-divider>
+          <FollowingEntsList />
+        </div>
+        <div v-for="tag in mytags" :key="tag">
+          <el-divider content-position="left"
+            >#{{ tag.taglist_name }} 관련 기업
+            <el-divider direction="vertical"></el-divider
+            ><span
+              @click="GetTagCompany(tag.taglist_name)"
+              style="cursor:pointer"
+              >전체보기</span
+            ></el-divider
+          >
+          <TagCompanyList :tag="tag.taglist_name" />
+        </div>
       </el-main>
-      <el-footer>
-        <el-divider content-position="left">기업 정보</el-divider>
-        <CompanyList />
-        <el-divider content-position="left">관심기업 정보</el-divider>
-        <FollowingEntsList />
-      </el-footer>
+      <el-footer> </el-footer>
     </el-container>
   </el-container>
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
-import MyInfo from "@/components/MainUser/MyInfo.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
-import CompanyList from "@/components/MainUser/CompanyList.vue";
+import TagCompanyList from "@/components/MainUser/TagCompanyList.vue";
 import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 
@@ -51,11 +54,10 @@ export default {
   name: "MainUser",
   components: {
     SideBarUser,
-    CompanyList,
+    TagCompanyList,
     FollowingEntsList,
     UserSugInterview,
     UserSchedule,
-    MyInfo,
     headerSearchCompany,
   },
   mounted() {
@@ -78,21 +80,37 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 유저본인 태그목록 불러오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+        headers: { Authorization: token },
+        params: {
+          index: index,
+          type: 0,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.mytags = res.data;
+      })
+      .catch((err) => {
+        if (err.response == 401) {
+          console.log("token error");
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
       });
     return {
-      mainsearch: "",
-      search: "",
       username: "",
-      hasVideo: true,
-      hasDoc: true,
-      videosrc: "@/assets/samplevideo.mp4",
-      fileList: [],
+      mytags: [],
     };
   },
   methods: {
@@ -108,6 +126,25 @@ export default {
     },
     beforeRemove(file) {
       return this.$confirm(`Cancel the transfert of ${file.name} ?`);
+    },
+    // 해당 태그의 기업들 검색으로
+    GetTagCompany(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          params: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };
