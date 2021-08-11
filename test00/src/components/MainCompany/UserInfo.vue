@@ -71,7 +71,7 @@
           </el-collapse-item>
           <el-collapse-item title="Documents" name="4">
             <div>
-              <webviewer initialDoc="파이팅 프런트.docx" />
+              <webviewer initialDoc="/docx_pdf/파이팅 프런트.docx" />
             </div>
           </el-collapse-item>
           <el-collapse-item title="reservation" name="5">

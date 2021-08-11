@@ -10,9 +10,11 @@
     <el-dialog
       :title="this.userdetailinfo.ind_name"
       v-model="dialogVisible"
-      width="50%"
-      style="color:black"
+      style="color:black; width:1500px"
     >
+      <div style="width:300px">
+        <web-viewer initialDoc="test.pdf"></web-viewer>
+      </div>
       <!-- 팔로우가 되어있을때 -->
       <div v-if="follow" style="color: Tomato;">
         <i
@@ -60,6 +62,9 @@
               {{ this.userdetailinfo.ind_introduce }}
             </div>
           </el-collapse-item>
+          <div style="width:300px">
+            <web-viewer initialDoc="test.pdf"></web-viewer>
+          </div>
           <el-collapse-item title="자기소개영상" name="2">
             <div>
               {{ this.userdetailinfo.ind_video }}
@@ -69,13 +74,9 @@
             <div>Tel : {{ this.userdetailinfo.ind_phone }}</div>
             <div>E-mail : {{ this.userdetailinfo.ind_email }}</div>
           </el-collapse-item>
-          <el-collapse-item title="Documents" name="4">
-            <div>
-              <webviewer initialDoc="파이팅 프런트.docx" />
-            </div>
-          </el-collapse-item>
+          <el-collapse-item title="Documents" name="4"> </el-collapse-item>
           <el-collapse-item title="reservation" name="5">
-            <div style="text-align:center; width:50%; margin: 0 auto;">
+            <div style="text-align:center; ">
               <el-input
                 v-model="reservationdata.sug_duty"
                 placeholder="채용직군을 입력해주세요"
@@ -134,13 +135,13 @@
 </template>
 
 <script>
-import webviewer from "@/components/MainCompany/webviewer.vue";
+import WebViewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
   name: "SearchUserTagCard",
   components: {
-    webviewer,
+    WebViewer,
   },
   props: { item: Object },
   data() {
