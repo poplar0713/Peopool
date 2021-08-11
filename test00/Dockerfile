@@ -2,7 +2,7 @@ FROM node:latest as build-stage
 WORKDIR /test00
 COPY package*.json ./
 
-RUN npm install
+RUN npm i --package-lock-only
 COPY . .
 RUN npm run build
 
