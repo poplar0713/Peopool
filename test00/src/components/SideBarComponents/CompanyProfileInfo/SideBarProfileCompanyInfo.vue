@@ -10,7 +10,7 @@
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
         {{ this.ruleForm.ent_image }}<br />
-        <el-input type="" v-model="ruleForm.ent_image"></el-input>
+        <el-input type="file" v-model="ruleForm.ent_image"></el-input>
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">
@@ -76,8 +76,8 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
+        console.log(err.response);
+        if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -187,8 +187,8 @@ export default {
             })
             .catch((err) => {
               console.log("token error");
-              console.log(err.response.data.status);
-              if (err.response.data.status == 401) {
+              console.log(err.response);
+              if (err.response == 401) {
                 this.$message.error("로그인세션이 만료되었습니다");
                 localStorage.clear();
                 this.$router.push("/");

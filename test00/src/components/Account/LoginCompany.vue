@@ -74,7 +74,7 @@ export default {
             .catch((err) => {
               console.log(err);
               this.$message.error("아이디와 비밀번호를 확인해주세요");
-              if (err.response.data.status == 401) {
+              if (err.response == 401) {
                 this.$message.error('로그인세션이 만료되었습니다');
                 localStorage.clear();
                 this.$router.push("/");

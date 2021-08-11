@@ -9,6 +9,11 @@
     >
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item label="" prop="Introduction">
+          {{this.ruleForm.photo}}
+          <br>
+          <el-input type="file" v-model="ruleForm.photo"></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="Introduction">
           <el-input type="textarea" v-model="ruleForm.Introduction"></el-input>
         </el-form-item>
         <div style="float:right">
@@ -42,12 +47,13 @@ export default {
       })
       .then((res) => {
         this.ruleForm.Introduction = res.data.ind_introduce;
+        this.ruleForm.photo = res.data.ind_photo;
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
-        if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -58,6 +64,7 @@ export default {
       loading: false,
       userindex: "",
       ruleForm: {
+        photo:"",
         Introduction: "",
       },
       rules: {
@@ -83,7 +90,7 @@ export default {
               headers: { Authorization: this.token },
               ind_index: this.userindex,
               ind_introduce: this.ruleForm.Introduction,
-              ind_photo: "string",
+              ind_photo:  this.ruleForm.photo,
               ind_resume: "string",
               ind_switch: "string",
               ind_video: "string",
@@ -98,9 +105,9 @@ export default {
             })
             .catch((err) => {
               console.log("token error");
-              console.log(err.response.data.status);
-              if (err.response.data.status == 401) {
-                this.$message.error('로그인세션이 만료되었습니다');
+              console.log(err.response);
+              if (err.response == 401) {
+                this.$message.error("로그인세션이 만료되었습니다");
                 localStorage.clear();
                 this.$router.push("/");
               }

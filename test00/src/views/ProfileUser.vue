@@ -1,38 +1,22 @@
 <template>
   <!-- UserSchedule -->
   <el-container>
-    <el-aside width="200px"><SideBarUser :usertoken="index"/></el-aside>
+    <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
+      <el-header>프로필</el-header>
       <el-main>
-        <el-row :gutter="20">
-          <el-col :span="12"
-            ><div class="grid-content bg-purple">
-              <el-divider content-position="left">요청받은 인터뷰</el-divider
-              ><UserSugInterview /></div
-          ></el-col>
-          <el-col :span="12"
-            ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 일정</el-divider
-              ><UserSchedule /></div
-          ></el-col>
-        </el-row>
-        <div>
-          <el-divider content-position="left">관심기업 정보</el-divider>
-          <FollowingEntsList />
-        </div>
-        <div v-for="tag in mytags" :key="tag">
-          <el-divider content-position="left"
-            >#{{ tag.taglist_name }} 관련 기업
-            <el-divider direction="vertical"></el-divider
-            ><span
-              @click="GetTagCompany(tag.taglist_name)"
-              style="cursor:pointer"
-              >전체보기</span
-            ></el-divider
-          >
-          <TagCompanyList :tag="tag.taglist_name" />
-        </div>
+        <el-tabs :tab-position="tabPosition" style="height: 100%;">
+          <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
+          <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
+          <el-tab-pane label="프로필사진 및 소개"
+            ><SideBarProfileUserIntroduction
+          /></el-tab-pane>
+          <el-tab-pane label="소개영상"><PRVideo /></el-tab-pane>
+          <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
+          <el-tab-pane label="서류관리"><SideBarProfileUserDoc /></el-tab-pane>
+          <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
+        </el-tabs>
       </el-main>
       <el-footer> </el-footer>
     </el-container>
@@ -40,11 +24,13 @@
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
-import UserSchedule from "@/components/MainUser/UserSchedule.vue";
-import TagCompanyList from "@/components/MainUser/TagCompanyList.vue";
-import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
+import SideBarProfileUserInfo from "@/components/SideBarComponents/UserProfileInfo/SideBarProfileUserInfo.vue";
+import SideBarProfileUserIntroduction from "@/components/SideBarComponents/UserProfileInfo/SideBarProfileUserIntroduction.vue";
+import SideBarProfileUserTags from "@/components/SideBarComponents/UserProfileInfo/SideBarProfileUserTags.vue";
+import PRVideo from "@/components/SideBarComponents/UserProfileInfo/PRVideo.vue";
+import SideBarProfileUserDoc from "@/components/SideBarComponents/UserProfileInfo/SideBarProfileUserDoc.vue";
+import DeleteUserAccount from "@/components/SideBarComponents/UserProfileInfo/DeleteUserAccount.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -54,11 +40,13 @@ export default {
   name: "MainUser",
   components: {
     SideBarUser,
-    TagCompanyList,
-    FollowingEntsList,
-    UserSugInterview,
-    UserSchedule,
     headerSearchCompany,
+    SideBarProfileUserInfo,
+    SideBarProfileUserIntroduction,
+    SideBarProfileUserTags,
+    PRVideo,
+    SideBarProfileUserDoc,
+    DeleteUserAccount,
   },
   mounted() {
     console.log(server_url);
@@ -111,6 +99,7 @@ export default {
     return {
       username: "",
       mytags: [],
+      tabPosition: "left",
     };
   },
   methods: {

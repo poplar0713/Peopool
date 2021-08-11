@@ -101,6 +101,7 @@ export default {
       }, 2000);
     },
   },
+  props:{usertoken:Number},
   data() {
     return {
       value: [],
