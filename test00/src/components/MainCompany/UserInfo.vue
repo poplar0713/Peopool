@@ -58,6 +58,11 @@
             <div>
               {{ this.userdetailinfo.ind_introduce }}
             </div>
+            <div>
+              <img
+                src="/home/ubuntu/upload/210810/e09462ab-c2e5-4c9b-8f3c-ae86bfcfc896.PNG"
+              />
+            </div>
           </el-collapse-item>
           <el-collapse-item title="자기소개영상" name="2">
             <div>
@@ -70,7 +75,7 @@
           </el-collapse-item>
           <el-collapse-item title="Documents" name="4">
             <div>
-              <webviewer initialDoc="파이팅 프런트.docx" />
+              <webviewer initialDoc="/docx_pdf/파이팅 프런트.docx" />
             </div>
           </el-collapse-item>
           <el-collapse-item title="reservation" name="5">
