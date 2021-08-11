@@ -135,8 +135,6 @@
         </div>
       </el-aside>
     </el-container>
-<<<<<<< HEAD
-=======
     <el-footer v-if="this.options" class="footer">
       <span>
         <el-button
@@ -198,7 +196,6 @@
         ></span
       >
     </el-footer>
->>>>>>> front_cho
   </el-container>
 
   <el-dialog
