@@ -12,14 +12,23 @@
         </div>
       </router-link>
       <el-menu background-color="#f1c40f">
-        <!--  -->
-        <el-menu-item index="1" @click="dialogVisible = true">
-          <i
-            class="el-icon-office-building
-"
-          ></i>
-          <span><ProfileCompany /></span>
+        <el-menu-item index="1">
+          <i class="fas fa-home"></i>&nbsp;&nbsp;
+          <a href="/company" style="text-decoration: none; color:black">Home</a>
         </el-menu-item>
+        <!--  -->
+        <el-menu-item index="2">
+          <i class="el-icon-office-building"></i>
+          <router-link
+            :to="{
+              name: 'ProfileCompany',
+              params: { companyindex: companyindex },
+            }"
+            style="text-decoration: none; color:black"
+            >Company</router-link
+          >
+        </el-menu-item>
+        <!--  -->
         <el-menu-item index="3">
           <i class="el-icon-right"></i>
           <i class="el-icon-user-solid"></i>
@@ -31,15 +40,15 @@
           <i class="el-icon-back"></i>
           <span><CompanyFollowers /></span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="5">
           <i class="el-icon-star-on"></i>
           <span @click="GoToRecruit">Recruitment</span>
         </el-menu-item>
-        <el-menu-item index="5">
+        <el-menu-item index="6">
           <i class="el-icon-setting"></i>
           <span>setting</span>
         </el-menu-item>
-        <el-menu-item index="6">
+        <el-menu-item index="7">
           <i class="el-icon-turn-off"></i>
           <span @click="Logout">Logout</span>
         </el-menu-item>
@@ -51,14 +60,25 @@
 </template>
 
 <script>
-import ProfileCompany from "@/components/SideBarComponents/ProfileCompany.vue";
+// import ProfileCompany from "@/components/SideBarComponents/ProfileCompany.vue";
 import CompanyFollowings from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowings.vue";
 import CompanyFollowers from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowers.vue";
+import jwt_decode from "jwt-decode";
 export default {
   components: {
     CompanyFollowers,
     CompanyFollowings,
-    ProfileCompany,
+    // ProfileCompany,
+  },
+  data() {
+    // 토큰가져오기
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    return {
+      value: [],
+      companyindex: index,
+    };
   },
   methods: {
     Logout() {
@@ -83,11 +103,6 @@ export default {
     GoToRecruit() {
       this.$router.push("recruiting");
     },
-  },
-  data() {
-    return {
-      value: [],
-    };
   },
 };
 </script>
