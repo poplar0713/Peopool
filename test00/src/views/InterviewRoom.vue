@@ -99,7 +99,8 @@
               @click="exitDiaVisible = true"
             >
               X</el-button
-            ></span
+            >
+            </span
           >
           <el-button
             type="warning"
@@ -135,67 +136,6 @@
         </div>
       </el-aside>
     </el-container>
-    <el-footer v-if="this.options" class="footer">
-      <span>
-        <el-button
-          round
-          v-if="this.audioOn"
-          type="warning"
-          id="button-audio"
-          v-on:click="AudioOnOff"
-          value="Audio Off"
-          >음소거</el-button
-        >&nbsp;&nbsp;
-        <el-button
-          round
-          v-else
-          type="success"
-          id="button-audio"
-          v-on:click="AudioOnOff"
-          value="Audio On"
-          >음소거 해제</el-button
-        ></span
-      >&nbsp;&nbsp;
-      <span
-        ><el-button
-          round
-          v-if="this.videoOn"
-          type="warning"
-          id="button-video"
-          v-on:click="VideoOnOff"
-          value="Video Off"
-          >비디오 Off</el-button
-        >&nbsp;&nbsp;
-        <el-button
-          round
-          v-else
-          type="success"
-          id="button-video"
-          v-on:click="VideoOnOff"
-          value="Video On"
-          >비디오 On</el-button
-        ></span
-      >&nbsp;&nbsp;<span>
-        <el-button
-          round
-          type="success"
-          id="button-setting"
-          @click="this.dialogVisible = true"
-          value="Setting"
-          >설정</el-button
-        ></span
-      >&nbsp;&nbsp;
-      <span
-        ><el-button
-          round
-          type="danger"
-          id="button-leave"
-          @click="exitDiaVisible = true"
-        >
-          X</el-button
-        ></span
-      >
-    </el-footer>
   </el-container>
 
   <el-dialog
@@ -657,6 +597,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  
+}
+.footer span {
+  padding: 10px;
 }
 .wrapper {
   display: grid;
