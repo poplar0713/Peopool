@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.0.0",
