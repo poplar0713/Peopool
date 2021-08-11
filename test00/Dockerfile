@@ -1,4 +1,4 @@
-FROM node:latest as build-stage
+FROM node:16.4.2 as build-stage
 WORKDIR /test00
 COPY package*.json ./
 
