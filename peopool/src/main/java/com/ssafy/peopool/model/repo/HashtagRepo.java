@@ -1,7 +1,5 @@
 package com.ssafy.peopool.model.repo;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +14,7 @@ public interface HashtagRepo {
 	List<Map<String, Object>> tagByUser(int index, int type);
 	
 	// 태그별 사용자 목록
-	List<Hashtag> userByTag(String name, int type);
+	List<Map<Object, Object>> userByTag(String name, int type);
 
 	// 태그 별 사용자 수
 	List<Map<String, Object>> countByTag();

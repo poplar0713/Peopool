@@ -41,7 +41,7 @@ public class HashtagController {
 	
 	@ApiOperation(value = "태그별 등록한 사용자목록", response = String.class)
 	@GetMapping("/user")
-	public ResponseEntity<List<Hashtag>> userByTag(@RequestParam("name")String name, @RequestParam("type")int type ) {
+	public ResponseEntity<List<Map<Object, Object>>> userByTag(@RequestParam("name")String name, @RequestParam("type")int type ) {
 		return new ResponseEntity<>(hashtagService.userByTag(name, type), HttpStatus.OK);
 
 	}
