@@ -9,7 +9,7 @@ import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
-import cookies from 'vue-cookies';
+import cookies from "vue3-cookies";
 const routes = [
   {
     path: "/meetinter",
