@@ -177,7 +177,7 @@ export default {
       });
 
     axios
-      .get(`https://localhost:8443/int/ent/iday/${this.company_index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/int/ent/iday/${this.company_index}`, {
         // 면접 대기자
         headers: { Authroization: token },
       })
