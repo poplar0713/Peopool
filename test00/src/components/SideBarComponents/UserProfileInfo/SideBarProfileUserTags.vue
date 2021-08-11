@@ -1,93 +1,61 @@
 <template>
-  <el-divider content-position="left">나의 태그</el-divider>
-  <div
-    v-if="this.mytags.length > 0"
-    style="width:100%; word-break:break-all;word-wrap:break-word;"
-  >
-    <el-tag
-      v-for="item in mytags"
-      style="margin:5px"
-      :key="item.taglist_index"
-      :type="warning"
-      effect="plain"
-      closable
-      :disable-transitions="true"
-      @close="handleClose(tag, item.tag_index)"
-      @click="GetTagCompany(item.taglist_name)"
+  <div class="select-section">
+    <el-divider content-position="left">나의 태그</el-divider>
+    <div style="align-text:center">
+      <!-- select -->
+      <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
+        <el-option
+          v-for="item in options_user"
+          :key="item.taglist_index"
+          :label="item.taglist_name"
+          :value="item.taglist_index"
+        >
+        </el-option>
+      </el-select>
+      <!--  -->
+      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+    </div>
+    <div
+      v-if="this.mytags.length > 0"
+      style="width:100%; word-break:break-all;word-wrap:break-word;"
     >
-      {{ item.taglist_name }}
-    </el-tag>
-  </div>
-  <div v-else style="align-text:center">
-    선택된 태그가 없습니다
-  </div>
-  <div style="align-text:center">
-    <!-- select -->
-    <el-select
-      v-model="value"
-      filterable
-      placeholder="Choose tags"
-      style="align-text:center"
-    >
-      <el-option
-        v-for="item in options_user"
+      <el-tag
+        v-for="item in mytags"
+        style="margin:5px"
         :key="item.taglist_index"
-        :label="item.taglist_name"
-        :value="item.taglist_index"
+        :type="warning"
+        effect="plain"
+        closable
+        :disable-transitions="true"
+        @close="handleClose(tag, item.tag_index)"
+        @click="GetTagCompany(item.taglist_name)"
       >
-      </el-option>
-    </el-select>
-    <!--  -->
-    <i
-      class="far fa-plus-square fa-2x"
-      @click="plustag"
-      style="cursor:pointer; margin: 10px"
-    ></i>
+        {{ item.taglist_name }}
+      </el-tag>
+    </div>
+    <div v-else style="align-text:center">
+      선택된 태그가 없습니다
+    </div>
   </div>
-  <el-divider content-position="left">기업태그</el-divider>
-  <div
-    v-if="this.mytags.length > 0"
-    style="width:100%; word-break:break-all;word-wrap:break-word;"
-  >
-    <el-tag
-      v-for="item in mytags"
-      style="margin:5px"
-      :key="item.taglist_index"
-      :type="warning"
-      effect="plain"
-      closable
-      :disable-transitions="true"
-      @close="handleClose(tag, item.tag_index)"
-      @click="GetTagCompany(item.taglist_name)"
-    >
-      {{ item.taglist_name }}
-    </el-tag>
-  </div>
-  <div v-else style="align-text:center">
-    선택된 태그가 없습니다
-  </div>
-  <div style="align-text:center">
-    <!-- select -->
-    <el-select
-      v-model="value"
-      filterable
-      placeholder="Choose tags"
-      style="align-text:center"
-    >
-      <el-option
-        v-for="item in options_user"
-        :key="item.taglist_index"
-        :label="item.taglist_name"
-        :value="item.taglist_index"
-      >
-      </el-option>
-    </el-select>
-    <!--  -->
-    <i
-      class="far fa-plus-square fa-2x"
-      @click="plustag"
-      style="cursor:pointer; margin: 10px"
-    ></i>
+  <div class="select-section">
+    <el-divider content-position="left"><span>관심 직종</span></el-divider>
+
+    미구현
+
+    <div style="align-text:center">
+      <!-- select -->
+      <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
+        <el-option
+          v-for="item in options_user"
+          :key="item.taglist_index"
+          :label="item.taglist_name"
+          :value="item.taglist_index"
+        >
+        </el-option>
+      </el-select>
+      <!--  -->
+      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+    </div>
   </div>
 </template>
 
@@ -141,14 +109,14 @@ export default {
           this.$router.push("/");
         }
       });
-      // 기업전용태그목록 불러오기
+    // 기업전용태그목록 불러오기
   },
   data() {
     return {
       user_index: "",
       // 불러온 태그들
       options_user: [],
-      options_company:[],
+      options_company: [],
       // 선택한 태그들
       value: "",
       //나의 태그들
@@ -228,4 +196,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.el-divider span {
+  font-size: 1rem;
+}
+.select-section {
+  padding: 1%;
+  margin: 1%;
+}
+</style>
