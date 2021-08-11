@@ -82,8 +82,6 @@ export default {
   },
   methods: {
     Logout() {
-      // 깔끔하게 비우기
-      localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
@@ -93,6 +91,7 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.$cookies.remove("PID_AUTH");
         this.$router.push("/");
         this.$message({
           message: "로그아웃",

@@ -3,6 +3,7 @@ import Start from "../views/Start.vue";
 import MainUser from "../views/MainUser.vue";
 import ProfileUser from "../views/ProfileUser.vue";
 import ProfileCompany from "../views/ProfileCompany.vue";
+import ViewCompany from "../views/ViewCompany.vue";
 import MainCompany from "../views/MainCompany.vue";
 import InterviewRoom from "../views/InterviewRoom.vue";
 import SearchCompany from "../views/SearchCompany.vue";
@@ -36,6 +37,18 @@ const routes = [
     path: "/profileuser/:userindex",
     name: "ProfileUser",
     component: ProfileUser,
+    beforeEnter: function(to, from, next) {
+      if (cookies.get("PID_AUTH") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
+  },
+  {
+    path: "/viewcompany",
+    name: "ViewCompany",
+    component: ViewCompany,
     beforeEnter: function(to, from, next) {
       if (cookies.get("PID_AUTH") == null) {
         alert("로그인이 필요한 서비스입니다");

@@ -39,7 +39,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  data() {
+  mounted() {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
@@ -61,8 +61,9 @@ export default {
           this.$router.push("/");
         }
       });
+  },
+  data() {
     return {
-      user: "김백수",
       myinterview: [],
       search: "",
     };
