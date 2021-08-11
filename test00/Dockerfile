@@ -1,4 +1,4 @@
-FROM node:14.17.1 as build-stage
+FROM node:14.17-alpine as build-stage
 WORKDIR /test00
 COPY package*.json ./
 
