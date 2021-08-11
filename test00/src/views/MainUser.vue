@@ -37,6 +37,7 @@
       <el-footer> </el-footer>
     </el-container>
   </el-container>
+  <router-view></router-view>
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
