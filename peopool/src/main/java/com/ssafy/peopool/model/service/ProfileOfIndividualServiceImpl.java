@@ -97,6 +97,12 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 		return profileOfIndividualRepo.getTagOfProfile(word);
 	}
 
+	@Override
+	public List<IndCard> getIntroOfProfile(String word) {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.getIntroOfProfile(word);
+	}
+
 	
 
 }

@@ -60,6 +60,13 @@ public class ProfileOfIndividualController {
 
 	}
 	
+	@ApiOperation(value = "자기소개에 해당하는 단어가 있는 프로필을 가져온다.", response = String.class)
+	@GetMapping("/intro")
+	public ResponseEntity<List<IndCard>> getIntroOfProfile(@RequestParam("word")String word) {
+		return new ResponseEntity<>(profileOfIndividualService.getIntroOfProfile(word), HttpStatus.OK);
+
+	}
+	
 	@ApiOperation(value = "기술 스택을 가진 프로필을 가져온다.", response = String.class)
 	@GetMapping("/tag")
 	public ResponseEntity<List<IndCard>> getTagOfProfile(@RequestParam("word")String word) {

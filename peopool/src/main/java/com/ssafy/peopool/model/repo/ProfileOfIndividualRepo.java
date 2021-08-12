@@ -40,4 +40,7 @@ public interface ProfileOfIndividualRepo {
 	
 	// 기술 스택을 가진 사용자 프로필 조회
 	List<IndCard> getTagOfProfile(String word);
+	
+	// 자기소개에 따른 사용자 프로필 조회
+	List<IndCard> getIntroOfProfile(String word);
 }
