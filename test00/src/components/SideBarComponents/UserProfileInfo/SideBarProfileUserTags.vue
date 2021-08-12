@@ -3,7 +3,12 @@
     <el-divider content-position="left">나의 태그</el-divider>
     <div style="align-text:center">
       <!-- select -->
-      <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
+      <el-select
+        v-model="value"
+        filterable
+        placeholder="Choose tags"
+        style="align-text:center"
+      >
         <el-option
           v-for="item in options_user"
           :key="item.taglist_index"
@@ -13,7 +18,12 @@
         </el-option>
       </el-select>
       <!--  -->
-      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+      <el-button
+        icon="el-icon-plus"
+        circle
+        @click="plustag"
+        style="margin: 1em;"
+      ></el-button>
     </div>
     <div
       v-if="this.mytags.length > 0"
@@ -21,7 +31,7 @@
     >
       <el-tag
         v-for="item in mytags"
-        style="margin: 0.1rem"
+        style="margin:5px"
         :key="item.taglist_index"
         :type="warning"
         effect="plain"
@@ -35,26 +45,6 @@
     </div>
     <div v-else style="align-text:center">
       선택된 태그가 없습니다
-    </div>
-  </div>
-  <div class="select-section">
-    <el-divider content-position="left"><span>관심 직종</span></el-divider>
-
-    미구현
-
-    <div style="align-text:center">
-      <!-- select -->
-      <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
-        <el-option
-          v-for="item in options_user"
-          :key="item.taglist_index"
-          :label="item.taglist_name"
-          :value="item.taglist_index"
-        >
-        </el-option>
-      </el-select>
-      <!--  -->
-      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
     </div>
   </div>
 </template>
@@ -109,14 +99,12 @@ export default {
           this.$router.push("/");
         }
       });
-    // 기업전용태그목록 불러오기
   },
   data() {
     return {
       user_index: "",
       // 불러온 태그들
       options_user: [],
-      options_company: [],
       // 선택한 태그들
       value: "",
       //나의 태그들

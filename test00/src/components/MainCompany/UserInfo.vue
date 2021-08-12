@@ -42,7 +42,6 @@
           :key="item.taglist_index"
           :type="warning"
           effect="plain"
-          closable
           :disable-transitions="true"
           @click="GetTagUser(item.taglist_name)"
         >

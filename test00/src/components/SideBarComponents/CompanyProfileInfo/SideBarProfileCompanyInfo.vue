@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:100%;"
+    style="width:80%;"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
@@ -10,7 +10,7 @@
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
         {{ this.ruleForm.ent_image }}<br />
-        <el-input type="file" v-model="ruleForm.ent_image"></el-input>
+        <el-input type="" v-model="ruleForm.ent_image"></el-input>
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">
