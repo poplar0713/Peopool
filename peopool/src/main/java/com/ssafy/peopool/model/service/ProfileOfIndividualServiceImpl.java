@@ -2,6 +2,7 @@ package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	}
 
 	@Override
-	public IndCard getProfile(int index) {
+	public List<Map<Object, Object>> getProfile(int index) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.getProfile(index);
 	}
@@ -101,6 +102,12 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	public List<IndCard> getIntroOfProfile(String word) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.getIntroOfProfile(word);
+	}
+
+	@Override
+	public IndCard getIndexOfProfile(int index) {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.getIndexOfProfile(index);
 	}
 
 	
