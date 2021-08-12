@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -54,8 +55,15 @@ public class ProfileOfIndividualController {
 	}
 	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
+	@GetMapping("/profile")
+	public ResponseEntity<IndCard> getIndexOfProfile(@RequestParam("index")int index) {
+		return new ResponseEntity<>(profileOfIndividualService.getIndexOfProfile(index), HttpStatus.OK);
+
+	}
+	
+	@ApiOperation(value = "index에 해당하는 프로필과 파일 경로를 가져온다.", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<IndCard> getProfile(@PathVariable("index")int index) {
+	public ResponseEntity<List<Map<Object, Object>>> getProfile(@PathVariable("index")int index) {
 		return new ResponseEntity<>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
 
 	}
@@ -144,7 +152,7 @@ public class ProfileOfIndividualController {
 				}
 				fileInfos.add(fileInfo);
 			}
-			IndCard ind = profileOfIndividualService.getProfile(index);
+			IndCard ind = profileOfIndividualService.getIndexOfProfile(index);
 			profileOfIndividual.setInd_index(index);
 			profileOfIndividual.setInd_photo(ind.getInd_photo());
 			profileOfIndividual.setInd_switch(ind.getInd_switch());
@@ -194,7 +202,7 @@ public class ProfileOfIndividualController {
 				}
 				fileInfos.add(fileInfo);
 			}
-			IndCard ind = profileOfIndividualService.getProfile(index);
+			IndCard ind = profileOfIndividualService.getIndexOfProfile(index);
 			profileOfIndividual.setInd_index(index);
 			profileOfIndividual.setInd_resume(ind.getInd_resume());
 			profileOfIndividual.setInd_switch(ind.getInd_switch());
@@ -244,7 +252,7 @@ public class ProfileOfIndividualController {
 				}
 				fileInfos.add(fileInfo);
 			}
-			IndCard ind = profileOfIndividualService.getProfile(index);
+			IndCard ind = profileOfIndividualService.getIndexOfProfile(index);
 			profileOfIndividual.setInd_index(index);
 			profileOfIndividual.setInd_video(ind.getInd_video());
 			profileOfIndividual.setInd_switch(ind.getInd_switch());
