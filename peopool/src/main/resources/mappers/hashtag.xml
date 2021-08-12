@@ -15,19 +15,18 @@
 		<choose>
 			<when test="type == 0">
 				select ind_index, ind_name
-				from individual
-				where ind_index = (select tag_target
-				from hashtag h left outer join taglist t 
-				on h.taglist_index = t.taglist_index
-				where taglist_name = #{name} and tag_type = #{type});
+				from individual i join hashtag h
+                on i.ind_index = h.tag_target
+				where h.tag_type = #{type} and h.taglist_index = (select taglist_index
+				from taglist
+				where taglist_name = #{name});
 			</when>
 			<otherwise>
 				select ent_index, ent_name
-				from enterprise
-				where ent_index = (select tag_target
-				from hashtag h left outer join taglist t 
-				on h.taglist_index = t.taglist_index
-				where taglist_name = #{name} and tag_type = #{type});
+				from enterprise e join hashtag h
+				where h.tag_type = #{type} and h.taglist_index = (select taglist_index
+				from taglist
+				where taglist_name = #{name});
 			</otherwise>
 		</choose>
 		

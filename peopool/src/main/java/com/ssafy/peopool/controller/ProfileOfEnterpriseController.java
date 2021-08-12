@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.EntCard;
@@ -55,6 +56,20 @@ public class ProfileOfEnterpriseController {
 	@GetMapping("/name/{name}")
 	public ResponseEntity<List<EntCard>> getNameOfEnterprise(@PathVariable("name")String name) throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getNameOfEnterprise(name), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "기업소개에서 해당하는 단어가 있는 프로필을 가져온다.", response = String.class)
+	@GetMapping("/intro")
+	public ResponseEntity<List<EntCard>> getIntroOfEnterprise(@RequestParam("word")String word) throws SQLException{
+		return new ResponseEntity<>(profileOfEnterpriseService.getIntroOfEnterprise(word), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "등록된 분류에서 해당하는 단어가 있는 프로필을 가져온다.", response = String.class)
+	@GetMapping("/class")
+	public ResponseEntity<List<EntCard>> getClassOfEnterprise(@RequestParam("word")String word) throws SQLException{
+		return new ResponseEntity<>(profileOfEnterpriseService.getClassOfEnterprise(word), HttpStatus.OK);
 		
 	}
 	

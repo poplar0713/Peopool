@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.ClassList;
@@ -27,6 +28,12 @@ public class ClassListController {
 	@GetMapping("/")
 	public ResponseEntity<List<ClassList>> getTagList() {
 		return new ResponseEntity<>(classListService.getClassList(), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "name을 포함한 분류 목록 받아오기", response = List.class)
+	@GetMapping("/name")
+	public ResponseEntity<List<ClassList>> getTagList(@RequestParam("name")String name) {
+		return new ResponseEntity<>(classListService.getName(name), HttpStatus.OK);
 	}
 
 }

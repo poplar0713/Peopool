@@ -59,6 +59,13 @@ public class ProfileOfIndividualController {
 		return new ResponseEntity<>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
 
 	}
+	
+	@ApiOperation(value = "기술 스택을 가진 프로필을 가져온다.", response = String.class)
+	@GetMapping("/tag")
+	public ResponseEntity<List<IndCard>> getTagOfProfile(@RequestParam("word")String word) {
+		return new ResponseEntity<>(profileOfIndividualService.getTagOfProfile(word), HttpStatus.OK);
+
+	}
 
 	@ApiOperation(value = "index에 해당하는 프로필을 수정한다.", response = String.class)
 	@PutMapping()
