@@ -6,15 +6,17 @@
         Upload
       </button>
     </form>
-    <div v-if="!docfilepath">이력서가 없습니다.</div>
-    <div v-else><web-viewer :initialDoc="docfilepath" /></div>
+    <!-- <div v-if="!docfilepath">이력서가 없습니다.</div> -->
+    <div>
+      <web-viewer initialDoc="/docx_pdf/test.pdf"></web-viewer>
+    </div>
   </div>
 </template>
 
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import WebViewer from "@/components/MainCompany/UserInfo.vue";
+import WebViewer from "@/components/MainCompany/webviewer.vue";
 export default {
   props: {
     docfilepath: String,

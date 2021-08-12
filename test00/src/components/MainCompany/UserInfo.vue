@@ -80,6 +80,8 @@
             </el-collapse-item>
             <el-collapse-item title="Documents" name="4">
               <div>
+                <!-- 되는거 -->
+                <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
                 <webviewer :initialDoc="userdetailinfo.resumefilepath" />
               </div>
             </el-collapse-item>
