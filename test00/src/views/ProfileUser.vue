@@ -107,7 +107,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log("asdgdfasdfasfd");
         var result = res.data[0];
         this.userdata.photofilepath =
           "/file/" + result.photo_savefolder + "/" + result.photo_savefile;

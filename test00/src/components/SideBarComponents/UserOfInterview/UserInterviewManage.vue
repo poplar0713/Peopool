@@ -6,13 +6,13 @@
   <el-dialog
     title="면접관리"
     v-model="dialogVisible"
-    width="40%"
+    width="50%"
     :before-close="handleClose"
   >
     <!--  -->
     <el-tabs :tab-position="tabPosition" style="height: 100%;">
-      <el-tab-pane label="받은요청"><RequestedInterviews /></el-tab-pane>
-      <el-tab-pane label="수락한면접"><MyInterviews /></el-tab-pane>
+      <el-tab-pane label="받은요청"><UserSugInterview /></el-tab-pane>
+      <el-tab-pane label="수락한면접"><UserSchedule /></el-tab-pane>
       <el-tab-pane label="결과대기">Role</el-tab-pane>
       <el-tab-pane label="결과">Task</el-tab-pane>
     </el-tabs>
@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import RequestedInterviews from "./RequestedInterviews.vue";
-import MyInterviews from "./MyInterviews.vue";
+import UserSchedule from "@/components/MainUser/UserSchedule.vue";
+import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 export default {
   components: {
-    RequestedInterviews,
-    MyInterviews,
+    UserSugInterview,
+    UserSchedule,
   },
   data() {
     return {

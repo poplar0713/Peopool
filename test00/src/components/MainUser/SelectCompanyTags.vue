@@ -1,29 +1,36 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :span="2"
-      ><div class="grid-content bg-purple">
-        <el-divider content-position="left">기업규모</el-divider>
-        <el-checkbox-group v-model="checksize" :min="0" :max="1">
-          <el-checkbox v-for="city in cities" :label="city" :key="city">{{
-            city
-          }}</el-checkbox>
-        </el-checkbox-group>
-      </div></el-col
-    >
-    <el-col :span="22"
-      ><div class="grid-content bg-purple">
-        <el-divider content-position="left">태그목록</el-divider>
-        <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-          <el-checkbox
-            v-for="tag in company_tags"
-            :label="tag.list_name"
-            :key="tag"
-            >{{ tag.list_name }}</el-checkbox
+  <el-collapse v-model="activeNames" @change="handleChange">
+    <el-collapse-item title="Select Tags" name="1" style="text-align:center">
+      <div>
+        <el-row :gutter="20">
+          <el-col :span="2"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">기업규모</el-divider>
+              <el-checkbox-group v-model="checksize" :min="0" :max="1">
+                <el-checkbox v-for="city in cities" :label="city" :key="city">{{
+                  city
+                }}</el-checkbox>
+              </el-checkbox-group>
+            </div></el-col
           >
-        </el-checkbox-group>
-      </div></el-col
-    >
-  </el-row>
+          <el-col :span="22"
+            ><div class="grid-content bg-purple">
+              <el-divider content-position="left">태그목록</el-divider>
+              <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+                <el-checkbox
+                  v-for="tag in company_tags"
+                  :label="tag.list_name"
+                  :key="tag"
+                  >{{ tag.list_name }}</el-checkbox
+                >
+              </el-checkbox-group>
+            </div></el-col
+          >
+        </el-row>
+      </div>
+    </el-collapse-item>
+  </el-collapse>
+
   <el-divider>내가고른 태그목록</el-divider>
   <div style="text-align:center">
     <h3>{{ this.checksize[0] }}</h3>
@@ -73,8 +80,13 @@ export default {
       cities: sizes,
       company_tags: [],
       selected_tags: [],
+      // activeNames: ["1"],
     };
   },
-  methods: {},
+  methods: {
+    handleChange(val) {
+      console.log(val);
+    },
+  },
 };
 </script>

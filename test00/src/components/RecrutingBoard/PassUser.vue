@@ -3,15 +3,19 @@
     :data="
       pastinterview.filter(
         (data) =>
-          !search ||
-          (data.name.toLowerCase().includes(search.toLowerCase()) &&
-            data.int_done == 'P')
+          (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
+          data.int_done == 'P'
       )
     "
     height="600"
     width="100"
   >
-    <el-table-column align="center" label="면접일" prop="int_end" width="160%">
+    <el-table-column
+      align="center"
+      label="면접종료일"
+      prop="int_end"
+      width="160%"
+    >
     </el-table-column>
     <el-table-column align="center" label="피풀인" prop="name" width="100%">
     </el-table-column>
