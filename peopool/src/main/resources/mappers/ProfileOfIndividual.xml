@@ -36,11 +36,12 @@
 	</select>
 	
 	<select id="getProfile" parameterType="int" resultType="HashMap">
-		select c.* ,d.originfile as photo_originfile, d.savefile as photo_savefile, d.savefolder as photo_savefolder
-		from (select a.* ,b.originfile as video_originfile, b.savefile as video_savefile, b.savefolder as video_savefolder
+		select g.ind_name,g.ind_gender,g.ind_email,g.ind_phone,e.*
+		from(select c.*,d.originfile as photo_originfile, d.savefile as photo_savefile, d.savefolder as photo_savefolder
+		from (select a.*,b.originfile as video_originfile, b.savefile as video_savefile, b.savefolder as video_savefolder
 		from (select i.ind_index, i.ind_resume as resume_index, f.savefolder as resume_savefolder,f.originfile as resume_originfile,f.savefile as resume_savefile,i.ind_video as video_index,i.ind_photo as photo_index, i.ind_switch, i.ind_introduce  from ind_profile i left outer join file_info f on i.ind_resume = f.fil_index) a 
-		left outer join file_info b on a.video_index = b.fil_index) c left outer join file_info d on c.photo_index = d.fil_index
-		where c.ind_index = #{index};
+		left outer join file_info b on a.video_index = b.fil_index) c left outer join file_info d on c.photo_index = d.fil_index) e left outer join individual g on e.ind_index = g.ind_index
+		where e.ind_index = #{index};
 	</select>
 	
 	<select id="getIntroOfProfile" parameterType="String" resultType="IndCard">
