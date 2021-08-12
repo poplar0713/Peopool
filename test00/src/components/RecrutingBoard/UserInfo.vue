@@ -4,7 +4,7 @@
     @click="dialogVisible = true"
     style="color:black; text-align:center; cursor:pointer"
     size="mini"
-    >상세보기
+    >{{ this.userdetailinfo.ind_name }} 상세보기
   </el-text>
   <div style="text-align:center">
     <el-dialog
@@ -144,14 +144,14 @@ export default {
   },
   created() {},
   props: {
-    user: Object,
-    userindex: Object,
+    userindex: Number,
   },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    this.company_index = index;
     // 팔로우했는지 체크해보기
     axios
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
@@ -225,7 +225,7 @@ export default {
       });
     return {
       follow: false,
-      company_index: index,
+      company_index: "",
       dialogVisible: false,
       // activeNames: ["1"],
       activeName: "1",
@@ -367,7 +367,7 @@ export default {
           }
         });
     },
-    // 해당 태그의 기업들 검색으로
+    // 해당 태그의 유저들 검색으로
     GetTagUser(keyword) {
       const loading = this.$loading({
         lock: true,

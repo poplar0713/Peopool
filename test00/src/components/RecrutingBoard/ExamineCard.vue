@@ -16,75 +16,57 @@
       </el-footer>
     </el-container>
   </el-dialog>
+
   <el-card class="box-card" style="margin-bottom:25px;" shadow="hover">
-    <template #header>
-      <div class="card-header">
-        <span>{{ item.name }}</span
-        >&nbsp;&nbsp;&nbsp;
-        <!-- <UserInfo :userindex="item.ind_index"/> -->
-      </div>
-    </template>
-    <div>
-      <el-image :src="p_img" :fit="fill"></el-image>
-      &nbsp;
-      <el-button type="text" @click="openInterviewMemo(item.p_ind)"
-        >메모</el-button
+    <el-row :gutter="20">
+      <el-col :span="8"
+        ><div>
+          <el-avatar
+            shape="square"
+            :size="60"
+            :src="squareUrl"
+          ></el-avatar></div
+      ></el-col>
+      <el-col :span="16"
+        ><div>
+          <UserInfo :userindex="item.ind_index" />
+          <el-button type="text" @click="openInterviewMemo(item)"
+            >메모</el-button
+          >
+          <el-button type="text" @click="sugpass(item.int_index)"
+            >입사제안</el-button
+          >
+          <el-button type="text" @click="sugfail(item.int_index)"
+            >탈락</el-button
+          >
+        </div></el-col
       >
-      &nbsp;
-      <el-button type="text">입사제안</el-button>
-      &nbsp;
-      <el-button type="text">탈락</el-button>
-    </div>
+    </el-row>
   </el-card>
-  <!-- <el-space class="examineCard">
-    <el-container>
-      <el-aside>
-        <el-image :src="p_img" :fit="fill"></el-image>
-      </el-aside>
-      <el-container>
-        <el-main
-          ><h5>면접일시 : {{ interviewTime }}</h5>
-          <h4>{{ p_name }} ({{ part }})</h4>
-          <el-button-group>
-            <el-button @click="openUserprofile">프로필</el-button>
-            <el-button type="warning" @click="openInterviewMemo(p_ind)"
-              >면접 메모</el-button
-            >
-          </el-button-group>
-        </el-main>
-        <el-footer>
-          <el-space wrap :size="large">
-            <el-button type="success">입사 제안</el-button>
-            <el-button type="danger">탈락</el-button>
-          </el-space>
-        </el-footer>
-      </el-container>
-    </el-container>
-  </el-space> -->
 </template>
 
 <script>
-import webviewer from "../MainCompany/webviewer.vue";
-// import UserInfo from "./UserInfo.vue";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+import UserInfo from "./UserInfo.vue";
 
 export default {
-  component: {
-    webviewer,
-    // UserInfo,
+  components: {
+    UserInfo,
   },
   data() {
+    // 토큰가져오기
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
     return {
       InterviewDialogVisible: false,
       memo: "",
+      company_index: index,
     };
   },
-  props: { item: Object },
-  // props: ["p_ind", "p_name", "app_url", "part", "p_img", "interviewTime"],
+  props: ["item"],
   methods: {
-    openUserprofile() {},
-    openViewer(app_url) {
-      console.log(app_url);
-    },
     openInterviewMemo() {
       console.log(this.p_ind);
       this.InterviewDialogVisible = true;
@@ -95,6 +77,18 @@ export default {
     clickSaveBtn() {
       console.log(this.memo);
       alert("저장되었습니다");
+    },
+    sugpass(intindex) {
+      console.log(intindex);
+      axios.put(`https://i5d206.p.ssafy.io:8443/int/pass?index=${intindex}`, {
+        headers: { Authorization: this.token },
+      });
+    },
+    sugfail(intindex) {
+      console.log(intindex);
+      axios.put(`https://i5d206.p.ssafy.io:8443/int/fail?index=${intindex}`, {
+        headers: { Authorization: this.token },
+      });
     },
   },
 };
