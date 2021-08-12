@@ -22,7 +22,6 @@
             id="file"
             ref="file"
             multiple="multiple"
-            v-model="ruleForm.photo"
           ></el-input>
         </el-form-item>
 
@@ -31,7 +30,7 @@
     </button> -->
 
         <el-form-item label="" prop="Introduction">
-          <el-input type="textarea" v-model="ruleForm.Introduction"></el-input>
+          <el-input type="textarea"></el-input>
         </el-form-item>
         <div style="float:right">
           <el-form-item>

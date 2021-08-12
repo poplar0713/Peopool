@@ -24,7 +24,7 @@ import PRVideo from "./PRVideo.vue";
 import SideBarProfileUserDoc from "./SideBarProfileUserDoc.vue";
 import DeleteUserAccount from "./DeleteUserAccount.vue";
 import axios from "axios";
-
+import jwt_decode from "jwt-decode";
 export default {
   components: {
     SideBarProfileUserInfo,
@@ -39,11 +39,12 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res);
+        console.log("asdgasdgahsdhsdsdafs");
+        console.log(res.data);
         this.userdata.photofilepath =
           "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
         this.userdata.resumefilepath =
