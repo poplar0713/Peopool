@@ -2,6 +2,7 @@ package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
@@ -33,12 +34,16 @@ public interface ProfileOfIndividualService {
 	boolean modifyVideo(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
-	IndCard getProfile(int index);
+	List<Map<Object, Object>> getProfile(int index);
 	
 	// 기술스택을 가진 사용자 프로필 조회
 	List<IndCard> getTagOfProfile(String word);
 	
 	// 자기소개에 따른 사용자 프로필 조회
 	List<IndCard> getIntroOfProfile(String word);
+	
+	//인덱스로 가져오기
+	IndCard getIndexOfProfile(int index);
+	
 
 }

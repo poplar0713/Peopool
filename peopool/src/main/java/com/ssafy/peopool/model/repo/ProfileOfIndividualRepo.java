@@ -2,8 +2,10 @@ package com.ssafy.peopool.model.repo;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
+
 
 import com.ssafy.peopool.model.IndCard;
 import com.ssafy.peopool.model.ProfileOfIndividual;
@@ -36,7 +38,10 @@ public interface ProfileOfIndividualRepo {
 	int modifyVideo(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
-	IndCard getProfile(int index);
+	List<Map<Object, Object>> getProfile(int index);
+	
+	// 인덱스로 조회
+	IndCard getIndexOfProfile(int index);
 	
 	// 기술 스택을 가진 사용자 프로필 조회
 	List<IndCard> getTagOfProfile(String word);
