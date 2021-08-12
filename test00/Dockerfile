@@ -2,7 +2,7 @@ FROM node:12.17.0 as build-stage
 WORKDIR /test00
 COPY package*.json ./
 
-RUN npm cache verify
+RUN npm cache clean --force
 RUN npm install
 COPY . .
 RUN npm run build
