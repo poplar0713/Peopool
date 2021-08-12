@@ -80,16 +80,22 @@ public class IntCard {
 		this.name = name;
 	}
 
+	public String getInt_done() {
+		return int_done;
+	}
+
+	public void setInt_done(String int_done) {
+		this.int_done = int_done;
+	}
+
 	@Override
 	public String toString() {
 		return "IntCard [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
 				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_roomnumber=" + int_roomnumber
-				+ ", int_show=" + int_show + ", name=" + name + ", getInt_index()=" + getInt_index()
-				+ ", getInd_index()=" + getInd_index() + ", getEnt_index()=" + getEnt_index() + ", getInt_start()="
-				+ getInt_start() + ", getInt_end()=" + getInt_end() + ", getInt_roomnumber()=" + getInt_roomnumber()
-				+ ", getInt_show()=" + getInt_show() + ", getName()=" + getName() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", int_show=" + int_show + ", name=" + name + ", int_done=" + int_done + "]";
 	}
+
+	
 	
 	
 	
