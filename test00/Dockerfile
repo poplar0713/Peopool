@@ -2,6 +2,7 @@ FROM node:latest as build-stage
 WORKDIR /test00
 COPY package*.json ./
 
+RUN npm cache verify
 RUN npm install
 COPY . .
 RUN npm run build

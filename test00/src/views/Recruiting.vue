@@ -29,38 +29,23 @@
                         :timestamp="days.date"
                       >
                         <el-card style="width: 80%; align-content: center;">
-                          <el-table
-                            :data="days.Interviewer"
-                            :default-sort="{ prop: 'time' }"
-                          >
-                            <el-table-column
-                              prop="time"
-                              label="면접시간"
-                              sortable
-                            >
+                          <el-table :data="days.interviewers" :default-sort="{ prop: 'time' }">
+                            <el-table-column prop="int_start" label="면접시간" sortable>
                             </el-table-column>
-                            <el-table-column prop="p_name" label="성명">
-                            </el-table-column>
-                            <el-table-column prop="p_part" label="직무">
-                            </el-table-column>
+                            <el-table-column prop="name" label="성명"> </el-table-column>
+                            <el-table-column prop="p_part" label="직무"> </el-table-column>
                             <el-table-column label="" prop="p_name">
                               <template #default="scope">
                                 <el-button
                                   size="mini"
-                                  @click="
-                                    Cancel(
-                                      scope.$index,
-                                      scope.row,
-                                      scope.row.p_name
-                                    )
-                                  "
+                                  @click="Cancel(scope.$index, scope.row, scope.row.p_name)"
                                   >Cancel</el-button
                                 >
                                 <!-- {{scope.row.company}} -->
                                 <el-button
                                   size="mini"
                                   type="danger"
-                                  @click="GoToInteriewRoom(scope.row.p_name)"
+                                  @click="GoToInteriewRoom(scope.row.name)"
                                   >Interview Room</el-button
                                 >
                                 <!-- {{scope.row.url}} -->
@@ -125,6 +110,12 @@ export default {
     getExaiminingLength() {
       return this.exaimining.length;
     },
+
+    getInterviewDays() {
+      var InterviewDays = {};
+
+      return InterviewDays;
+    },
   },
   data() {
     const token = localStorage.getItem("token");
@@ -153,105 +144,55 @@ export default {
       now: new Date(),
       tabposition: "right",
       company: "로그인된기업",
-      waitinglist: [
-        {
-          p_name: "천서진",
-          p_part: "광고",
-          date1: "2021-08-09 11:00",
-          date2: "2021-08-10 11:00",
-          date3: "2021-08-11 11:00",
-        },
-        {
-          p_name: "주단태",
-          p_part: "영업",
-          date1: "2021-08-09 11:00",
-          date2: "2021-08-10 11:00",
-          date3: "2021-08-11 11:00",
-        },
-        {
-          p_name: "심수련",
-          p_part: "영업",
-          date1: "2021-08-09 13:00",
-          date2: "2021-08-10 13:00",
-          date3: "2021-08-11 13:00",
-        },
-        {
-          p_name: "주석경",
-          p_part: "영업",
-          date1: "2021-08-09 14:00",
-          date2: "2021-08-10 14:00",
-          date3: "2021-08-11 14:00",
-        },
-        {
-          p_name: "배로나",
-          p_part: "영업",
-          date1: "2021-08-09 15:00",
-          date2: "2021-08-10 15:00",
-          date3: "2021-08-11 15:00",
-        },
-      ],
-      InterviewDays: [
-        {
-          date: "2021-08-01",
-          Interviewer: [
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "문영화",
-              p_part: "FrontEnd",
-            },
-            {
-              time: "14:00",
-              p_ind: 1,
-              p_name: "조영우",
-              p_part: "FrontEnd",
-            },
-            {
-              time: "15:00",
-              p_ind: 0,
-              p_name: "채승협",
-              p_part: "BackEnd",
-            },
-          ],
-        },
-        {
-          date: "2021-08-02",
-          Interviewer: [
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "여정동",
-              p_part: "FrontEnd",
-            },
-            {
-              time: "14:00",
-              p_ind: 0,
-              p_name: "허창환",
-              p_part: "BackEnd",
-            },
-          ],
-        },
-        {
-          date: "2021-08-03",
-          Interviewer: [
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "허창환",
-              p_part: "BackEnd",
-            },
-            {
-              time: "13:00",
-              p_ind: 0,
-              p_name: "채승협",
-              p_part: "BackEnd",
-            },
-          ],
-        },
-      ],
+      waitinglist: [],
+      InterviewDays: [],
       exaimining: [],
+      followData: [],
+
       exaiminingtotal: this.getExaiminingLength,
     };
+  },
+  mounted() {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.company_index = index;
+
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/sug/ent/${this.company_index}`, {
+        // 면접 수락 대기
+        headers: { Authroization: token },
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.waitinglist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response.data.status);
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/int/ent/iday/${this.company_index}`, {
+        // 면접 대기자
+        headers: { Authroization: token },
+      })
+      .then((res) => {
+        console.log("interview >> ");
+        console.log(res.data);
+        this.InterviewDays = res.data;
+      })
+      .catch((err) => {
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   methods: {
     // 인터뷰룸으로 이동

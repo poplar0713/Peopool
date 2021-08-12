@@ -5,7 +5,7 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-header>프로필</el-header>
-      <el-main>
+      <el-main style="width:80%;">
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
@@ -21,6 +21,7 @@
       <el-footer> </el-footer>
     </el-container>
   </el-container>
+  <router-view></router-view>
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
