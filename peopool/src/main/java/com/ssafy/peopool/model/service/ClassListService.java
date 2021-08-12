@@ -7,5 +7,7 @@ import com.ssafy.peopool.model.ClassList;
 public interface ClassListService {
 	
 	List<ClassList> getClassList();
+	
+	List<ClassList> getName(String name);
 
 }

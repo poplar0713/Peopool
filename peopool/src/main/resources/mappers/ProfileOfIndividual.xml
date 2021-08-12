@@ -28,11 +28,34 @@
 		where ind_index = #{ind_index}
 	</update>
 	
-	<select id="getProfile" parameterType="int" resultType="IndCard">
+	<select id="getIndexOfProfile" parameterType="int" resultType="IndCard">
 		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
 		from ind_profile p join individual i
 		on p.ind_index = i.ind_index
 		where i.ind_index = #{index}
+	</select>
+	
+	<select id="getProfile" parameterType="int" resultType="HashMap">
+		select g.ind_name,g.ind_gender,g.ind_email,g.ind_phone,e.*
+		from(select c.*,d.originfile as photo_originfile, d.savefile as photo_savefile, d.savefolder as photo_savefolder
+		from (select a.*,b.originfile as video_originfile, b.savefile as video_savefile, b.savefolder as video_savefolder
+		from (select i.ind_index, i.ind_resume as resume_index, f.savefolder as resume_savefolder,f.originfile as resume_originfile,f.savefile as resume_savefile,i.ind_video as video_index,i.ind_photo as photo_index, i.ind_switch, i.ind_introduce  from ind_profile i left outer join file_info f on i.ind_resume = f.fil_index) a 
+		left outer join file_info b on a.video_index = b.fil_index) c left outer join file_info d on c.photo_index = d.fil_index) e left outer join individual g on e.ind_index = g.ind_index
+		where e.ind_index = #{index};
+	</select>
+	
+	<select id="getIntroOfProfile" parameterType="String" resultType="IndCard">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
+		from ind_profile p join individual i
+		on p.ind_index = i.ind_index
+		where p.ind_introduce like CONCAT( '%', #{word}, '%')
+	</select>
+	
+	<select id="getTagOfProfile" parameterType="String" resultType="IndCard">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
+		from ind_profile p join individual i
+		on p.ind_index = i.ind_index
+		where p.ind_index in (select h.tag_target from hashtag h join taglist t on h.taglist_index = t.taglist_index where h.tag_type = 0 and t.taglist_name like CONCAT( '%', #{word}, '%'))
 	</select>
 	
 	<delete id="deleteProfile" parameterType="int">

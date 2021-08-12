@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="getLastInterviews" parameterType="int" resultType="IntCard">
-		select int_index, ind_index, e.ent_index, int_start, int_end, int_roomnumber, int_show, e.ent_name name
+		select int_index, ind_index, e.ent_index, int_start, int_end, int_roomnumber, int_show, e.ent_name name, int_done
 		from interview join enterprise e
 		on interview.ent_index = e.ent_index
 		where ind_index=#{index} and now() > int_end
@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="getELastInterviews" parameterType="int" resultType="IntCard">
-		select int_index, i.ind_index, ent_index, int_start, int_end, int_roomnumber, int_show, i.ind_name name
+		select int_index, i.ind_index, ent_index, int_start, int_end, int_roomnumber, int_show, i.ind_name name ,int_done
 		from interview join individual i
 		on interview.ind_index = i.ind_index
 		where ent_index=#{index} and now() > int_end
