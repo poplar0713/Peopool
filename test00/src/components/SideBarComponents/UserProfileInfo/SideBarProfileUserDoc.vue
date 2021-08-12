@@ -1,12 +1,11 @@
 <template>
   <form v-on:submit.prevent enctype="multipart/form-data">
-    <input multiple="multiple" type="file" name="file" id="file" ref="file"  />
+    <input multiple="multiple" type="file" name="file" id="file" ref="file" />
     <button @click="upload">
       Upload
     </button>
   </form>
 </template>
-
 
 <script>
 import jwt_decode from "jwt-decode";
@@ -47,6 +46,5 @@ export default {
   },
 };
 </script>
-
 
 <style></style>
