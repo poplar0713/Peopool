@@ -107,38 +107,38 @@ export default {
           // var frm = new FormData();
           // var photodata = this.$refs[formName].files[0];
           // var introducedata = this.$refs[]
-          return;
-          axios
-            .put("https://i5d206.p.ssafy.io:8443/poi", {
-              headers: { Authorization: this.token },
-              ind_index: this.userindex,
-              // ind_introduce: this.ruleForm.Introduction,
-              // ind_photo:  this.ruleForm.photo,
-              // ind_resume: "string",
-              // ind_switch: "string",
-              // ind_video: "string",
-            })
-            .then((res) => {
-              console.log(res);
-              this.loading = true;
-              setTimeout(() => {
-                this.loading = false;
-                this.successmessage();
-              }, 3000);
-            })
-            .catch((err) => {
-              console.log("token error");
-              console.log(err.response);
-              if (err.response == 401) {
-                this.$message.error("로그인세션이 만료되었습니다");
-                localStorage.clear();
-                this.$router.push("/");
-              }
-            });
-        } else {
-          console.log("error submit!!");
-          this.failed();
-          return false;
+
+          //     axios
+          //       .put("https://i5d206.p.ssafy.io:8443/poi", {
+          //         headers: { Authorization: this.token },
+          //         ind_index: this.userindex,
+          //         // ind_introduce: this.ruleForm.Introduction,
+          //         // ind_photo:  this.ruleForm.photo,
+          //         // ind_resume: "string",
+          //         // ind_switch: "string",
+          //         // ind_video: "string",
+          //       })
+          //       .then((res) => {
+          //         console.log(res);
+          //         this.loading = true;
+          //         setTimeout(() => {
+          //           this.loading = false;
+          //           this.successmessage();
+          //         }, 3000);
+          //       })
+          //       .catch((err) => {
+          //         console.log("token error");
+          //         console.log(err.response);
+          //         if (err.response == 401) {
+          //           this.$message.error("로그인세션이 만료되었습니다");
+          //           localStorage.clear();
+          //           this.$router.push("/");
+          //         }
+          //       });
+          //   } else {
+          //     console.log("error submit!!");
+          //     this.failed();
+          //     return false;
         }
       });
     },
