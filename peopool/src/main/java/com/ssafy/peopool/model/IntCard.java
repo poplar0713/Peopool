@@ -10,6 +10,7 @@ public class IntCard {
 	String int_roomnumber; // 면접 room number
 	String int_show; // 진행 여부 (show / now show)
 	String name; // 개인  or 기업 이름
+	String int_done; // 면접 결과
 	
 	public IntCard() {
 		
