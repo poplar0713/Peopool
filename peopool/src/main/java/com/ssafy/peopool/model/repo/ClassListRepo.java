@@ -11,5 +11,8 @@ public interface ClassListRepo {
 	
 	// 분류 목록 조회
 	List<ClassList> getClassList();
+	
+	// 단어가 포함된 분류 목록 조회
+	List<ClassList> getName(String name);
 
 }

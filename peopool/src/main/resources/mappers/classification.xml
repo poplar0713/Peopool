@@ -23,10 +23,10 @@
 	
 	<select id="getEnt" parameterType="String" resultType="HashMap">
 		select ent_index, ent_name
-		from enterprise
-		where ent_index = (select ent_index
-		from classification c join classlist l 
-		on c.list_index = l.list_index
+		from enterprise e join classification c
+		on e.ent_index = c.ent_index
+		where c.list_index = (select list_index
+		from classlist
 		where list_name = #{name});
 	</select>
 </mapper>

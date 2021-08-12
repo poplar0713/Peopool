@@ -46,5 +46,17 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 		return profileOfEnterpriseRepo.getNameOfEnterprise(name);
 	}
 
+	@Override
+	public List<EntCard> getIntroOfEnterprise(String word) throws SQLException {
+		// TODO Auto-generated method stub
+		return profileOfEnterpriseRepo.getIntroOfEnterprise(word);
+	}
+
+	@Override
+	public List<EntCard> getClassOfEnterprise(String word) throws SQLException {
+		// TODO Auto-generated method stub
+		return profileOfEnterpriseRepo.getClassOfEnterprise(word);
+	}
+
 	
 }

@@ -19,6 +19,14 @@ public class ClassListServiceImpl implements ClassListService {
 		// TODO Auto-generated method stub
 		return classListRepo.getClassList();
 	}
+
+	@Override
+	public List<ClassList> getName(String name) {
+		// TODO Auto-generated method stub
+		return classListRepo.getName(name);
+	}
+
+	
 	
 	
 
