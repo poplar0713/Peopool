@@ -4,10 +4,10 @@
     <!-- 테스트 -->
     <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
       <el-option
-        v-for="item in options"
+        v-for="item in this.options"
         :key="item.list_index"
         :label="item.list_name"
-        :value="item.list_index"
+        :value="item.cla_index"
       >
       </el-option>
     </el-select>
@@ -16,17 +16,17 @@
   </div>
   <div v-if="this.mytags.length > 0" style="width:100%; word-break:break-all;word-wrap:break-word;">
     <el-tag
-      v-for="item in mytags"
+      v-for="item in this.mytags"
       style="margin:5px"
-      :key="item.taglist_index"
+      :key="item.list_index"
       :type="warning"
       effect="plain"
       closable
       :disable-transitions="true"
-      @close="handleClose(tag, item.tag_index)"
-      @click="GetTagCompany(item.taglist_name)"
+      @close="handleClose(item.cla_index)"
+      @click="GetTagCompany(item.list_name)"
     >
-      {{ item.taglist_name }}
+      {{ item.list_name }}
     </el-tag>
   </div>
   <div v-else style="align-text:center">
@@ -73,8 +73,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: index,
-          type: 1,
+          ent_index: index,
         },
       })
       .then((res) => {
@@ -109,8 +108,7 @@ export default {
         .get("https://i5d206.p.ssafy.io:8443/cla/list", {
           headers: { Authorization: token },
           params: {
-            index: index,
-            type: 1,
+            ent_index: index,
           },
         })
         .then((res) => {
@@ -129,23 +127,22 @@ export default {
   },
   methods: {
     plustag() {
-      // 유저본인 태그추가
+      // 기업 태그추가
       console.log(this.value);
       console.log(this.company_index);
       const mytaglist = [];
       for (var i in this.mytags) {
-        mytaglist.push(this.mytags[i].taglist_index);
+        mytaglist.push(this.mytags[i].list_index);
       }
-      console.log(mytaglist);
       if (mytaglist.includes(this.value)) {
         this.$message.error("이미 추가된 태그입니다.");
       } else {
         axios
           .post("https://i5d206.p.ssafy.io:8443/cla", {
-            headers: { Authorization: this.token },
-            tag_target: this.company_index,
-            tag_type: 0,
-            taglist_index: this.value,
+            headers: { Authorization: token },
+            ent_index: this.company_index,
+            //cla_index: this.value,
+            list_index: this.value,
           })
           .then((res) => {
             console.log(res);
@@ -181,15 +178,13 @@ export default {
         location.reload();
       }, 2001);
     },
-    handleClose(tag, tag_index) {
-      console.log(tag);
-      console.log(tag_index);
+    handleClose(tag_index) {
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/cla/${tag_index}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: token },
         })
         .then(() => {
-          this.mytags.splice(this.mytags.indexOf(tag), 1);
+          this.getNewArray = !this.getNewArray;
         })
         .catch((err) => {
           console.log(err);

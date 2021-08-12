@@ -22,12 +22,12 @@
       <el-tag
         v-for="item in mytags"
         style="margin: 0.1rem"
-        :key="item.taglist_index"
+        :key="item.tag_index"
         :type="warning"
         effect="plain"
         closable
         :disable-transitions="true"
-        @close="handleClose(tag, item.tag_index)"
+        @close="handleClose(item.tag_index)"
         @click="GetTagCompany(item.taglist_name)"
       >
         {{ item.taglist_name }}
@@ -186,8 +186,7 @@ export default {
         location.reload();
       }, 2001);
     },
-    handleClose(tag, tag_index) {
-      console.log(tag);
+    handleClose(tag_index) {
       console.log(tag_index);
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
@@ -195,7 +194,7 @@ export default {
         })
         .then(() => {
           console.log();
-          this.mytags.splice(this.mytags.indexOf(tag), 1);
+          this.getNewArray = !this.getNewArray;
         })
         .catch((err) => {
           console.log(err);
