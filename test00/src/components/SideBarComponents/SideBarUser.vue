@@ -22,10 +22,11 @@
           <i class="fas fa-home"></i>&nbsp;&nbsp;Home
         </el-menu-item>
 
-        <router-link :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
+        <router-link
+          :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
+          style="color: black; text-decoration: none;"
           ><el-menu-item index="2">
-            <i class="el-icon-user"></i
-            ><span style="color: black; text-decoration: none;">User</span></el-menu-item
+            <i class="el-icon-user"></i><span>User</span></el-menu-item
           ></router-link
         >
 
@@ -47,10 +48,16 @@
           <span><UserFollowers /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="6" disabled>
-          <i class="el-icon-document"></i>
-          <span>혹시나</span>
-        </el-menu-item>
+
+        <router-link
+          :to="{ name: 'ViewCompany' }"
+          style="color: black; text-decoration: none;"
+          ><el-menu-item index="6">
+            <span
+              ><i class="el-icon-office-building"></i>기업찾아보기</span
+            ></el-menu-item
+          ></router-link
+        >
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-setting"></i>
@@ -59,7 +66,7 @@
         <!--  -->
         <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
-          <span @click="Logout">Logout</span>
+          <el-text @click="Logout">Logout</el-text>
         </el-menu-item>
         <!--  -->
       </el-menu>
@@ -103,8 +110,6 @@ export default {
     },
     // 로그아웃
     Logout() {
-      // 깔끔하게 비우기
-      localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
@@ -114,6 +119,7 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.$cookies.remove("PID_AUTH");
         this.$router.push("/");
         this.$message({
           message: "로그아웃",
