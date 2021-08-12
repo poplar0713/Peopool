@@ -1,17 +1,27 @@
 <template>
-  <form v-on:submit.prevent enctype="multipart/form-data">
-    <input multiple="multiple" type="file" name="file" id="file" ref="file"  />
-    <button @click="upload">
-      Upload
-    </button>
-  </form>
+  <div>
+    <form v-on:submit.prevent enctype="multipart/form-data">
+      <input multiple="multiple" type="file" name="file" id="file" ref="file" />
+      <button @click="upload">
+        Upload
+      </button>
+    </form>
+    <div v-if="!docfilepath">이력서가 없습니다.</div>
+    <div v-else><web-viewer :initialDoc="docfilepath" /></div>
+  </div>
 </template>
-
 
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import WebViewer from "@/components/MainCompany/UserInfo.vue";
 export default {
+  props: {
+    docfilepath: String,
+  },
+  component: {
+    WebViewer,
+  },
   data() {
     return {};
   },
@@ -47,6 +57,5 @@ export default {
   },
 };
 </script>
-
 
 <style></style>
