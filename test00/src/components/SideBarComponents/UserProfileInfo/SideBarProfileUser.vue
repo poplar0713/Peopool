@@ -3,11 +3,15 @@
     <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
     <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
     <el-tab-pane label="프로필사진 및 소개"
-      ><SideBarProfileUserIntroduction
+      ><SideBarProfileUserIntroduction :photofilepath="userdata.photofilepath"
     /></el-tab-pane>
-    <el-tab-pane label="소개영상"><PRVideo /></el-tab-pane>
+    <el-tab-pane label="소개영상"
+      ><PRVideo :vediofilepath="userdata.videofilepath"
+    /></el-tab-pane>
     <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
-    <el-tab-pane label="서류관리"><SideBarProfileUserDoc /></el-tab-pane>
+    <el-tab-pane label="서류관리"
+      ><SideBarProfileUserDoc :docfilepath="userdata.resumefilepath"
+    /></el-tab-pane>
     <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
   </el-tabs>
 </template>
@@ -35,7 +39,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}}`, {
         headers: { Authorization: token },
       })
       .then((res) => {

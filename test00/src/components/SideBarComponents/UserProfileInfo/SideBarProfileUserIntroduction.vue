@@ -14,7 +14,7 @@
         v-on:submit.prevent
         enctype="multipart/form-data"
       >
-        <div><img :src="ruleForm.photo" /></div>
+        <div><img :src="photofilepath" width="200px" /></div>
         <el-form-item label="" prop="Introduction">
           <!-- <input multiple="multiple" type="file" name="file" id="file" ref="file"  /> -->
           <el-input
@@ -54,6 +54,9 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 export default {
+  props: {
+    photofilepath: String,
+  },
   mounted() {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
