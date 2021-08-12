@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <form v-on:submit.prevent enctype="multipart/form-data">
       <input multiple="multiple" type="file" name="file" id="file" ref="file" />
@@ -11,6 +12,14 @@
       <web-viewer initialDoc="/docx_pdf/test.pdf"></web-viewer>
     </div>
   </div>
+=======
+  <form v-on:submit.prevent enctype="multipart/form-data">
+    <input multiple="multiple" type="file" name="file" id="file" ref="file" />
+    <button @click="upload">
+      Upload
+    </button>
+  </form>
+>>>>>>> front_cho
 </template>
 
 <script>
