@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.ssafy.peopool.model.repo.ClassListRepo">
+ 	
+ 	<select id="getClassList" resultType="ClassList">
+ 		select *
+ 		from classlist
+ 		where list_index > 5
+ 	</select>
+ 	
+ 	<select id="getName" parameterType="String" resultType="ClassList">
+ 		select *
+ 		from classlist
+ 		where list_name like CONCAT( '%', #{name}, '%')
+ 	</select>
+ 
+ </mapper>  

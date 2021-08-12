@@ -3,7 +3,7 @@
     <div>
       <div v-if="hasVideo">
         <video
-          src="@/assets/samplevideo.mp4"
+          :src="vediofilepath"
           height="360"
           width="640"
           controls
@@ -31,6 +31,9 @@
 
 <script>
 export default {
+  props: {
+    vediofilepath: String,
+  },
   data() {
     return {
       mainsearch: "",
