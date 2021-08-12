@@ -3,7 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import installElementPlus from "./plugins/element";
-import cookies from "vue3-cookies";
+import VueCooKie from "vue3-cookies";
 import "./element-variables.scss";
 
 // import vueMoment from "vue-moment";
@@ -17,12 +17,13 @@ window.Kakao.init("e5254ff19094b2f428ebe96dfb28c1a7");
 
 const app = createApp(App);
 installElementPlus(app);
-app
-  .use(router)
-  .use(store)
-  .use(cookies)
-  // .use(AxiosPlugin)
-  .mount("#app");
+
+app.use(router);
+router.app = app;
+app.use(store);
+app.use(VueCooKie);
+// .use(AxiosPlugin)
+app.mount("#app");
 
 //set default config
-app.$cookies.config("21600", "", "", true);
+// app.$cookies.config("21600", "", "", true);
