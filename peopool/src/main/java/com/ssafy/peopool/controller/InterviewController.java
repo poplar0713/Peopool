@@ -111,4 +111,24 @@ public class InterviewController {
 		
 	}
 	
+	@ApiOperation(value = "면접 합격", response = String.class)
+	@PutMapping("/pass")
+	public ResponseEntity<String> modifyPass(@RequestParam("int_index") int index) throws SQLException{
+		if(interviewService.modifyPass(index)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		
+	}
+	
+	@ApiOperation(value = "면접 불합격", response = String.class)
+	@PutMapping("/fail")
+	public ResponseEntity<String> modifyFail(@RequestParam("int_index") int index) throws SQLException{
+		if(interviewService.modifyFail(index)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		
+	}
+	
 }

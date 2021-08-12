@@ -56,5 +56,17 @@
 		values(#{ind_index}, #{ent_index}, #{int_start}, #{int_url})
 	</insert>
 	
+	<update id="modifyPass" parameterType="int">
+		update interview
+		set int_done = 'P'
+		where int_index=#{index}
+	</update>
+	
+	<update id="modifyFail" parameterType="int">
+		update interview
+		set int_done = 'F'
+		where int_index=#{index}
+	</update>
+	
 	
 </mapper>
