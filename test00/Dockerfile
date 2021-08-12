@@ -3,7 +3,7 @@ WORKDIR /test00
 COPY package*.json ./
 
 RUN npm cache verify
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 
