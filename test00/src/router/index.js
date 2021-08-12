@@ -10,7 +10,7 @@ import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
-import cookies from 'vue-cookies';
+
 const routes = [
   {
     path: "/meetinter",
@@ -25,25 +25,13 @@ const routes = [
     path: "/user",
     name: "MainUser",
     component: MainUser,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/profileuser/:userindex",
     name: "ProfileUser",
     component: ProfileUser,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/viewcompany",
@@ -61,49 +49,25 @@ const routes = [
     path: "/company",
     name: "MainCompany",
     component: MainCompany,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/profilecompany/:companyindex",
     name: "ProfileCompany",
     component: ProfileCompany,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/searchcompany/:keyword",
     name: "SearchCompany",
     component: SearchCompany,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/searchuser/:keyword",
     name: "searchuser",
     component: SearchUser,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/user/interviewroom/:company/:url",
@@ -115,25 +79,13 @@ const routes = [
     path: "/searchcompany",
     name: "searchcompany",
     component: SearchCompany,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
     path: "/recruiting",
     name: "recruiting",
     component: Recruiting,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
 ];
 
@@ -141,5 +93,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+function requireAuth(to, from, next) {
+  const { $cookies } = router.app.config.globalProperties;
+  console.log($cookies.get("PID_AUTH"));
+  if ($cookies.get("PID_AUTH") == null) {
+    alert("로그인이 필요한 서비스입니다");
+    return next("/");
+  }
+  next();
+}
 
 export default router;
