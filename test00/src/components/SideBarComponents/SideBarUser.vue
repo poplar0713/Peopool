@@ -18,18 +18,17 @@
         background-color="#f1c40f"
       >
         <!--  -->
-        <el-menu-item index="1">
-          <i class="fas fa-home"></i>&nbsp;&nbsp;
-          <a href="/user" style="text-decoration: none; color:black">Home</a>
+        <el-menu-item index="1" onclick="location.href = '/user'">
+          <i class="fas fa-home"></i>&nbsp;&nbsp;Home
         </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-user"></i>
-          <router-link
-            :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
-            style="text-decoration: none; color:black"
-            >User</router-link
-          >
-        </el-menu-item>
+
+        <router-link :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
+          ><el-menu-item index="2">
+            <i class="el-icon-user"></i
+            ><span style="color: black; text-decoration: none;">User</span></el-menu-item
+          ></router-link
+        >
+
         <!--  -->
         <el-menu-item index="3">
           <i class="el-icon-video-camera"></i>
@@ -78,7 +77,7 @@ import jwt_decode from "jwt-decode";
 export default {
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     return {
@@ -93,6 +92,9 @@ export default {
     UserFollowers,
   },
   methods: {
+    mvHome() {
+      this.$router.replace("user");
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -125,7 +127,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 img {
   display: block;
   margin: 0px auto;

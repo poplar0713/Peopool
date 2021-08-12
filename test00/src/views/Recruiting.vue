@@ -118,7 +118,7 @@ export default {
     },
   },
   data() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 면접일정조회
@@ -153,7 +153,7 @@ export default {
     };
   },
   mounted() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.company_index = index;

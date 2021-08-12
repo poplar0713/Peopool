@@ -37,7 +37,7 @@ export default {
   components: { UserDetail },
   setup() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
 
     // 데이터저장 비동기방식
     const result = ref([]);

@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.0.0",
@@ -22,6 +21,7 @@
     "vue": "^3.1.4",
     "vue-router": "^4.0.0-0",
     "vue-webrtc": "^2.0.0",
+    "vue3-cookies": "^1.0.1",
     "vuedraggable": "^4.0.3",
     "vuex": "^4.0.0-0",
     "webrtc-adapter": "^8.1.0",

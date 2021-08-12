@@ -4,14 +4,12 @@
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
-      <el-header>프로필</el-header>
+      <el-header><h2>프로필</h2></el-header>
       <el-main style="width:80%;">
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
-          <el-tab-pane label="프로필사진 및 소개"
-            ><SideBarProfileUserIntroduction
-          /></el-tab-pane>
+          <el-tab-pane label="프로필사진 및 소개"><SideBarProfileUserIntroduction /></el-tab-pane>
           <el-tab-pane label="소개영상"><PRVideo /></el-tab-pane>
           <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
           <el-tab-pane label="서류관리"><SideBarProfileUserDoc /></el-tab-pane>
@@ -54,7 +52,7 @@ export default {
   },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 회원정보 가져오기
@@ -142,7 +140,7 @@ export default {
 
 <style>
 .el-main {
-  margin: 10px 10px 10px 10px;
+  margin: 1rem 1rem 1rem 1rem;
   background-color: white;
   border-radius: 20px;
 }

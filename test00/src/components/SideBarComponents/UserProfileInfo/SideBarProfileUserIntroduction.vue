@@ -37,7 +37,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 export default {
   mounted() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.userindex = index;
