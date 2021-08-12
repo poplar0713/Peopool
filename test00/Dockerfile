@@ -3,6 +3,7 @@ WORKDIR /test00
 COPY package*.json ./
 
 RUN npm cache clean --force
+RUN rm package-lock.json
 RUN npm install
 COPY . .
 RUN npm run build
