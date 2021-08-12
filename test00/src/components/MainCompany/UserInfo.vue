@@ -60,7 +60,7 @@
             </div>
             <div>
               <img
-                src="/home/ubuntu/upload/210810/e09462ab-c2e5-4c9b-8f3c-ae86bfcfc896.PNG"
+                src="/file/210810/e09462ab-c2e5-4c9b-8f3c-ae86bfcfc896.PNG"
               />
             </div>
           </el-collapse-item>
