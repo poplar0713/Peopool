@@ -25,6 +25,10 @@ public interface InterviewService {
 	boolean isInterview(Interview interview) throws SQLException; // 면접 노쇼
 
 	boolean registerInterview(Interview interview) throws SQLException; // 면접 일정 등록
+	
+	boolean modifyPass(int index) throws SQLException; // 면접 합격
+
+	boolean modifyFail(int index) throws SQLException; // 면접 불합격
 
 	List<InterviewDays> getEDInterviewGroupByDays(int index) throws SQLException; // 기업의 면접 일정 날짜별로
 
