@@ -1,9 +1,13 @@
 <template>
   <el-collapse v-model="activeNames" @change="handleChange">
-    <el-collapse-item title="Select Tags" name="1" style="text-align:center">
+    <el-collapse-item
+      title="태그선택(최대4개)"
+      name="1"
+      style="text-align:center"
+    >
       <div>
         <el-row :gutter="20">
-          <el-col :span="2"
+          <el-col :span="3"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">기업규모</el-divider>
               <el-checkbox-group v-model="checksize" :min="0" :max="1">
@@ -13,7 +17,7 @@
               </el-checkbox-group>
             </div></el-col
           >
-          <el-col :span="22"
+          <el-col :span="21"
             ><div class="grid-content bg-purple">
               <el-divider content-position="left">태그목록</el-divider>
               <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
@@ -31,7 +35,10 @@
     </el-collapse-item>
   </el-collapse>
 
-  <el-divider>내가고른 태그목록</el-divider>
+  <el-divider v-if="this.selected_tags.length > 0"
+    >내가고른 태그목록</el-divider
+  >
+  <div v-else style="text-align:center"><h1>태그를 선택해주세요</h1></div>
   <div style="text-align:center">
     <h3>{{ this.checksize[0] }}</h3>
     <span v-for="tag in selected_tags" :key="tag" style="margin:3px">{{
@@ -39,7 +46,13 @@
     }}</span>
   </div>
   <div v-for="tag in selected_tags" :key="tag">
-    <el-divider content-position="left">{{ tag }}</el-divider>
+    <el-divider content-position="left"
+      ><span>{{ tag }}</span
+      ><el-divider direction="vertical"></el-divider>
+      <span @click="gototagcompany(tag)" style="cursor:pointer"
+        >전체보기</span
+      ></el-divider
+    >
     <TagCompanyList :tag="tag" />
   </div>
 </template>
@@ -86,6 +99,21 @@ export default {
   methods: {
     handleChange(val) {
       console.log(val);
+    },
+    gototagcompany(tag) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push(`/searchcompany/${tag}`);
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };
