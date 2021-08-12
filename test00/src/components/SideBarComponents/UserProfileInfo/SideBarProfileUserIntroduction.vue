@@ -14,7 +14,6 @@
         v-on:submit.prevent
         enctype="multipart/form-data"
       >
-        <div><img :src="photofilepath" width="200px" /></div>
         <el-form-item label="" prop="Introduction">
           <!-- <input multiple="multiple" type="file" name="file" id="file" ref="file"  /> -->
           <el-input
@@ -44,6 +43,7 @@
               >Save</el-button
             >
           </el-form-item>
+          <div><img :src="photofilepath" width="200px" /></div>
         </div>
       </el-form>
     </div>

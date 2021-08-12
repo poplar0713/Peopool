@@ -43,6 +43,7 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
+        console.log(res);
         this.userdata.photofilepath =
           "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
         this.userdata.resumefilepath =
