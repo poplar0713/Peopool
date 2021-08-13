@@ -104,6 +104,7 @@ export default {
     // 로그아웃
     Logout() {
       // 깔끔하게 비우기
+      this.$cookies.remove("token");
       localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
