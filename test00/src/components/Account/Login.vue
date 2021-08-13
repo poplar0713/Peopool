@@ -63,11 +63,6 @@
               <ResetUserPw />
             </el-dialog>
           </div>
-          <br />
-          <!-- 카카오톡로그인 -->
-          <div style="text-align:center"><KakaoLogin /></div>
-          <!-- 구글로그인 -->
-          <!--  -->
         </el-tab-pane>
         <!-- 기업 -->
         <!--  -->
@@ -129,7 +124,6 @@ import SignupCompany from "@/components/Account/SignupCompany.vue";
 import SignupIndiv from "@/components/Account/SignupIndiv.vue";
 import LoginIndiv from "@/components/Account/LoginIndiv.vue";
 import LoginCompany from "@/components/Account/LoginCompany.vue";
-import KakaoLogin from "./KakaoLogin.vue";
 import FindUserId from "./FindUserId.vue";
 import ResetUserPw from "./ResetUserPw.vue";
 import FindCompanyId from "./FindCompanyId.vue";
@@ -140,7 +134,6 @@ export default {
     SignupCompany,
     LoginIndiv,
     LoginCompany,
-    KakaoLogin,
     FindUserId,
     ResetUserPw,
     FindCompanyId,
@@ -175,7 +168,7 @@ export default {
           console.log("token error");
           console.log(err.response);
           if (err.response == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }

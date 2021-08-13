@@ -4,11 +4,11 @@
     @click="dialogVisible = true"
     style="color:black; text-align:center; cursor:pointer"
     size="mini"
-    >{{ this.userdetailinfo.ind_name }} 상세보기
+    >{{this.userdata.ind_name}}
   </el-text>
   <div style="text-align:center">
     <el-dialog
-      :title="this.userdetailinfo.ind_name"
+      :title="this.userdata.ind_name"
       v-model="dialogVisible"
       width="50%"
       style="color:black"
@@ -57,17 +57,17 @@
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item title="Introduction" name="1">
             <div>
-              {{ this.userdetailinfo.ind_introduce }}
+              {{ this.userdata.ind_introduce }}
             </div>
           </el-collapse-item>
           <el-collapse-item title="자기소개영상" name="2">
             <div>
-              {{ this.userdetailinfo.ind_video }}
+              {{ this.userdata.ind_video }}
             </div>
           </el-collapse-item>
           <el-collapse-item title="연락처" name="3">
-            <div>Tel : {{ this.userdetailinfo.ind_phone }}</div>
-            <div>E-mail : {{ this.userdetailinfo.ind_email }}</div>
+            <div>Tel : {{ this.userdata.ind_phone }}</div>
+            <div>E-mail : {{ this.userdata.ind_email }}</div>
           </el-collapse-item>
           <el-collapse-item title="Documents" name="4">
             <div>
@@ -138,7 +138,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "UserDetail",
+  name: "UserInfo",
   components: {
     webviewer,
   },
@@ -182,16 +182,26 @@ export default {
       })
       .then((res) => {
         console.log(res);
-        this.userdetailinfo.ind_index = res.data.ind_index;
-        this.userdetailinfo.ind_name = res.data.ind_name;
-        this.userdetailinfo.ind_gender = res.data.ind_gender;
-        this.userdetailinfo.ind_phone = res.data.ind_phone;
-        this.userdetailinfo.ind_email = res.data.ind_email;
-        this.userdetailinfo.ind_resume = res.data.ind_resume;
-        this.userdetailinfo.ind_video = res.data.ind_video;
-        this.userdetailinfo.ind_photo = res.data.ind_photo;
-        this.userdetailinfo.ind_switch = res.data.ind_switch;
-        this.userdetailinfo.ind_introduce = res.data.ind_introduce;
+        var result = res.data[0];
+        this.userdata.photofilepath =
+          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+        this.userdata.resumefilepath =
+          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+        this.userdata.videofilepath =
+          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+        this.userdata.resume_originfile = result.resume_originfile;
+        this.userdata.photo_originfile = result.photo_originfile;
+        this.userdata.video_originfile = result.video_originfile;
+        this.userdata.ind_switch = result.ind_switch;
+        this.userdata.ind_introduce = result.ind_introduce;
+        this.userdata.photo_index = result.photo_index;
+        this.userdata.resume_index = result.resume_index;
+        this.userdata.video_index = result.resume_index;
+        this.userdata.ind_index = result.ind_index;
+        this.userdata.ind_name = result.ind_name;
+        this.userdata.ind_email = result.ind_email;
+        this.userdata.ind_phone = result.ind_phone;
+        this.userdata.ind_gender = result.ind_gender;
       })
       .catch((err) => {
         console.log("token error");
@@ -230,15 +240,21 @@ export default {
       // activeNames: ["1"],
       activeName: "1",
       user_tags: [],
-      userdetailinfo: [
-        { ind_index: 0 },
+      userdata: [
         { ind_name: "" },
         { ind_gender: "" },
         { ind_phone: "" },
         { ind_email: "" },
-        { ind_resume: "" },
-        { ind_video: "" },
-        { ind_photo: "" },
+        { photofilepath: "" },
+        { resume_originfile: "" },
+        { photo_index: "" },
+        { resume_index: "" },
+        { video_index: "" },
+        { ind_index: 0 },
+        { video_originfile: "" },
+        { videofilepath: "" },
+        { photo_originfile: "" },
+        { resumefilepath: "" },
         { ind_switch: "" },
         { ind_introduce: "" },
       ],

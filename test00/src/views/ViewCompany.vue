@@ -5,6 +5,7 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
+        <PopularCompanyList/>
         <SelectCompanyTags />
       </el-main>
       <el-footer> </el-footer>
@@ -16,6 +17,7 @@
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import SelectCompanyTags from "@/components/MainUser/SelectCompanyTags.vue";
+import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
@@ -25,6 +27,7 @@ export default {
     SideBarUser,
     headerSearchCompany,
     SelectCompanyTags,
+    PopularCompanyList
   },
   mounted() {},
   data() {
