@@ -10,7 +10,8 @@ import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
-
+import FinduserByTag from "@/views/FinduserBytag";
+import cookies from 'vue-cookies';
 const routes = [
   {
     path: "/meetinter",
@@ -80,6 +81,18 @@ const routes = [
     name: "recruiting",
     component: Recruiting,
     beforeEnter: requireAuth,
+  },
+  {
+    path: "/company/findtag",
+    name: "FinduserByTag",
+    component: FinduserByTag,
+    beforeEnter: function(to, from, next) {
+      if (cookies.get("PID_AUTH") == null) {
+        alert("로그인이 필요한 서비스입니다");
+        return next("/");
+      }
+      next();
+    },
   },
 ];
 
