@@ -84,6 +84,11 @@
                 <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
                 <webviewer :initialDoc="userdata.resumefilepath" />
               </div>
+              <a
+                :href="userdata.resumefilepath"
+                :download="userdata.resume_originfile"
+                >이력서 다운로드</a
+              >
             </el-collapse-item>
             <el-collapse-item title="reservation" name="5">
               <div style="text-align:center; width:50%; margin: 0 auto;">
