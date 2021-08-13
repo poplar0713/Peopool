@@ -86,8 +86,8 @@
               </div>
               <a
                 :href="userdata.resumefilepath"
-                :download="this.userdata.resume_originfile"
-                >Download</a
+                :download="userdata.resume_originfile"
+                >이력서 다운로드</a
               >
             </el-collapse-item>
             <el-collapse-item title="reservation" name="5">
