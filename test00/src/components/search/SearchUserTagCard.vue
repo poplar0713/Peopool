@@ -1,149 +1,164 @@
 <template>
-  <el-card
-    shadow="hover"
-    style="margin-bottom:20px; text-align:center"
-    @click="dialogVisible = true"
-  >
-    <h1>{{ this.userdetailinfo.ind_name }}</h1>
-  </el-card>
-  <div style="text-align:center">
-    <el-dialog
-      :title="this.userdetailinfo.ind_name"
-      v-model="dialogVisible"
-      style="color:black; width:1500px"
-    >
-      <div style="width:300px">
-        <web-viewer initialDoc="test.pdf"></web-viewer>
-      </div>
-      <!-- 팔로우가 되어있을때 -->
-      <div v-if="follow" style="color: Tomato;">
-        <i
-          class="fas fa-heart fa-2x"
-          size:7x
-          @click="clickfollowBtn"
-          style="cursor:pointer"
-        ></i>
-      </div>
-      <!-- 팔로우가 안되어있을때 -->
-      <div v-if="follow == false" style="color: Tomato;">
-        <i
-          @click="clickfollowBtn"
-          class="far fa-heart fa-2x"
-          style="cursor:pointer"
-        ></i>
-      </div>
-      <br />
-      <!-- 태그 -->
-      <div
-        v-if="this.user_tags.length > 0"
-        style="width:100%; word-break:break-all;word-wrap:break-word;"
+  <div>
+    <el-card
+      shadow="hover"
+      style="margin-bottom:20px; text-align:center"
+      @click="dialogVisible = true"
+      ><img :src="userdata.photofilepath" style="max-width: 100%; height: auto;"/>
+      <h3>{{ this.userdata.ind_name }}</h3>
+    </el-card>
+    <div style="text-align:center">
+      <el-dialog
+        :title="this.userdata.ind_name"
+        v-model="dialogVisible"
+        width="50%"
+        style="color:black"
       >
-        <el-tag
-          v-for="item in user_tags"
-          style="margin:5px"
-          :key="item.taglist_index"
-          :type="warning"
-          effect="plain"
-          closable
-          :disable-transitions="true"
-          @click="GetTagUser(item.taglist_name)"
+        <!-- 팔로우가 되어있을때 -->
+        <div v-if="follow" style="color: Tomato;">
+          <i
+            class="fas fa-heart fa-2x"
+            size:7x
+            @click="clickfollowBtn"
+            style="cursor:pointer"
+          ></i>
+        </div>
+        <!-- 팔로우가 안되어있을때 -->
+        <div v-if="follow == false" style="color: Tomato;">
+          <i
+            @click="clickfollowBtn"
+            class="far fa-heart fa-2x"
+            style="cursor:pointer"
+          ></i>
+        </div>
+        <br />
+        <!-- 태그 -->
+        <div
+          v-if="this.user_tags.length > 0"
+          style="width:100%; word-break:break-all;word-wrap:break-word;"
         >
-          {{ item.taglist_name }}
-        </el-tag>
-      </div>
-      <div v-else style="align-text:center">
-        선택된 태그가 없습니다
-      </div>
-      <br />
-      <div>
-        <el-collapse v-model="activeName" accordion>
-          <el-collapse-item title="Introduction" name="1">
-            <div>
-              {{ this.userdetailinfo.ind_introduce }}
-            </div>
-          </el-collapse-item>
-          <div style="width:300px">
-            <web-viewer initialDoc="test.pdf"></web-viewer>
-          </div>
-          <el-collapse-item title="자기소개영상" name="2">
-            <div>
-              {{ this.userdetailinfo.ind_video }}
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="연락처" name="3">
-            <div>Tel : {{ this.userdetailinfo.ind_phone }}</div>
-            <div>E-mail : {{ this.userdetailinfo.ind_email }}</div>
-          </el-collapse-item>
-          <el-collapse-item title="Documents" name="4"> </el-collapse-item>
-          <el-collapse-item title="reservation" name="5">
-            <div style="text-align:center; ">
-              <el-input
-                v-model="reservationdata.sug_duty"
-                placeholder="채용직군을 입력해주세요"
-              ></el-input>
-            </div>
-            <div style="text-align:center; margin:10px">
-              <el-date-picker
-                value-format="YYYY-MM-DD HH:mm:ss"
-                v-model="reservationdata.sug_timeone"
-                type="datetime"
-                placeholder="Select date and time"
+          <el-tag
+            v-for="item in user_tags"
+            style="margin:5px"
+            :key="item.taglist_index"
+            :type="warning"
+            effect="plain"
+            :disable-transitions="true"
+            @click="GetTagUser(item.taglist_name)"
+          >
+            {{ item.taglist_name }}
+          </el-tag>
+        </div>
+        <div v-else style="align-text:center">
+          선택된 태그가 없습니다
+        </div>
+        <br />
+        <div>
+          <el-collapse v-model="activeName" accordion>
+            <el-collapse-item title="Introduction" name="1">
+              <div>
+                <img :src="userdata.photofilepath" />
+              </div>
+              <div>
+                {{ this.userdata.ind_introduce }}
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="자기소개영상" name="2">
+              <div>
+                <video
+                  :src="userdata.videofilepath"
+                  height="360"
+                  width="640"
+                  controls=""
+                  style="width: 100%; height: 100%;"
+                ></video>
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="연락처" name="3">
+              <div>Tel : {{ this.userdata.ind_phone }}</div>
+              <div>E-mail : {{ this.userdata.ind_email }}</div>
+            </el-collapse-item>
+            <el-collapse-item title="Documents" name="4">
+              <div>
+                <!-- 웹뷰어 되는것 확인 -->
+                <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
+                <webviewer :initialDoc="userdata.resumefilepath" />
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="reservation" name="5">
+              <div style="text-align:center; width:50%; margin: 0 auto;">
+                <el-input
+                  v-model="reservationdata.sug_duty"
+                  placeholder="채용직군을 입력해주세요"
+                ></el-input>
+              </div>
+              <div style="text-align:center; margin:10px">
+                <el-date-picker
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  v-model="reservationdata.sug_timeone"
+                  type="datetime"
+                  placeholder="Select date and time"
+                >
+                </el-date-picker>
+              </div>
+              <div style="text-align:center; margin:5px">
+                <el-date-picker
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  v-model="reservationdata.sug_timetwo"
+                  type="datetime"
+                  placeholder="Select date and time"
+                >
+                </el-date-picker>
+              </div>
+              <div style="text-align:center; margin:10px">
+                <el-date-picker
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  v-model="reservationdata.sug_timethree"
+                  type="datetime"
+                  placeholder="Select date and time"
+                >
+                </el-date-picker>
+              </div>
+              <div>
+                <el-input
+                  v-model="reservationdata.sug_message"
+                  placeholder="전하고싶은 메시지를 입력해주세요"
+                ></el-input>
+              </div>
+              <el-button
+                @click="(dialogVisible = false), interviewrequest()"
+                type="success"
+                style="float: right; margin:10px;"
+                :plain="true"
+                >Interview Request</el-button
               >
-              </el-date-picker>
-            </div>
-            <div style="text-align:center; margin:5px">
-              <el-date-picker
-                value-format="YYYY-MM-DD HH:mm:ss"
-                v-model="reservationdata.sug_timetwo"
-                type="datetime"
-                placeholder="Select date and time"
-              >
-              </el-date-picker>
-            </div>
-            <div style="text-align:center; margin:10px">
-              <el-date-picker
-                value-format="YYYY-MM-DD HH:mm:ss"
-                v-model="reservationdata.sug_timethree"
-                type="datetime"
-                placeholder="Select date and time"
-              >
-              </el-date-picker>
-            </div>
-            <div>
-              <el-input
-                v-model="reservationdata.sug_message"
-                placeholder="전하고싶은 메시지를 입력해주세요"
-              ></el-input>
-            </div>
-            <el-button
-              @click="(dialogVisible = false), interviewrequest()"
-              type="success"
-              style="float: right; margin:10px;"
-              :plain="true"
-              >Interview Request</el-button
-            >
-          </el-collapse-item>
-        </el-collapse>
-      </div>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-        </span>
-      </template>
-    </el-dialog>
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
-import WebViewer from "@/components/MainCompany/webviewer.vue";
+import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "SearchUserTagCard",
+  name: "UserDetail",
   components: {
-    WebViewer,
+    webviewer,
   },
-  props: { item: Object },
+  created() {},
+  props: {
+    user: Object,
+    userindex: Object,
+  },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -154,7 +169,7 @@ export default {
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
         fol_type: 1,
-        follower: this.item.ind_index,
+        follower: this.userindex,
         following: index,
       })
 
@@ -174,37 +189,37 @@ export default {
       });
     // 유저정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.item.ind_index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res);
-        this.userdetailinfo.ind_index = res.data.ind_index;
-        this.userdetailinfo.ind_name = res.data.ind_name;
-        this.userdetailinfo.ind_gender = res.data.ind_gender;
-        this.userdetailinfo.ind_phone = res.data.ind_phone;
-        this.userdetailinfo.ind_email = res.data.ind_email;
-        this.userdetailinfo.ind_resume = res.data.ind_resume;
-        this.userdetailinfo.ind_video = res.data.ind_video;
-        this.userdetailinfo.ind_photo = res.data.ind_photo;
-        this.userdetailinfo.ind_switch = res.data.ind_switch;
-        this.userdetailinfo.ind_introduce = res.data.ind_introduce;
-      })
-      .catch((err) => {
-        console.log("token error");
-        console.log(err.response);
-        if (err.response == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
+        var result = res.data[0];
+        this.userdata.photofilepath =
+          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+        this.userdata.resumefilepath =
+          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+        this.userdata.videofilepath =
+          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+        this.userdata.resume_originfile = result.resume_originfile;
+        this.userdata.photo_originfile = result.photo_originfile;
+        this.userdata.video_originfile = result.video_originfile;
+        this.userdata.ind_switch = result.ind_switch;
+        this.userdata.ind_introduce = result.ind_introduce;
+        this.userdata.photo_index = result.photo_index;
+        this.userdata.resume_index = result.resume_index;
+        this.userdata.video_index = result.resume_index;
+        this.userdata.ind_index = result.ind_index;
+        this.userdata.ind_name = result.ind_name;
+        this.userdata.ind_email = result.ind_email;
+        this.userdata.ind_phone = result.ind_phone;
+        this.userdata.ind_gender = result.ind_gender;
       });
     // 유저 태그목록 불러오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
         headers: { Authorization: token },
         params: {
-          index: this.item.ind_index,
+          index: this.userindex,
           type: 0,
         },
       })
@@ -224,17 +239,24 @@ export default {
       follow: false,
       company_index: index,
       dialogVisible: false,
-      user_tags: [],
+      // activeNames: ["1"],
       activeName: "1",
-      userdetailinfo: [
-        { ind_index: 0 },
+      user_tags: [],
+      userdata: [
         { ind_name: "" },
         { ind_gender: "" },
         { ind_phone: "" },
         { ind_email: "" },
-        { ind_resume: "" },
-        { ind_video: "" },
-        { ind_photo: "" },
+        { photofilepath: "" },
+        { resume_originfile: "" },
+        { photo_index: "" },
+        { resume_index: "" },
+        { video_index: "" },
+        { ind_index: 0 },
+        { video_originfile: "" },
+        { videofilepath: "" },
+        { photo_originfile: "" },
+        { resumefilepath: "" },
         { ind_switch: "" },
         { ind_introduce: "" },
       ],
@@ -262,7 +284,7 @@ export default {
             data: {
               fol_type: 1,
               following: this.company_index,
-              follower: this.item.ind_index,
+              follower: this.userindex,
             },
             headers: { Authorization: this.token },
           })
@@ -286,7 +308,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 1,
             following: this.company_index,
-            follower: this.item.ind_index,
+            follower: this.userindex,
           })
           .then((res) => {
             console.log(res);
@@ -327,7 +349,7 @@ export default {
     },
     interviewrequest() {
       console.log(this.company_index);
-      console.log(this.this.item.ind_index);
+      console.log(this.userindex);
       console.log(this.reservationdata.sug_duty);
       console.log(this.reservationdata.sug_timeone);
       console.log(this.reservationdata.sug_timetwo);
@@ -338,7 +360,7 @@ export default {
         .post("https://i5d206.p.ssafy.io:8443/sug", {
           headers: { Authorization: this.token },
           ent_index: this.company_index,
-          ind_index: this.this.item.ind_index,
+          ind_index: this.userindex,
           sug_duty: this.reservationdata.sug_duty,
           sug_timeone: this.reservationdata.sug_timeone,
           sug_timetwo: this.reservationdata.sug_timetwo,

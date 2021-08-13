@@ -7,9 +7,9 @@
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
-    height="200"
+    height="500"
   >
-    <el-table-column align="center" label="Date" prop="int_start" sortable>
+    <el-table-column align="center" label="Date" prop="int_start" sortable width="100">
     </el-table-column>
     <el-table-column align="center" label="Company" prop="name">
     </el-table-column>
@@ -18,6 +18,8 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
+        <CompanyInfo :item="scope.row.ent_index" />
+        &nbsp;
         <el-button
           v-if="scope.row.int_end !== 'null'"
           size="mini"
@@ -26,9 +28,7 @@
           >Interview Room</el-button
         >
 
-        <el-button v-else size="mini" disabled
-          >인터뷰가 종료되었습니다</el-button
-        >
+        <el-text v-else size="mini" disabled>인터뷰가 종료되었습니다</el-text>
       </template>
     </el-table-column>
   </el-table>
@@ -37,8 +37,10 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  components: { CompanyInfo },
   mounted() {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
@@ -79,12 +81,10 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-        // this.$router.push(`interviewroom/${company}/${user}`);
         this.$router.push({
           name: "InterviewRoom",
           params: { company: company, url: url },
         });
-        // user/interviewroom으로 넘어감
       }, 1000);
     },
   },

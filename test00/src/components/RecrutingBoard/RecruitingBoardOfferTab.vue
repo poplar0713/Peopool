@@ -22,28 +22,28 @@
       align="center"
       label="제안1"
       prop="sug_timeone"
-      width="100%"
+      width="160%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안2"
       prop="sug_timetwo"
-      width="100%"
+      width="160%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안3"
       prop="sug_timethree"
-      width="100%"
+      width="160%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="응답일정"
       prop="sug_decision"
-      width="100%"
+      width="160%"
     >
     </el-table-column>
     <el-table-column align="center">
@@ -60,7 +60,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfo from "@/components/MainCompany/UserInfo.vue";
+import UserInfo from "./UserInfo.vue";
 
 export default {
   components: { UserInfo },

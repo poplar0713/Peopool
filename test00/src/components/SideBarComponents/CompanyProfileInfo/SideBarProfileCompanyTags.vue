@@ -1,51 +1,36 @@
 <template>
-  <div class="select-section">
-    <el-divider content-position="left">나의 태그</el-divider>
-    <div style="align-text:center">
-      <!-- select -->
-      <el-select
-        v-model="value"
-        filterable
-        placeholder="Choose tags"
-        style="align-text:center"
-      >
-        <el-option
-          v-for="item in options_company"
-          :key="item.list_index"
-          :label="item.list_name"
-          :value="item.list_index"
-        >
-        </el-option>
-      </el-select>
-      <!--  -->
-      <el-button
-        icon="el-icon-plus"
-        circle
-        @click="plustag"
-        style="margin: 1em;"
-      ></el-button>
-    </div>
-    <div
-      v-if="this.mytags.length > 0"
-      style="width:100%; word-break:break-all;word-wrap:break-word;"
-    >
-      <el-tag
-        v-for="item in mytags"
-        style="margin:5px"
+  <div style="align-text:center">
+    <!-- select -->
+    <!-- 테스트 -->
+    <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
+      <el-option
+        v-for="item in this.options"
         :key="item.list_index"
-        :type="warning"
-        effect="plain"
-        closable
-        :disable-transitions="true"
-        @close="handleClose(tag, item.tag_index)"
-        @click="GetTagCompany(item.taglist_name)"
+        :label="item.list_name"
+        :value="item.cla_index"
       >
-        {{ item.taglist_name }}
-      </el-tag>
-    </div>
-    <div v-else style="align-text:center">
-      선택된 태그가 없습니다
-    </div>
+      </el-option>
+    </el-select>
+    <!--  -->
+    <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+  </div>
+  <div v-if="this.mytags.length > 0" style="width:100%; word-break:break-all;word-wrap:break-word;">
+    <el-tag
+      v-for="item in this.mytags"
+      style="margin:5px"
+      :key="item.list_index"
+      :type="warning"
+      effect="plain"
+      closable
+      :disable-transitions="true"
+      @close="handleClose(item.cla_index)"
+      @click="GetTagCompany(item.list_name)"
+    >
+      {{ item.list_name }}
+    </el-tag>
+  </div>
+  <div v-else style="align-text:center">
+    선택된 태그가 없습니다
   </div>
 </template>
 
@@ -53,12 +38,16 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+var token;
+var decoded;
+var index;
+
 export default {
   mounted() {
     // 토큰가져오기
-    const token = this.$cookies.get("PID_AUTH");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
+    token = this.$cookies.get("PID_AUTH");
+    decoded = jwt_decode(token);
+    index = decoded.index;
     this.company_index = index;
 
     // 회사전용태그목록 불러오기
@@ -83,7 +72,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: index,
+          ent_index: index,
         },
       })
       .then((res) => {
@@ -100,16 +89,16 @@ export default {
       });
     // 본인 태그목록 불러오기
     axios
-      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: index,
-          type: 1,
+          ent_index: index,
         },
       })
       .then((res) => {
         console.log(res);
-        // this.mytags = res.data;
+        this.mytags = res.data;
+        this.getNewArray = !this.getNewArray;
       })
       .catch((err) => {
         if (err.response == 401) {
@@ -130,25 +119,49 @@ export default {
       value: "",
       //나의 태그들
       mytags: [],
+      getNewArray: false,
     };
+  },
+  watch: {
+    getNewArray() {
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/cla/list", {
+          headers: { Authorization: token },
+          params: {
+            ent_index: index,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.mytags = res.data;
+        })
+        .catch((err) => {
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
   },
   methods: {
     plustag() {
-      // 유저본인 태그추가
+      // 기업 태그추가
       console.log(this.value);
       console.log(this.company_index);
       const mytaglist = [];
       for (var i in this.mytags) {
-        mytaglist.push(this.mytags[i].taglist_index);
+        mytaglist.push(this.mytags[i].list_index);
       }
-      console.log(mytaglist);
       if (mytaglist.includes(this.value)) {
         this.$message.error("이미 추가된 태그입니다.");
       } else {
         axios
           .post("https://i5d206.p.ssafy.io:8443/cla", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: token },
             ent_index: this.company_index,
+            //cla_index: this.value,
             list_index: this.value,
           })
           .then((res) => {
@@ -178,23 +191,20 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {
         location.reload();
-      }, 2001);
+      }, 2005);
     },
-    handleClose(tag, tag_index) {
-      console.log(tag);
-      console.log(tag_index);
+    handleClose(tag_index) {
       axios
-        .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
-          headers: { Authorization: this.token },
+        .delete(`https://i5d206.p.ssafy.io:8443/cla/${tag_index}`, {
+          headers: { Authorization: token },
         })
         .then(() => {
-          console.log();
-          this.mytags.splice(this.mytags.indexOf(tag), 1);
+          this.getNewArray = !this.getNewArray;
         })
         .catch((err) => {
           console.log(err);

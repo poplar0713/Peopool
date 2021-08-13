@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.peopool.model.repo.ProfileOfEnterpriseRepo">
+	
+	<select id="getAllProfile" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+	</select>
+
+
+	<update id="modifyProfileOfEnterprise" parameterType="ProfileOfEnterprise">
+		update ent_profile 
+		set ent_image = #{ent_image}, ent_ceo = #{ent_ceo}, ent_history = #{ent_history}, ent_address = #{ent_address}, ent_website = #{ent_website}, ent_introduce = #{ent_introduce} 
+		where ent_index = #{ent_index}
+	</update>
+	
+	<select id="getProfileOfEnterprise" parameterType="int" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where e.ent_index = #{index}
+	</select>
+	
+	<select id="getNameOfEnterprise" parameterType="String" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where e.ent_name like CONCAT( '%', #{name}, '%')	
+	</select>
+	
+	<select id="getIntroOfEnterprise" parameterType="String" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where ent_introduce like CONCAT( '%', #{word}, '%')
+	</select>
+	
+	<select id="getClassOfEnterprise" parameterType="String" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where p.ent_index in (select c.ent_index from classification c join classlist l on c.list_index = l.list_index where l.list_name like CONCAT( '%', #{word}, '%'))
+	</select>
+	
+	<delete id="deleteProfileOfEnterprise" parameterType="int">
+		delete from ent_profile
+		where ent_index = #{index}
+	</delete>
+	
+	
+	
+
+</mapper>

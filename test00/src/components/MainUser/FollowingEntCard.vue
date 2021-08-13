@@ -4,7 +4,7 @@
     shadow="hover"
     style="margin-bottom:20px; text-align:center"
     @click="dialogVisible = true"
-  >
+  ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
     <h1>{{ item.name }}</h1>
   </el-card>
   <!-- 모달창 -->

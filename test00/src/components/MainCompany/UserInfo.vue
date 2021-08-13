@@ -9,7 +9,7 @@
     </el-text>
     <div style="text-align:center">
       <el-dialog
-        :title="this.userdetailinfo.ind_name"
+        :title="this.userdata.ind_name"
         v-model="dialogVisible"
         width="50%"
         style="color:black"
@@ -57,16 +57,16 @@
           <el-collapse v-model="activeName" accordion>
             <el-collapse-item title="Introduction" name="1">
               <div>
-                <img :src="userdetailinfo.photofilepath" />
+                <img :src="userdata.photofilepath" />
               </div>
               <div>
-                {{ this.userdetailinfo.ind_introduce }}
+                {{ this.userdata.ind_introduce }}
               </div>
             </el-collapse-item>
             <el-collapse-item title="자기소개영상" name="2">
               <div>
                 <video
-                  :src="userdetailinfo.videofilepath"
+                  :src="userdata.videofilepath"
                   height="360"
                   width="640"
                   controls=""
@@ -75,14 +75,14 @@
               </div>
             </el-collapse-item>
             <el-collapse-item title="연락처" name="3">
-              <div>Tel : {{ this.userdetailinfo.ind_phone }}</div>
-              <div>E-mail : {{ this.userdetailinfo.ind_email }}</div>
+              <div>Tel : {{ this.userdata.ind_phone }}</div>
+              <div>E-mail : {{ this.userdata.ind_email }}</div>
             </el-collapse-item>
             <el-collapse-item title="Documents" name="4">
               <div>
-                <!-- 되는거 -->
+                <!-- 웹뷰어 되는것 확인 -->
                 <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
-                <webviewer :initialDoc="userdetailinfo.resumefilepath" />
+                <webviewer :initialDoc="userdata.resumefilepath" />
               </div>
             </el-collapse-item>
             <el-collapse-item title="reservation" name="5">
@@ -189,42 +189,30 @@ export default {
       });
     // 유저정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res);
-        this.userdetailinfo.photofilepath =
-          "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
-        this.userdetailinfo.resumefilepath =
-          "/file/" +
-          res.data.resume_savefolder +
-          "/" +
-          res.data.resume_savefile;
-        this.userdetailinfo.videofilepath =
-          "/file/" + res.data.video_savefolder + "/" + res.data.video_savefile;
-        this.userdetailinfo.resume_originfile = res.data.resume_originfile;
-        this.userdetailinfo.photo_originfile = res.data.photo_originfile;
-        this.userdetailinfo.video_originfile = res.data.video_originfile;
-        this.userdetailinfo.ind_switch = res.data.ind_switch;
-        this.userdetailinfo.ind_introduce = res.data.ind_introduce;
-        this.userdetailinfo.photo_index = res.data.photo_index;
-        this.userdetailinfo.resume_index = res.data.resume_index;
-        this.userdetailinfo.video_index = res.data.resume_index;
-        this.userdetailinfo.ind_index = res.data.ind_index;
-        this.userdetailinfo.ind_name = res.data.ind_name;
-        this.userdetailinfo.ind_email = res.data.ind_email;
-        this.userdetailinfo.ind_phone = res.data.ind_phone;
-        this.userdetailinfo.ind_gender = res.data.ind_gender;
-      })
-      .catch((err) => {
-        console.log("token error");
-        console.log(err.response);
-        if (err.response == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
+        var result = res.data[0];
+        this.userdata.photofilepath =
+          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+        this.userdata.resumefilepath =
+          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+        this.userdata.videofilepath =
+          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+        this.userdata.resume_originfile = result.resume_originfile;
+        this.userdata.photo_originfile = result.photo_originfile;
+        this.userdata.video_originfile = result.video_originfile;
+        this.userdata.ind_switch = result.ind_switch;
+        this.userdata.ind_introduce = result.ind_introduce;
+        this.userdata.photo_index = result.photo_index;
+        this.userdata.resume_index = result.resume_index;
+        this.userdata.video_index = result.resume_index;
+        this.userdata.ind_index = result.ind_index;
+        this.userdata.ind_name = result.ind_name;
+        this.userdata.ind_email = result.ind_email;
+        this.userdata.ind_phone = result.ind_phone;
+        this.userdata.ind_gender = result.ind_gender;
       });
     // 유저 태그목록 불러오기
     axios
@@ -254,7 +242,7 @@ export default {
       // activeNames: ["1"],
       activeName: "1",
       user_tags: [],
-      userdetailinfo: [
+      userdata: [
         { ind_name: "" },
         { ind_gender: "" },
         { ind_phone: "" },
