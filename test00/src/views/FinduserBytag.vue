@@ -30,7 +30,9 @@
               </el-switch
             ></el-col>
             <el-col :span="2">
-              <el-button type="info" @click="this.getResultList">검색</el-button></el-col
+              <el-button type="info" @click="this.getResultList"
+                >검색</el-button
+              ></el-col
             >
           </el-row>
         </div>
@@ -54,6 +56,7 @@ var token;
 //var index;
 
 export default {
+  name:"FinduserBytag",
   mounted() {
     token = this.$cookies.get("PID_AUTH");
     //    decoded = jwt_decode(token);

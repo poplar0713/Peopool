@@ -43,7 +43,7 @@ import axios from "axios";
 import server_url from "@/server.js";
 
 export default {
-  name: "MainUser",
+  name: "ProfileUser",
   components: {
     SideBarUser,
     headerSearchCompany,

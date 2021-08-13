@@ -48,6 +48,7 @@
 <script>
 import DecibelMeter from "decibel-meter";
 export default {
+  name:"beforeMettngRoom",
   data() {
     return {
       company: this.$route.params.company,

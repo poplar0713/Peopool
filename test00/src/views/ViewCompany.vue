@@ -5,7 +5,7 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
-        <PopularCompanyList/>
+        <PopularCompanyList />
         <SelectCompanyTags />
       </el-main>
       <el-footer> </el-footer>
@@ -22,12 +22,12 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name: "ViewCompany",
+  name:"ViewCompany",
   components: {
     SideBarUser,
     headerSearchCompany,
     SelectCompanyTags,
-    PopularCompanyList
+    PopularCompanyList,
   },
   mounted() {},
   data() {

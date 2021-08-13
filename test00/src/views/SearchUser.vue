@@ -7,7 +7,7 @@
         <div>
           <el-divider content-position="left"
             ><h1>
-              # {{ $route.params.keyword }} 태그에 해당하는 피풀인
+              # {{ $route.query.keyword }} 태그에 해당하는 피풀인
             </h1></el-divider
           >
           <SearchUserTagList />
@@ -23,8 +23,8 @@ import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vu
 import SearchUserTagList from "@/components/search/SearchUserTagList.vue";
 
 export default {
+  name:"SearchUser",
   mounted() {},
-  name: "SearchCompany",
   components: {
     SideBarCompany,
     headerSearchUser,

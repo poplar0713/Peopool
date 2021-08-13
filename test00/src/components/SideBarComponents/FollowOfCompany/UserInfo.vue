@@ -150,7 +150,6 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "UserDetail",
   components: {
     webviewer,
   },
@@ -396,8 +395,8 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          name: "searchuser",
-          params: { keyword: `${keyword}` },
+          path: "SearchUser",
+          query: { keyword: `${keyword}` },
         });
       }, 2000);
       setTimeout(() => {

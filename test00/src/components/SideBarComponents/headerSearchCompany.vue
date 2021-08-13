@@ -25,7 +25,10 @@ export default {
     search() {
       console.log(this.keyword);
       // this.$router.push(`/searchcompany/${this.keyword}`);
-      this.$router.push({ path: 'SearchCompany', query: { keyword: this.keyword }});
+      this.$router.push({
+        name: "SearchCompany",
+        query: { keyword: this.keyword },
+      });
       setTimeout(() => {
         location.reload();
       }, 1);

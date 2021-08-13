@@ -4,7 +4,10 @@
       shadow="hover"
       style="margin-bottom:20px; text-align:center"
       @click="dialogVisible = true"
-      ><img :src="userdata.photofilepath" style="max-width: 100%; height: auto;"/>
+      ><img
+        :src="userdata.photofilepath"
+        style="max-width: 100%; height: auto;"
+      />
       <h3>{{ this.userdata.ind_name }}</h3>
     </el-card>
     <div style="text-align:center">
@@ -150,7 +153,6 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "UserDetail",
   components: {
     webviewer,
   },
@@ -396,8 +398,8 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          name: "searchuser",
-          params: { keyword: `${keyword}` },
+          path: "SearchUser",
+          query: { keyword: `${keyword}` },
         });
       }, 2000);
       setTimeout(() => {

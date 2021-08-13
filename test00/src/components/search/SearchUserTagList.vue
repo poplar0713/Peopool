@@ -30,7 +30,6 @@ import { useRoute } from "vue-router";
 import SearchUserTagCard from "@/components/search/SearchUserTagCard.vue";
 
 export default {
-  name: "SearchUserTag",
   components: {
     SearchUserTagCard,
   },
@@ -38,7 +37,7 @@ export default {
     // 토큰가져오기
     // const token = this.$cookies.get("PID_AUTH");
     const route = useRoute();
-    const keyword = route.params.keyword;
+    const keyword = route.query.keyword;
 
     // 데이터저장 비동기방식
     const result = ref([]);

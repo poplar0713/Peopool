@@ -30,7 +30,6 @@ import { useRoute } from "vue-router";
 import SearchCompanyCard from "@/components/search/SearchCompanyCard.vue";
 
 export default {
-  name: "SearchCompany",
   components: {
     SearchCompanyCard,
   },

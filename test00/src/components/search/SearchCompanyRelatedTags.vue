@@ -17,7 +17,6 @@
 <script>
 import axios from "axios";
 export default {
-  name: "SearchCompanyRelatedTags",
   components: {},
   props: [],
   data() {

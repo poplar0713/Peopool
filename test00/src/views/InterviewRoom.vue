@@ -100,8 +100,7 @@
             >
               X</el-button
             >
-            </span
-          >
+          </span>
           <el-button
             type="warning"
             icon="el-icon-chat-round"
@@ -167,6 +166,7 @@ var ws = null;
 var participants = {};
 
 export default {
+  name: "InterviewRoom",
   data() {
     return {
       room: null,
@@ -186,7 +186,6 @@ export default {
     BeforeMeeting,
   },
 
-  name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
     ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
@@ -597,7 +596,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .footer span {
   padding: 10px;
