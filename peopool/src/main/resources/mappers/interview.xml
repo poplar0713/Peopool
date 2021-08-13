@@ -25,10 +25,15 @@
 	</select>
 	
 	<select id="getEInterviews" parameterType="int" resultType="IntCard">
-		select int_index, i.ind_index, ent_index, int_start, int_roomnumber, i.ind_name name
-		from interview join individual i
-		on interview.ind_index = i.ind_index
-		where ent_index=#{index} and int_start > now()
+		select j.*, e.ent_name
+		from (select int_index, i.ind_index, ent_index, int_start, int_roomnumber, i.ind_name
+				from interview 
+					join individual i 
+					on 
+					interview.ind_index = i.ind_index ) j 
+			join enterprise e 
+			on j.ent_index = e.ent_index
+		where j.ent_index=#{index} and int_start > now();
 	</select>
 	
 	<select id="getELastInterviews" parameterType="int" resultType="IntCard">

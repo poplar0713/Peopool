@@ -9,6 +9,20 @@
 		from ent_profile p join enterprise e
 		on p.ent_index = e.ent_index
 	</select>
+	
+	<select id="getAllProfileByFollower" resultType="EntCard">
+		select a.*, IFNULL(b.count,0)
+ 		from (select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+				from ent_profile p 
+					join enterprise e
+					on p.ent_index = e.ent_index) a
+					left outer join 
+            		(select follower ,count(*) count
+						from follow 
+						group by follower) b
+					on a.ent_index = b.follower
+		order by b.count desc;
+	</select>
 
 
 	<update id="modifyProfileOfEnterprise" parameterType="ProfileOfEnterprise">

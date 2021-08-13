@@ -22,11 +22,21 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 		return profileOfEnterpriseRepo.getAllProfile();
 	}
 	
+	// 전체 프로필 조회 (팔로워 순)
+	@Override
+	public List<EntCard> getAllProfileByFollower() throws SQLException {
+		// TODO Auto-generated method stub
+		return profileOfEnterpriseRepo.getAllProfileByFollower();
+	}
+
+	
 	@Override
 	public boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.modifyProfileOfEnterprise(profileOfEnterprise) == 1;
 	}
+
+	
 
 	@Override
 	public boolean deleteProfileOfEnterprise(int index) throws SQLException {
