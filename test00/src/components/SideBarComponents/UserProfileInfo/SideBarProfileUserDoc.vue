@@ -56,7 +56,6 @@ export default {
       axios
         .post(`https://i5d206.p.ssafy.io:8443/poi/resume/${index}`, frm, {
           headers: { Authorization: token },
-          index: 30,
         })
         .then((response) => {
           console.log(response);
