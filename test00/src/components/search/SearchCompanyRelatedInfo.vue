@@ -43,10 +43,11 @@ export default {
     // 데이터저장 비동기방식
     const result = ref([]);
     (async () => {
-      const res = await axios.get("https://i5d206.p.ssafy.io:8443/cla/ent", {
+      const res = await axios.get("https://i5d206.p.ssafy.io:8443/poe/intro", {
         // headers: { Authorization: token },
         params: {
           name: keyword,
+          type: 1,
         },
       });
       result.value = res.data;

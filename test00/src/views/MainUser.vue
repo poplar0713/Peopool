@@ -1,7 +1,7 @@
 <template>
   <!-- UserSchedule -->
   <el-container>
-    <el-aside width="200px"><SideBarUser/></el-aside>
+    <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
@@ -139,8 +139,8 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          path: "SearchCompany",
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {

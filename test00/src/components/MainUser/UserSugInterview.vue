@@ -8,7 +8,7 @@
           data.sug_duty.toLowerCase().includes(search.toLowerCase())
       )
     "
-    height="200"
+    height="500"
     ref="filterTable"
   >
     <el-table-column
@@ -21,19 +21,19 @@
         { text: '취소', value: 'C' },
       ]"
       :filter-method="filterHandler"
-      width="60%"
+      width="58"
     >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name">
+    <el-table-column align="center" label="Company" prop="name" width="100">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty">
+    <el-table-column align="center" label="직무" prop="sug_duty" width="100">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <CompanyInfo :item="scope.row.ent_index" :front="button" />
+        <CompanyInfo :item="scope.row.ent_index" />
         &nbsp;
         <el-button
           v-if="scope.row.sug_state == 'W'"
@@ -41,14 +41,14 @@
           size="mini"
           >응답하기</el-button
         >
-        <el-button v-if="scope.row.sug_state == 'T'" disabled size="mini"
-          >응답완료</el-button
+        <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini"
+          >응답완료</el-text
         >
-        <el-button v-if="scope.row.sug_state == 'F'" disabled size="mini"
-          >응답거절</el-button
+        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini"
+          >응답거절</el-text
         >
-        <el-button v-if="scope.row.sug_state == 'C'" disabled size="mini"
-          >취소된 요청입니다</el-button
+        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini"
+          >취소된 요청입니다</el-text
         >
 
         <el-dialog
@@ -123,7 +123,8 @@ import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
   components: { CompanyInfo },
-  mounted(){// 토큰으로 유저index 가져오기
+  mounted() {
+    // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
@@ -144,9 +145,9 @@ export default {
           localStorage.clear();
           this.$router.push("/");
         }
-      });},
+      });
+  },
   data() {
-    
     return {
       InterviewReq: [],
       dialogVisible: false,

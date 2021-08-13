@@ -72,7 +72,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: index,
+          ent_index: index,
         },
       })
       .then((res) => {
@@ -191,12 +191,12 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {
         location.reload();
-      }, 2001);
+      }, 2005);
     },
     handleClose(tag_index) {
       axios

@@ -18,6 +18,7 @@
   </el-dialog>
 
   <el-card class="box-card" style="margin-bottom:25px;" shadow="hover">
+    <!-- v-if="item.int_done == 'W'" -->
     <el-row :gutter="20">
       <el-col :span="8"
         ><div>
@@ -29,14 +30,14 @@
       ></el-col>
       <el-col :span="16"
         ><div>
-          <UserInfo :userindex="item.ind_index" />
-          <el-button type="text" @click="openInterviewMemo(item)"
+          <UserInfo :userindex="item.ind_index" /><br />
+          <!-- <el-button type="text" @click="openInterviewMemo(item)"
             >메모</el-button
-          >
-          <el-button type="text" @click="sugpass(item.int_index)"
+          > -->
+          <el-button type="success" @click="sugpass(item.int_index)"
             >입사제안</el-button
           >
-          <el-button type="text" @click="sugfail(item.int_index)"
+          <el-button type="danger" @click="sugfail(item.int_index)"
             >탈락</el-button
           >
         </div></el-col

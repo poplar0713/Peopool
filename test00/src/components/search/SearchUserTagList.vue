@@ -2,7 +2,7 @@
   <div v-if="this.result.length > 0">
     <el-row :gutter="24">
       <el-col :span="4" v-for="item in nowPageData" :key="item">
-        <SearchUserTagCard :item="item" />
+        <SearchUserTagCard :userindex="item.ind_index" />
       </el-col>
     </el-row>
     <div style="text-align:center">

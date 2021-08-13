@@ -276,3 +276,12 @@ export default {
   width: "50%";
 }
 </style>
+
+
+<el-card
+    shadow="hover"
+    style="margin-bottom:20px; text-align:center"
+    @click="dialogVisible = true"
+  >
+    <h1>{{ item.ent_name }}</h1>
+  </el-card>

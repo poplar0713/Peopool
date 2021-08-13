@@ -27,8 +27,7 @@
         effect="plain"
         closable
         :disable-transitions="true"
-        @close="handleClose(item.tag_index)"
-        @click="GetTagCompany(item.taglist_name)"
+        @close="handleClose(tag, item.tag_index)"
       >
         {{ item.taglist_name }}
       </el-tag>
