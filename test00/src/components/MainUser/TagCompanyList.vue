@@ -25,13 +25,12 @@ export default {
   },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     axios
-      .get("https://i5d206.p.ssafy.io:8443/has/user", {
+      .get("https://i5d206.p.ssafy.io:8443/cla/ent", {
         headers: { Authorization: token },
         params: {
           name: this.tag,
-          type: 1,
         },
       })
       .then((res) => {

@@ -4,24 +4,29 @@
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
-      <el-header>프로필</el-header>
+      <el-header><h2>프로필</h2></el-header>
       <el-main style="width:80%;">
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개"
             ><SideBarProfileUserIntroduction
+              :photofilepath="userdata.photofilepath"
           /></el-tab-pane>
-          <el-tab-pane label="소개영상"><PRVideo /></el-tab-pane>
+          <el-tab-pane label="소개영상"
+            ><PRVideo :vediofilepath="userdata.videofilepath"
+          /></el-tab-pane>
           <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
-          <el-tab-pane label="서류관리"><SideBarProfileUserDoc /></el-tab-pane>
+          <el-tab-pane label="서류관리"
+            ><SideBarProfileUserDoc :docfilepath="userdata.resumefilepath"
+          /></el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
       </el-main>
       <el-footer> </el-footer>
     </el-container>
+    <router-view></router-view>
   </el-container>
-  <router-view></router-view>
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
@@ -54,7 +59,7 @@ export default {
   },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 회원정보 가져오기
@@ -97,10 +102,55 @@ export default {
           this.$router.push("/");
         }
       });
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log("asdgdfasdfasfd");
+        var result = res.data[0];
+        this.userdata.photofilepath =
+          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+        this.userdata.resumefilepath =
+          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+        this.userdata.videofilepath =
+          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+        this.userdata.resume_originfile = result.resume_originfile;
+        this.userdata.photo_originfile = result.photo_originfile;
+        this.userdata.video_originfile = result.video_originfile;
+        this.userdata.ind_switch = result.ind_switch;
+        this.userdata.ind_introduce = result.ind_introduce;
+        this.userdata.photo_index = result.photo_index;
+        this.userdata.resume_index = result.resume_index;
+        this.userdata.video_index = result.resume_index;
+        this.userdata.ind_index = result.ind_index;
+        this.userdata.ind_name = result.ind_name;
+        this.userdata.ind_email = result.ind_email;
+        this.userdata.ind_phone = result.ind_phone;
+        this.userdata.ind_gender = result.ind_gender;
+      });
     return {
       username: "",
       mytags: [],
       tabPosition: "left",
+      userdata: [
+        { ind_name: "" },
+        { ind_gender: "" },
+        { ind_phone: "" },
+        { ind_email: "" },
+        { photofilepath: "" },
+        { resume_originfile: "" },
+        { photo_index: "" },
+        { resume_index: "" },
+        { video_index: "" },
+        { ind_index: 0 },
+        { video_originfile: "" },
+        { videofilepath: "" },
+        { photo_originfile: "" },
+        { resumefilepath: "" },
+        { ind_switch: "" },
+        { ind_introduce: "" },
+      ],
     };
   },
   methods: {
@@ -142,7 +192,7 @@ export default {
 
 <style>
 .el-main {
-  margin: 10px 10px 10px 10px;
+  margin: 1rem 1rem 1rem 1rem;
   background-color: white;
   border-radius: 20px;
 }

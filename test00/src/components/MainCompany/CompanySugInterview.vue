@@ -51,8 +51,8 @@
               <el-button v-if="scope.row.sug_state == 'W'" size="mini"
                 >응답대기</el-button
               >
-              <el-button v-if="scope.row.sug_state == 'T'" disabled size="mini"
-                >면접수락</el-button
+              <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini"
+                >면접수락</el-text
               >
               <el-button
                 v-if="scope.row.sug_state !== 'C'"
@@ -81,7 +81,7 @@ export default {
   components: { UserInfo },
   data() {
     // 토큰으로 유저index 가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 요청받은 면접일정 가져오기
@@ -95,7 +95,6 @@ export default {
       })
       .catch((err) => {
         console.log("여기서 이미 못받아옴");
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -129,7 +128,6 @@ export default {
         })
         .catch((err) => {
           console.log("token error");
-          console.log(err.response.data.status);
           if (err.response.data.status == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();

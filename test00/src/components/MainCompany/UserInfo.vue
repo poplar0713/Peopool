@@ -1,135 +1,147 @@
 <template>
-  <el-text
-    type="text"
-    @click="dialogVisible = true"
-    style="color:black; text-align:center; cursor:pointer"
-    size="mini"
-    >상세보기
-  </el-text>
-  <div style="text-align:center">
-    <el-dialog
-      :title="this.userdetailinfo.ind_name"
-      v-model="dialogVisible"
-      width="50%"
-      style="color:black"
-    >
-      <!-- 팔로우가 되어있을때 -->
-      <div v-if="follow" style="color: Tomato;">
-        <i
-          class="fas fa-heart fa-2x"
-          size:7x
-          @click="clickfollowBtn"
-          style="cursor:pointer"
-        ></i>
-      </div>
-      <!-- 팔로우가 안되어있을때 -->
-      <div v-if="follow == false" style="color: Tomato;">
-        <i
-          @click="clickfollowBtn"
-          class="far fa-heart fa-2x"
-          style="cursor:pointer"
-        ></i>
-      </div>
-      <br />
-      <!-- 태그 -->
-      <div
-        v-if="this.user_tags.length > 0"
-        style="width:100%; word-break:break-all;word-wrap:break-word;"
+  <div>
+    <el-text
+      type="text"
+      @click="dialogVisible = true"
+      style="color:black; text-align:center; cursor:pointer"
+      size="mini"
+      >상세보기
+    </el-text>
+    <div style="text-align:center">
+      <el-dialog
+        :title="this.userdetailinfo.ind_name"
+        v-model="dialogVisible"
+        width="50%"
+        style="color:black"
       >
-        <el-tag
-          v-for="item in user_tags"
-          style="margin:5px"
-          :key="item.taglist_index"
-          :type="warning"
-          effect="plain"
-          closable
-          :disable-transitions="true"
-          @click="GetTagUser(item.taglist_name)"
+        <!-- 팔로우가 되어있을때 -->
+        <div v-if="follow" style="color: Tomato;">
+          <i
+            class="fas fa-heart fa-2x"
+            size:7x
+            @click="clickfollowBtn"
+            style="cursor:pointer"
+          ></i>
+        </div>
+        <!-- 팔로우가 안되어있을때 -->
+        <div v-if="follow == false" style="color: Tomato;">
+          <i
+            @click="clickfollowBtn"
+            class="far fa-heart fa-2x"
+            style="cursor:pointer"
+          ></i>
+        </div>
+        <br />
+        <!-- 태그 -->
+        <div
+          v-if="this.user_tags.length > 0"
+          style="width:100%; word-break:break-all;word-wrap:break-word;"
         >
-          {{ item.taglist_name }}
-        </el-tag>
-      </div>
-      <div v-else style="align-text:center">
-        선택된 태그가 없습니다
-      </div>
-      <br />
-      <div>
-        <el-collapse v-model="activeName" accordion>
-          <el-collapse-item title="Introduction" name="1">
-            <div>
-              {{ this.userdetailinfo.ind_introduce }}
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="자기소개영상" name="2">
-            <div>
-              {{ this.userdetailinfo.ind_video }}
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="연락처" name="3">
-            <div>Tel : {{ this.userdetailinfo.ind_phone }}</div>
-            <div>E-mail : {{ this.userdetailinfo.ind_email }}</div>
-          </el-collapse-item>
-          <el-collapse-item title="Documents" name="4">
-            <div>
-              <webviewer initialDoc="파이팅 프런트.docx" />
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="reservation" name="5">
-            <div style="text-align:center; width:50%; margin: 0 auto;">
-              <el-input
-                v-model="reservationdata.sug_duty"
-                placeholder="채용직군을 입력해주세요"
-              ></el-input>
-            </div>
-            <div style="text-align:center; margin:10px">
-              <el-date-picker
-                value-format="YYYY-MM-DD HH:mm:ss"
-                v-model="reservationdata.sug_timeone"
-                type="datetime"
-                placeholder="Select date and time"
+          <el-tag
+            v-for="item in user_tags"
+            style="margin:5px"
+            :key="item.taglist_index"
+            :type="warning"
+            effect="plain"
+            :disable-transitions="true"
+            @click="GetTagUser(item.taglist_name)"
+          >
+            {{ item.taglist_name }}
+          </el-tag>
+        </div>
+        <div v-else style="align-text:center">
+          선택된 태그가 없습니다
+        </div>
+        <br />
+        <div>
+          <el-collapse v-model="activeName" accordion>
+            <el-collapse-item title="Introduction" name="1">
+              <div>
+                <img :src="userdetailinfo.photofilepath" />
+              </div>
+              <div>
+                {{ this.userdetailinfo.ind_introduce }}
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="자기소개영상" name="2">
+              <div>
+                <video
+                  :src="userdetailinfo.videofilepath"
+                  height="360"
+                  width="640"
+                  controls=""
+                  style="width: 100%; height: 100%;"
+                ></video>
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="연락처" name="3">
+              <div>Tel : {{ this.userdetailinfo.ind_phone }}</div>
+              <div>E-mail : {{ this.userdetailinfo.ind_email }}</div>
+            </el-collapse-item>
+            <el-collapse-item title="Documents" name="4">
+              <div>
+                <!-- 되는거 -->
+                <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
+                <webviewer :initialDoc="userdetailinfo.resumefilepath" />
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="reservation" name="5">
+              <div style="text-align:center; width:50%; margin: 0 auto;">
+                <el-input
+                  v-model="reservationdata.sug_duty"
+                  placeholder="채용직군을 입력해주세요"
+                ></el-input>
+              </div>
+              <div style="text-align:center; margin:10px">
+                <el-date-picker
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  v-model="reservationdata.sug_timeone"
+                  type="datetime"
+                  placeholder="Select date and time"
+                >
+                </el-date-picker>
+              </div>
+              <div style="text-align:center; margin:5px">
+                <el-date-picker
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  v-model="reservationdata.sug_timetwo"
+                  type="datetime"
+                  placeholder="Select date and time"
+                >
+                </el-date-picker>
+              </div>
+              <div style="text-align:center; margin:10px">
+                <el-date-picker
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  v-model="reservationdata.sug_timethree"
+                  type="datetime"
+                  placeholder="Select date and time"
+                >
+                </el-date-picker>
+              </div>
+              <div>
+                <el-input
+                  v-model="reservationdata.sug_message"
+                  placeholder="전하고싶은 메시지를 입력해주세요"
+                ></el-input>
+              </div>
+              <el-button
+                @click="(dialogVisible = false), interviewrequest()"
+                type="success"
+                style="float: right; margin:10px;"
+                :plain="true"
+                >Interview Request</el-button
               >
-              </el-date-picker>
-            </div>
-            <div style="text-align:center; margin:5px">
-              <el-date-picker
-                value-format="YYYY-MM-DD HH:mm:ss"
-                v-model="reservationdata.sug_timetwo"
-                type="datetime"
-                placeholder="Select date and time"
-              >
-              </el-date-picker>
-            </div>
-            <div style="text-align:center; margin:10px">
-              <el-date-picker
-                value-format="YYYY-MM-DD HH:mm:ss"
-                v-model="reservationdata.sug_timethree"
-                type="datetime"
-                placeholder="Select date and time"
-              >
-              </el-date-picker>
-            </div>
-            <div>
-              <el-input
-                v-model="reservationdata.sug_message"
-                placeholder="전하고싶은 메시지를 입력해주세요"
-              ></el-input>
-            </div>
-            <el-button
-              @click="(dialogVisible = false), interviewrequest()"
-              type="success"
-              style="float: right; margin:10px;"
-              :plain="true"
-              >Interview Request</el-button
-            >
-          </el-collapse-item>
-        </el-collapse>
-      </div>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-        </span>
-      </template>
-    </el-dialog>
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -149,7 +161,7 @@ export default {
   },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 팔로우했는지 체크해보기
@@ -177,21 +189,33 @@ export default {
       });
     // 유저정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
         console.log(res);
-        this.userdetailinfo.ind_index = res.data.ind_index;
-        this.userdetailinfo.ind_name = res.data.ind_name;
-        this.userdetailinfo.ind_gender = res.data.ind_gender;
-        this.userdetailinfo.ind_phone = res.data.ind_phone;
-        this.userdetailinfo.ind_email = res.data.ind_email;
-        this.userdetailinfo.ind_resume = res.data.ind_resume;
-        this.userdetailinfo.ind_video = res.data.ind_video;
-        this.userdetailinfo.ind_photo = res.data.ind_photo;
+        this.userdetailinfo.photofilepath =
+          "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
+        this.userdetailinfo.resumefilepath =
+          "/file/" +
+          res.data.resume_savefolder +
+          "/" +
+          res.data.resume_savefile;
+        this.userdetailinfo.videofilepath =
+          "/file/" + res.data.video_savefolder + "/" + res.data.video_savefile;
+        this.userdetailinfo.resume_originfile = res.data.resume_originfile;
+        this.userdetailinfo.photo_originfile = res.data.photo_originfile;
+        this.userdetailinfo.video_originfile = res.data.video_originfile;
         this.userdetailinfo.ind_switch = res.data.ind_switch;
         this.userdetailinfo.ind_introduce = res.data.ind_introduce;
+        this.userdetailinfo.photo_index = res.data.photo_index;
+        this.userdetailinfo.resume_index = res.data.resume_index;
+        this.userdetailinfo.video_index = res.data.resume_index;
+        this.userdetailinfo.ind_index = res.data.ind_index;
+        this.userdetailinfo.ind_name = res.data.ind_name;
+        this.userdetailinfo.ind_email = res.data.ind_email;
+        this.userdetailinfo.ind_phone = res.data.ind_phone;
+        this.userdetailinfo.ind_gender = res.data.ind_gender;
       })
       .catch((err) => {
         console.log("token error");
@@ -231,14 +255,20 @@ export default {
       activeName: "1",
       user_tags: [],
       userdetailinfo: [
-        { ind_index: 0 },
         { ind_name: "" },
         { ind_gender: "" },
         { ind_phone: "" },
         { ind_email: "" },
-        { ind_resume: "" },
-        { ind_video: "" },
-        { ind_photo: "" },
+        { photofilepath: "" },
+        { resume_originfile: "" },
+        { photo_index: "" },
+        { resume_index: "" },
+        { video_index: "" },
+        { ind_index: 0 },
+        { video_originfile: "" },
+        { videofilepath: "" },
+        { photo_originfile: "" },
+        { resumefilepath: "" },
         { ind_switch: "" },
         { ind_introduce: "" },
       ],

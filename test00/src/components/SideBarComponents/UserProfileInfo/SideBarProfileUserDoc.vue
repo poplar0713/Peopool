@@ -1,17 +1,29 @@
 <template>
-  <form v-on:submit.prevent enctype="multipart/form-data">
-    <input multiple="multiple" type="file" name="file" id="file" ref="file"  />
-    <button @click="upload">
-      Upload
-    </button>
-  </form>
+  <div>
+    <form v-on:submit.prevent enctype="multipart/form-data">
+      <input multiple="multiple" type="file" name="file" id="file" ref="file" />
+      <button @click="upload">
+        Upload
+      </button>
+    </form>
+    <!-- <div v-if="!docfilepath">이력서가 없습니다.</div> -->
+    <div>
+      <web-viewer initialDoc="/docx_pdf/test.pdf"></web-viewer>
+    </div>
+  </div>
 </template>
-
 
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import WebViewer from "@/components/MainCompany/webviewer.vue";
 export default {
+  props: {
+    docfilepath: String,
+  },
+  component: {
+    WebViewer,
+  },
   data() {
     return {};
   },
@@ -24,7 +36,7 @@ export default {
     },
 
     upload() {
-      const token = localStorage.getItem("token");
+      const token = this.$cookies.get("PID_AUTH");
       const decoded = jwt_decode(token);
       const index = decoded.index;
 
@@ -47,6 +59,5 @@ export default {
   },
 };
 </script>
-
 
 <style></style>

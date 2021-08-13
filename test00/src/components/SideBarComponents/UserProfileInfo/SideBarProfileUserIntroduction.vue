@@ -7,14 +7,30 @@
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
     >
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        v-on:submit.prevent
+        enctype="multipart/form-data"
+      >
         <el-form-item label="" prop="Introduction">
-          {{this.ruleForm.photo}}
-          <br>
-          <el-input type="file" v-model="ruleForm.photo"></el-input>
+          <!-- <input multiple="multiple" type="file" name="file" id="file" ref="file"  /> -->
+          <el-input
+            type="file"
+            name="file"
+            id="file"
+            ref="file"
+            multiple="multiple"
+          ></el-input>
         </el-form-item>
+
+        <!-- <button @click="upload">
+      Upload
+    </button> -->
+
         <el-form-item label="" prop="Introduction">
-          <el-input type="textarea" v-model="ruleForm.Introduction"></el-input>
+          <el-input type="textarea"></el-input>
         </el-form-item>
         <div style="float:right">
           <el-form-item>
@@ -26,6 +42,7 @@
               >Save</el-button
             >
           </el-form-item>
+          <div><img :src="photofilepath" width="200px" /></div>
         </div>
       </el-form>
     </div>
@@ -36,8 +53,11 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 export default {
+  props: {
+    photofilepath: String,
+  },
   mounted() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.userindex = index;
@@ -47,7 +67,7 @@ export default {
       })
       .then((res) => {
         this.ruleForm.Introduction = res.data.ind_introduce;
-        this.ruleForm.photo = res.data.ind_photo;
+        this.ruleForm.photo = "/file/" + res.data.ind_photo;
       })
       .catch((err) => {
         console.log("token error");
@@ -64,7 +84,7 @@ export default {
       loading: false,
       userindex: "",
       ruleForm: {
-        photo:"",
+        photo: "",
         Introduction: "",
       },
       rules: {
@@ -84,38 +104,43 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.openFullScreen2();
+          console.log(this.$refs[formName]);
           // 저장하는 방법 찾아보기
-          axios
-            .put("https://i5d206.p.ssafy.io:8443/poi", {
-              headers: { Authorization: this.token },
-              ind_index: this.userindex,
-              ind_introduce: this.ruleForm.Introduction,
-              ind_photo:  this.ruleForm.photo,
-              ind_resume: "string",
-              ind_switch: "string",
-              ind_video: "string",
-            })
-            .then((res) => {
-              console.log(res);
-              this.loading = true;
-              setTimeout(() => {
-                this.loading = false;
-                this.successmessage();
-              }, 3000);
-            })
-            .catch((err) => {
-              console.log("token error");
-              console.log(err.response);
-              if (err.response == 401) {
-                this.$message.error("로그인세션이 만료되었습니다");
-                localStorage.clear();
-                this.$router.push("/");
-              }
-            });
-        } else {
-          console.log("error submit!!");
-          this.failed();
-          return false;
+          // var frm = new FormData();
+          // var photodata = this.$refs[formName].files[0];
+          // var introducedata = this.$refs[]
+
+          //     axios
+          //       .put("https://i5d206.p.ssafy.io:8443/poi", {
+          //         headers: { Authorization: this.token },
+          //         ind_index: this.userindex,
+          //         // ind_introduce: this.ruleForm.Introduction,
+          //         // ind_photo:  this.ruleForm.photo,
+          //         // ind_resume: "string",
+          //         // ind_switch: "string",
+          //         // ind_video: "string",
+          //       })
+          //       .then((res) => {
+          //         console.log(res);
+          //         this.loading = true;
+          //         setTimeout(() => {
+          //           this.loading = false;
+          //           this.successmessage();
+          //         }, 3000);
+          //       })
+          //       .catch((err) => {
+          //         console.log("token error");
+          //         console.log(err.response);
+          //         if (err.response == 401) {
+          //           this.$message.error("로그인세션이 만료되었습니다");
+          //           localStorage.clear();
+          //           this.$router.push("/");
+          //         }
+          //       });
+          //   } else {
+          //     console.log("error submit!!");
+          //     this.failed();
+          //     return false;
         }
       });
     },

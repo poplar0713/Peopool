@@ -29,16 +29,31 @@
                         :timestamp="days.date"
                       >
                         <el-card style="width: 80%; align-content: center;">
-                          <el-table :data="days.interviewers" :default-sort="{ prop: 'time' }">
-                            <el-table-column prop="int_start" label="면접시간" sortable>
+                          <el-table
+                            :data="days.interviewers"
+                            :default-sort="{ prop: 'time' }"
+                          >
+                            <el-table-column
+                              prop="int_start"
+                              label="면접시간"
+                              sortable
+                            >
                             </el-table-column>
-                            <el-table-column prop="name" label="성명"> </el-table-column>
-                            <el-table-column prop="p_part" label="직무"> </el-table-column>
+                            <el-table-column prop="name" label="성명">
+                            </el-table-column>
+                            <el-table-column prop="p_part" label="직무">
+                            </el-table-column>
                             <el-table-column label="" prop="p_name">
                               <template #default="scope">
                                 <el-button
                                   size="mini"
-                                  @click="Cancel(scope.$index, scope.row, scope.row.p_name)"
+                                  @click="
+                                    Cancel(
+                                      scope.$index,
+                                      scope.row,
+                                      scope.row.p_name
+                                    )
+                                  "
                                   >Cancel</el-button
                                 >
                                 <!-- {{scope.row.company}} -->
@@ -118,7 +133,7 @@ export default {
     },
   },
   data() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 면접일정조회
@@ -132,7 +147,6 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -153,7 +167,7 @@ export default {
     };
   },
   mounted() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.company_index = index;
@@ -168,7 +182,6 @@ export default {
         this.waitinglist = res.data;
       })
       .catch((err) => {
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -177,10 +190,13 @@ export default {
       });
 
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/int/ent/iday/${this.company_index}`, {
-        // 면접 대기자
-        headers: { Authroization: token },
-      })
+      .get(
+        `https://i5d206.p.ssafy.io:8443/int/ent/iday/${this.company_index}`,
+        {
+          // 면접 대기자
+          headers: { Authroization: token },
+        }
+      )
       .then((res) => {
         console.log("interview >> ");
         console.log(res.data);

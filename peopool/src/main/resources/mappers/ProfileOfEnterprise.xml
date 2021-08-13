@@ -31,6 +31,20 @@
 		where e.ent_name like CONCAT( '%', #{name}, '%')	
 	</select>
 	
+	<select id="getIntroOfEnterprise" parameterType="String" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where ent_introduce like CONCAT( '%', #{word}, '%')
+	</select>
+	
+	<select id="getClassOfEnterprise" parameterType="String" resultType="EntCard">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where p.ent_index in (select c.ent_index from classification c join classlist l on c.list_index = l.list_index where l.list_name like CONCAT( '%', #{word}, '%'))
+	</select>
+	
 	<delete id="deleteProfileOfEnterprise" parameterType="int">
 		delete from ent_profile
 		where ent_index = #{index}

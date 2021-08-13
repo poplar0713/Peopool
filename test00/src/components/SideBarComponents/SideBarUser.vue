@@ -18,18 +18,18 @@
         background-color="#f1c40f"
       >
         <!--  -->
-        <el-menu-item index="1">
-          <i class="fas fa-home"></i>&nbsp;&nbsp;
-          <a href="/user" style="text-decoration: none; color:black">Home</a>
+        <el-menu-item index="1" onclick="location.href = '/user'">
+          <i class="fas fa-home"></i>&nbsp;&nbsp;Home
         </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-user"></i>
-          <router-link
-            :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
-            style="text-decoration: none; color:black"
-            >User</router-link
-          >
-        </el-menu-item>
+
+        <router-link
+          :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
+          style="color: black; text-decoration: none;"
+          ><el-menu-item index="2">
+            <i class="el-icon-user"></i><span>User</span></el-menu-item
+          ></router-link
+        >
+
         <!--  -->
         <el-menu-item index="3">
           <i class="el-icon-video-camera"></i>
@@ -48,10 +48,16 @@
           <span><UserFollowers /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="6" disabled>
-          <i class="el-icon-document"></i>
-          <span>혹시나</span>
-        </el-menu-item>
+
+        <router-link
+          :to="{ name: 'ViewCompany' }"
+          style="color: black; text-decoration: none;"
+          ><el-menu-item index="6">
+            <span
+              ><i class="el-icon-office-building"></i>기업찾아보기</span
+            ></el-menu-item
+          ></router-link
+        >
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-setting"></i>
@@ -60,7 +66,7 @@
         <!--  -->
         <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
-          <span @click="Logout">Logout</span>
+          <el-text @click="Logout">Logout</el-text>
         </el-menu-item>
         <!--  -->
       </el-menu>
@@ -78,7 +84,7 @@ import jwt_decode from "jwt-decode";
 export default {
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     return {
@@ -93,6 +99,9 @@ export default {
     UserFollowers,
   },
   methods: {
+    mvHome() {
+      this.$router.replace("user");
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -101,8 +110,6 @@ export default {
     },
     // 로그아웃
     Logout() {
-      // 깔끔하게 비우기
-      localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
@@ -112,6 +119,7 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.$cookies.remove("PID_AUTH");
         this.$router.push("/");
         this.$message({
           message: "로그아웃",
@@ -125,7 +133,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 img {
   display: block;
   margin: 0px auto;

@@ -2,12 +2,7 @@
   <el-scrollbar height="600px">
     <div>
       <el-main>
-        <el-card
-          class="box-card"
-          style="width: 200px"
-          v-for="user in userdata"
-          :key="user"
-        >
+        <el-card class="box-card" style="width: 200px" v-for="user in userdata" :key="user">
           <template #header>
             <div class="card-header">
               <img src="images/a.jpg" style="width: 150px" />
@@ -43,7 +38,7 @@ export default {
   },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 내정보 가져오기
@@ -66,7 +61,7 @@ export default {
         console.log("token error");
         console.log(err.response);
         if (err.response == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }

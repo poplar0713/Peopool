@@ -44,7 +44,7 @@ export default {
   components: { UserInfo },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 내정보 가져오기
@@ -65,7 +65,6 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error('로그인세션이 만료되었습니다');
           localStorage.clear();

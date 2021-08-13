@@ -52,7 +52,7 @@ import UserInfo from "./UserInfo.vue";
 export default {
   components: { UserInfo },
   data() {
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 면접일정조회
@@ -66,7 +66,6 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();

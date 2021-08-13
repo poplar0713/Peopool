@@ -123,9 +123,8 @@ import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
   components: { CompanyInfo },
-  data() {
-    // 토큰으로 유저index 가져오기
-    const token = localStorage.getItem("token");
+  mounted(){// 토큰으로 유저index 가져오기
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 요청받은 면접일정 가져오기
@@ -145,7 +144,9 @@ export default {
           localStorage.clear();
           this.$router.push("/");
         }
-      });
+      });},
+  data() {
+    
     return {
       InterviewReq: [],
       dialogVisible: false,

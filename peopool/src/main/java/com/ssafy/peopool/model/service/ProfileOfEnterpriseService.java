@@ -22,5 +22,11 @@ public interface ProfileOfEnterpriseService {
 
 	// 이름으로 회사 검색
 	List<EntCard> getNameOfEnterprise(String name) throws SQLException;
+	
+	// 기업소개에서 회사 검색
+	List<EntCard> getIntroOfEnterprise(String word) throws SQLException;
+	
+	// 분류에서 회사 검색
+	List<EntCard> getClassOfEnterprise(String word) throws SQLException;
 
 }
