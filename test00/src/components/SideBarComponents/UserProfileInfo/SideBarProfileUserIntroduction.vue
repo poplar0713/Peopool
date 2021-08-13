@@ -123,7 +123,7 @@ export default {
           console.log(this.$refs[formName]);
           // 저장하는 방법 찾아보기
           var frm = new FormData();
-          var photodata = this.$refs[formName].files[0];
+          var photodata = this.$refs.photo.files[0];
           var introduce = document.getElementById("introtextarea");
           console.log(introduce.value);
           // var introducedata = this.$refs[]
@@ -131,7 +131,7 @@ export default {
           // frm.append("introduce", introduce.value);
 
           axios
-            .put("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
+            .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
               headers: { Authorization: this.token },
               index: this.userindex,
               introduce: introduce.value,
