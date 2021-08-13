@@ -17,7 +17,7 @@
       width="100"
     >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name">
+    <el-table-column align="center" label="Company" prop="ent_name">
     </el-table-column>
     <el-table-column align="center">
       <template #header>

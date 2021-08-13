@@ -2,7 +2,7 @@
   <div v-if="this.ents !== null">
     <el-row :gutter="24">
       <el-col :span="4" v-for="(item, i) in ents.slice(0, 6)" :key="i">
-        <TagCompanyCard :item="item.ent_index" />
+        <CompanyCardInfo :item="item.ent_index" />
       </el-col>
     </el-row>
   </div>
@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import TagCompanyCard from "./TagCompanyCard.vue";
+import CompanyCardInfo from "./CompanyCardInfo.vue";
 // import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
   name:"TagCompanyList",
   components: {
-    TagCompanyCard,
+    CompanyCardInfo,
   },
   props: {
     tag: Object,

@@ -12,7 +12,7 @@
   >
     <el-table-column align="center" label="Date" prop="int_start" sortable>
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="name">
+    <el-table-column align="center" label="피풀인" prop="ind_name">
     </el-table-column>
     <el-table-column align="center">
       <template #header>

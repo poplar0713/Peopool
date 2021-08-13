@@ -67,14 +67,14 @@
             <el-tag
               v-for="item in ent_tags"
               style="margin:5px"
-              :key="item.taglist_index"
+              :key="item.list_index"
               :type="warning"
               effect="plain"
               closable
               :disable-transitions="true"
-              @click="GetTagCompany(item.taglist_name)"
+              @click="GetTagCompany(item.list_name)"
             >
-              {{ item.taglist_name }}
+              {{ item.list_name }}
             </el-tag>
           </div>
           <div v-else style="align-text:center">
@@ -96,7 +96,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name:"TagCompanyCard",
+  name:"CompanyCardInfo",
   props: { item: Number },
   data() {
     // 토큰가져오기
@@ -153,11 +153,10 @@ export default {
       });
     // 기업본인 태그목록 불러오기
     axios
-      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: this.item,
-          type: 1,
+          ent_index : this.item,
         },
       })
       .then((res) => {

@@ -62,7 +62,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import TagCompanyList from "./TagCompanyList.vue";
 export default {
-  name:"SelectCompanyTags",
+  name: "SelectCompanyTags",
   components: { TagCompanyList },
   data() {
     // 토큰가져오기
@@ -108,13 +108,13 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)",
       });
+      this.$router.push({
+        name: "SearchCompany",
+        query: { keyword: tag },
+      });
       setTimeout(() => {
         loading.close();
-        this.$router.push(`/searchcompany/${tag}`);
-      }, 2000);
-      setTimeout(() => {
-        location.reload();
-      }, 2001);
+      }, 1000);
     },
   },
 };

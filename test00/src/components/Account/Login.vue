@@ -11,7 +11,7 @@
     >
 
     <br />
-    <el-dialog title="Login" v-model="$store.state.LoginDialog">
+    <el-dialog title="Login" v-model="$store.state.LoginDialog" width="30%">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="개인회원" name="first">
           <!-- 개인로그인 -->
@@ -35,10 +35,10 @@
             </el-dialog>
             <br /><br />
             <!-- 아이디찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findUserId = true"
-              style="color:black; margin:10px"
-              >아이디찾기</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >아이디찾기</el-text
             >
             <el-dialog
               title="아이디 찾기"
@@ -49,10 +49,10 @@
               <FindUserId />
             </el-dialog>
             <!-- 비밀번호찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findUserPw = true"
-              style="color:black; margin:10px"
-              >비밀번호 초기화</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >비밀번호 초기화</el-text
             >
             <el-dialog
               title="비밀번호 초기화"
@@ -85,10 +85,10 @@
             </el-dialog>
             <br /><br />
             <!-- 아이디찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findCompanyId = true"
-              style="color:black; margin:10px"
-              >아이디찾기</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >아이디찾기</el-text
             >
             <el-dialog
               title="아이디 찾기"
@@ -99,10 +99,10 @@
               <FindCompanyId />
             </el-dialog>
             <!-- 비밀번호찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findCompanyPw = true"
-              style="color:black; margin:10px"
-              >비밀번호 초기화</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >비밀번호 초기화</el-text
             >
             <el-dialog
               title="비밀번호 초기화"
@@ -160,7 +160,7 @@ export default {
   methods: {
     // 창닫기
     handleClose(done) {
-      this.$confirm("Are you sure to close this page?")
+      this.$confirm("창을 닫으시겠습니까?")
         .then(() => {
           done();
           this.dialogVisible = false;

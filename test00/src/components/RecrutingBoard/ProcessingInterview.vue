@@ -16,7 +16,7 @@
               >
                 <el-table-column prop="int_start" label="면접시간" sortable>
                 </el-table-column>
-                <el-table-column prop="name" label="성명"> </el-table-column>
+                <el-table-column prop="ind_name" label="성명"> </el-table-column>
                 <el-table-column prop="p_part" label="직무"> </el-table-column>
                 <el-table-column label="" prop="p_name">
                   <template #default="scope">
@@ -31,7 +31,7 @@
                       type="danger"
                       @click="
                         GoToInteriewRoom(
-                          scope.row.company_name,
+                          scope.row.ent_name,
                           scope.row.int_roomnumber
                         )
                       "

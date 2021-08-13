@@ -46,20 +46,29 @@
           <el-col :span="6"
             ><div><UserInfo :userindex="scope.row.ind_index" /></div
           ></el-col>
-          <el-col :span="6"
+          <el-col :span="18"
             ><div>
               <el-button v-if="scope.row.sug_state == 'W'" size="mini"
                 >응답대기</el-button
               >
-              <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini"
-                >면접수락</el-text
-              >
-              <el-button
-                v-if="scope.row.sug_state !== 'C'"
-                size="mini"
-                type="danger"
-                @click="CancelInt(scope.row.sug_index)"
-                >요청취소</el-button
+              <el-row
+                ><el-col :span="12">
+                  <el-text
+                    v-if="scope.row.sug_state == 'T'"
+                    disabled
+                    size="mini"
+                    style="margin-right:5px"
+                    >면접수락</el-text
+                  ></el-col
+                ><el-col :span="12">
+                  <el-button
+                    v-if="scope.row.sug_state !== 'C'"
+                    size="mini"
+                    type="danger"
+                    @click="CancelInt(scope.row.sug_index)"
+                    >요청취소</el-button
+                  ></el-col
+                ></el-row
               >
               <el-button v-if="scope.row.sug_state == 'C'" disabled size="mini"
                 >취소된 요청입니다</el-button
@@ -108,6 +117,7 @@ export default {
     };
   },
   methods: {
+    // 면접취소
     CancelInt(sugindex) {
       console.log(sugindex);
       axios

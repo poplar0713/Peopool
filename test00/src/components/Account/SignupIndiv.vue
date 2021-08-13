@@ -3,7 +3,7 @@
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="ind_id">
       <el-input @keydown="recheck" v-model="ruleForm.ind_id"></el-input>
-      <el-button @click="checkID">중복확인</el-button>
+      <el-button @click="checkID" style="margin-top:10px">중복확인</el-button>
     </el-form-item>
     <!-- 개인회원 PW -->
     <el-form-item label="Password" prop="ind_password">
@@ -82,7 +82,7 @@ export default {
       if (value === "") {
         callback(new Error("ID를 입력해주세요"));
       } else if (length.value < 5 || length.value > 10) {
-        callback(new Error("1-15자리로 설정해주세요"));
+        callback(new Error("5-10자리로 설정해주세요"));
       } else {
         callback();
       }

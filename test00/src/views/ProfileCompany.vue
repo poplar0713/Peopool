@@ -3,8 +3,9 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-      <SideBarProfileCompany />
-      <el-main> </el-main>
+      <el-main style="width:50%; text-align:center; margin:0 auto; padding: 70px 0;">
+        <SideBarProfileCompany />
+      </el-main>
     </el-container>
   </el-container>
 </template>

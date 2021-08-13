@@ -30,7 +30,7 @@ import { useRoute } from "vue-router";
 import SearchCompanyCard from "@/components/search/SearchCompanyCard.vue";
 
 export default {
-  name:"SearchCompanyRelatedInfo",
+  name: "SearchCompanyRelatedInfo",
   components: {
     SearchCompanyCard,
   },
@@ -39,15 +39,14 @@ export default {
     // const token = this.$cookies.get("PID_AUTH");
     const route = useRoute();
     const keyword = route.query.keyword;
-
+    console.log(keyword);
     // 데이터저장 비동기방식
     const result = ref([]);
     (async () => {
       const res = await axios.get("https://i5d206.p.ssafy.io:8443/poe/intro", {
         // headers: { Authorization: token },
         params: {
-          name: keyword,
-          type: 1,
+          word: keyword,
         },
       });
       result.value = res.data;

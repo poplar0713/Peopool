@@ -67,14 +67,13 @@
             <el-tag
               v-for="item in ent_tags"
               style="margin:5px"
-              :key="item.taglist_index"
+              :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
-              @click="GetTagCompany(item.taglist_name)"
+              @click="GetTagCompany(item.list_name)"
             >
-              {{ item.taglist_name }}
+              {{ item.list_name }}
             </el-tag>
           </div>
           <div v-else style="align-text:center">

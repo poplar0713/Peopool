@@ -6,7 +6,7 @@
     style="text-align:center; cursor:pointer"
     @click="dialogVisible = true"
   >
-    정보보기
+    기업정보
   </el-button>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
