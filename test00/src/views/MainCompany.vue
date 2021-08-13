@@ -3,7 +3,6 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-
       <el-main>
         <el-row :gutter="20">
           <el-col :span="12"

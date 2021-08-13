@@ -10,61 +10,60 @@
             <span class="f">ool</span>
           </div>
         </div>
+        <!-- onclick="location.href = '/user'" -->
       </router-link>
-      <el-menu
-        default-active="2"
-        @open="handleOpen"
-        @close="handleClose"
-        background-color="#f1c40f"
-      >
-        <!--  -->
-        <el-menu-item index="1" onclick="location.href = '/user'">
-          <i class="fas fa-home"></i>&nbsp;&nbsp;Home
+      <el-menu background-color="#f1c40f">
+        <el-menu-item
+          index="1"
+          onclick="location.href = '/user'"
+          style="text-align:center"
+        >
+          <i class="fas fa-home"></i><span style="margin:10px">Home</span>
         </el-menu-item>
 
         <router-link
           :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
           style="color: black; text-decoration: none;"
-          ><el-menu-item index="2">
+          ><el-menu-item index="2" style="text-align:center">
             <i class="el-icon-user"></i><span>User</span></el-menu-item
           ></router-link
         >
-
         <!--  -->
-        <el-menu-item index="3">
+        <el-menu-item index="3" style="text-align:center">
           <i class="el-icon-video-camera"></i>
           <span><UserInterviewManage /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="4">
-          <i class="el-icon-right"></i>
-          <i class="el-icon-office-building"></i>
-          <span><UserFollowings /></span>
-        </el-menu-item>
-        <!--  -->
-        <el-menu-item index="5">
-          <i class="el-icon-user-solid"></i>
-          <i class="el-icon-back"></i>
-          <span><UserFollowers /></span>
-        </el-menu-item>
-        <!--  -->
-
         <router-link
           :to="{ name: 'ViewCompany' }"
           style="color: black; text-decoration: none;"
-          ><el-menu-item index="6">
+          ><el-menu-item index="4" style="text-align:center">
             <span
               ><i class="el-icon-office-building"></i>기업찾아보기</span
             ></el-menu-item
           ></router-link
         >
         <!--  -->
-        <el-menu-item index="7">
+        <el-menu-item index="5" style="text-align:center">
+          <i class="el-icon-right"></i>
+          <i class="el-icon-office-building"></i>
+          <span><UserFollowings /></span>
+        </el-menu-item>
+        <!--  -->
+        <el-menu-item index="6" style="text-align:center">
+          <i class="el-icon-user-solid"></i>
+          <i class="el-icon-back"></i>
+          <span><UserFollowers /></span>
+        </el-menu-item>
+        <!--  -->
+
+        <!--  -->
+        <el-menu-item index="7" style="text-align:center">
           <i class="el-icon-setting"></i>
           <span>settings</span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="8">
+        <el-menu-item index="8" style="text-align:center">
           <i class="el-icon-turn-off"></i>
           <el-text @click="Logout">Logout</el-text>
         </el-menu-item>
@@ -102,12 +101,6 @@ export default {
   methods: {
     mvHome() {
       this.$router.replace("user");
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
     },
     // 로그아웃
     Logout() {

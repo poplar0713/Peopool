@@ -52,11 +52,6 @@
     <div></div>
     <el-footer></el-footer>
   </el-container>
-  <!-- <div style="text-align: center; align-items: center; margin-top: 10px;">
-    <Login />
-    <br />
-    <NotLoginMain />
-  </div> -->
 </template>
 
 <script>

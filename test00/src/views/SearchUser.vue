@@ -23,7 +23,7 @@ import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vu
 import SearchUserTagList from "@/components/search/SearchUserTagList.vue";
 
 export default {
-  name:"SearchUser",
+  name: "SearchUser",
   mounted() {},
   components: {
     SideBarCompany,

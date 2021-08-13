@@ -46,7 +46,7 @@ import SearchCompanyRelatedTags from "@/components/search/SearchCompanyRelatedTa
 import SearchCompanyRelatedInfo from "@/components/search/SearchCompanyRelatedInfo.vue";
 
 export default {
-  name:"SearchCompany",
+  name: "SearchCompany",
   components: {
     SideBarUser,
     headerSearchCompany,
