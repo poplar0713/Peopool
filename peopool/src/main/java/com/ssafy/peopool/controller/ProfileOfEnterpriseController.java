@@ -45,7 +45,7 @@ public class ProfileOfEnterpriseController {
 	}
 	
 	@ApiOperation(value = "팔로워 순으로 전체 프로필을 가져온다.", response = String.class)
-	@GetMapping()
+	@GetMapping("/ByFollower")
 	public ResponseEntity<List<EntCard>> getAllProfileByFollower() throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getAllProfileByFollower(), HttpStatus.OK);
 		
