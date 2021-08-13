@@ -2,19 +2,32 @@
   <div style="align-text:center">
     <!-- select -->
     <!-- 테스트 -->
-    <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
+    <el-select
+      v-model="value"
+      filterable
+      placeholder="Choose tags"
+      style="align-text:center"
+    >
       <el-option
-        v-for="item in this.options"
+        v-for="item in this.options_company"
         :key="item.list_index"
         :label="item.list_name"
-        :value="item.cla_index"
+        :value="item.list_index"
       >
       </el-option>
     </el-select>
     <!--  -->
-    <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+    <el-button
+      icon="el-icon-plus"
+      circle
+      @click="plustag"
+      style="margin: 1em;"
+    ></el-button>
   </div>
-  <div v-if="this.mytags.length > 0" style="width:100%; word-break:break-all;word-wrap:break-word;">
+  <div
+    v-if="this.mytags.length > 0"
+    style="width:100%; word-break:break-all;word-wrap:break-word;"
+  >
     <el-tag
       v-for="item in this.mytags"
       style="margin:5px"
@@ -24,7 +37,6 @@
       closable
       :disable-transitions="true"
       @close="handleClose(item.cla_index)"
-      @click="GetTagCompany(item.list_name)"
     >
       {{ item.list_name }}
     </el-tag>
@@ -38,9 +50,9 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-var token;
-var decoded;
-var index;
+var token = "";
+var decoded = "";
+var index = "";
 
 export default {
   mounted() {
@@ -78,27 +90,6 @@ export default {
       .then((res) => {
         console.log(res);
         this.mytags = res.data;
-      })
-      .catch((err) => {
-        if (err.response == 401) {
-          console.log("token error");
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 본인 태그목록 불러오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
-        headers: { Authorization: token },
-        params: {
-          ent_index: index,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        this.mytags = res.data;
-        this.getNewArray = !this.getNewArray;
       })
       .catch((err) => {
         if (err.response == 401) {
@@ -159,14 +150,14 @@ export default {
       } else {
         axios
           .post("https://i5d206.p.ssafy.io:8443/cla", {
-            headers: { Authorization: token },
+            headers: { Authorization: this.token },
             ent_index: this.company_index,
             //cla_index: this.value,
             list_index: this.value,
           })
-          .then((res) => {
-            console.log(res);
-            this.mytags.push(res.data);
+          .then(() => {
+            this.$message.info("태그가 추가되었습니다");
+            this.getNewArray = !this.getNewArray;
           })
           .catch((err) => {
             console.log(err);
