@@ -36,7 +36,7 @@
       effect="plain"
       closable
       :disable-transitions="true"
-      @close="handleClose(item.cla_index)"
+      @close="handleClose(tag, item.cla_index)"
     >
       {{ item.list_name }}
     </el-tag>
