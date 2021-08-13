@@ -17,18 +17,8 @@
         >
         </el-option>
       </el-select>
-<<<<<<< HEAD
 
       <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
-=======
-      <!--  -->
-      <el-button
-        icon="el-icon-plus"
-        circle
-        @click="plustag"
-        style="margin: 1em;"
-      ></el-button>
->>>>>>> 4bb271543842966be865cd408a7932a70e3d9ca8
     </div>
     <div
       v-if="this.mytags.length > 0"
@@ -36,13 +26,8 @@
     >
       <el-tag
         v-for="item in mytags"
-<<<<<<< HEAD
-        style="margin: 0.1rem"
-        :key="item.tag_index"
-=======
         style="margin:5px"
         :key="item.taglist_index"
->>>>>>> 4bb271543842966be865cd408a7932a70e3d9ca8
         :type="warning"
         effect="plain"
         closable
@@ -54,11 +39,7 @@
       </el-tag>
     </div>
     <div v-else style="align-text:center">
-<<<<<<< HEAD
-      설정된 태그가 없습니다
-=======
       선택된 태그가 없습니다
->>>>>>> 4bb271543842966be865cd408a7932a70e3d9ca8
     </div>
   </div>
 </template>

@@ -110,12 +110,6 @@ export default {
     },
     // 로그아웃
     Logout() {
-<<<<<<< HEAD
-      // 깔끔하게 비우기
-      this.$cookies.remove("token");
-      localStorage.clear();
-=======
->>>>>>> 4bb271543842966be865cd408a7932a70e3d9ca8
       // 로딩페이지
       const loading = this.$loading({
         lock: true,

@@ -10,12 +10,8 @@ import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
-<<<<<<< HEAD
 import FinduserByTag from "@/views/FinduserBytag";
 import cookies from 'vue-cookies';
-=======
-
->>>>>>> 4bb271543842966be865cd408a7932a70e3d9ca8
 const routes = [
   {
     path: "/meetinter",
