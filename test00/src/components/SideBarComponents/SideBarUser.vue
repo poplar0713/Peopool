@@ -49,13 +49,9 @@
         </el-menu-item>
         <!--  -->
 
-        <router-link
-          :to="{ name: 'ViewCompany' }"
-          style="color: black; text-decoration: none;"
+        <router-link :to="{ name: 'ViewCompany' }" style="color: black; text-decoration: none;"
           ><el-menu-item index="6">
-            <span
-              ><i class="el-icon-office-building"></i>기업찾아보기</span
-            ></el-menu-item
+            <span><i class="el-icon-office-building"></i>기업찾아보기</span></el-menu-item
           ></router-link
         >
         <!--  -->
@@ -110,12 +106,9 @@ export default {
     },
     // 로그아웃
     Logout() {
-<<<<<<< HEAD
       // 깔끔하게 비우기
       this.$cookies.remove("token");
       localStorage.clear();
-=======
->>>>>>> 4bb271543842966be865cd408a7932a70e3d9ca8
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
