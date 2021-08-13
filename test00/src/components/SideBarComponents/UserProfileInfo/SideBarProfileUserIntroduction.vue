@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="box" style="background: #BDBDBD;">
-      <img class="profile" id="profilephoto" :src="ruleForm.photo" />
+      <img class="profile" id="profilephoto" :src="photofilepath" />
     </div>
     <el-scrollbar>
       <div
@@ -30,13 +30,12 @@
             />
           </el-form-item>
 
-          <el-form-item label="" prop="Introduction">
-            <el-input
-              id="introtextarea"
-              type="textarea"
-              v-model="ruleForm.Introduction"
-            ></el-input>
-          </el-form-item>
+          <el-input
+            id="introtextarea"
+            type="textarea"
+            v-model="ruleForm.Introduction"
+          ></el-input>
+
           <div style="float:right">
             <el-form-item>
               <el-button @click="resetForm('ruleForm')">Reset</el-button>
@@ -47,7 +46,7 @@
                 >Save</el-button
               >
             </el-form-item>
-            <div><img :src="photofilepath" width="200px" /></div>
+            <!-- <div><img :src="photofilepath" width="200px" /></div> -->
           </div>
         </el-form>
       </div>
@@ -57,6 +56,8 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+
 // import jwt_decode from "jwt-decode";
 export default {
   props: {
@@ -86,8 +87,13 @@ export default {
     //       this.$router.push("/");
     //     }
     //   });
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.userindex = index;
   },
   data() {
+    console.log("userindex : ", this.userindex);
     return {
       loading: false,
       userindex: "",
@@ -121,23 +127,28 @@ export default {
         if (valid) {
           this.openFullScreen2();
           console.log(this.$refs[formName]);
+
           // 저장하는 방법 찾아보기
           var frm = new FormData();
-          var photodata = this.$refs[formName].files[0];
+          var photodata = this.$refs.photo.files[0];
           var introduce = document.getElementById("introtextarea");
           console.log(introduce.value);
+          console.log("userindex : ", this.userindex);
           // var introducedata = this.$refs[]
           frm.append("upfile", photodata);
           // frm.append("introduce", introduce.value);
 
           axios
-            .put("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
+            .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
               headers: { Authorization: this.token },
-              index: this.userindex,
-              introduce: introduce.value,
+              params: {
+                index: this.userindex,
+                introduce: introduce.value,
+              },
             })
             .then((res) => {
               console.log(res);
+              <el-alert title="업로드 되었습니다" type="success"></el-alert>;
               this.loading = true;
               setTimeout(() => {
                 this.loading = false;
