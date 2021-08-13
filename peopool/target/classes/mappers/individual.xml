@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.peopool.model.repo.IndividualRepo">
+	<select id="getAllUser" resultType="Individual">
+		select *
+		from individual
+	</select>
+	
+	<select id="getIndividual" parameterType="int" resultType="Individual">
+		select *
+		from individual
+		where ind_index=#{index}
+	</select>
+	
+	<insert id="registerIndividual" parameterType="Individual">
+		insert into individual(ind_id, ind_password, ind_name, ind_birth, ind_gender, ind_phone, ind_email) 
+		values ( #{ind_id},#{ind_password},#{ind_name},#{ind_birth},#{ind_gender},#{ind_phone},#{ind_email})
+	</insert>
+	
+	<update id="modifyIndividual" parameterType="Individual">
+		update individual 
+		set ind_password = #{ind_password}, ind_phone = #{ind_phone}, ind_email = #{ind_email} 
+		where ind_index = #{ind_index}
+	</update>
+	
+	<delete id="deleteIndividual" parameterType="int">
+		delete from individual 
+		where ind_index = #{index}
+	</delete>
+	
+	<select id="findIndividualID" parameterType="String" resultType="Individual">
+		select * 
+		from individual 
+		where ind_name = #{name} and ind_phone = #{phone}
+	</select>
+	
+	<select id="findIndividualPW" parameterType="Individual" resultType="Individual">
+		select * 
+		from individual 
+		where ind_id = #{id} and ind_phone = #{phone}
+	</select>
+	
+	<select id="getUserId" parameterType="String" resultType="Individual">
+		select *
+		from individual
+		where ind_id=#{id}
+	</select>
+</mapper>
