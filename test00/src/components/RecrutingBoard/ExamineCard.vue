@@ -52,6 +52,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name:"ExamineCard",
   components: {
     UserInfo,
   },

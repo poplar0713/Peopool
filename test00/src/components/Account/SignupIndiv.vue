@@ -63,6 +63,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "SignupIndiv",
   // data
   data() {
     // 비밀번호 체크

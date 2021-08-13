@@ -17,6 +17,7 @@ import TagCompanyCard from "./TagCompanyCard.vue";
 import axios from "axios";
 
 export default {
+  name:"TagCompanyList",
   components: {
     TagCompanyCard,
   },

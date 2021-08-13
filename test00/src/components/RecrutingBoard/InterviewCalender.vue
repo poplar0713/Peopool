@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  name: "InterviewCalender",
   data() {
     const month = new Date().getMonth();
     const year = new Date().getFullYear();

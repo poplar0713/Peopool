@@ -82,6 +82,7 @@ import UserFollowings from "@/components/SideBarComponents/FollowOfUser/UserFoll
 import UserFollowers from "@/components/SideBarComponents/FollowOfUser/UserFollowers.vue";
 import jwt_decode from "jwt-decode";
 export default {
+  name: "SideBarUser",
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");

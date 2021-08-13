@@ -51,6 +51,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name: "CompanySchedule",
   components: { UserInfo },
   data() {
     const token = this.$cookies.get("PID_AUTH");

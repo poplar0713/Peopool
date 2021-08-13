@@ -78,6 +78,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name: "CompanySugInterview",
   components: { UserInfo },
   data() {
     // 토큰으로 유저index 가져오기

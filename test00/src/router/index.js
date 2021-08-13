@@ -53,13 +53,13 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
-    path: "/searchcompany/:keyword",
+    path: "/searchcompany/",
     name: "SearchCompany",
     component: SearchCompany,
     beforeEnter: requireAuth,
   },
   {
-    path: "/searchuser/:keyword",
+    path: "/searchuser/",
     name: "SearchUser",
     component: SearchUser,
     beforeEnter: requireAuth,

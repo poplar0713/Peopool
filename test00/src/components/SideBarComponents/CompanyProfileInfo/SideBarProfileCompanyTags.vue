@@ -55,6 +55,7 @@ var decoded = "";
 var index = "";
 
 export default {
+  name: "SideBarProfileCompanyTags",
   mounted() {
     // 토큰가져오기
     token = this.$cookies.get("PID_AUTH");

@@ -9,7 +9,13 @@
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="500"
   >
-    <el-table-column align="center" label="Date" prop="int_start" sortable width="100">
+    <el-table-column
+      align="center"
+      label="Date"
+      prop="int_start"
+      sortable
+      width="100"
+    >
     </el-table-column>
     <el-table-column align="center" label="Company" prop="name">
     </el-table-column>
@@ -40,6 +46,7 @@ import axios from "axios";
 import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  name: "UserSchedule",
   components: { CompanyInfo },
   mounted() {
     const token = this.$cookies.get("PID_AUTH");

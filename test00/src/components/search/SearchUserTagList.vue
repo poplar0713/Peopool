@@ -30,6 +30,7 @@ import { useRoute } from "vue-router";
 import SearchUserTagCard from "@/components/search/SearchUserTagCard.vue";
 
 export default {
+  name: "SearchUserTagList",
   components: {
     SearchUserTagCard,
   },

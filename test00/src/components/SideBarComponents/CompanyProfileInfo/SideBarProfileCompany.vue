@@ -13,6 +13,7 @@ import SideBarProfileCompanyInfo from "./SideBarProfileCompanyInfo.vue";
 import SideBarProfileCompanyTags from "./SideBarProfileCompanyTags.vue";
 import DeleteCompanyAccount from "./DeleteCompanyAccount.vue";
 export default {
+  name:"SideBarProfileCompany",
   components: {
     SideBarProfileCompanyBasicInfo,
     SideBarProfileCompanyInfo,

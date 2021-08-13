@@ -65,6 +65,7 @@ import CompanyFollowings from "@/components/SideBarComponents/FollowOfCompany/Co
 import CompanyFollowers from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowers.vue";
 import jwt_decode from "jwt-decode";
 export default {
+  name: "SideBarCompany",
   components: {
     CompanyFollowers,
     CompanyFollowings,

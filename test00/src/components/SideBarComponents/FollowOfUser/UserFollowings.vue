@@ -54,6 +54,7 @@ import axios from "axios";
 import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  name: "UserFollowings",
   components: { CompanyInfo },
   data() {
     return {

@@ -18,6 +18,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import WebViewer from "@/components/MainCompany/webviewer.vue";
 export default {
+  name: "SideBarProfileUserDoc",
   props: {
     docfilepath: String,
   },

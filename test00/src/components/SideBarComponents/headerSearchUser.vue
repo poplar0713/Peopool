@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: "headerSearchUser",
   data() {
     return {
       keyword: "",
@@ -25,7 +26,6 @@ export default {
 
   methods: {
     search() {
-      // console.log(this.keyword);
       console.log(this.keyword);
       this.$router.push({
         name: "SearchUser",

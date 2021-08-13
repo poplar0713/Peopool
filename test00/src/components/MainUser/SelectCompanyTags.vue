@@ -62,6 +62,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import TagCompanyList from "./TagCompanyList.vue";
 export default {
+  name:"SelectCompanyTags",
   components: { TagCompanyList },
   data() {
     // 토큰가져오기

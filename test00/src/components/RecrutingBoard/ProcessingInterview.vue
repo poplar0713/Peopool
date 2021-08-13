@@ -57,6 +57,7 @@ import InterviewCalender from "@/components/RecrutingBoard/InterviewCalender.vue
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name: "ProcessingInterview",
   components: { InterviewCalender },
   computed: {
     getInterviewDays() {
@@ -100,7 +101,7 @@ export default {
   },
   methods: {
     // 인터뷰룸으로 이동
-    GoToInteriewRoom(company,url) {
+    GoToInteriewRoom(company, url) {
       this.$router.push({
         name: "InterviewRoom",
         params: { company: company, url: url },

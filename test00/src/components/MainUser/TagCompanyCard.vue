@@ -96,6 +96,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name:"TagCompanyCard",
   props: { item: Number },
   data() {
     // 토큰가져오기

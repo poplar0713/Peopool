@@ -150,6 +150,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name:"FollowOfCompanyUserInfo",
   components: {
     webviewer,
   },

@@ -17,22 +17,6 @@
               ><UserSchedule /></div
           ></el-col>
         </el-row>
-        <!-- <div>
-          <el-divider content-position="left">오늘의 면접자</el-divider>
-          <FollowingEntsList />
-        </div> -->
-        <!-- <div v-for="tag in mytags" :key="tag">
-          <el-divider content-position="left"
-            >#{{ tag.taglist_name }} 관련 기업
-            <el-divider direction="vertical"></el-divider
-            ><span
-              @click="GetTagCompany(tag.taglist_name)"
-              style="cursor:pointer"
-              >전체보기</span
-            ></el-divider
-          >
-          <TagCompanyList :tag="tag.taglist_name" />
-        </div> -->
       </el-main>
       <el-footer> </el-footer>
     </el-container>
@@ -44,8 +28,6 @@ import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
-// import TagCompanyList from "@/components/MainUser/TagCompanyList.vue";
-// import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -55,8 +37,7 @@ export default {
   name: "MainUser",
   components: {
     SideBarUser,
-    // TagCompanyList,
-    // FollowingEntsList,
+
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,

@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name:"headerSearchCompany",
   data() {
     return {
       keyword: "",
@@ -24,7 +25,6 @@ export default {
   methods: {
     search() {
       console.log(this.keyword);
-      // this.$router.push(`/searchcompany/${this.keyword}`);
       this.$router.push({
         name: "SearchCompany",
         query: { keyword: this.keyword },

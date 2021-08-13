@@ -129,6 +129,7 @@ import ResetUserPw from "./ResetUserPw.vue";
 import FindCompanyId from "./FindCompanyId.vue";
 import ResetCompanyPw from "./ResetCompanyPw.vue";
 export default {
+  name: "Login",
   components: {
     SignupIndiv,
     SignupCompany,

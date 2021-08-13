@@ -23,6 +23,7 @@
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 export default {
+  name:"UserInterviewManage",
   components: {
     UserSugInterview,
     UserSchedule,

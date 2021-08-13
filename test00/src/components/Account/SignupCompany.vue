@@ -45,6 +45,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "SignupCompany",
   data() {
     // 비밀번호 체크
     const checkPWCF = (rule, value, callback) => {

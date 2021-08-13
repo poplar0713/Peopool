@@ -18,7 +18,12 @@
         </el-option>
       </el-select>
 
-      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+      <el-button
+        icon="el-icon-plus"
+        circle
+        @click="plustag"
+        style="margin: 1em;"
+      ></el-button>
     </div>
     <div
       v-if="this.mytags.length > 0"
@@ -52,6 +57,7 @@ var decoded = "";
 var index = "";
 
 export default {
+  name: "SideBarProfileUserTags",
   mounted() {
     // 토큰가져오기
     token = this.$cookies.get("PID_AUTH");

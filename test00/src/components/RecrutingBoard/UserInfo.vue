@@ -4,7 +4,7 @@
     @click="dialogVisible = true"
     style="color:black; text-align:center; cursor:pointer"
     size="mini"
-    >{{this.userdata.ind_name}}
+    >{{ this.userdata.ind_name }}
   </el-text>
   <div style="text-align:center">
     <el-dialog
@@ -138,6 +138,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name: "RecruitingBoardUserInfo",
   components: {
     webviewer,
   },

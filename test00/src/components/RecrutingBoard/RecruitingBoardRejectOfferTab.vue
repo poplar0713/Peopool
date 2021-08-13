@@ -56,6 +56,7 @@ import axios from "axios";
 import UserInfo from "@/components/MainCompany/UserInfo.vue";
 
 export default {
+  name: "RecruitingBoardRejectOfferTab",
   components: { UserInfo },
   data() {
     // 토큰으로 유저index 가져오기
