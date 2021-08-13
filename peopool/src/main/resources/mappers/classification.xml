@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="getEnt" parameterType="String" resultType="HashMap">
-		select ent_index, ent_name
+		select e.ent_index, ent_name
 		from enterprise e join classification c
 		on e.ent_index = c.ent_index
 		where c.list_index = (select list_index

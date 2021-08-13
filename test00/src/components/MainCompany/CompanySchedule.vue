@@ -3,7 +3,8 @@
     :data="
       myinterview.filter(
         (data) =>
-          !search || data.name.toLowerCase().includes(search.toLowerCase())
+          (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
+          data.int_end == null
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
