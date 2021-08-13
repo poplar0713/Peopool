@@ -54,7 +54,42 @@ export default {
     SideBarProfileUserDoc,
     DeleteUserAccount,
   },
+  beforeMount() {
+    console.log("created");
+    this.userdataload;
+  },
   mounted() {
+    // const token = this.$cookies.get("PID_AUTH");
+    // const decoded = jwt_decode(token);
+    // const index = decoded.index;
+    // axios
+    //   .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+    //     headers: { Authorization: token },
+    //   })
+    //   .then((res) => {
+    //     var result = res.data[0];
+    //     console.log(result);
+    //     this.userdata.photofilepath =
+    //       "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+    //     console.log(this.userdata.photofilepath);
+    //     this.userdata.resumefilepath =
+    //       "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+    //     this.userdata.videofilepath =
+    //       "/file/" + result.video_savefolder + "/" + result.video_savefile;
+    //     this.userdata.resume_originfile = result.resume_originfile;
+    //     this.userdata.photo_originfile = result.photo_originfile;
+    //     this.userdata.video_originfile = result.video_originfile;
+    //     this.userdata.ind_switch = result.ind_switch;
+    //     this.userdata.ind_introduce = result.ind_introduce;
+    //     this.userdata.photo_index = result.photo_index;
+    //     this.userdata.resume_index = result.resume_index;
+    //     this.userdata.video_index = result.resume_index;
+    //     this.userdata.ind_index = result.ind_index;
+    //     this.userdata.ind_name = result.ind_name;
+    //     this.userdata.ind_email = result.ind_email;
+    //     this.userdata.ind_phone = result.ind_phone;
+    //     this.userdata.ind_gender = result.ind_gender;
+    //   });
     console.log(server_url);
   },
   data() {
@@ -153,6 +188,40 @@ export default {
     };
   },
   methods: {
+    async userdataload() {
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
+      const res = await axios.get(
+        `https://i5d206.p.ssafy.io:8443/poi/${index}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+
+      var result = res.data[0];
+      console.log("load ", result);
+      this.userdata.photofilepath =
+        "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+      console.log(this.userdata.photofilepath);
+      this.userdata.resumefilepath =
+        "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+      this.userdata.videofilepath =
+        "/file/" + result.video_savefolder + "/" + result.video_savefile;
+      this.userdata.resume_originfile = result.resume_originfile;
+      this.userdata.photo_originfile = result.photo_originfile;
+      this.userdata.video_originfile = result.video_originfile;
+      this.userdata.ind_switch = result.ind_switch;
+      this.userdata.ind_introduce = result.ind_introduce;
+      this.userdata.photo_index = result.photo_index;
+      this.userdata.resume_index = result.resume_index;
+      this.userdata.video_index = result.resume_index;
+      this.userdata.ind_index = result.ind_index;
+      this.userdata.ind_name = result.ind_name;
+      this.userdata.ind_email = result.ind_email;
+      this.userdata.ind_phone = result.ind_phone;
+      this.userdata.ind_gender = result.ind_gender;
+    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);

@@ -17,13 +17,8 @@
         >
         </el-option>
       </el-select>
-      <!--  -->
-      <el-button
-        icon="el-icon-plus"
-        circle
-        @click="plustag"
-        style="margin: 1em;"
-      ></el-button>
+
+      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
     </div>
     <div
       v-if="this.mytags.length > 0"
@@ -52,12 +47,16 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+var token = "";
+var decoded = "";
+var index = "";
+
 export default {
   mounted() {
     // 토큰가져오기
-    const token = this.$cookies.get("PID_AUTH");
-    const decoded = jwt_decode(token);
-    const index = decoded.index;
+    token = this.$cookies.get("PID_AUTH");
+    decoded = jwt_decode(token);
+    index = decoded.index;
     this.user_index = index;
 
     // 유저전용태그목록 불러오기
@@ -108,21 +107,16 @@ export default {
       value: "",
       //나의 태그들
       mytags: [],
-      mytagLength: this.getMytagLength,
+      getNewArray: false,
     };
   },
-  computed: {
-    getMytagLength() {
-      return this.mytags.length;
-    },
-  },
   watch: {
-    mytagLength: function() {
+    getNewArray() {
       axios
         .get("https://i5d206.p.ssafy.io:8443/has/tag", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: token },
           params: {
-            index: this.index,
+            index: index,
             type: 0,
           },
         })
@@ -162,7 +156,7 @@ export default {
           })
           .then(() => {
             this.$message.info("태그가 추가되었습니다");
-            this.mytagLength += 1;
+            this.getNewArray = !this.getNewArray;
           })
           .catch((err) => {
             console.log(err);
@@ -184,7 +178,7 @@ export default {
         })
         .then(() => {
           console.log();
-          this.mytags.splice(this.mytags.indexOf(tag), 1);
+          this.getNewArray = !this.getNewArray;
         })
         .catch((err) => {
           console.log(err);
@@ -195,7 +189,7 @@ export default {
 </script>
 
 <style>
-.el-divider span {
+el-divider {
   font-size: 1rem;
 }
 .select-section {
