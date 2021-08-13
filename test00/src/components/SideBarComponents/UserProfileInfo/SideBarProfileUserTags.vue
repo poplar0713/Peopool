@@ -34,7 +34,7 @@
       </el-tag>
     </div>
     <div v-else style="align-text:center">
-      설정된 태그가 없습니다
+      선택된 태그가 없습니다
     </div>
   </div>
 </template>
