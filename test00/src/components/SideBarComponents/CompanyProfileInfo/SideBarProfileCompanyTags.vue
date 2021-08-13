@@ -37,10 +37,10 @@
         effect="plain"
         closable
         :disable-transitions="true"
-        @close="handleClose(tag, item.tag_index)"
-        @click="GetTagCompany(item.taglist_name)"
+        @close="handleClose(tag, item.list_index)"
+        @click="GetTagCompany(item.list_name)"
       >
-        {{ item.taglist_name }}
+        {{ item.list_name }}
       </el-tag>
     </div>
     <div v-else style="align-text:center">
@@ -83,7 +83,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: index,
+          ent_index: index,
         },
       })
       .then((res) => {
@@ -98,28 +98,6 @@ export default {
           this.$router.push("/");
         }
       });
-    // 본인 태그목록 불러오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
-        headers: { Authorization: token },
-        params: {
-          index: index,
-          type: 1,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        // this.mytags = res.data;
-      })
-      .catch((err) => {
-        if (err.response == 401) {
-          console.log("token error");
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 기업전용태그목록 불러오기
   },
   data() {
     return {
@@ -178,12 +156,12 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {
         location.reload();
-      }, 2001);
+      }, 2005);
     },
     handleClose(tag, tag_index) {
       console.log(tag);

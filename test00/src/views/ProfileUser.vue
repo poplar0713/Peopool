@@ -166,25 +166,6 @@ export default {
     beforeRemove(file) {
       return this.$confirm(`Cancel the transfert of ${file.name} ?`);
     },
-    // 해당 태그의 기업들 검색으로
-    GetTagCompany(keyword) {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      setTimeout(() => {
-        loading.close();
-        this.$router.push({
-          name: "SearchCompany",
-          params: { keyword: `${keyword}` },
-        });
-      }, 2000);
-      setTimeout(() => {
-        location.reload();
-      }, 2001);
-    },
   },
 };
 </script>

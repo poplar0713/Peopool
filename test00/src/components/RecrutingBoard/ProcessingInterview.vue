@@ -31,7 +31,7 @@
                       type="danger"
                       @click="
                         GoToInteriewRoom(
-                          scope.row.name,
+                          scope.row.company_name,
                           scope.row.int_roomnumber
                         )
                       "
@@ -100,10 +100,10 @@ export default {
   },
   methods: {
     // 인터뷰룸으로 이동
-    GoToInteriewRoom(row) {
+    GoToInteriewRoom(company,url) {
       this.$router.push({
         name: "InterviewRoom",
-        params: { company: this.company, user: row },
+        params: { company: company, url: url },
       });
     },
   },
