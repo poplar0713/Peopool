@@ -18,10 +18,11 @@
 	</select>
 	
 	<select id="getLastInterviews" parameterType="int" resultType="IntCard">
-		select int_index, ind_index, e.ent_index, int_start, int_end, int_roomnumber, int_show, e.ent_name name, int_done
+		select a.*, b.ind_name
+		from (select int_index, ind_index, e.ent_index, int_start, int_end, int_roomnumber, int_show,e.ent_name, int_done
 		from interview join enterprise e
 		on interview.ent_index = e.ent_index
-		where ind_index=#{index} and now() > int_end
+		where ind_index= #{index} and now() > int_end) a join individual b on a.ind_index = b.ind_index;     
 	</select>
 	
 	<select id="getEInterviews" parameterType="int" resultType="IntCard">
