@@ -83,14 +83,16 @@
               <!--  -->
               <el-scrollbar height="720px">
                 <el-row :gutter="24">
-                  <el-col :span="8" v-for="(item, i) in exaimining" :key="i">
+                  <el-col :span="6" v-for="(item, i) in exaimining" :key="i">
                     <ExamineCard :item="item" />
                   </el-col>
                 </el-row>
               </el-scrollbar>
             </el-tab-pane>
             <!--  -->
-            <el-tab-pane label="입사 제안 중" name="fourth"> </el-tab-pane>
+            <el-tab-pane label="입사 제안 중" name="fourth">
+              <PassUser />
+            </el-tab-pane>
           </el-tabs>
         </div>
       </el-main>
@@ -109,6 +111,7 @@ import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
 import RecruitingBoardOfferTab from "../components/RecrutingBoard/RecruitingBoardOfferTab.vue";
 import RecruitingBoardRejectOfferTab from "../components/RecrutingBoard/RecruitingBoardRejectOfferTab.vue";
+import PassUser from "../components/RecrutingBoard/PassUser.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
@@ -120,6 +123,7 @@ export default {
     InterviewCalender,
     RecruitingBoardOfferTab,
     RecruitingBoardRejectOfferTab,
+    PassUser,
   },
   computed: {
     getExaiminingLength() {
