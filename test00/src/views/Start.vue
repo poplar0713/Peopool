@@ -3,13 +3,12 @@
     <el-header>
       <router-link to="/" style="text-decoration: none;">
         <div class="title">
-          <div>
-            <!-- object error -->
+          <!-- <div>
             <span class="fcolor">P</span>
             <span class="scolor">eo</span>
             <span class="scolor">P</span>
             <span class="fcolor">ool</span>
-          </div>
+          </div> -->
         </div>
       </router-link>
     </el-header>
