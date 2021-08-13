@@ -64,9 +64,11 @@ export default {
               ent_password: this.ruleForm.LoginCompanyPW,
             })
             .then((result) => {
-              this.$cookies.set("PID_AUTH","Bearer"+result.data.accessToken);
+              this.$cookies.set("PID_AUTH", "Bearer" + result.data.accessToken);
               this.$store.state.type = "1";
-              this.$store.state.type = "0";
+              this.$store.state.othertype = "0";
+              this.ruleForm.LoginCompanyID = "";
+              this.ruleForm.LoginCompanyPW = "";
               setTimeout(() => {
                 this.$router.push("company");
               }, 3000);
@@ -74,8 +76,10 @@ export default {
             .catch((err) => {
               console.log(err);
               this.$message.error("아이디와 비밀번호를 확인해주세요");
+              this.ruleForm.LoginCompanyID = "";
+              this.ruleForm.LoginCompanyPW = "";
               if (err.response == 401) {
-                this.$message.error('로그인세션이 만료되었습니다');
+                this.$message.error("로그인세션이 만료되었습니다");
                 localStorage.clear();
                 this.$router.push("/");
               }

@@ -70,15 +70,20 @@ export default {
             })
             .then((result) => {
               // alert("accessToken: " + result.data.accessToken);
-              this.$cookies.set("PID_AUTH","Bearer"+result.data.accessToken);
+
+              this.$cookies.set("PID_AUTH", "Bearer" + result.data.accessToken);
               this.$store.state.type = "0";
               this.$store.state.othertype = "1";
+              this.ruleForm.LoginIndivID = "";
+              this.ruleForm.LoginIndivPW = "";
               setTimeout(() => {
                 this.$router.push("user");
               }, 3000);
             })
             .catch((err) => {
               console.log(err);
+              this.ruleForm.LoginIndivID = "";
+              this.ruleForm.LoginIndivPW = "";
               this.$message.error("아이디와 비밀번호를 확인해주세요");
             });
           //

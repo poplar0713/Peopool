@@ -3,7 +3,8 @@
     :data="
       myinterview.filter(
         (data) =>
-          !search || data.name.toLowerCase().includes(search.toLowerCase())
+          (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
+          data.int_end == null
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
@@ -66,7 +67,6 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();

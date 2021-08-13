@@ -48,7 +48,7 @@ export default {
             type: "warning",
           });
           if (err.response == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }

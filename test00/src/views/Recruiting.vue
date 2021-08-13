@@ -29,16 +29,31 @@
                         :timestamp="days.date"
                       >
                         <el-card style="width: 80%; align-content: center;">
-                          <el-table :data="days.interviewers" :default-sort="{ prop: 'time' }">
-                            <el-table-column prop="int_start" label="면접시간" sortable>
+                          <el-table
+                            :data="days.interviewers"
+                            :default-sort="{ prop: 'time' }"
+                          >
+                            <el-table-column
+                              prop="int_start"
+                              label="면접시간"
+                              sortable
+                            >
                             </el-table-column>
-                            <el-table-column prop="name" label="성명"> </el-table-column>
-                            <el-table-column prop="p_part" label="직무"> </el-table-column>
+                            <el-table-column prop="name" label="성명">
+                            </el-table-column>
+                            <el-table-column prop="p_part" label="직무">
+                            </el-table-column>
                             <el-table-column label="" prop="p_name">
                               <template #default="scope">
                                 <el-button
                                   size="mini"
-                                  @click="Cancel(scope.$index, scope.row, scope.row.p_name)"
+                                  @click="
+                                    Cancel(
+                                      scope.$index,
+                                      scope.row,
+                                      scope.row.p_name
+                                    )
+                                  "
                                   >Cancel</el-button
                                 >
                                 <!-- {{scope.row.company}} -->
@@ -68,14 +83,16 @@
               <!--  -->
               <el-scrollbar height="720px">
                 <el-row :gutter="24">
-                  <el-col :span="8" v-for="(item, i) in exaimining" :key="i">
+                  <el-col :span="6" v-for="(item, i) in exaimining" :key="i">
                     <ExamineCard :item="item" />
                   </el-col>
                 </el-row>
               </el-scrollbar>
             </el-tab-pane>
             <!--  -->
-            <el-tab-pane label="입사 제안 중" name="fourth"> </el-tab-pane>
+            <el-tab-pane label="입사 제안 중" name="fourth">
+              <PassUser />
+            </el-tab-pane>
           </el-tabs>
         </div>
       </el-main>
@@ -94,6 +111,7 @@ import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
 import InterviewCalender from "../components/RecrutingBoard/InterviewCalender.vue";
 import RecruitingBoardOfferTab from "../components/RecrutingBoard/RecruitingBoardOfferTab.vue";
 import RecruitingBoardRejectOfferTab from "../components/RecrutingBoard/RecruitingBoardRejectOfferTab.vue";
+import PassUser from "../components/RecrutingBoard/PassUser.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
@@ -105,6 +123,7 @@ export default {
     InterviewCalender,
     RecruitingBoardOfferTab,
     RecruitingBoardRejectOfferTab,
+    PassUser,
   },
   computed: {
     getExaiminingLength() {
@@ -132,7 +151,6 @@ export default {
       })
       .catch((err) => {
         console.log("token error");
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -168,7 +186,6 @@ export default {
         this.waitinglist = res.data;
       })
       .catch((err) => {
-        console.log(err.response.data.status);
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -177,10 +194,13 @@ export default {
       });
 
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/int/ent/iday/${this.company_index}`, {
-        // 면접 대기자
-        headers: { Authroization: token },
-      })
+      .get(
+        `https://i5d206.p.ssafy.io:8443/int/ent/iday/${this.company_index}`,
+        {
+          // 면접 대기자
+          headers: { Authroization: token },
+        }
+      )
       .then((res) => {
         console.log("interview >> ");
         console.log(res.data);

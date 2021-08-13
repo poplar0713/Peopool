@@ -4,10 +4,10 @@
       <router-link to="/" style="text-decoration: none;">
         <div class="title">
           <div>
-            <span class="f">P</span>
-            <span class="s">eo</span>
-            <span class="s">P</span>
-            <span class="f">ool</span>
+            <span class="fcolor">P</span>
+            <span class="scolor">eo</span>
+            <span class="scolor">P</span>
+            <span class="fcolor">ool</span>
           </div>
         </div>
       </router-link>
@@ -101,10 +101,10 @@ export default {
   font-weight: 800;
 }
 
-.f {
+.fcolor {
   color: #ffc000;
 }
-.s {
+.scolor {
   color: black;
 }
 /* .el-header {

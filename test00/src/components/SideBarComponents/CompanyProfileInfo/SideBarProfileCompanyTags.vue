@@ -50,14 +50,13 @@ export default {
     index = decoded.index;
     this.company_index = index;
 
-    // 태그목록 불러오기
+    // 회사전용태그목록 불러오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/classlist/", {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data);
-        this.options = res.data;
+        this.options_company = res.data;
       })
       .catch((err) => {
         console.log(err.response);
@@ -68,7 +67,27 @@ export default {
           this.$router.push("/");
         }
       });
-    // 기업본인 태그목록 불러오기
+    // 회사 본인 태그목록 불러오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
+        headers: { Authorization: token },
+        params: {
+          index: index,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.mytags = res.data;
+      })
+      .catch((err) => {
+        if (err.response == 401) {
+          console.log("token error");
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 본인 태그목록 불러오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
@@ -89,12 +108,13 @@ export default {
           this.$router.push("/");
         }
       });
+    // 기업전용태그목록 불러오기
   },
   data() {
     return {
       company_index: "",
       // 불러온 태그들
-      options: [],
+      options_company: [],
       // 선택한 태그들
       value: "",
       //나의 태그들
@@ -170,7 +190,7 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          name: "searchuser",
+          name: "SearchCompany",
           params: { keyword: `${keyword}` },
         });
       }, 2000);
@@ -194,4 +214,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.el-divider span {
+  font-size: 1rem;
+}
+.select-section {
+  padding: 1%;
+  margin: 1%;
+}
+</style>

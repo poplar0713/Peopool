@@ -36,7 +36,7 @@ export default {
   },
   setup() {
     // 토큰가져오기
-    const token = this.$cookies.get("PID_AUTH");
+    // const token = this.$cookies.get("PID_AUTH");
     const route = useRoute();
     const keyword = route.params.keyword;
 
@@ -44,7 +44,7 @@ export default {
     const result = ref([]);
     (async () => {
       const res = await axios.get("https://i5d206.p.ssafy.io:8443/has/user", {
-        headers: { Authorization: token },
+        // headers: { Authorization: token },
         params: {
           name: keyword,
           type: 1,

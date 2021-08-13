@@ -1,7 +1,7 @@
 <template>
   <!-- UserSchedule -->
   <el-container>
-    <el-aside width="200px"><SideBarUser :usertoken="index"/></el-aside>
+    <el-aside width="200px"><SideBarUser/></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
@@ -17,11 +17,11 @@
               ><UserSchedule /></div
           ></el-col>
         </el-row>
-        <div>
-          <el-divider content-position="left">관심기업 정보</el-divider>
+        <!-- <div>
+          <el-divider content-position="left">오늘의 면접자</el-divider>
           <FollowingEntsList />
-        </div>
-        <div v-for="tag in mytags" :key="tag">
+        </div> -->
+        <!-- <div v-for="tag in mytags" :key="tag">
           <el-divider content-position="left"
             >#{{ tag.taglist_name }} 관련 기업
             <el-divider direction="vertical"></el-divider
@@ -32,7 +32,7 @@
             ></el-divider
           >
           <TagCompanyList :tag="tag.taglist_name" />
-        </div>
+        </div> -->
       </el-main>
       <el-footer> </el-footer>
     </el-container>
@@ -41,11 +41,11 @@
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
+import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
-import TagCompanyList from "@/components/MainUser/TagCompanyList.vue";
-import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
-import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
+// import TagCompanyList from "@/components/MainUser/TagCompanyList.vue";
+// import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -55,8 +55,8 @@ export default {
   name: "MainUser",
   components: {
     SideBarUser,
-    TagCompanyList,
-    FollowingEntsList,
+    // TagCompanyList,
+    // FollowingEntsList,
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
