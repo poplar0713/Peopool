@@ -225,8 +225,8 @@ public class ProfileOfIndividualController {
 	}
 	
 	@ApiOperation(value = "index에 해당하는 사진을 수정한다.", response = String.class)
-	@PostMapping("/photo/{index}")
-	public ResponseEntity<String> modifyPhoto(@PathVariable("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
+	@PostMapping("/photo")
+	public ResponseEntity<String> modifyPhoto(@RequestParam("index")int index, @RequestParam("introduce")String intro, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException {
 		ProfileOfIndividual profileOfIndividual = new ProfileOfIndividual();
 		if(!files[0].isEmpty()) {
 //			String realPath = servletContext.getRealPath("/upload");
@@ -260,7 +260,7 @@ public class ProfileOfIndividualController {
 			profileOfIndividual.setInd_index(index);
 			profileOfIndividual.setInd_video(ind.getInd_video());
 			profileOfIndividual.setInd_switch(ind.getInd_switch());
-			profileOfIndividual.setInd_introduce(ind.getInd_introduce());
+			profileOfIndividual.setInd_introduce(intro);
 			profileOfIndividual.setInd_resume(ind.getInd_resume());
 			profileOfIndividual.setFileInfos(fileInfos);
 		}
