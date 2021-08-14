@@ -31,4 +31,7 @@ public interface ProfileOfEnterpriseRepo {
 	
 	// 분류에서 회사 검색
 	List<EntCard> getClassOfEnterprise(String word) throws SQLException;
+	
+	// 사진 등록
+	int modifyPhoto(ProfileOfEnterprise profileOfEnterprise) throws SQLException;;
 }

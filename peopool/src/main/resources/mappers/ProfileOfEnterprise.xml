@@ -50,6 +50,17 @@
 		where ent_index = #{index}
 	</delete>
 	
+	<insert id="modifyPhoto" parameterType="ProfileOfEnterprise">
+		insert into file_info (savefolder, originfile, savefile)
+		values
+		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+		(#{fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
+		</foreach>
+		<selectKey resultType="String" keyProperty="ent_image" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+	</insert>
+	
 	
 	
 
