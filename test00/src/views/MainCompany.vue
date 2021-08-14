@@ -16,6 +16,10 @@
               ><CompanySchedule /></div
           ></el-col>
         </el-row>
+        <div>
+          <el-divider content-position="left">오늘의 면접자</el-divider>
+          <TodayInterviewUser />
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -25,6 +29,7 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
+import TodayInterviewUser from "@/components/MainCompany/TodayInterviewUser.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 
 import jwt_decode from "jwt-decode";
@@ -37,13 +42,13 @@ export default {
     CompanySchedule,
     headerSearchUser,
     CompanySugInterview,
+    TodayInterviewUser,
   },
   mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    this.company_index = index;
     //팔로잉정보 가져오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/fol/follower", {

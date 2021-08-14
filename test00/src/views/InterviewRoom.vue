@@ -30,14 +30,6 @@
                 <el-divider></el-divider>
                 <div id="participants" class="wrapper"></div>
               </div>
-
-              <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
-            <el-button
-              type="warning"
-              icon="el-icon-chat-round"
-              circle
-              @click="sendchat"
-            ></el-button> -->
             </div>
           </div>
         </el-main>

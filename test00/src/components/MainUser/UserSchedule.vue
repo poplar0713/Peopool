@@ -30,7 +30,9 @@
           v-if="scope.row.int_end !== 'null'"
           size="mini"
           type="danger"
-          @click="GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)"
+          @click="
+            GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)
+          "
           >Interview Room</el-button
         >
 

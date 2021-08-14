@@ -5,7 +5,9 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
+        <h1>인기있는 기업 랭킹</h1>
         <PopularCompanyList />
+        <h1>태그별 기업 찾아보기</h1>
         <SelectCompanyTags />
       </el-main>
       <el-footer> </el-footer>
@@ -16,8 +18,8 @@
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
-import SelectCompanyTags from "@/components/MainUser/SelectCompanyTags.vue";
-import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
+import SelectCompanyTags from "@/components/ViewCompany/SelectCompanyTags.vue";
+import PopularCompanyList from "@/components/ViewCompany/PopularCompanyList.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
