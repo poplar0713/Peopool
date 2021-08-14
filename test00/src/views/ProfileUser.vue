@@ -42,15 +42,7 @@
             </div>
             <div v-else>
               <div>이력서 및 포트폴리오</div>
-              <webviewer
-                :initialDoc="userdata.resumefilepath"
-                class="fileDoc"
-              ></webviewer>
-              <!-- <webviewer
-                initialDoc="
-                   https://i5d206.p.ssafy.io/file/210814/43885693-0b71-465c-945c-8bd6000d4da8.pdf
-                "
-              ></webviewer> -->
+              <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
