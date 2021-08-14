@@ -8,10 +8,9 @@
       <el-main style="width:1000px; height:1000px">
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
-          <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
-
+          <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개">
-            <div v-if="photo_index == ''">
+            <div v-if="userdata.photo_index == ''">
               <SideBarProfileUserIntroduction
                 photofilepath="https://i5d206.p.ssafy.io/file/thumbuser.png"
                 :introduce="userdata.ind_introduce"
@@ -26,7 +25,7 @@
           </el-tab-pane>
 
           <el-tab-pane label="소개영상">
-            <div v-if="video_index == ''">
+            <div v-if="userdata.video_index == ''">
               소개영상이 없습니다.
             </div>
             <div v-else>
@@ -35,14 +34,17 @@
           </el-tab-pane>
 
           <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
-          <el-tab-pane label="서류관리"
-            ><SideBarProfileUserDoc />
-            <!-- <div v-if="resume_index == ''" class="fileDoc">
+          <el-tab-pane label="서류관리">
+            <SideBarProfileUserDoc />
+            <div v-if="userdata.resume_index == ''" class="fileDoc">
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
-            </div> -->
+            </div>
             <div>
               {{ userdata.resumefilepath }}
-              <webviewer :initialDoc="userdata.resumefilepath" />
+              <!-- <webviewer :initialDoc="userdata.resumefilepath" /> -->
+              <webviewer
+                initialDoc="https://i5d206.p.ssafy.io/file/210814/e63203ae-6183-4621-8dee-8dd45e78725c.pdf"
+              />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
@@ -83,6 +85,50 @@ export default {
   beforeMount() {
     // this.userdataload();
   },
+  created() {
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    axios
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        var result = res.data[0];
+
+        this.userdata.photofilepath =
+          "https://i5d206.p.ssafy.io/file/" +
+          result.photo_savefolder +
+          "/" +
+          result.photo_savefile;
+        this.userdata.resumefilepath =
+          "https://i5d206.p.ssafy.io/file/" +
+          result.resume_savefolder +
+          "/" +
+          result.resume_savefile;
+
+        console.log(this.userdata.resumefilepath);
+        this.userdata.videofilepath =
+          "https://i5d206.p.ssafy.io/file/" +
+          result.video_savefolder +
+          "/" +
+          result.video_savefile;
+        this.userdata.resume_originfile = result.resume_originfile;
+        this.userdata.photo_originfile = result.photo_originfile;
+        this.userdata.video_originfile = result.video_originfile;
+        this.userdata.ind_switch = result.ind_switch;
+        this.userdata.ind_introduce = result.ind_introduce;
+        this.userdata.photo_index = result.photo_index;
+        this.userdata.resume_index = result.resume_index;
+        this.userdata.video_index = result.resume_index;
+        this.userdata.ind_index = result.ind_index;
+        this.userdata.ind_name = result.ind_name;
+        this.userdata.ind_email = result.ind_email;
+        this.userdata.ind_phone = result.ind_phone;
+        this.userdata.ind_gender = result.ind_gender;
+        console.log("this userintroduce: ", this.userdata.ind_introduce);
+      });
+  },
   mounted() {
     console.log(server_url);
   },
@@ -111,32 +157,43 @@ export default {
         }
       });
 
-    axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        var result = res.data[0];
-        this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
-        this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
-        this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
-        this.userdata.resume_originfile = result.resume_originfile;
-        this.userdata.photo_originfile = result.photo_originfile;
-        this.userdata.video_originfile = result.video_originfile;
-        this.userdata.ind_switch = result.ind_switch;
-        this.userdata.ind_introduce = result.ind_introduce;
-        this.userdata.photo_index = result.photo_index;
-        this.userdata.resume_index = result.resume_index;
-        this.userdata.video_index = result.resume_index;
-        this.userdata.ind_index = result.ind_index;
-        this.userdata.ind_name = result.ind_name;
-        this.userdata.ind_email = result.ind_email;
-        this.userdata.ind_phone = result.ind_phone;
-        this.userdata.ind_gender = result.ind_gender;
-      });
+    // axios
+    //   .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+    //     headers: { Authorization: token },
+    //   })
+    //   .then((res) => {
+    //     var result = res.data[0];
+    //     this.userdata.photofilepath =
+    //       "https://i5d206.p.ssafy.io/file/" +
+    //       result.photo_savefolder +
+    //       "/" +
+    //       result.photo_savefile;
+    //     this.userdata.resumefilepath =
+    //       "https://i5d206.p.ssafy.io/file/" +
+    //       result.resume_savefolder +
+    //       "/" +
+    //       result.resume_savefile;
+    //     this.userdata.videofilepath =
+    //       "https://i5d206.p.ssafy.io/file/" +
+    //       result.video_savefolder +
+    //       "/" +
+    //       result.video_savefile;
+    //     this.userdata.resume_originfile = result.resume_originfile;
+    //     this.userdata.photo_originfile = result.photo_originfile;
+    //     this.userdata.video_originfile = result.video_originfile;
+    //     this.userdata.ind_switch = result.ind_switch;
+    //     this.userdata.ind_introduce = result.ind_introduce;
+    //     this.userdata.photo_index = result.photo_index;
+    //     this.userdata.resume_index = result.resume_index;
+    //     this.userdata.video_index = result.resume_index;
+    //     this.userdata.ind_index = result.ind_index;
+    //     this.userdata.ind_name = result.ind_name;
+    //     this.userdata.ind_email = result.ind_email;
+    //     this.userdata.ind_phone = result.ind_phone;
+    //     this.userdata.ind_gender = result.ind_gender;
+    //     console.log("this userintroduce: ", this.userdata.ind_introduce);
+    //   });
+
     // 유저본인 태그목록 불러오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
@@ -163,6 +220,7 @@ export default {
       username: "",
       mytags: [],
       tabPosition: "left",
+      // testdata: [],
       userdata: [
         { ind_name: "" },
         { ind_gender: "" },
@@ -184,6 +242,29 @@ export default {
     };
   },
   methods: {
+    upload() {
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
+
+      var frm = new FormData();
+      var Filedata = this.$refs.file.files[0];
+      frm.append("upfile", Filedata);
+
+      axios
+        .post(`https://i5d206.p.ssafy.io:8443/poi/resume/${index}`, frm, {
+          headers: { Authorization: token },
+        })
+        .then((response) => {
+          console.log(response.status);
+          if (response.status == 200) {
+            alert("업로드 되었습니다!");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     async userdataload() {
       const token = this.$cookies.get("PID_AUTH");
       const decoded = jwt_decode(token);
@@ -244,7 +325,7 @@ export default {
   border-radius: 20px;
 }
 #tabpane {
-  height: 900px;
+  height: auto;
   width: 1000px;
 }
 .fileDoc {
