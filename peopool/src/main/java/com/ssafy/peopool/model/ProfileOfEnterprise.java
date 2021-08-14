@@ -1,5 +1,7 @@
 package com.ssafy.peopool.model;
 
+import java.util.List;
+
 public class ProfileOfEnterprise {
 	int ent_index; // 기업 인덱스
 	String ent_image; // 기업 프로필 사진
@@ -8,6 +10,7 @@ public class ProfileOfEnterprise {
 	String ent_address; // 기업 주소
 	String ent_website; // 기업 사이트
 	String ent_introduce; // 기업 소개
+	List<FileInfo> fileInfos; // 파일정보
 
 	public ProfileOfEnterprise() {
 	}
@@ -68,13 +71,22 @@ public class ProfileOfEnterprise {
 		this.ent_introduce = ent_introduce;
 	}
 
+	public List<FileInfo> getFileInfos() {
+		return fileInfos;
+	}
+
+	public void setFileInfos(List<FileInfo> fileInfos) {
+		this.fileInfos = fileInfos;
+	}
+
 	@Override
 	public String toString() {
 		return "ProfileOfEnterprise [ent_index=" + ent_index + ", ent_image=" + ent_image + ", ent_ceo=" + ent_ceo
 				+ ", ent_history=" + ent_history + ", ent_address=" + ent_address + ", ent_website=" + ent_website
-				+ ", ent_introduce=" + ent_introduce + "]";
+				+ ", ent_introduce=" + ent_introduce + ", fileInfos=" + fileInfos + "]";
 	}
 
+	
 
 	
 }

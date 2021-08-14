@@ -7,7 +7,6 @@
  	<select id="getClassList" resultType="ClassList">
  		select *
  		from classlist
- 		where list_index > 5
  	</select>
  	
  	<select id="getName" parameterType="String" resultType="ClassList">
