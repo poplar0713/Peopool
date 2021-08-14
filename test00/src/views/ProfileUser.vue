@@ -112,7 +112,7 @@ export default {
       });
 
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {

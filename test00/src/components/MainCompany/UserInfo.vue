@@ -56,8 +56,12 @@
         <div>
           <el-collapse v-model="activeName" accordion>
             <el-collapse-item title="Introduction" name="1">
-              <div>
-                <img :src="userdata.photofilepath" />
+              <div class="box" style="background: #BDBDBD;">
+                <img
+                  class="profile"
+                  id="profilephoto"
+                  :src="userdata.photofilepath"
+                />
               </div>
               <div>
                 {{ this.userdata.ind_introduce }}
@@ -413,4 +417,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.box {
+  width: 150px;
+  height: 150px;
+  /* border-radius: 70%; */
+  overflow: hidden;
+
+  margin: 30px;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>

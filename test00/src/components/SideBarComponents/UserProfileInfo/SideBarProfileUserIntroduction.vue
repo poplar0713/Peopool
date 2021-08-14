@@ -192,7 +192,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .box {
   width: 150px;
   height: 150px;
