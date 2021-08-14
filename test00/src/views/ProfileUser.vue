@@ -42,15 +42,8 @@
             </div>
             <div v-else>
               <div>이력서 및 포트폴리오</div>
-              <webviewer
-                :initialDoc="userdata.resumefilepath"
-                class="fileDoc"
-              ></webviewer>
-              <!-- <webviewer
-                initialDoc="
-                   https://i5d206.p.ssafy.io/file/210814/43885693-0b71-465c-945c-8bd6000d4da8.pdf
-                "
-              ></webviewer> -->
+
+              <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
@@ -74,7 +67,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
-
+// 'https://i5d206.p.ssafy.io' -->사진 및 확인
 export default {
   name: "MainUser",
   components: {
@@ -87,6 +80,44 @@ export default {
     SideBarProfileUserDoc,
     DeleteUserAccount,
     webviewer,
+  },
+  create() {
+    async () => {
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
+      const res = await axios.get(
+        `https://i5d206.p.ssafy.io:8443/poi/${index}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+
+      var result = res.data[0];
+      console.log("load ", result);
+      this.userdata.photofilepath =
+        "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+      console.log(this.userdata.photofilepath);
+      this.userdata.resumefilepath =
+        "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+      this.userdata.videofilepath =
+        "/file/" + result.video_savefolder + "/" + result.video_savefile;
+      this.userdata.resume_originfile = result.resume_originfile;
+      this.userdata.photo_originfile = result.photo_originfile;
+      this.userdata.video_originfile = result.video_originfile;
+      this.userdata.ind_switch = result.ind_switch;
+      this.userdata.ind_introduce = result.ind_introduce;
+      this.userdata.photo_index = result.photo_index;
+      this.userdata.resume_index = result.resume_index;
+      this.userdata.video_index = result.resume_index;
+      this.userdata.ind_index = result.ind_index;
+      this.userdata.ind_name = result.ind_name;
+      this.userdata.ind_email = result.ind_email;
+      this.userdata.ind_phone = result.ind_phone;
+      this.userdata.ind_gender = result.ind_gender;
+
+      console.log("userdata ind introduce: ", this.userdata.ind_introduce);
+    };
   },
   beforeMount() {
     this.userdataload();
