@@ -32,6 +32,32 @@
 		
 	</select>
 	
+	<select id="userTagIntersection" parameterType="List" resultType="HashMap">
+		select ind_index, ind_name, ind_gender, ind_phone, ind_email
+		from individual i join hashtag h
+		on i.ind_index = h.tag_target
+		where h.taglist_index = (select taglist_index 
+		from taglist
+		where
+		<foreach collection="tagList" item='item' separator="and"> 
+			h.taglist_name = #{item}
+		</foreach>
+		)
+	</select>
+	
+	<select id="userTagUnion" parameterType="List" resultType="HashMap">
+		select ind_index, ind_name, ind_gender, ind_phone, ind_email
+		from individual i join hashtag h
+		on i.ind_index = h.tag_target
+		where h.taglist_index = (select taglist_index 
+		from taglist
+		where in
+		<foreach collection="tagList" item='item' separator="and" open="(" close=")">
+			#{item}
+		</foreach>
+		)
+	</select>
+	
 	<select id="countByTag" resultType="HashMap">
 		select taglist_name, count(*) cnt
 		from hashtag h left outer join taglist t 

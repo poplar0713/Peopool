@@ -10,6 +10,10 @@ public class ProfileOfIndividual {
 	String ind_switch; // On-Off 스위치
 	String ind_introduce; // 회원 자기소개
 	List<FileInfo> fileInfos; // 파일정보
+	int cat_index; // 직무 인덱스
+	int car_index; // 경력 인덱스
+	String cat_name; // 직무 정보
+	String car_value; // 경력 정보
 
 	public ProfileOfIndividual() {
 	}

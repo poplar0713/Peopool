@@ -48,4 +48,10 @@ public interface ProfileOfIndividualRepo {
 	
 	// 자기소개에 따른 사용자 프로필 조회
 	List<IndCard> getIntroOfProfile(String word);
+
+	// 직무 변경
+	int modifyPart(ProfileOfIndividual profileOfIndividual);
+
+	// 인덱스로 경력과 직무 조회
+	IndCard getIndexOfCareerAndPart(int index);
 }

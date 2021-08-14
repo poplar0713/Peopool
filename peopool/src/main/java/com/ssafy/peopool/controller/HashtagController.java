@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.Hashtag;
+import com.ssafy.peopool.model.SelectedTag;
 import com.ssafy.peopool.model.service.HashtagService;
 
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,18 @@ public class HashtagController {
 	public ResponseEntity<List<Map<Object, Object>>> userByTag(@RequestParam("name")String name, @RequestParam("type")int type ) {
 		return new ResponseEntity<>(hashtagService.userByTag(name, type), HttpStatus.OK);
 
+	}
+	
+	@ApiOperation(value = "선택된 태그를 모두 포함하는 사용자 교집합", response = String.class)
+	@GetMapping("/inter")
+	public ResponseEntity<List<Map<Object, Object>>> userTagIntersection(@RequestParam("list") SelectedTag list){
+		return new ResponseEntity<>(hashtagService.userTagIntersection(list), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "선택된 태그를 포함한 사용자 합집합", response = String.class)
+	@GetMapping("/union")
+	public ResponseEntity<List<Map<Object, Object>>> userTagUnion(@RequestParam("list") SelectedTag list){
+		return new ResponseEntity<>(hashtagService.userTagUnion(list), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "태그를 등록한 사용자 수", response = String.class)

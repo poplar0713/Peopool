@@ -25,4 +25,9 @@ public interface HashtagRepo {
 	// 태그 삭제
 	int deleteHashtag(int index);
 
+	// 태그를 모두 포함하는 사용자 교집합 목록
+	List<Map<Object, Object>> userTagIntersection(List<String> list);
+	
+	// 태그를 포함하는 사용자 합집합 목록
+	List<Map<Object, Object>> userTagUnion(List<String> list);
 }

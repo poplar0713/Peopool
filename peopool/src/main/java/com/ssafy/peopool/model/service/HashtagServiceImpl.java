@@ -1,6 +1,6 @@
 package com.ssafy.peopool.model.service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.peopool.model.Hashtag;
+import com.ssafy.peopool.model.SelectedTag;
 import com.ssafy.peopool.model.repo.HashtagRepo;
 
 @Service
@@ -44,6 +45,28 @@ public class HashtagServiceImpl implements HashtagService {
 	public boolean deleteHashtag(int index) {
 		// TODO Auto-generated method stub
 		return hashtagRepo.deleteHashtag(index) == 1;
+	}
+
+	@Override
+	public List<Map<Object, Object>> userTagIntersection(SelectedTag list) {
+		
+		List<String> nlist = new ArrayList<>();
+		for(String temp: list.getList()) {
+			nlist.add(temp);
+		}
+		
+		return hashtagRepo.userTagIntersection(nlist);
+	}
+
+	@Override
+	public List<Map<Object, Object>> userTagUnion(SelectedTag list) {
+		
+		List<String> nlist = new ArrayList<>();
+		for(String temp: list.getList()) {
+			nlist.add(temp);
+		}
+		
+		return hashtagRepo.userTagUnion(nlist);
 	}
 
 	

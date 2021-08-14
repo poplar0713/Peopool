@@ -45,19 +45,23 @@ public class ProfileOfIndividualController {
 	@Autowired
 	ProfileOfIndividualService profileOfIndividualService;
 	
-	
-
 	@ApiOperation(value = "전체 프로필을 가져온다.", response = String.class)
 	@GetMapping()
 	public ResponseEntity<List<IndCard>> getAllProfile() {
 		return new ResponseEntity<>(profileOfIndividualService.getAllProfile(), HttpStatus.OK);
-
 	}
 	
 	@ApiOperation(value = "index에 해당하는 프로필을 가져온다.", response = String.class)
 	@GetMapping("/profile")
 	public ResponseEntity<IndCard> getIndexOfProfile(@RequestParam("index")int index) {
 		return new ResponseEntity<>(profileOfIndividualService.getIndexOfProfile(index), HttpStatus.OK);
+
+	}
+	
+	@ApiOperation(value = "index에 해당하는 경력과 직무를 가져온다", response = String.class)
+	@GetMapping("/cap")
+	public ResponseEntity<IndCard> getIndexOfCareerAndPart(@RequestParam("index")int index) {
+		return new ResponseEntity<>(profileOfIndividualService.getIndexOfCareerAndPart(index), HttpStatus.OK);
 
 	}
 	
@@ -269,4 +273,14 @@ public class ProfileOfIndividualController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
 	}
+	
+	@ApiOperation(value = "index에 해당하는 직무를 수정한다.", response = String.class)
+	@PutMapping("/part")
+	public ResponseEntity<String> modifyPart(@RequestBody ProfileOfIndividual profileOfIndividual){
+		if(profileOfIndividualService.modifyPart(profileOfIndividual)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 }
