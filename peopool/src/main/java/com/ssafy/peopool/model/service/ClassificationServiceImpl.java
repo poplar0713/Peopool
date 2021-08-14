@@ -39,4 +39,11 @@ public class ClassificationServiceImpl implements ClassificationService{
 		return classificationRepo.getEnt(name);
 	}
 
+	@Override
+	public List<Map<Object, Object>> getCase(List<Integer> list) {
+		// TODO Auto-generated method stub
+		int count = list.size();
+		return classificationRepo.getCase(list, count);
+	}
+
 }
