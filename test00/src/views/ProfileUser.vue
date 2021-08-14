@@ -1,25 +1,58 @@
 <template>
   <!-- UserSchedule -->
-  <el-container>
+  <el-container id="tabpane">
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-header><h2>프로필</h2></el-header>
-      <el-main style="width:80%;">
+      <el-main style="width:1000px; height:1000px">
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation /></el-tab-pane> -->
-          <el-tab-pane label="프로필사진 및 소개"
-            ><SideBarProfileUserIntroduction
-              :photofilepath="userdata.photofilepath"
-          /></el-tab-pane>
-          <el-tab-pane label="소개영상"
-            ><PRVideo :vediofilepath="userdata.videofilepath"
-          /></el-tab-pane>
+
+          <el-tab-pane label="프로필사진 및 소개">
+            <div v-if="photo_index == ''">
+              <SideBarProfileUserIntroduction
+                photofilepath="https://i5d206.p.ssafy.io/file/thumbuser.png"
+                :introduce="userdata.ind_introduce"
+              />
+            </div>
+            <div v-else>
+              <SideBarProfileUserIntroduction
+                :photofilepath="userdata.photofilepath"
+                :introduce="userdata.ind_introduce"
+              />
+            </div>
+          </el-tab-pane>
+
+          <el-tab-pane label="소개영상">
+            <div v-if="video_index == ''">
+              소개영상이 없습니다.
+            </div>
+            <div v-else>
+              <PRVideo :vediofilepath="userdata.videofilepath" />
+            </div>
+          </el-tab-pane>
+
           <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
           <el-tab-pane label="서류관리"
-            ><SideBarProfileUserDoc :docfilepath="userdata.resumefilepath"
-          /></el-tab-pane>
+            ><SideBarProfileUserDoc />
+            <div v-if="resume_index == ''" class="fileDoc">
+              {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
+            </div>
+            <div v-else>
+              <div>이력서 및 포트폴리오</div>
+              <webviewer
+                :initialDoc="userdata.resumefilepath"
+                class="fileDoc"
+              ></webviewer>
+              <!-- <webviewer
+                initialDoc="
+                   https://i5d206.p.ssafy.io/file/210814/43885693-0b71-465c-945c-8bd6000d4da8.pdf
+                "
+              ></webviewer> -->
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
       </el-main>
@@ -37,7 +70,7 @@ import SideBarProfileUserTags from "@/components/SideBarComponents/UserProfileIn
 import PRVideo from "@/components/SideBarComponents/UserProfileInfo/PRVideo.vue";
 import SideBarProfileUserDoc from "@/components/SideBarComponents/UserProfileInfo/SideBarProfileUserDoc.vue";
 import DeleteUserAccount from "@/components/SideBarComponents/UserProfileInfo/DeleteUserAccount.vue";
-
+import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
@@ -53,43 +86,12 @@ export default {
     PRVideo,
     SideBarProfileUserDoc,
     DeleteUserAccount,
+    webviewer,
   },
   beforeMount() {
-    console.log("created");
-    this.userdataload;
+    this.userdataload();
   },
   mounted() {
-    // const token = this.$cookies.get("PID_AUTH");
-    // const decoded = jwt_decode(token);
-    // const index = decoded.index;
-    // axios
-    //   .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-    //     headers: { Authorization: token },
-    //   })
-    //   .then((res) => {
-    //     var result = res.data[0];
-    //     console.log(result);
-    //     this.userdata.photofilepath =
-    //       "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
-    //     console.log(this.userdata.photofilepath);
-    //     this.userdata.resumefilepath =
-    //       "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
-    //     this.userdata.videofilepath =
-    //       "/file/" + result.video_savefolder + "/" + result.video_savefile;
-    //     this.userdata.resume_originfile = result.resume_originfile;
-    //     this.userdata.photo_originfile = result.photo_originfile;
-    //     this.userdata.video_originfile = result.video_originfile;
-    //     this.userdata.ind_switch = result.ind_switch;
-    //     this.userdata.ind_introduce = result.ind_introduce;
-    //     this.userdata.photo_index = result.photo_index;
-    //     this.userdata.resume_index = result.resume_index;
-    //     this.userdata.video_index = result.resume_index;
-    //     this.userdata.ind_index = result.ind_index;
-    //     this.userdata.ind_name = result.ind_name;
-    //     this.userdata.ind_email = result.ind_email;
-    //     this.userdata.ind_phone = result.ind_phone;
-    //     this.userdata.ind_gender = result.ind_gender;
-    //   });
     console.log(server_url);
   },
   data() {
@@ -137,32 +139,7 @@ export default {
           this.$router.push("/");
         }
       });
-    axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        var result = res.data[0];
-        this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
-        this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
-        this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
-        this.userdata.resume_originfile = result.resume_originfile;
-        this.userdata.photo_originfile = result.photo_originfile;
-        this.userdata.video_originfile = result.video_originfile;
-        this.userdata.ind_switch = result.ind_switch;
-        this.userdata.ind_introduce = result.ind_introduce;
-        this.userdata.photo_index = result.photo_index;
-        this.userdata.resume_index = result.resume_index;
-        this.userdata.video_index = result.resume_index;
-        this.userdata.ind_index = result.ind_index;
-        this.userdata.ind_name = result.ind_name;
-        this.userdata.ind_email = result.ind_email;
-        this.userdata.ind_phone = result.ind_phone;
-        this.userdata.ind_gender = result.ind_gender;
-      });
+
     return {
       username: "",
       mytags: [],
@@ -221,6 +198,8 @@ export default {
       this.userdata.ind_email = result.ind_email;
       this.userdata.ind_phone = result.ind_phone;
       this.userdata.ind_gender = result.ind_gender;
+
+      console.log("userdata ind introduce: ", this.userdata.ind_introduce);
     },
     uploadFile() {},
     handleRemove(file, fileList) {
@@ -239,10 +218,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-main {
   margin: 1rem 1rem 1rem 1rem;
   background-color: white;
   border-radius: 20px;
+}
+#tabpane {
+  height: 900px;
+  width: 1000px;
+}
+.fileDoc {
+  margin: 20px;
 }
 </style>
