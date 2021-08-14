@@ -5,7 +5,7 @@
       name="1"
       style="text-align:center"
     >
-      <el-button style="margin:5px" @click="search">검색</el-button>
+      <el-button style="margin:5px" @click="search(this.selected_tags)">검색</el-button>
       <div v-if="this.selected_tags.length == 0" style="text-align:center">
         <h3>태그를 선택해주세요</h3>
       </div>
@@ -19,7 +19,7 @@
           <el-col :span="2"
             ><div class="grid-content bg-purple">
               <el-divider content-position="top">규모</el-divider>
-              <el-checkbox-group v-model="selected_tags" :min="0" :max="1">
+              <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
                 <el-checkbox
                   v-for="tag in sizes"
                   :label="tag.list_name"
@@ -171,7 +171,9 @@ export default {
         loading.close();
       }, 1000);
     },
-    search(){}
+    search(selected_tags){
+      console.log(selected_tags)
+    }
   },
 };
 </script>
