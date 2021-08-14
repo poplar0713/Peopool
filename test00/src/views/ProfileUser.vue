@@ -37,10 +37,10 @@
           <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
           <el-tab-pane label="서류관리"
             ><SideBarProfileUserDoc />
-            <div v-if="resume_index == ''" class="fileDoc">
+            <!-- <div v-if="resume_index == ''" class="fileDoc">
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
-            </div>
-            <div v-else>
+            </div> -->
+            <div>
               {{ userdata.resumefilepath }}
               <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
