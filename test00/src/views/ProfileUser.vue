@@ -40,7 +40,7 @@
             <div v-if="resume_index == ''" class="fileDoc">
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
             </div>
-            <div v-else>
+            <div v-else class="fileDoc">
               <div>이력서 및 포트폴리오{{ userdata.resumefilepath }}</div>
               <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
