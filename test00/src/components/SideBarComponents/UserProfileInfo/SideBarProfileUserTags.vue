@@ -1,5 +1,34 @@
 <template>
   <div class="select-section">
+    <div>
+      <el-divider content-position="left">직무</el-divider>
+      <div>나의 직무 : {{ this.mypart }}</div>
+      <el-select v-model="mypart_ind" filterable placeholder="" style="align-text:center">
+        <el-option
+          v-for="item in this.partlist"
+          :key="item.cat_index"
+          :label="item.cat_name"
+          :value="item.cat_index"
+        >
+        </el-option>
+      </el-select>
+      <el-button>변경</el-button>
+    </div>
+    <div>
+      <el-divider content-position="left">경력</el-divider>
+      <div>나의 경력 : {{ this.mycareer }}</div>
+      <el-select v-model="mycareer_ind" filterable placeholder="" style="align-text:center">
+        <el-option
+          v-for="item in this.careerlist"
+          :key="item.car_index"
+          :label="item.car_value"
+          :value="item.car_index"
+        >
+        </el-option>
+      </el-select>
+      <el-button>변경</el-button>
+    </div>
+    <div></div>
     <el-divider content-position="left">나의 태그</el-divider>
     <div style="align-text:center">
       <!-- select -->
@@ -54,6 +83,67 @@ export default {
     index = decoded.index;
     this.user_index = index;
 
+    //자신의 직무, 경력을 불러온다
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/poi/profile", {
+        headers: { Authorization: token },
+        params: {
+          index: index,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.mypart_ind = res.data.cat_index;
+        this.mycareer_ind = res.data.car_index;
+        this.mypart = res.data.cat_name;
+        this.mycareer = res.data.car_value;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    //커리어 목록 받아오기
+    axios
+      .get("https://localhost:8443/career/", {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        this.careerlist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    //직무 목록 받아오기
+    axios
+      .get("https://localhost:8443/taglist/cat", {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        this.partlist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
     // 유저전용태그목록 불러오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/taglist/", {
@@ -103,6 +193,12 @@ export default {
       //나의 태그들
       mytags: [],
       getNewArray: false,
+      mypart: "",
+      mycareer: "",
+      mypart_ind: "",
+      mycareer_ind: "",
+      careerlist: [],
+      partlist: [],
     };
   },
   watch: {
