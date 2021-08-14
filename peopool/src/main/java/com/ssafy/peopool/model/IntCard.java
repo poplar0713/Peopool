@@ -12,6 +12,7 @@ public class IntCard {
 	String ind_name; // 개인 이름
 	String ent_name; // 기업 이름
 	String int_done; // 면접 결과
+	String int_duty;
 	
 	public IntCard() {
 		
@@ -97,6 +98,14 @@ public class IntCard {
 		this.int_done = int_done;
 	}
 
+	public String getInt_duty() {
+		return int_duty;
+	}
+
+	public void setInt_duty(String int_duty) {
+		this.int_duty = int_duty;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -104,7 +113,7 @@ public class IntCard {
 				.append(", ent_index=").append(ent_index).append(", int_start=").append(int_start).append(", int_end=")
 				.append(int_end).append(", int_roomnumber=").append(int_roomnumber).append(", int_show=")
 				.append(int_show).append(", ind_name=").append(ind_name).append(", ent_name=").append(ent_name)
-				.append(", int_done=").append(int_done).append("]");
+				.append(", int_done=").append(int_done).append(", int_duty=").append(int_duty).append("]");
 		return builder.toString();
 	}
 
