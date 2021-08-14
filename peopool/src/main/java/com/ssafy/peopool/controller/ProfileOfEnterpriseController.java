@@ -104,7 +104,7 @@ public class ProfileOfEnterpriseController {
 		
 	}
 	
-	@ApiOperation(value = "index에 해당하는 이력서을 수정한다.", response = String.class)
+	@ApiOperation(value = "index에 해당하는 사진을 수정한다.", response = String.class)
 	@PostMapping("/photo/{index}")
 	public ResponseEntity<String> modifyPhoto(@PathVariable("index")int index, @RequestParam("upfile") MultipartFile[] files) throws IllegalStateException, IOException, SQLException {
 		ProfileOfEnterprise profileOfEnterprise = new ProfileOfEnterprise();
