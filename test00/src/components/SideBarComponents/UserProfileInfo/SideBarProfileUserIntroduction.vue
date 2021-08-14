@@ -12,9 +12,7 @@
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
         <el-form
-          :model="ruleForm"
           :rules="rules"
-          ref="ruleForm"
           v-on:submit.prevent
           enctype="multipart/form-data"
         >
@@ -33,7 +31,7 @@
           <el-input
             id="introtextarea"
             type="textarea"
-            v-model="ruleForm.Introduction"
+            v-model="userintroduce"
           ></el-input>
 
           <div style="float:right">
@@ -62,10 +60,9 @@ import jwt_decode from "jwt-decode";
 export default {
   props: {
     photofilepath: String,
+    introduce: String,
   },
   mounted() {
-    console.log("asdfsd");
-    console.log("photofile ", this.photofilepath);
     // const token = this.$cookies.get("PID_AUTH");
     // const decoded = jwt_decode(token);
     // const index = decoded.index;
@@ -93,14 +90,11 @@ export default {
     this.userindex = index;
   },
   data() {
-    console.log("userindex : ", this.userindex);
+    console.log("introduce: ", this.introduce);
     return {
       loading: false,
       userindex: "",
-      ruleForm: {
-        photo: "https://i5d206.p.ssafy.io" + this.photofilepath,
-        Introduction: "",
-      },
+      userintroduce: this.introduce,
       rules: {
         Introduction: [
           {

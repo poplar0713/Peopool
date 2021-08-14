@@ -1,36 +1,29 @@
 <template>
-  <div>
+  <div id="formdiv">
     <form v-on:submit.prevent enctype="multipart/form-data">
-      <input multiple="multiple" type="file" name="file" id="file" ref="file" />
+      <input
+        multiple="multiple"
+        type="file"
+        name="file"
+        id="file"
+        ref="file"
+        class="file"
+      />
       <button @click="upload">
         Upload
       </button>
     </form>
-
-    <!-- <div v-if="!docfilepath">이력서가 없습니다.</div>
-    <div>
-      <web-viewer :initialDoc="docfilepath"></web-viewer>
-    </div> -->
-  </div>
-  <div>이력서 및 포트폴리오</div>
-  <div>
-    <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer>
   </div>
 </template>
 
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import webviewer from "@/components/MainCompany/webviewer.vue";
 export default {
-  props: {
-    docfilepath: String,
-  },
-  component: {
-    webviewer,
-  },
   data() {
-    return {};
+    return {
+      fileList: "",
+    };
   },
   methods: {
     handleRemove(file, fileList) {
@@ -64,10 +57,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 html,
 body {
   height: 100%;
   width: 100%;
+}
+#formdiv {
+  margin: 20px;
 }
 </style>
