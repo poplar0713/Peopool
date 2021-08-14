@@ -41,7 +41,6 @@
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
             </div>
             <div v-else>
-              <div>이력서 및 포트폴리오</div>
               <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
