@@ -34,15 +34,23 @@
             ></el-col>
           </el-row>
           <el-divider></el-divider>
-          <el-row :gutte="10">
+          <el-row style="margin: 0.3rem">
             <el-col :span="24">
-              <el-checkbox-group v-model="selected">
+              <el-checkbox
+                v-if="this.cat_ind != 1"
+                :indeterminate="isIndeterminate"
+                v-model="checkAll"
+                @change="handleCheckAllChange"
+                >전체 선택</el-checkbox
+              >
+              <div style="margin: 1rem 0;"></div>
+              <el-checkbox-group v-model="this.selected" @change="handleCheckedChange">
                 <el-checkbox
                   v-for="item in this.taglist"
+                  :label="item.taglist_index"
                   :key="item.taglist_index"
-                  :label="item.taglist_name"
-                  :value="item.taglist_index"
-                ></el-checkbox>
+                  >{{ item.taglist_name }}</el-checkbox
+                >
               </el-checkbox-group>
             </el-col>
           </el-row>
@@ -56,11 +64,13 @@
                 inactive-color="#FFC000"
                 active-text="그리고"
                 inactive-text="또는"
+                active-value="inter"
+                inactive-value="union"
               >
               </el-switch
             ></el-col>
             <el-col :span="2"
-              ><el-button type="success" icon="el-icon-search" @click="this.getResultList"
+              ><el-button type="success" icon="el-icon-search" @click="this.getOriginList"
                 >검색</el-button
               >
             </el-col>
@@ -85,6 +95,7 @@ import axios from "axios";
 var token;
 //var decoded;
 //var index;
+const qs = require("qs");
 
 export default {
   mounted() {
@@ -110,12 +121,28 @@ export default {
       });
 
     axios
-      .get("https://localhost:8443/career", {
+      .get("https://localhost:8443/career/", {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data);
         this.careerlist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    axios
+      .get("https://localhost:8443/taglist/", {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        this.taglist = res.data;
       })
       .catch((err) => {
         console.log(err.response);
@@ -129,15 +156,17 @@ export default {
   },
   data() {
     return {
+      checkAll: false,
+      isIndeterminate: true,
       categorylist: [],
       careerlist: [],
       taglist: [],
       selected: [],
       //resultList: this.getResultList(),
-      isUnion: false,
+      isUnion: "inter",
       isAbove: false,
       originlist: [],
-      resultList: [],
+      resultList: this.getResultList,
       cat_ind: "",
       range: [1, 9],
       marks: {
@@ -158,43 +187,31 @@ export default {
   },
   watch: {
     cat_ind() {
-      console.log(this.cat_ind);
-      axios
-        .get(`https://localhost:8443/taglist/${this.cat_ind}`, {
-          headers: { Authorization: token },
-        })
-        .then((res) => {
-          console.log(res.data);
-          this.taglist = res.data;
-        })
-        .catch((err) => {
-          if (err.response == 401) {
-            console.log("token error");
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
-    },
-  },
-
-  methods: {
-    getResultList() {
-      var jsonArray = new Object();
-      jsonArray.list = this.selected;
-      jsonArray = JSON.stringify(jsonArray);
-      console.log(jsonArray);
-
-      if (this.isUnion) {
+      this.selected = [];
+      if (this.cat_ind == 1) {
         axios
-          .get("https://localhost:8443/has/union", {
+          .get("https://localhost:8443/taglist/", {
             headers: { Authorization: token },
-            params: {
-              list: jsonArray,
-            },
           })
           .then((res) => {
-            this.resultList = res.data;
+            this.taglist = res.data;
+          })
+          .catch((err) => {
+            console.log(err.response);
+            if (err.response == 401) {
+              this.$message.error("로그인세션이 만료되었습니다");
+              console.log("token error");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      } else {
+        axios
+          .get(`https://localhost:8443/taglist/${this.cat_ind}`, {
+            headers: { Authorization: token },
+          })
+          .then((res) => {
+            this.taglist = res.data;
           })
           .catch((err) => {
             if (err.response == 401) {
@@ -204,16 +221,82 @@ export default {
               this.$router.push("/");
             }
           });
-      } else {
+      }
+    },
+    originlist() {
+      this.resultList = [];
+      for (var i = 0; i < this.originlist.length; i++) {
+        if (
+          this.originlist[i].car_index >= this.range[0] &&
+          this.originlist[i].car_index <= this.range[1]
+        ) {
+          this.resultList.push(this.originlist[i]);
+        }
+      }
+    },
+    range() {
+      this.resultList = [];
+      for (var i = 0; i < this.originlist.length; i++) {
+        if (
+          this.originlist[i].car_index >= this.range[0] &&
+          this.originlist[i].car_index <= this.range[1]
+        ) {
+          this.resultList.push(this.originlist[i]);
+        }
+      }
+    },
+  },
+
+  methods: {
+    handleCheckAllChange(val) {
+      this.selected = val ? this.taglist : [];
+      this.isIndeterminate = false;
+    },
+    handleCheckedChange(value) {
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.taglist.length;
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.taglist.length;
+    },
+    getOriginList() {
+      this.originlist = [];
+      console.log(this.isUnion);
+      if (this.isUnion == "union") {
         axios
-          .get("https://localhost:8443:8443/has/inter", {
+          .get("https://localhost:8443/has/union", {
             headers: { Authorization: token },
             params: {
-              list: jsonArray,
+              list: this.selected,
+            },
+            paramsSerializer: (params) => {
+              return qs.stringify(params, { arrayFormat: "repeat" });
             },
           })
           .then((res) => {
-            this.resultList = res.data;
+            this.originlist = res.data;
+            console.log(this.originlist);
+          })
+          .catch((err) => {
+            if (err.response == 401) {
+              console.log("token error");
+              this.$message.error("로그인세션이 만료되었습니다");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      } else if (this.isUnion == "inter") {
+        axios
+          .get("https://localhost:8443/has/inter", {
+            headers: { Authorization: token },
+            params: {
+              list: this.selected,
+            },
+            paramsSerializer: (params) => {
+              return qs.stringify(params, { arrayFormat: "repeat" });
+            },
+          })
+          .then((res) => {
+            this.originlist = res.data;
+            console.log(this.originlist);
           })
           .catch((err) => {
             if (err.response == 401) {

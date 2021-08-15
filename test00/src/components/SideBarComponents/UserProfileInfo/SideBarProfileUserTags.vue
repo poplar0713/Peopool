@@ -2,7 +2,7 @@
   <div class="select-section">
     <div>
       <el-divider content-position="left">직무</el-divider>
-      <div>나의 직무 : {{ this.mypart }}</div>
+      <div>나의 직무 ({{ this.mypart }})</div>
       <el-select v-model="mypart_ind" filterable placeholder="" style="align-text:center">
         <el-option
           v-for="item in this.partlist"
@@ -12,11 +12,11 @@
         >
         </el-option>
       </el-select>
-      <el-button>변경</el-button>
+      <el-button @click="modifypart">수정</el-button>
     </div>
     <div>
       <el-divider content-position="left">경력</el-divider>
-      <div>나의 경력 : {{ this.mycareer }}</div>
+      <div>나의 경력 ({{ this.mycareer }})</div>
       <el-select v-model="mycareer_ind" filterable placeholder="" style="align-text:center">
         <el-option
           v-for="item in this.careerlist"
@@ -26,7 +26,7 @@
         >
         </el-option>
       </el-select>
-      <el-button>변경</el-button>
+      <el-button @click="modifycareer">수정</el-button>
     </div>
     <div></div>
     <el-divider content-position="left">나의 태그</el-divider>
@@ -85,7 +85,7 @@ export default {
 
     //자신의 직무, 경력을 불러온다
     axios
-      .get("https://i5d206.p.ssafy.io:8443/poi/profile", {
+      .get("https://localhost:8443/poi/cap", {
         headers: { Authorization: token },
         params: {
           index: index,
@@ -171,7 +171,6 @@ export default {
         },
       })
       .then((res) => {
-        console.log(res);
         this.mytags = res.data;
       })
       .catch((err) => {
@@ -193,6 +192,7 @@ export default {
       //나의 태그들
       mytags: [],
       getNewArray: false,
+      getNewInfo: false,
       mypart: "",
       mycareer: "",
       mypart_ind: "",
@@ -212,7 +212,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("다시 불러오기 ");
           this.mytags = res.data;
         })
         .catch((err) => {
@@ -224,8 +223,75 @@ export default {
           }
         });
     },
+    getNewInfo() {
+      axios
+        .get("https://localhost:8443/poi/cap", {
+          headers: { Authorization: token },
+          params: {
+            index: index,
+          },
+        })
+        .then((res) => {
+          this.mypart_ind = res.data.cat_index;
+          this.mycareer_ind = res.data.car_index;
+          this.mypart = res.data.cat_name;
+          this.mycareer = res.data.car_value;
+        })
+        .catch((err) => {
+          console.log(err.response);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            console.log("token error");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
   },
   methods: {
+    modifypart() {
+      axios
+        .put("https://localhost:8443/poi/mpart", {
+          headers: { Authorization: token },
+          ind_index: index,
+          cat_index: this.mypart_ind,
+        })
+        .then(() => {
+          this.$message.info("직무가 변경 되었습니다");
+          this.getNewInfo = !this.getNewInfo;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
+    modifycareer() {
+      axios
+        .put("https://localhost:8443/poi/mcar", {
+          headers: { Authorization: token },
+          ind_index: index,
+          cat_index: this.mycareer_ind,
+        })
+        .then(() => {
+          this.$message.info("경력사항이 변경 되었습니다");
+          this.getNewInfo = !this.getNewInfo;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
+
     plustag() {
       // 유저본인 태그추가
       console.log(this.value);
