@@ -126,20 +126,22 @@ export default {
       });
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.item}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${this.item}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        this.company_info.ent_index = res.data.ent_index;
-        this.company_info.ent_name = res.data.ent_name;
-        this.company_info.ent_image = res.data.ent_image;
-        this.company_info.ent_contact = res.data.ent_contact;
-        this.company_info.ent_address = res.data.ent_address;
-        this.company_info.ent_email = res.data.ent_email;
-        this.company_info.ent_history = res.data.ent_history;
-        this.company_info.ent_website = res.data.ent_website;
-        this.company_info.ent_introduce = res.data.ent_introduce;
-        this.company_info.ent_ceo = res.data.ent_ceo;
+        console.log(`searchcompany- ${res.data[0].ent_name}`, res);
+        let result = res.data[0];
+        this.company_info.ent_index = result.ent_index;
+        this.company_info.ent_name = result.ent_name;
+        this.company_info.ent_image = result.ent_image;
+        this.company_info.ent_contact = result.ent_contact;
+        this.company_info.ent_address = result.ent_address;
+        this.company_info.ent_email = result.ent_email;
+        this.company_info.ent_history = result.ent_history;
+        this.company_info.ent_website = result.ent_website;
+        this.company_info.ent_introduce = result.ent_introduce;
+        this.company_info.ent_ceo = result.ent_ceo;
       })
       .catch((err) => {
         console.log(err.response);
