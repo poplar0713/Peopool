@@ -89,6 +89,7 @@ export default {
     const index = decoded.index;
     this.userindex = index;
   },
+  beforeMount() {},
   data() {
     console.log("introduce: ", this.introduce);
     return {
