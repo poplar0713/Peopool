@@ -39,19 +39,17 @@
             <div v-if="userdata.resume_index == ''" class="fileDoc">
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
             </div>
-<<<<<<< HEAD
-            <div v-else>
-              <div>이력서 및 포트폴리오</div>
 
-              <webviewer :initialDoc="userdata.resumefilepath" />
-=======
-            <div>
+            <div v-else>
               {{ userdata.resumefilepath }}
               <!-- <webviewer :initialDoc="userdata.resumefilepath" /> -->
               <webviewer
                 initialDoc="https://i5d206.p.ssafy.io/file/210814/e63203ae-6183-4621-8dee-8dd45e78725c.pdf"
               />
->>>>>>> 0c626ab3f235d5dbe02119e0d4f92813259956a1
+            </div>
+            <div>
+              {{ userdata.resumefilepath }}
+              <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
