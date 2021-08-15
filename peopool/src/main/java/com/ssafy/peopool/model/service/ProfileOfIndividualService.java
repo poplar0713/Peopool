@@ -44,6 +44,15 @@ public interface ProfileOfIndividualService {
 	
 	//인덱스로 가져오기
 	IndCard getIndexOfProfile(int index);
+
+	// 인덱스로 직무 번호 변경
+	boolean modifyPart(ProfileOfIndividual profileOfIndividual);
+
+	// 인덱스로 경력과 직무 가져오기
+	IndCard getIndexOfCareerAndPart(int index);
+
+	//인덱스로 경력 번호 변경
+	boolean modifyCareer(ProfileOfIndividual profileOfIndividual);
 	
 
 }
