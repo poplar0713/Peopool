@@ -10,33 +10,32 @@
       )
     "
     height="600"
-    width="100"
   >
-    <el-table-column align="center" label="요청일" prop="sug_send" width="160%">
+    <el-table-column align="center" label="요청일" prop="sug_send">
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="name" width="100%">
+    <el-table-column align="center" label="피풀인" prop="name">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
+    <el-table-column align="center" label="직무" prop="sug_duty">
     </el-table-column>
     <el-table-column
       align="center"
       label="제안1"
       prop="sug_timeone"
-      width="100%"
+      width="170%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안2"
       prop="sug_timetwo"
-      width="100%"
+      width="170%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안3"
       prop="sug_timethree"
-      width="100%"
+      width="170%"
     >
     </el-table-column>
     <el-table-column align="center">

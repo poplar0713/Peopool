@@ -4,7 +4,7 @@
     <el-aside width="200px"><SideBarUser :usertoken="index"/></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
-      <el-main>
+      <el-main style="">
         <h1>인기있는 기업 랭킹</h1>
         <PopularCompanyList />
         <h1>태그별 기업 찾아보기</h1>

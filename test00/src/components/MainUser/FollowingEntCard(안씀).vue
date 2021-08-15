@@ -4,7 +4,7 @@
     shadow="hover"
     style="margin-bottom:20px; text-align:center"
     @click="dialogVisible = true"
-  ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
+    ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
     <h1>{{ item.name }}</h1>
   </el-card>
   <!-- 모달창 -->
@@ -111,12 +111,16 @@ export default {
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();

@@ -1,16 +1,14 @@
 <template>
   <el-collapse v-model="activeNames" @change="handleChange">
     <el-collapse-item title="태그선택" name="1" style="text-align:center">
-      <el-button style="margin:5px" @click="search(this.selected_tags)"
-        >검색</el-button
-      >
+      <el-button style="margin:5px" @click="search()">검색</el-button>
       <div v-if="this.selected_tags.length == 0" style="text-align:center">
         <h3>태그를 선택해주세요</h3>
       </div>
       <div style="text-align:center">
-        <span v-for="tag in selected_tags" :key="tag" style="margin:3px">{{
-          tag.list_name
-        }}</span>
+        <h3><span v-for="tag in selected_tags" :key="tag" style="margin:3px"
+          >{{ tag.list_name }}</span
+        ></h3>
       </div>
       <div>
         <el-row :gutter="20">
@@ -74,29 +72,23 @@
       </div>
     </el-collapse-item>
   </el-collapse>
-  <div>
-    <SearchCompanyMultiList :selected_tags="selected_tags" />
+  <br />
+  <div v-show="this.searchresult == true">
+    <el-row :gutter="24">
+      <el-col :span="4" v-for="(item, i) in selected_list" :key="i">
+        <CompanyCardInfo :item="item.ent_index" />
+      </el-col>
+    </el-row>
   </div>
-
-  <!-- <div v-for="tag in selected_tags" :key="tag">
-    <el-divider content-position="left"
-      ><span>{{ tag }}</span
-      ><el-divider direction="vertical"></el-divider>
-      <span @click="gototagcompany(tag)" style="cursor:pointer"
-        >전체보기</span
-      ></el-divider
-    >
-    <TagCompanyList :tag="tag" />
-  </div> -->
 </template>
 
 <script>
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import SearchCompanyMultiList from "./SearchCompanyMultiList.vue";
+import CompanyCardInfo from "./CompanyCardInfo.vue";
 export default {
   name: "SelectCompanyTags",
-  components: { SearchCompanyMultiList },
+  components: { CompanyCardInfo },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -109,7 +101,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log("어케저장되고있냐");
         console.log(res.data);
         this.sizes = res.data.slice(0, 4);
         this.tag1 = res.data.slice(4, 7);
@@ -127,19 +118,34 @@ export default {
           this.$router.push("/");
         }
       });
+    // 교집합정보 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/cla/case", {
+        headers: { Authorization: token },
+        params: {
+          list: this.selected_tags,
+        },
+      })
+      .then((res) => {
+        this.matchinglist = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return {
-      viewmultilist: true,
+      searchresult: false,
       tabPosition: "left",
       user_index: "",
       sizes: [],
+      checksize: [],
       tag1: [],
       tag2: [],
       tag3: [],
       tag4: [],
       tag5: [],
-      checksize: [],
       selected_tags: [],
-      selected:[],
+      selected: [],
+      selected_list: [],
       // activeNames: ["1"],
     };
   },
@@ -163,18 +169,50 @@ export default {
       }, 1000);
     },
     search() {
-      console.log("이름으로보내지고있는가?");
       const loading = this.$loading({
         lock: true,
         text: "Loading",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)",
       });
+      var tagindexlist = [];
+      for (var tagindex of this.selected_tags) {
+        tagindexlist.push(tagindex.list_index);
+      }
+      this.selected = tagindexlist;
+      // 교집합불러오기
+
+      const indexlist = [];
+      for (var ind of this.selected) {
+        indexlist.push(ind);
+      }
+      console.log(indexlist);
+      const qs = require("qs");
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/cla/case", {
+          headers: { Authorization: this.token },
+          params: {
+            list: indexlist,
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          this.selected_list = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       setTimeout(() => {
         loading.close();
-        this.viewmultilist = false;
+        this.searchresult = true;
       }, 1000);
     },
+  },
+  reset() {
+    this.selected_tags = [];
   },
 };
 </script>

@@ -13,41 +13,51 @@
       </router-link>
       <el-menu background-color="#f1c40f">
         <el-menu-item index="1" onclick="location.href = '/company'">
-          <i class="fas fa-home"></i>&nbsp;&nbsp;Home
+          <i class="fas fa-home"></i><span style="margin:10px">Home</span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="2">
-          <i class="el-icon-office-building"></i>
-          <router-link
-            :to="{
-              name: 'ProfileCompany',
-              params: { companyindex: companyindex },
-            }"
-            style="text-decoration: none; color:black"
-            >Company</router-link
-          >
-        </el-menu-item>
+        <router-link
+          :to="{
+            name: 'ProfileCompany',
+            params: { companyindex: companyindex },
+          }"
+          style="text-decoration: none; color:black"
+        >
+          <el-menu-item index="2">
+            <i class="el-icon-office-building"></i>
+            company
+          </el-menu-item></router-link
+        >
         <!--  -->
-        <el-menu-item index="3">
+        <router-link
+          :to="{
+            name: 'recruiting',
+          }"
+          style="text-decoration: none; color:black"
+        >
+          <el-menu-item index="4">
+            <i class="fas fa-tasks"></i>
+            <span style="margin:10px">Recruitment</span>
+          </el-menu-item></router-link
+        >
+        <!--  -->
+        <el-menu-item index="5">
           <i class="el-icon-right"></i>
           <i class="el-icon-user-solid"></i>
           <span><CompanyFollowings /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="4">
+        <el-menu-item index="6">
           <i class="el-icon-office-building"></i>
           <i class="el-icon-back"></i>
           <span><CompanyFollowers /></span>
         </el-menu-item>
-        <el-menu-item index="5">
-          <i class="el-icon-star-on"></i>
-          <span @click="GoToRecruit">Recruitment</span>
-        </el-menu-item>
-        <el-menu-item index="6">
+        <!--  -->
+        <el-menu-item index="7">
           <i class="el-icon-setting"></i>
           <span>setting</span>
         </el-menu-item>
-        <el-menu-item index="7">
+        <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
           <span @click="Logout">Logout</span>
         </el-menu-item>
@@ -68,7 +78,6 @@ export default {
   components: {
     CompanyFollowers,
     CompanyFollowings,
-    // ProfileCompany,
   },
   data() {
     // 토큰가져오기

@@ -6,7 +6,7 @@
       <el-header><headerSearchUser /></el-header>
       <!--  -->
       <el-header><h2>채용 프로세스 관리</h2></el-header>
-      <el-main>
+      <el-main style="margin:0 auto; width:105%">
         <div class="mainBoard">
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="미응답" name="offerTab">

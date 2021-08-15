@@ -96,7 +96,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name:"CompanyCardInfo",
+  name: "CompanyCardInfo",
   props: { item: Number },
   data() {
     // 토큰가져오기
@@ -113,12 +113,16 @@ export default {
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -145,7 +149,6 @@ export default {
       .catch((err) => {
         console.log(err.response);
         if (err.response == 401) {
-          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -156,7 +159,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          ent_index : this.item,
+          ent_index: this.item,
         },
       })
       .then((res) => {
@@ -165,7 +168,6 @@ export default {
       })
       .catch((err) => {
         if (err.response == 401) {
-          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");

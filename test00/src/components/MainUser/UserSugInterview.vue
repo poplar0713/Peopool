@@ -43,6 +43,7 @@
         &nbsp;
         <el-button
           v-if="scope.row.sug_state == 'W'"
+          type="primary"
           @click="dialogVisible = true"
           size="mini"
           >응답하기</el-button

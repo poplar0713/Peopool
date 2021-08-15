@@ -13,14 +13,10 @@
         <!-- onclick="location.href = '/user'" -->
       </router-link>
       <el-menu background-color="#f1c40f">
-        <el-menu-item
-          index="1"
-          onclick="location.href = '/user'"
-         
-        >
+        <el-menu-item index="1" onclick="location.href = '/user'">
           <i class="fas fa-home"></i><span style="margin:10px">Home</span>
         </el-menu-item>
-
+        <!--  -->
         <router-link
           :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
           style="color: black; text-decoration: none;"

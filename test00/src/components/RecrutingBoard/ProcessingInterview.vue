@@ -9,35 +9,37 @@
             :key="index"
             :timestamp="days.date"
           >
-            <el-card style="width: 80%; align-content: center;">
+            <el-card style="width: 95%; align-content: center;">
               <el-table
                 :data="days.interviewers"
                 :default-sort="{ prop: 'time' }"
               >
                 <el-table-column prop="int_start" label="면접시간" sortable>
                 </el-table-column>
-                <el-table-column prop="ind_name" label="성명"> </el-table-column>
-                <el-table-column prop="int_duty" label="직무"> </el-table-column>
+                <el-table-column prop="ind_name" label="성명">
+                </el-table-column>
+                <el-table-column prop="int_duty" label="직무">
+                </el-table-column>
                 <el-table-column label="" prop="p_name">
                   <template #default="scope">
-                    <el-button
-                      size="mini"
-                      @click="Cancel(scope.$index, scope.row, scope.row.p_name)"
-                      >Cancel</el-button
-                    >
-                    <!-- {{scope.row.company}} -->
-                    <el-button
-                      size="mini"
-                      type="danger"
-                      @click="
-                        GoToInteriewRoom(
-                          scope.row.ent_name,
-                          scope.row.int_roomnumber
-                        )
-                      "
-                      >Interview Room</el-button
-                    >
-                    <!-- {{scope.row.url}} -->
+                    <el-row>
+                      <el-col :span="12">
+                        <UserInfo :userindex="scope.row.ind_index" />
+                      </el-col>
+                      <el-col :span="12">
+                        <el-button
+                          size="mini"
+                          type="danger"
+                          @click="
+                            GoToInteriewRoom(
+                              scope.row.ent_name,
+                              scope.row.int_roomnumber
+                            )
+                          "
+                          >Interview Room</el-button
+                        ></el-col
+                      >
+                    </el-row>
                   </template>
                 </el-table-column>
               </el-table></el-card
@@ -46,19 +48,20 @@
         </el-timeline>
       </el-scrollbar>
     </el-tab-pane>
-    <el-tab-pane label="일정 📅">
+    <el-tab-pane label="달력 📅">
       <InterviewCalender />
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
-import InterviewCalender from "@/components/RecrutingBoard/InterviewCalender.vue";
+import InterviewCalender from "./InterviewCalender.vue";
+import UserInfo from "./UserInfo.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
   name: "ProcessingInterview",
-  components: { InterviewCalender },
+  components: { InterviewCalender, UserInfo },
   computed: {
     getInterviewDays() {
       var InterviewDays = {};

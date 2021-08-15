@@ -8,7 +8,7 @@
           data.sug_duty.toLowerCase().includes(search.toLowerCase())
       )
     "
-    height="300"
+    height="500"
     ref="filterTable"
   >
     <el-table-column
@@ -28,7 +28,7 @@
     </el-table-column>
     <el-table-column align="center" label="피풀인" prop="name" width="100%">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
+    <el-table-column align="center" label="직무" prop="sug_duty" width="120%">
     </el-table-column>
     <el-table-column
       align="center"
@@ -48,30 +48,29 @@
           ></el-col>
           <el-col :span="18"
             ><div>
-              <el-button v-if="scope.row.sug_state == 'W'" size="mini"
+              <span><el-button v-if="scope.row.sug_state == 'W'" size="mini"
                 >응답대기</el-button
               >
-              <el-row
-                ><el-col :span="12">
-                  <el-text
-                    v-if="scope.row.sug_state == 'T'"
-                    disabled
-                    size="mini"
-                    style="margin-right:5px"
-                    >면접수락</el-text
-                  ></el-col
-                ><el-col :span="12">
-                  <el-button
-                    v-if="scope.row.sug_state !== 'C'"
-                    size="mini"
-                    type="danger"
-                    @click="CancelInt(scope.row.sug_index)"
-                    >요청취소</el-button
-                  ></el-col
-                ></el-row
+              <el-button
+                v-if="scope.row.sug_state == 'W'"
+                size="mini"
+                type="danger"
+                @click="CancelInt(scope.row.sug_index)"
+                >요청취소</el-button
+              ></span>
+
+              <el-text
+                v-if="scope.row.sug_state == 'T'"
+                disabled
+                size="mini"
+                style="margin-right:5px"
+                >면접수락</el-text
               >
               <el-button v-if="scope.row.sug_state == 'C'" disabled size="mini"
                 >취소된 요청입니다</el-button
+              >
+              <el-button v-if="scope.row.sug_state == 'F'" disabled size="mini"
+                >거절된 요청입니다</el-button
               >
             </div></el-col
           >

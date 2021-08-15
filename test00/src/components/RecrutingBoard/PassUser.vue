@@ -8,7 +8,6 @@
       )
     "
     height="600"
-    width="100"
   >
     <el-table-column
       align="center"
