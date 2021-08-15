@@ -21,7 +21,15 @@
               </el-select>
             </el-col>
             <el-col :span="18">
-              <el-slider v-model="range" range show-stops :min="1" :max="9" :marks="marks">
+              <el-slider
+                v-model="range"
+                range
+                show-stops
+                :show-tooltip="false"
+                :min="1"
+                :max="9"
+                :marks="marks"
+              >
               </el-slider
             ></el-col>
           </el-row>
