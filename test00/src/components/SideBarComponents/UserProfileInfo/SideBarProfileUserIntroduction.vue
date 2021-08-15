@@ -63,34 +63,17 @@ export default {
     introduce: String,
   },
   mounted() {
-    // const token = this.$cookies.get("PID_AUTH");
-    // const decoded = jwt_decode(token);
-    // const index = decoded.index;
-    // this.userindex = index;
-    // axios
-    //   .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-    //     headers: { Authorization: token },
-    //   })
-    //   .then((res) => {
-    //     this.ruleForm.Introduction = res.data.ind_introduce;
-    //     this.ruleForm.photo = "/file/" + res.data.ind_photo;
-    //   })
-    //   .catch((err) => {
-    //     console.log("token error");
-    //     console.log(err.response);
-    //     if (err.response == 401) {
-    //       this.$message.error("로그인세션이 만료되었습니다");
-    //       localStorage.clear();
-    //       this.$router.push("/");
-    //     }
-    //   });
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.userindex = index;
   },
+  created() {
+    console.log("this.introduce created- ", this.introduce);
+    console.log("this.path created- ", this.photofilepath);
+    this.userintroduce = this.introduce;
+  },
   data() {
-    console.log("introduce: ", this.introduce);
     return {
       loading: false,
       userindex: "",
