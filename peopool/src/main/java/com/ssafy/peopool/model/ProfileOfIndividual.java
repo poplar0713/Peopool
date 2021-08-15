@@ -70,6 +70,38 @@ public class ProfileOfIndividual {
 		return fileInfos;
 	}
 
+	public int getCat_index() {
+		return cat_index;
+	}
+
+	public void setCat_index(int cat_index) {
+		this.cat_index = cat_index;
+	}
+
+	public int getCar_index() {
+		return car_index;
+	}
+
+	public void setCar_index(int car_index) {
+		this.car_index = car_index;
+	}
+
+	public String getCat_name() {
+		return cat_name;
+	}
+
+	public void setCat_name(String cat_name) {
+		this.cat_name = cat_name;
+	}
+
+	public String getCar_value() {
+		return car_value;
+	}
+
+	public void setCar_value(String car_value) {
+		this.car_value = car_value;
+	}
+
 	public void setFileInfos(List<FileInfo> fileInfos) {
 		this.fileInfos = fileInfos;
 	}

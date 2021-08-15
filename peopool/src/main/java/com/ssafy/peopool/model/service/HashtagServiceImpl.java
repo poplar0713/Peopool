@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.peopool.model.Hashtag;
-import com.ssafy.peopool.model.SelectedTag;
 import com.ssafy.peopool.model.repo.HashtagRepo;
 
 @Service
@@ -48,25 +47,15 @@ public class HashtagServiceImpl implements HashtagService {
 	}
 
 	@Override
-	public List<Map<Object, Object>> userTagIntersection(SelectedTag list) {
-		
-		List<String> nlist = new ArrayList<>();
-		for(String temp: list.getList()) {
-			nlist.add(temp);
-		}
-		
-		return hashtagRepo.userTagIntersection(nlist);
+	public List<Map<Object, Object>> userTagIntersection(List<Integer> list) {
+		int count = list.size();
+		return hashtagRepo.userTagIntersection(list, count);
 	}
 
 	@Override
-	public List<Map<Object, Object>> userTagUnion(SelectedTag list) {
-		
-		List<String> nlist = new ArrayList<>();
-		for(String temp: list.getList()) {
-			nlist.add(temp);
-		}
-		
-		return hashtagRepo.userTagUnion(nlist);
+	public List<Map<Object, Object>> userTagUnion(List<Integer> list) {
+		int count = list.size();
+		return hashtagRepo.userTagUnion(list, count);
 	}
 
 	

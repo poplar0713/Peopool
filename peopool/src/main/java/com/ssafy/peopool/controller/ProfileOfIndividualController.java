@@ -275,9 +275,18 @@ public class ProfileOfIndividualController {
 	}
 	
 	@ApiOperation(value = "index에 해당하는 직무를 수정한다.", response = String.class)
-	@PutMapping("/part")
+	@PutMapping("/mpart")
 	public ResponseEntity<String> modifyPart(@RequestBody ProfileOfIndividual profileOfIndividual){
 		if(profileOfIndividualService.modifyPart(profileOfIndividual)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "index에 해당하는 직무를 수정한다.", response = String.class)
+	@PutMapping("/mcar")
+	public ResponseEntity<String> modifyCareer(@RequestBody ProfileOfIndividual profileOfIndividual){
+		if(profileOfIndividualService.modifyCareer(profileOfIndividual)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

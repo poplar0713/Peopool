@@ -122,4 +122,10 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 		return profileOfIndividualRepo.getIndexOfCareerAndPart(index);
 	}
 
+	@Override
+	public boolean modifyCareer(ProfileOfIndividual profileOfIndividual) {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.modifyCareer(profileOfIndividual) == 1;
+	}
+
 }

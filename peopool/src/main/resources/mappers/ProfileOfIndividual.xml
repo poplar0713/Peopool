@@ -109,6 +109,19 @@
         on p.cat_index = c.cat_index
         join ind_career r
         on p.car_index = r. car_index
+        where p.ind_index = #{index}
 	</select>
+	
+	<update id="modifyPart" parameterType="ProfileOfIndividual">
+		update ind_profile
+		set cat_index=#{cat_index}
+		where ind_index = #{ind_index}
+	</update>
+	
+	<update id="modifyCareer" parameterType="ProfileOfIndividual">
+		update ind_profile
+		set car_index=#{cat_index}
+		where ind_index = #{ind_index}
+	</update>
 	
 </mapper>

@@ -33,29 +33,45 @@
 	</select>
 	
 	<select id="userTagIntersection" parameterType="List" resultType="HashMap">
-		select ind_index, ind_name, ind_gender, ind_phone, ind_email
-		from individual i join hashtag h
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, p.car_index, car_value, cat_name, ind_resume, ind_video, ind_photo, ind_introduce
+		from individual i 
+		join hashtag h 
 		on i.ind_index = h.tag_target
-		where h.taglist_index = (select taglist_index 
-		from taglist
-		where
-		<foreach collection="tagList" item='item' separator="and"> 
-			h.taglist_name = #{item}
-		</foreach>
-		)
+		join ind_profile p
+		on i.ind_index = p.ind_index
+		join user_main_category c
+		on p.cat_index = c.cat_index
+		join ind_career r
+		on p.car_index = r.car_index
+		where i.ind_index in (select tag_target
+						from hashtag
+						where taglist_index in
+						<foreach collection="list" item="item" open="(" close=")" separator=",">
+						#{item}
+						</foreach>
+						group by tag_target
+						having count(*) = #{count})
+		and ind_switch ='T'
+		group by i.ind_index;
+						
 	</select>
 	
 	<select id="userTagUnion" parameterType="List" resultType="HashMap">
-		select ind_index, ind_name, ind_gender, ind_phone, ind_email
-		from individual i join hashtag h
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, p.car_index, car_value, cat_name, ind_resume, ind_video, ind_photo, ind_introduce
+		from individual i 
+		join hashtag h 
 		on i.ind_index = h.tag_target
-		where h.taglist_index = (select taglist_index 
-		from taglist
-		where in
-		<foreach collection="tagList" item='item' separator="and" open="(" close=")">
+		join ind_profile p
+		on i.ind_index = p.ind_index
+		join user_main_category c
+		on p.cat_index = c.cat_index
+		join ind_career r
+		on p.car_index = r.car_index
+		where h.taglist_index in
+		<foreach collection="list" item='item' separator="," open="(" close=")">
 			#{item}
 		</foreach>
-		)
+		and ind_switch = 'T';
 	</select>
 	
 	<select id="countByTag" resultType="HashMap">

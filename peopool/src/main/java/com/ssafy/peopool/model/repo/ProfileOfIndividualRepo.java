@@ -54,4 +54,7 @@ public interface ProfileOfIndividualRepo {
 
 	// 인덱스로 경력과 직무 조회
 	IndCard getIndexOfCareerAndPart(int index);
+
+	// 경력 변경
+	int modifyCareer(ProfileOfIndividual profileOfIndividual);
 }

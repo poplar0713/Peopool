@@ -6,7 +6,8 @@
 
 	<select id="getTagList" resultType="TagList">
 	select *
-	from taglist;
+	from taglist
+	order by cat_index
 	</select>
 	
 	<select id="getCTagList" parameterType="int" resultType="TagList">
