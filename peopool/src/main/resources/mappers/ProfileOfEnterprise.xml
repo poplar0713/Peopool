@@ -61,6 +61,13 @@
     	</selectKey>
 	</insert>
 	
+	<select id="getProfile" parameterType="int" resultType="HashMap">
+		select a.*, b.ent_name, b.ent_contact, b.ent_email 
+		from (select f.savefolder image_savefolder, f.originfile image_originfile, f.savefile image_savefile, e.*
+				from file_info f left outer join ent_profile e on f.fil_index = e.ent_image) a left outer join enterprise b on a.ent_index = b.ent_index
+		where a.ent_index = #{index};	
+	</select>
+	
 	
 	
 
