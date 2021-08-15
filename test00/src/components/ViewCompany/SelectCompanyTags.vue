@@ -1,17 +1,15 @@
 <template>
   <el-collapse v-model="activeNames" @change="handleChange">
-    <el-collapse-item
-      title="태그선택"
-      name="1"
-      style="text-align:center"
-    >
-      <el-button style="margin:5px" @click="search(this.selected_tags)">검색</el-button>
+    <el-collapse-item title="태그선택" name="1" style="text-align:center">
+      <el-button style="margin:5px" @click="search(this.selected_tags)"
+        >검색</el-button
+      >
       <div v-if="this.selected_tags.length == 0" style="text-align:center">
         <h3>태그를 선택해주세요</h3>
       </div>
       <div style="text-align:center">
         <span v-for="tag in selected_tags" :key="tag" style="margin:3px">{{
-          tag
+          tag.list_name
         }}</span>
       </div>
       <div>
@@ -20,12 +18,9 @@
             ><div class="grid-content bg-purple">
               <el-divider content-position="top">규모</el-divider>
               <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-                <el-checkbox
-                  v-for="tag in sizes"
-                  :label="tag.list_name"
-                  :key="tag"
-                  >{{ tag.list_name }}</el-checkbox
-                >
+                <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{
+                  tag.list_name
+                }}</el-checkbox>
               </el-checkbox-group>
             </div></el-col
           >
@@ -37,7 +32,8 @@
                   ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
                     <el-checkbox
                       v-for="tag in tag1"
-                      :label="tag.list_name"
+                      :label="tag"
+                      :value="tag"
                       :key="tag"
                       >{{ tag.list_name }}</el-checkbox
                     >
@@ -45,42 +41,30 @@
                 >
                 <el-tab-pane label="tag2"
                   ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-                    <el-checkbox
-                      v-for="tag in tag2"
-                      :label="tag.list_name"
-                      :key="tag"
-                      >{{ tag.list_name }}</el-checkbox
-                    >
+                    <el-checkbox v-for="tag in tag2" :label="tag" :key="tag">{{
+                      tag.list_name
+                    }}</el-checkbox>
                   </el-checkbox-group></el-tab-pane
                 >
                 <el-tab-pane label="tag3"
                   ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-                    <el-checkbox
-                      v-for="tag in tag3"
-                      :label="tag.list_name"
-                      :key="tag"
-                      >{{ tag.list_name }}</el-checkbox
-                    >
+                    <el-checkbox v-for="tag in tag3" :label="tag" :key="tag">{{
+                      tag.list_name
+                    }}</el-checkbox>
                   </el-checkbox-group></el-tab-pane
                 >
                 <el-tab-pane label="tag4"
                   ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-                    <el-checkbox
-                      v-for="tag in tag4"
-                      :label="tag.list_name"
-                      :key="tag"
-                      >{{ tag.list_name }}</el-checkbox
-                    >
+                    <el-checkbox v-for="tag in tag4" :label="tag" :key="tag">{{
+                      tag.list_name
+                    }}</el-checkbox>
                   </el-checkbox-group></el-tab-pane
                 >
                 <el-tab-pane label="tag5"
                   ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-                    <el-checkbox
-                      v-for="tag in tag5"
-                      :label="tag.list_name"
-                      :key="tag"
-                      >{{ tag.list_name }}</el-checkbox
-                    >
+                    <el-checkbox v-for="tag in tag5" :label="tag" :key="tag">{{
+                      tag.list_name
+                    }}</el-checkbox>
                   </el-checkbox-group></el-tab-pane
                 >
               </el-tabs>
@@ -90,6 +74,9 @@
       </div>
     </el-collapse-item>
   </el-collapse>
+  <div>
+    <SearchCompanyMultiList :selected_tags="selected_tags" />
+  </div>
 
   <!-- <div v-for="tag in selected_tags" :key="tag">
     <el-divider content-position="left"
@@ -106,10 +93,10 @@
 <script>
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-// import TagCompanyList from "./TagCompanyList.vue";
+import SearchCompanyMultiList from "./SearchCompanyMultiList.vue";
 export default {
   name: "SelectCompanyTags",
-  // components: { TagCompanyList },
+  components: { SearchCompanyMultiList },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -122,6 +109,8 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
+        console.log("어케저장되고있냐");
+        console.log(res.data);
         this.sizes = res.data.slice(0, 4);
         this.tag1 = res.data.slice(4, 7);
         this.tag2 = res.data.slice(7, 10);
@@ -139,6 +128,7 @@ export default {
         }
       });
     return {
+      viewmultilist: true,
       tabPosition: "left",
       user_index: "",
       sizes: [],
@@ -149,6 +139,7 @@ export default {
       tag5: [],
       checksize: [],
       selected_tags: [],
+      selected:[],
       // activeNames: ["1"],
     };
   },
@@ -171,9 +162,19 @@ export default {
         loading.close();
       }, 1000);
     },
-    search(selected_tags){
-      console.log(selected_tags)
-    }
+    search() {
+      console.log("이름으로보내지고있는가?");
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.viewmultilist = false;
+      }, 1000);
+    },
   },
 };
 </script>

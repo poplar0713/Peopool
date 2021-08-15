@@ -17,90 +17,90 @@
         </el-row>
       </el-card>
     </el-carousel-item>
-    <!-- 모달창 -->
-    <el-dialog v-model="dialogVisible" class="info">
-      <el-container style="text-align:center">
-        <el-header>
-          <h2>
-            {{ this.company_info.ent_name }}&nbsp;&nbsp;
-            <!-- 팔로우일경우 -->
-            <span v-if="follow" style="color: Tomato;">
-              <i
-                class="fas fa-heart fa-2x"
-                size:7x
-                @click="clickfollowBtn"
-                style="cursor:pointer"
-              ></i>
-            </span>
-            <!-- 언팔로우일경우 -->
-            <span v-if="follow == false" style="color: Tomato;">
-              <i
-                @click="clickfollowBtn"
-                class="far fa-heart fa-2x"
-                style="cursor:pointer"
-              ></i>
-            </span>
-          </h2>
-        </el-header>
-        <br />
-        <el-collapse v-model="activeNames" @change="handleChange">
-          <el-collapse-item title="기본정보" name="1">
-            <div>
-              <el-container>
-                <!-- 왼쪽 사진 -->
-                <el-aside width="300px"
-                  ><el-image
-                    style="width: 300px; height: 300px"
-                    :src="ent_img"
-                  ></el-image
-                ></el-aside>
-                <!--  -->
-                <el-main>
-                  <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
-                  {{ this.company_info.ent_info }}
-                  <br />
-                  {{ this.company_info.ent_introduce }}</el-main
-                >
-              </el-container>
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="역사" name="2">
-            <div>
-              {{ this.company_info.ent_history }}
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="태그" name="3">
-            <div
-              v-if="this.ent_tags.length > 0"
-              style="width:100%; word-break:break-all;word-wrap:break-word;"
-            >
-              <el-tag
-                v-for="item in ent_tags"
-                style="margin:5px"
-                :key="item.list_index"
-                :type="warning"
-                effect="plain"
-                closable
-                :disable-transitions="true"
-                @click="GetTagCompany(item.list_name)"
-              >
-                {{ item.list_name }}
-              </el-tag>
-            </div>
-            <div v-else style="align-text:center">
-              선택된 태그가 없습니다
-            </div>
-          </el-collapse-item>
-          <el-collapse-item title="연락처 및 찾아오는주소" name="4">
-            <div>Tel. {{ this.company_info.ent_contact }}</div>
-            <div>email. {{ this.company_info.ent_email }}</div>
-            <div>address. {{ this.company_info.ent_address }}</div>
-            <div>website. {{ this.company_info.ent_website }}</div>
-          </el-collapse-item>
-        </el-collapse>
-      </el-container>
-    </el-dialog>
   </el-carousel>
+  <!-- 모달창 -->
+  <el-dialog v-model="dialogVisible" class="info">
+    <el-container style="text-align:center">
+      <el-header>
+        <h2>
+          {{ this.company_info.ent_name }}&nbsp;&nbsp;
+          <!-- 팔로우일경우 -->
+          <span v-if="follow" style="color: Tomato;">
+            <i
+              class="fas fa-heart fa-2x"
+              size:7x
+              @click="clickfollowBtn"
+              style="cursor:pointer"
+            ></i>
+          </span>
+          <!-- 언팔로우일경우 -->
+          <span v-if="follow == false" style="color: Tomato;">
+            <i
+              @click="clickfollowBtn"
+              class="far fa-heart fa-2x"
+              style="cursor:pointer"
+            ></i>
+          </span>
+        </h2>
+      </el-header>
+      <br />
+      <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse-item title="기본정보" name="1">
+          <div>
+            <el-container>
+              <!-- 왼쪽 사진 -->
+              <el-aside width="300px"
+                ><el-image
+                  style="width: 300px; height: 300px"
+                  :src="ent_img"
+                ></el-image
+              ></el-aside>
+              <!--  -->
+              <el-main>
+                <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
+                {{ this.company_info.ent_info }}
+                <br />
+                {{ this.company_info.ent_introduce }}</el-main
+              >
+            </el-container>
+          </div>
+        </el-collapse-item>
+        <el-collapse-item title="역사" name="2">
+          <div>
+            {{ this.company_info.ent_history }}
+          </div>
+        </el-collapse-item>
+        <el-collapse-item title="태그" name="3">
+          <div
+            v-if="this.ent_tags.length > 0"
+            style="width:100%; word-break:break-all;word-wrap:break-word;"
+          >
+            <el-tag
+              v-for="item in ent_tags"
+              style="margin:5px"
+              :key="item.list_index"
+              :type="warning"
+              effect="plain"
+              closable
+              :disable-transitions="true"
+              @click="GetTagCompany(item.list_name)"
+            >
+              {{ item.list_name }}
+            </el-tag>
+          </div>
+          <div v-else style="align-text:center">
+            선택된 태그가 없습니다
+          </div>
+        </el-collapse-item>
+        <el-collapse-item title="연락처 및 찾아오는주소" name="4">
+          <div>Tel. {{ this.company_info.ent_contact }}</div>
+          <div>email. {{ this.company_info.ent_email }}</div>
+          <div>address. {{ this.company_info.ent_address }}</div>
+          <div>website. {{ this.company_info.ent_website }}</div>
+        </el-collapse-item>
+      </el-collapse>
+    </el-container>
+  </el-dialog>
 </template>
 
 <script>

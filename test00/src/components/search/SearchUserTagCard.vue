@@ -399,7 +399,7 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          path: "SearchUser",
+          name: "SearchUser",
           query: { keyword: `${keyword}` },
         });
       }, 2000);

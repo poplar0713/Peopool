@@ -21,22 +21,45 @@ export default {
   components: {},
   props: [],
   data() {
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/classlist/name", {
-        params: {
-          name: this.$route.query.keyword,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        this.relatedtaglist = res.data;
-      });
+    console.log("c");
+    console.log(this.$route.query.keyword);
+    if (typeof this.$route.query.keyword == "object") {
+      for (var word of this.$route.query.keyword) {
+        console.log(word);
+        axios
+          .get("https://i5d206.p.ssafy.io:8443/classlist/name", {
+            params: {
+              name: word,
+            },
+          })
+          .then((res) => {
+            console.log("여기");
+            console.log(res.data);
+            for (var tag of res.data) {
+              console.log(tag);
+              this.relatedtaglist.push(tag);
+            }
+          });
+      }
+    } else if (typeof this.$route.query.keyword == "string") {
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/classlist/name", {
+          params: {
+            name: this.$route.query.keyword,
+          },
+        })
+        .then((res) => {
+          console.log("여기");
+          console.log(res.data);
+          this.relatedtaglist = res.data;
+        });
+    }
     return {
       relatedtaglist: [],
     };
   },
   methods: {
-    gototagcompany(tag) {
+    gototagcompany(tagname) {
       const loading = this.$loading({
         lock: true,
         text: "Loading",
@@ -45,7 +68,10 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-        this.$router.push({ path: "SearchCompany", query: { keyword: tag } });
+        this.$router.push({
+          name: "SearchCompany",
+          query: { keyword: tagname },
+        });
       }, 2000);
       setTimeout(() => {
         location.reload();
