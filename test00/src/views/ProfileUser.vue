@@ -42,13 +42,12 @@
             <div v-else>
               {{ userdata.resumefilepath }}
               <!-- <webviewer :initialDoc="userdata.resumefilepath" /> -->
-              <webviewer
+              <!-- <webviewer
                 initialDoc="https://i5d206.p.ssafy.io/file/210814/e63203ae-6183-4621-8dee-8dd45e78725c.pdf"
-              />
-            </div>
-            <div>
+              /> -->
               <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
+            <div></div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
