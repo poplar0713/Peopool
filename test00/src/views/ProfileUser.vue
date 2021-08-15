@@ -39,12 +39,15 @@
             <div v-if="userdata.resume_index == ''" class="fileDoc">
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
             </div>
-            <div>
+            <div v-else>
               {{ userdata.resumefilepath }}
               <!-- <webviewer :initialDoc="userdata.resumefilepath" /> -->
               <webviewer
                 initialDoc="https://i5d206.p.ssafy.io/file/210814/e63203ae-6183-4621-8dee-8dd45e78725c.pdf"
               />
+            </div>
+            <div>
+              <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
@@ -97,22 +100,12 @@ export default {
         var result = res.data[0];
 
         this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io/file/" +
-          result.photo_savefolder +
-          "/" +
-          result.photo_savefile;
+          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
         this.userdata.resumefilepath =
-          "https://i5d206.p.ssafy.io/file/" +
-          result.resume_savefolder +
-          "/" +
-          result.resume_savefile;
-
+          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
         console.log(this.userdata.resumefilepath);
         this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io/file/" +
-          result.video_savefolder +
-          "/" +
-          result.video_savefile;
+          "/file/" + result.video_savefolder + "/" + result.video_savefile;
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
@@ -220,7 +213,6 @@ export default {
       username: "",
       mytags: [],
       tabPosition: "left",
-      // testdata: [],
       userdata: [
         { ind_name: "" },
         { ind_gender: "" },
