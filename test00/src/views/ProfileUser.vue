@@ -33,20 +33,17 @@
             </div>
           </el-tab-pane>
 
-          <el-tab-pane label="태그관리"
-            >sdfsdgd
-            <div v-if="show">
-              adskjdskljf
-              <input v-model="testinput" />
-            </div>
-            <button @click="testreload">reload</button> <SideBarProfileUserTags
+          <el-tab-pane label="태그관리">
+            <SideBarProfileUserTags
           /></el-tab-pane>
           <el-tab-pane label="서류관리">
             <SideBarProfileUserDoc />
+            <el-button type="warning" round @click="test">show</el-button>
             <div v-if="userdata.resume_index == ''" class="fileDoc">
               {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
             </div>
             <div v-else id="webviewer">
+              {{ userdata.resumefilepath }}
               <el-button type="warning" round @click="testreload"
                 >나의 이력서 보기</el-button
               >
@@ -218,11 +215,14 @@ export default {
           headers: { Authorization: token },
         })
         .then((response) => {
-          this.userdataload();
-          this.show = false;
           if (response.status == 200) {
             alert("업로드 되었습니다!");
           }
+          setTimeout(() => {
+            this.userdataload();
+            this.show = false;
+          }, 2000);
+          console.log("reload resume: ", this.userdata.resumefilepath);
         })
         .catch((error) => {
           console.log(error);
@@ -244,6 +244,7 @@ export default {
       this.userdata.photofilepath =
         "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
       console.log(this.userdata.photofilepath);
+      // this.userdata.resumefilepath = "/docx_pdf/test.pdf";
       this.userdata.resumefilepath =
         "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
       this.userdata.videofilepath =
@@ -279,6 +280,9 @@ export default {
     },
     testreload() {
       this.show = !this.show;
+    },
+    test() {
+      this.show = false;
     },
   },
 };
