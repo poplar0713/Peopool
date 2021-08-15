@@ -6,15 +6,17 @@
       <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-row :gutter="20">
-          <el-col :span="12"
+          <el-col
+            :span="12"
+            style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">요청받은 인터뷰</el-divider
-              ><UserSugInterview /></div
+              <h4 style="text-align:center">요청받은 인터뷰</h4><UserSugInterview /></div
           ></el-col>
-          <el-col :span="12"
+          <el-col
+            :span="12"
+            style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 일정</el-divider
-              ><UserSchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4><UserSchedule /></div
           ></el-col>
         </el-row>
       </el-main>

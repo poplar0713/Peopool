@@ -22,11 +22,10 @@
             </el-tab-pane>
             <!-- 심사중  -->
             <el-tab-pane label="심사" name="third">
-              <!--  -->
               <div>
                 <el-row :gutter="24">
                   <el-col :span="6" v-for="(item, i) in exaimining" :key="i">
-                    <ExamineCard :item="item" v-if="item.int_done == null" />
+                    <ExamineCard :item="item" v-if="item.int_done == 'W'" />
                   </el-col>
                 </el-row>
               </div>
@@ -78,7 +77,12 @@ export default {
       })
       .then((res) => {
         console.log(res);
-        this.exaimining = res.data;
+        // W인 애들만..
+        for (var user of res.data) {
+          if (user.int_done == "W") {
+            this.exaimining.push(user);
+          }
+        }
       })
       .catch((err) => {
         console.log("token error");

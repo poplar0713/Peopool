@@ -1,5 +1,6 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       InterviewSug.filter(
         (data) =>

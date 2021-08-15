@@ -98,7 +98,6 @@ export default {
     return {
       now: new Date(),
       tabposition: "right",
-      company: "로그인된기업",
       InterviewDays: [],
     };
   },

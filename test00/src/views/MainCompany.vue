@@ -6,14 +6,14 @@
       <el-main>
         <el-row :gutter="20">
           <el-col :span="12"
+          style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">제안한 면접</el-divider
-              ><CompanySugInterview /></div
+              <h4 style="text-align:center">제안한 면접</h4><CompanySugInterview /></div
           ></el-col>
           <el-col :span="12"
+          style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 스케줄</el-divider
-              ><CompanySchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4><CompanySchedule /></div
           ></el-col>
         </el-row>
         <div>

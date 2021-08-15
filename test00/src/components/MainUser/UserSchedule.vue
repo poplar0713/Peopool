@@ -1,5 +1,6 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       myinterview.filter(
         (data) =>
@@ -14,7 +15,7 @@
       label="Date"
       prop="int_start"
       sortable
-      width="100"
+      width="160%"
     >
     </el-table-column>
     <el-table-column align="center" label="Company" prop="ent_name">

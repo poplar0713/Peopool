@@ -1,5 +1,6 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       InterviewReq.filter(
         (data) =>
@@ -28,11 +29,7 @@
     </el-table-column>
     <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
     </el-table-column>
-    <el-table-column
-      align="center"
-      label="한마디"
-      prop="sug_message"
-    >
+    <el-table-column align="center" label="한마디" prop="sug_message">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
@@ -191,18 +188,19 @@ export default {
     },
     reject(index, row, sugindex) {
       console.log(index, row);
-      axios.put(`https://i5d206.p.ssafy.io:8443/sug/reject?index=${sugindex}`, {
-        headers: { Authorization: this.token },
-      })
-      .then(()=>{
-        this.dialogVisible=false;
-        this.$message({
+      axios
+        .put(`https://i5d206.p.ssafy.io:8443/sug/reject?index=${sugindex}`, {
+          headers: { Authorization: this.token },
+        })
+        .then(() => {
+          this.dialogVisible = false;
+          this.$message({
             showClose: true,
             message: "면접요청이 거절되었습니다",
             type: "danger",
           });
-          location.reload()
-      })
+          location.reload();
+        });
     },
     filterHandler(value, row, column) {
       const property = column["property"];

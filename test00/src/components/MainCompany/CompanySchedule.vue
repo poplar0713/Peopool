@@ -1,5 +1,6 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       myinterview.filter(
         (data) =>
@@ -42,7 +43,11 @@
                 "
                 >Interview Room</el-button
               >
-              <el-button size="mini" @click="FinishInterview(scope.row.int_index)">면접종료</el-button>
+              <el-button
+                size="mini"
+                @click="FinishInterview(scope.row, scope.row.int_index)"
+                >면접종료</el-button
+              >
             </div></el-col
           >
         </el-row>
@@ -102,15 +107,23 @@ export default {
         });
       }, 1000);
     },
-    FinishInterview(interviewindex){
-      axios.put("https://i5d206.p.ssafy.io:8443/int/finish", {
-        headers: { Authorization: this.token },
-        data:{
-          int_index:interviewindex
-        }
-
-      })
-    }
+    FinishInterview(row, interviewindex) {
+      axios
+        .put("https://i5d206.p.ssafy.io:8443/int/finish", {
+          headers: { Authorization: this.token },
+          int_index: interviewindex,
+        })
+        .then(() => {
+          this.$message({
+            message: "수정완료 되었습니다",
+            type: "success",
+          });
+          this.myinterview.splice(this.myinterview.indexOf(row), 1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

@@ -3,12 +3,7 @@
     >Followers</el-button
   >
 
-  <el-dialog
-    title="Followers"
-    v-model="dialogVisible"
-    width="30%"
-    :before-close="handleClose"
-  >
+  <el-dialog title="Followers" v-model="dialogVisible" width="30%">
     <!--  -->
     <el-table
       :data="
@@ -41,7 +36,7 @@ import axios from "axios";
 import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
-  name:"UserFollowers",
+  name: "UserFollowers",
   components: { CompanyInfo },
   data() {
     return {
@@ -97,23 +92,6 @@ export default {
         .then((res) => {
           console.log(res),
             this.Followers.splice(this.Followers.indexOf(row), 1);
-        })
-        .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
-          if (err.response == 401) {
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
-    },
-    handleClose(done) {
-      this.$confirm("창을 닫으시겠습니까?")
-        .then(() => {
-          done();
-          this.dialogVisible = false;
-          location.reload();
         })
         .catch((err) => {
           console.log("token error");

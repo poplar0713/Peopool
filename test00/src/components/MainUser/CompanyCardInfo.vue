@@ -257,7 +257,7 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          query: { keyword: `${keyword}` },
         });
       }, 2000);
       setTimeout(() => {
