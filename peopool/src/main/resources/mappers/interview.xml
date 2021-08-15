@@ -63,6 +63,12 @@
 		where int_index=#{int_index}
 	</update>
 	
+	<update id="cancleInterview" parameterType="Interview">
+		update interview
+		set int_end = now()
+		where int_index=#{int_index}
+	</update>
+	
 	<insert id="registerInterview" parameterType="Interview">
 		insert into interview(ind_index, ent_index, int_start, int_url)
 		values(#{ind_index}, #{ent_index}, #{int_start}, #{int_url})

@@ -8,7 +8,7 @@ public class IntCard {
 	String int_start; // 면접 시작 시간
 	String int_end; // 면접 종료 시간
 	String int_roomnumber; // 면접 room number
-	String int_show; // 진행 여부 (show / now show)
+	String int_show; // 진행 여부 (show / now show / cancle)
 	String ind_name; // 개인 이름
 	String ent_name; // 기업 이름
 	String int_done; // 면접 결과
