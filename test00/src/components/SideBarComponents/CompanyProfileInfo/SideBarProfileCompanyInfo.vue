@@ -9,8 +9,33 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
-        {{ this.ruleForm.ent_image }}<br />
-        <el-input type="" v-model="ruleForm.ent_image"></el-input>
+        <div
+          v-if="ruleForm.ent_image == ''"
+          class="box"
+          style="background: #BDBDBD;"
+        >
+          <img
+            class="cprofile"
+            id="cprofilephoto"
+            src="https://i5d206.p.ssafy.io/file/thumbuser.png"
+          />
+        </div>
+        <div v-else class="box" style="background: #BDBDBD;">
+          <img
+            class="cprofile"
+            id="cprofilephoto"
+            :src="'https://i5d206.p.ssafy.io/file/' + ruleForm.ent_image"
+          />
+        </div>
+        <!-- {{ this.ruleForm.ent_image }}<br /> -->
+        <input
+          type="file"
+          id="companyprofile"
+          ref="companyprofile"
+          @change="changept(this)"
+          accept="image/jpeg, image/jpg, image/png"
+          multiple="multiple"
+        />
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">
@@ -61,12 +86,14 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    this.userindex = index;
     // 기업정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
+        console.log("this.company-", res);
         this.ruleForm.ent_index = res.data.ent_index;
         this.ruleForm.ent_image = res.data.ent_image;
         this.ruleForm.ent_ceo = res.data.ent_ceo;
@@ -97,6 +124,7 @@ export default {
     };
     return {
       loading: false,
+      userindex: "",
       ruleForm: {
         ent_index: "",
         ent_image: "",
@@ -161,14 +189,43 @@ export default {
     };
   },
   methods: {
+    changept() {
+      let photoip = document.getElementById("companyprofile");
+      let imgtag = document.getElementById("cprofilephoto");
+      imgtag.src = URL.createObjectURL(photoip.files[0]);
+      imgtag.onload = function() {
+        URL.revokeObjectURL(imgtag.src);
+      };
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          var frm = new FormData();
+          var photodata = this.$refs.companyprofile.files[0];
+          if (photodata != "" && photodata != null) {
+            frm.append("upfile", photodata);
+            axios
+              .post(
+                `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
+                frm,
+                {
+                  headers: { Authorization: this.token },
+                }
+              )
+              .then((res) => {
+                console.log("cphoto: ", res);
+              })
+              .catch((err) => {
+                console.log("cerr: ", err);
+              });
+          }
+
           // 기업정보수정
+
           axios
             .put("https://i5d206.p.ssafy.io:8443/poe", {
               headers: { Authorization: this.token },
-              ent_image: this.ruleForm.ent_image,
+              // ent_image: this.ruleForm.ent_image,
               ent_index: this.ruleForm.ent_index,
               ent_ceo: this.ruleForm.ent_ceo,
               ent_history: this.ruleForm.ent_history,
@@ -216,4 +273,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.box {
+  width: 150px;
+  height: 150px;
+  /* border-radius: 70%; */
+  overflow: hidden;
+
+  margin: 30px;
+}
+.cprofile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>

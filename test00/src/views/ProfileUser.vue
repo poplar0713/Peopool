@@ -18,6 +18,7 @@
             </div>
             <div v-else>
               <SideBarProfileUserIntroduction
+                v-if="userdata.ind_introduce"
                 :photofilepath="userdata.photofilepath"
                 :introduce="userdata.ind_introduce"
               />
@@ -29,7 +30,10 @@
               소개영상이 없습니다.
             </div>
             <div v-else>
-              <PRVideo :vediofilepath="userdata.videofilepath" />
+              <PRVideo
+                v-if="userdata.videofilepath"
+                :vediofilepath="userdata.videofilepath"
+              />
             </div>
           </el-tab-pane>
 
@@ -40,17 +44,13 @@
             <SideBarProfileUserDoc />
 
             <div v-if="userdata.resume_index == ''" class="fileDoc">
-              {{ this.resume_index }}등록된 이력서 및 포트폴리오가 없습니다.
+              등록된 이력서 및 포트폴리오가 없습니다.
             </div>
-            <div v-else id="webviewer">
-              <el-button
-                type="warning"
-                round
-                @click="testreload"
-                style="margin:20px"
-                >나의 이력서 보기</el-button
-              >
-              <webviewer :initialDoc="userdata.resumefilepath" v-if="show" />
+            <div v-else>
+              <webviewer
+                v-if="userdata.resumefilepath"
+                :initialDoc="userdata.resumefilepath"
+              />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
@@ -88,45 +88,13 @@ export default {
     DeleteUserAccount,
     webviewer,
   },
-  beforeMount() {},
-  created() {
-    this.userdataload();
-    console.log("userdata ind introduce: ", this.userdata.ind_introduce);
-    // const token = this.$cookies.get("PID_AUTH");
-    // const decoded = jwt_decode(token);
-    // const index = decoded.index;
-    // axios
-    //   .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-    //     headers: { Authorization: token },
-    //   })
-    //   .then((res) => {
-    //     var result = res.data[0];
+  async created() {
+    await this.userdataload();
 
-    //     this.userdata.photofilepath =
-    //       "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
-    //     this.userdata.resumefilepath =
-    //       "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
-    //     console.log(this.userdata.resumefilepath);
-    //     this.userdata.videofilepath =
-    //       "/file/" + result.video_savefolder + "/" + result.video_savefile;
-    //     this.userdata.resume_originfile = result.resume_originfile;
-    //     this.userdata.photo_originfile = result.photo_originfile;
-    //     this.userdata.video_originfile = result.video_originfile;
-    //     this.userdata.ind_switch = result.ind_switch;
-    //     this.userdata.ind_introduce = result.ind_introduce;
-    //     this.userdata.photo_index = result.photo_index;
-    //     this.userdata.resume_index = result.resume_index;
-    //     this.userdata.video_index = result.resume_index;
-    //     this.userdata.ind_index = result.ind_index;
-    //     this.userdata.ind_name = result.ind_name;
-    //     this.userdata.ind_email = result.ind_email;
-    //     this.userdata.ind_phone = result.ind_phone;
-    //     this.userdata.ind_gender = result.ind_gender;
-    //     this.testurl =
-    //       "https://i5d206.p.ssafy.io" + this.userdata.resumefilepath;
-    //     console.log("this userintroduce: ", this.userdata.ind_introduce);
-    //   });
+    console.log("this created introduce: ", this.userdata.ind_introduce);
+    console.log("this created resumefile: ", this.userdata.resumefilepath);
   },
+  beforeMount() {},
   mounted() {
     console.log(server_url);
   },
@@ -228,7 +196,6 @@ export default {
         });
     },
     async userdataload() {
-      alert("async await");
       const token = this.$cookies.get("PID_AUTH");
       const decoded = jwt_decode(token);
       const index = decoded.index;
