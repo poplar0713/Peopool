@@ -91,7 +91,6 @@ export default {
   },
   beforeMount() {},
   data() {
-    console.log("introduce: ", this.introduce);
     return {
       loading: false,
       userindex: "",

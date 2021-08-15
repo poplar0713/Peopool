@@ -177,7 +177,6 @@ export default {
           this.$router.push("/");
         }
       });
-    setTimeout(() => {}, 2000);
     return {
       username: "",
       mytags: [],
