@@ -20,6 +20,7 @@ import com.ssafy.peopool.model.Classification;
 import com.ssafy.peopool.model.service.ClassificationService;
 
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.spring.web.json.Json;
 
 @RestController
 @RequestMapping("/cla")
@@ -43,6 +44,13 @@ public class ClassificationController {
 	@GetMapping("/ent")
 	public ResponseEntity<List<Map<Object, Object>>> getEnt(@RequestParam("name")String name ) {
 		return new ResponseEntity<>(classificationService.getEnt(name), HttpStatus.OK);
+
+	}
+	
+	@ApiOperation(value = "여러 조건별 기업목록", response = String.class)
+	@GetMapping("/case")
+	public ResponseEntity<List<Map<Object, Object>>> getCase(@RequestParam("list")List<Integer> list ) {
+		return new ResponseEntity<>(classificationService.getCase(list), HttpStatus.OK);
 
 	}
 	

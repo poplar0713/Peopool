@@ -23,8 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.peopool.model.FolCard;
 import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.service.FollowService;
+import com.ssafy.peopool.response.BaseResponseBody;
+import com.ssafy.peopool.response.LoginRes;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/fol")
@@ -111,9 +115,18 @@ public class FollowController {
 	
 	@ApiOperation(value = "팔로우 했는지 안했는지 조회", response = String.class)
 	@PostMapping("/check")
+	@ApiResponses({
+        @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+        @ApiResponse(code = 401, message = "인증 실패", response = BaseResponseBody.class),
+        @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
+        @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
+    })
 	public ResponseEntity<Integer> getCheck(@RequestBody Follow follow) throws SQLException{
 		Follow fol = followService.getCheck(follow);
-		return ResponseEntity.status(200).body(fol.getFol_index());
+		if(fol != null) {
+			return ResponseEntity.status(200).body(fol.getFol_index());
+		}
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 	
 

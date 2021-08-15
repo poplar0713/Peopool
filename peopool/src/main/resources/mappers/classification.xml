@@ -29,4 +29,19 @@
 		from classlist
 		where list_name = #{name});
 	</select>
+	
+	<select id="getCase" parameterType="List" resultType="HashMap">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where e.ent_index in (select ent_index
+						from classification
+						where list_index in
+						<foreach collection="list" item="item" open="(" close=")" separator=",">
+						#{item}
+						</foreach>
+						group by ent_index
+						having count(*) = #{count});
+	</select>
+	
 </mapper>

@@ -1,25 +1,27 @@
 <template>
   <div id="formdiv">
     <form v-on:submit.prevent enctype="multipart/form-data">
-      <input
-        multiple="multiple"
-        type="file"
-        name="file"
-        id="file"
-        ref="file"
-        class="file"
-      />
+      <input multiple="multiple" type="file" ref="file" />
       <button @click="upload">
         Upload
       </button>
     </form>
   </div>
+  <!-- <webviewer :initialDoc="this.resumefilepath" /> -->
 </template>
 
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+// import webviewer from "@/components/MainCompany/webviewer.vue";
 export default {
+  props: {
+    // resumefilePath:String
+  },
+
+  components: {
+    // webviewer
+  },
   data() {
     return {
       fileList: "",
@@ -47,7 +49,10 @@ export default {
           headers: { Authorization: token },
         })
         .then((response) => {
-          console.log(response);
+          console.log(response.status);
+          if (response.status == 200) {
+            alert("업로드 되었습니다!");
+          }
         })
         .catch((error) => {
           console.log(error);
