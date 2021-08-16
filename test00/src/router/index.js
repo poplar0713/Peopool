@@ -11,7 +11,6 @@ import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
 import FinduserByTag from "@/views/FinduserBytag";
-import cookies from "vue-cookies";
 const routes = [
   {
     path: "/meetinter",
