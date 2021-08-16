@@ -3,8 +3,8 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-        <SideBarProfileCompany/>
-      <el-main>
+      <el-main style="width:50%; text-align:center; margin:0 auto; padding: 70px 0;">
+        <SideBarProfileCompany />
       </el-main>
     </el-container>
   </el-container>
@@ -19,7 +19,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name: "MainCompany",
+  name: "ProfileCompany",
   components: {
     SideBarCompany,
     headerSearchUser,
@@ -48,7 +48,7 @@ export default {
       .catch((err) => {
         console.log("token error");
         if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }

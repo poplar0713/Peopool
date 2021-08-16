@@ -52,6 +52,10 @@
                 :initialDoc="userdata.resumefilepath"
               />
             </div>
+            <div>
+              {{ userdata.resumefilepath }}
+              <webviewer :initialDoc="userdata.resumefilepath" />
+            </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
@@ -74,9 +78,9 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
-
+// 'https://i5d206.p.ssafy.io' -->사진 및 확인
 export default {
-  name: "MainUser",
+  name: "ProfileUser",
   components: {
     SideBarUser,
     headerSearchCompany,

@@ -67,14 +67,13 @@
             <el-tag
               v-for="item in ent_tags"
               style="margin:5px"
-              :key="item.taglist_index"
+              :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
-              @click="GetTagCompany(item.taglist_name)"
+              @click="GetTagCompany(item.list_name)"
             >
-              {{ item.taglist_name }}
+              {{ item.list_name }}
             </el-tag>
           </div>
           <div v-else style="align-text:center">
@@ -96,6 +95,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name: "SearchCompanyCard",
   props: { item: Number },
   data() {
     // 토큰가져오기
@@ -112,12 +112,16 @@ export default {
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();

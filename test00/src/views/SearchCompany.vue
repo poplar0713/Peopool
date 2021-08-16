@@ -6,7 +6,7 @@
       <el-main>
         <div>
           <el-divider content-position="left"
-            ><h1>'{{ $route.query.keyword }}' 연관태그</h1></el-divider
+            ><h1>연관태그</h1></el-divider
           >
           <SearchCompanyRelatedTags />
         </div>

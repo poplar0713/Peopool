@@ -5,9 +5,7 @@
     <el-tab-pane label="프로필사진 및 소개"
       ><SideBarProfileUserIntroduction :photofilepath="userdata.photofilepath"
     /></el-tab-pane>
-    <el-tab-pane label="소개영상"
-      ><PRVideo :vediofilepath="userdata.videofilepath"
-    /></el-tab-pane>
+    <el-tab-pane label="소개영상"><PRVideo :vediofilepath="userdata.videofilepath"/></el-tab-pane>
     <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
     <el-tab-pane label="서류관리"
       ><SideBarProfileUserDoc :docfilepath="userdata.resumefilepath"
@@ -26,6 +24,7 @@ import DeleteUserAccount from "./DeleteUserAccount.vue";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 export default {
+  name:"SideBarProfileUser",
   components: {
     SideBarProfileUserInfo,
     SideBarProfileUserIntroduction,
@@ -48,10 +47,7 @@ export default {
         this.userdata.photofilepath =
           "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" +
-          res.data.resume_savefolder +
-          "/" +
-          res.data.resume_savefile;
+          "/file/" + res.data.resume_savefolder + "/" + res.data.resume_savefile;
         this.userdata.videofilepath =
           "/file/" + res.data.video_savefolder + "/" + res.data.video_savefile;
         this.userdata.resume_originfile = res.data.resume_originfile;
@@ -67,6 +63,8 @@ export default {
         this.userdata.ind_email = res.data.ind_email;
         this.userdata.ind_phone = res.data.ind_phone;
         this.userdata.ind_gender = res.data.ind_gender;
+        this.userdata.cat_name = res.data.cat_name;
+        this.userdata.ind_career = res.data.ind_career;
       });
     return {
       tabPosition: "left",
@@ -87,6 +85,8 @@ export default {
         { resumefilepath: "" },
         { ind_switch: "" },
         { ind_introduce: "" },
+        { cat_name: "" },
+        { ind_career: "" },
       ],
     };
   },

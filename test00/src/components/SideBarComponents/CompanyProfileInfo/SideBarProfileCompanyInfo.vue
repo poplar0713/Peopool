@@ -53,14 +53,6 @@
       <el-form-item label="WebSite" prop="ent_website">
         <el-input v-model="ruleForm.ent_website"></el-input>
       </el-form-item>
-      <!-- 기업회원 PW -->
-      <!-- <el-form-item label="Password" prop="Password">
-        <el-input type="password" v-model="ruleForm.Password"></el-input>
-      </el-form-item> -->
-      <!-- 기업회원 PW 확인 -->
-      <!-- <el-form-item label="Password Confirmation" prop="PasswordConfirm">
-        <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
-      </el-form-item> -->
       <div style="float:right">
         <el-form-item>
           <el-button
@@ -80,6 +72,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
+  name:"SideBarProfileCompanyInfo",
   components: {},
   mounted() {
     // 토큰가져오기

@@ -58,6 +58,7 @@ import jwt_decode from "jwt-decode";
 
 // import jwt_decode from "jwt-decode";
 export default {
+  name: "SideBarProfileUserIntroduction",
   props: {
     photofilepath: String,
     introduce: String,

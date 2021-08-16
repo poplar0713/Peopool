@@ -31,13 +31,18 @@
       <el-col :span="16"
         ><div>
           <UserInfo :userindex="item.ind_index" /><br />
-          <!-- <el-button type="text" @click="openInterviewMemo(item)"
-            >메모</el-button
-          > -->
-          <el-button type="success" @click="sugpass(item.int_index)"
+          <el-button
+            type="success"
+            plain
+            round
+            @click="sugpass(item.int_index), disabled"
             >입사제안</el-button
           >
-          <el-button type="danger" @click="sugfail(item.int_index)"
+          <el-button
+            type="danger"
+            plain
+            round
+            @click="sugfail(item.int_index), disabled"
             >탈락</el-button
           >
         </div></el-col
@@ -52,6 +57,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name: "ExamineCard",
   components: {
     UserInfo,
   },

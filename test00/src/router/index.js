@@ -11,7 +11,6 @@ import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
 import Inyh from "@/views/Interviewyh.vue";
 import FinduserByTag from "@/views/FinduserBytag";
-
 const routes = [
   {
     path: "/meetinter",
@@ -53,14 +52,14 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
-    path: "/searchcompany/:keyword",
+    path: "/searchcompany/",
     name: "SearchCompany",
     component: SearchCompany,
     beforeEnter: requireAuth,
   },
   {
-    path: "/searchuser/:keyword",
-    name: "searchuser",
+    path: "/searchuser/",
+    name: "SearchUser",
     component: SearchUser,
     beforeEnter: requireAuth,
   },

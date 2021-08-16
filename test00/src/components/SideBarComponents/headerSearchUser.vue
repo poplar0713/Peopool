@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: "headerSearchUser",
   data() {
     return {
       keyword: "",
@@ -25,20 +26,20 @@ export default {
 
   methods: {
     search() {
-      // console.log(this.keyword);
       const loading = this.$loading({
         lock: true,
         text: "Loading",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)",
       });
+      this.$router.push({
+        name: "SearchUser",
+        query: { keyword: this.keyword },
+      });
       setTimeout(() => {
+        location.reload();
         loading.close();
-        this.$router.push({
-          name: "searchuser",
-          params: { keyword: `${this.keyword}` },
-        });
-      }, 2000);
+      }, 1000);
     },
   },
 };

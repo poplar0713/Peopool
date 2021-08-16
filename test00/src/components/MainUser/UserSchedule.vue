@@ -1,5 +1,6 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       myinterview.filter(
         (data) =>
@@ -9,9 +10,15 @@
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="500"
   >
-    <el-table-column align="center" label="Date" prop="int_start" sortable width="100">
+    <el-table-column
+      align="center"
+      label="Date"
+      prop="int_start"
+      sortable
+      width="160%"
+    >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name">
+    <el-table-column align="center" label="Company" prop="ent_name">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
@@ -24,7 +31,9 @@
           v-if="scope.row.int_end !== 'null'"
           size="mini"
           type="danger"
-          @click="GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)"
+          @click="
+            GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)
+          "
           >Interview Room</el-button
         >
 
@@ -40,6 +49,7 @@ import axios from "axios";
 import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  name: "UserSchedule",
   components: { CompanyInfo },
   mounted() {
     const token = this.$cookies.get("PID_AUTH");
