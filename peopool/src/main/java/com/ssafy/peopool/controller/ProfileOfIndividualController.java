@@ -95,6 +95,16 @@ public class ProfileOfIndividualController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
 	}
+	
+	@ApiOperation(value = "index에 해당하는 프로필의 자기소개를 수정한다.", response = String.class)
+	@PutMapping("/intro")
+	public ResponseEntity<String> modifyIntro(@RequestBody ProfileOfIndividual profileOfIndividual) {
+		if (profileOfIndividualService.modifyIntro(profileOfIndividual)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
+	}
 
 	@ApiOperation(value = "프로필을 공개로 변경한다.", response = String.class)
 	@PutMapping("/switchOn")

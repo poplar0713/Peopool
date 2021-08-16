@@ -128,4 +128,10 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 		return profileOfIndividualRepo.modifyCareer(profileOfIndividual) == 1;
 	}
 
+	@Override
+	public boolean modifyIntro(ProfileOfIndividual profileOfIndividual) {
+		// TODO Auto-generated method stub
+		return profileOfIndividualRepo.modifyIntro(profileOfIndividual) == 1;
+	}
+
 }
