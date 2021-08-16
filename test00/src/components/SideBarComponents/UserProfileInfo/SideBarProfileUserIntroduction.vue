@@ -145,10 +145,10 @@ export default {
       }
 
       axios
-        .post("https://i5d206.p.ssafy.io:8443/poi/intro", {
+        .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
           headers: { Authorization: this.token },
           params: {
-            index: this.userindex,
+            ind_index: this.userindex,
             ind_introduce: this.userintroduce,
           },
         })

@@ -41,7 +41,8 @@
               <el-aside width="300px"
                 ><el-image
                   style="width: 300px; height: 300px"
-                  :src="ent_img"
+                  :src="company_info.ent_image_path"
+                  v-if="company_info.ent_image_path"
                 ></el-image
               ></el-aside>
               <!--  -->
@@ -138,6 +139,8 @@ export default {
         let result = res.data[0];
         this.company_info.ent_index = result.ent_index;
         this.company_info.ent_name = result.ent_name;
+        this.company_info.ent_image_path =
+          "/file/" + result.image_savefolder + "/" + "image_savefile";
         this.company_info.ent_image = result.ent_image;
         this.company_info.ent_contact = result.ent_contact;
         this.company_info.ent_address = result.ent_address;
@@ -193,6 +196,7 @@ export default {
         ent_address: "",
         ent_website: "",
         ent_introduce: null,
+        ent_image_path: "",
       },
     };
   },
