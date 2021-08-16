@@ -73,7 +73,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name:"SideBarProfileCompanyInfo",
+  name: "SideBarProfileCompanyInfo",
   components: {},
   mounted() {
     // 토큰가져오기
@@ -97,6 +97,8 @@ export default {
         this.ruleForm.ent_history = result.ent_history;
         this.ruleForm.ent_address = result.ent_address;
         this.ruleForm.ent_website = result.ent_website;
+        this.ent_image_pk = result.ent_image;
+        console.log("axios ent_index: ", this.ent_image_pk);
       })
       .catch((err) => {
         console.log("token error");
@@ -132,6 +134,7 @@ export default {
         ent_website: "",
         Password: "",
         PasswordConfirm: "",
+        ent_image_pk: "",
       },
       rules: {
         ent_ceo: [
@@ -197,7 +200,9 @@ export default {
       };
     },
     submitForm(formName) {
-      if (!this.ent_image && !this.changeprofile) {
+      console.log("this ent_index - ", this.ent_image_pk);
+      console.log("this boolean ent_indx", !this.ent_image_pk);
+      if (!this.ent_image_pk && !this.changeprofile) {
         this.failedprofile();
         return;
       }

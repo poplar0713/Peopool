@@ -212,9 +212,10 @@
 import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
+import wsocket from "@/components/utils/websocket.js";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
 //const PARTICIPANT_CLASS = "participant";
-var ws = null;
+var ws = wsocket;
 var participants = {};
 
 export default {
@@ -240,7 +241,7 @@ export default {
 
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    // ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
     this.username = localStorage.getItem("username");
     this.room = this.$route.params.url;
     ws.onmessage = (message) => {
@@ -283,7 +284,7 @@ export default {
     };
 
     ws.onopen = function() {
-      console.log("Websocket is connected!");
+      console.log("interviesroom - Websocket is connected!");
     };
   },
   methods: {
@@ -391,6 +392,7 @@ export default {
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
+      document.getElementById("chatdivtop").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
     },
