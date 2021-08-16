@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="box" style="background: #BDBDBD;">
-      <img class="profile" id="profilephoto" :src="ruleForm.photo" />
+      <img class="profile" id="profilephoto" :src="photofilepath" />
     </div>
     <el-scrollbar>
       <div
@@ -12,9 +12,7 @@
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
         <el-form
-          :model="ruleForm"
           :rules="rules"
-          ref="ruleForm"
           v-on:submit.prevent
           enctype="multipart/form-data"
         >
@@ -30,13 +28,12 @@
             />
           </el-form-item>
 
-          <el-form-item label="" prop="Introduction">
-            <el-input
-              id="introtextarea"
-              type="textarea"
-              v-model="ruleForm.Introduction"
-            ></el-input>
-          </el-form-item>
+          <el-input
+            id="introtextarea"
+            type="textarea"
+            v-model="userintroduce"
+          ></el-input>
+
           <div style="float:right">
             <el-form-item>
               <el-button @click="resetForm('ruleForm')">Reset</el-button>
@@ -47,7 +44,7 @@
                 >Save</el-button
               >
             </el-form-item>
-            <div><img :src="photofilepath" width="200px" /></div>
+            <!-- <div><img :src="photofilepath" width="200px" /></div> -->
           </div>
         </el-form>
       </div>
@@ -57,45 +54,31 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+
 // import jwt_decode from "jwt-decode";
 export default {
   name: "SideBarProfileUserIntroduction",
   props: {
     photofilepath: String,
+    introduce: String,
   },
   mounted() {
-    console.log("asdfsd");
-    console.log("photofile ", this.photofilepath);
-    // const token = this.$cookies.get("PID_AUTH");
-    // const decoded = jwt_decode(token);
-    // const index = decoded.index;
-    // this.userindex = index;
-    // axios
-    //   .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-    //     headers: { Authorization: token },
-    //   })
-    //   .then((res) => {
-    //     this.ruleForm.Introduction = res.data.ind_introduce;
-    //     this.ruleForm.photo = "/file/" + res.data.ind_photo;
-    //   })
-    //   .catch((err) => {
-    //     console.log("token error");
-    //     console.log(err.response);
-    //     if (err.response == 401) {
-    //       this.$message.error("로그인세션이 만료되었습니다");
-    //       localStorage.clear();
-    //       this.$router.push("/");
-    //     }
-    //   });
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.userindex = index;
+  },
+  created() {
+    console.log("this.introduce created- ", this.introduce);
+    console.log("this.path created- ", this.photofilepath);
+    this.userintroduce = this.introduce;
   },
   data() {
     return {
       loading: false,
       userindex: "",
-      ruleForm: {
-        photo: "https://i5d206.p.ssafy.io" + this.photofilepath,
-        Introduction: "",
-      },
+      userintroduce: this.introduce,
       rules: {
         Introduction: [
           {
@@ -122,23 +105,28 @@ export default {
         if (valid) {
           this.openFullScreen2();
           console.log(this.$refs[formName]);
+
           // 저장하는 방법 찾아보기
           var frm = new FormData();
-          var photodata = this.$refs[formName].files[0];
+          var photodata = this.$refs.photo.files[0];
           var introduce = document.getElementById("introtextarea");
           console.log(introduce.value);
+          console.log("userindex : ", this.userindex);
           // var introducedata = this.$refs[]
           frm.append("upfile", photodata);
           // frm.append("introduce", introduce.value);
 
           axios
-            .put("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
+            .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
               headers: { Authorization: this.token },
-              index: this.userindex,
-              introduce: introduce.value,
+              params: {
+                index: this.userindex,
+                introduce: introduce.value,
+              },
             })
             .then((res) => {
               console.log(res);
+              <el-alert title="업로드 되었습니다" type="success"></el-alert>;
               this.loading = true;
               setTimeout(() => {
                 this.loading = false;
@@ -188,7 +176,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .box {
   width: 150px;
   height: 150px;

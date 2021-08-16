@@ -10,6 +10,9 @@ public interface ProfileOfEnterpriseService {
 	
 	// 전체 프로필 조회
 	List<EntCard> getAllProfile() throws SQLException;
+	
+	// 전체 프로필 조회 (팔로워 순)
+	List<EntCard> getAllProfileByFollower() throws SQLException;
 
 	// 프로필 수정
 	boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
@@ -28,5 +31,8 @@ public interface ProfileOfEnterpriseService {
 	
 	// 분류에서 회사 검색
 	List<EntCard> getClassOfEnterprise(String word) throws SQLException;
+	
+	// 사진 등록
+	boolean modifyPhoto(ProfileOfEnterprise profileOfEnterprise) throws SQLException;
 
 }

@@ -56,12 +56,23 @@
         <div>
           <el-collapse v-model="activeName" accordion>
             <el-collapse-item title="Introduction" name="1">
-              <div>
-                <img :src="userdata.photofilepath" />
-              </div>
-              <div>
-                {{ this.userdata.ind_introduce }}
-              </div>
+              <el-row :gutter="20">
+                <el-col :span="6">
+                  <div class="box" style="background: #BDBDBD;">
+                    <img
+                      class="profile"
+                      id="profilephoto"
+                      :src="userdata.photofilepath"
+                      align="center"
+                    />
+                  </div>
+                </el-col>
+                <el-col :span="6" :offset="6">
+                  <div style="margin-top:30px">
+                    {{ this.userdata.ind_introduce }}
+                  </div>
+                </el-col>
+              </el-row>
             </el-collapse-item>
             <el-collapse-item title="자기소개영상" name="2">
               <div>
@@ -83,6 +94,14 @@
                 <!-- 웹뷰어 되는것 확인 -->
                 <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
                 <webviewer :initialDoc="userdata.resumefilepath" />
+              </div>
+              <div style="text-align: right;">
+                <a
+                  :href="userdata.resumefilepath"
+                  :download="userdata.resume_originfile"
+                  id="downatag"
+                  >📰 이력서 다운로드</a
+                >
               </div>
             </el-collapse-item>
             <el-collapse-item title="reservation" name="5">
@@ -412,4 +431,22 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.box {
+  width: 150px;
+  height: 150px;
+  /* border-radius: 70%; */
+  overflow: hidden;
+  margin: 30px;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#downatag {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+}
+</style>

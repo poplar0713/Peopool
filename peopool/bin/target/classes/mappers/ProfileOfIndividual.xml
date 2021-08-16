@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.peopool.model.repo.ProfileOfIndividualRepo">
+
+	<select id="getAllProfile" resultType="IndCard">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
+		from ind_profile p join individual i
+		on p.ind_index = i.ind_index
+	</select>
+	
+	<update id="modifyProfile" parameterType="ProfileOfIndividual">
+		update ind_profile 
+		set ind_resume = #{ind_resume}, ind_video=#{ind_video}, ind_photo=#{ind_photo}, ind_introduce=#{ind_introduce}
+		where ind_index = #{ind_index}
+	</update>
+	
+	<update id="modifySwitchOn" parameterType="ProfileOfIndividual">
+		update ind_profile 
+		set ind_switch = 'T'
+		where ind_index = #{ind_index}
+	</update>
+	
+	<update id="modifySwitchOff" parameterType="ProfileOfIndividual">
+		update ind_profile 
+		set ind_switch = 'F'
+		where ind_index = #{ind_index}
+	</update>
+	
+	<select id="getProfile" parameterType="int" resultType="IndCard">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, ind_resume, ind_video, ind_photo, ind_switch, ind_introduce
+		from ind_profile p join individual i
+		on p.ind_index = i.ind_index
+		where i.ind_index = #{index}
+	</select>
+	
+	<delete id="deleteProfile" parameterType="int">
+		delete from ind_profile
+		where ind_index = #{index}
+	</delete>
+</mapper>

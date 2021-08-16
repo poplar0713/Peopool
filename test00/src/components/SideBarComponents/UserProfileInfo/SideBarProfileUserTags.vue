@@ -1,14 +1,38 @@
 <template>
   <div class="select-section">
+    <div>
+      <el-divider content-position="left">직무</el-divider>
+      <div>나의 직무 ({{ this.mypart }})</div>
+      <el-select v-model="mypart_ind" filterable placeholder="" style="align-text:center">
+        <el-option
+          v-for="item in this.partlist"
+          :key="item.cat_index"
+          :label="item.cat_name"
+          :value="item.cat_index"
+        >
+        </el-option>
+      </el-select>
+      <el-button @click="modifypart">수정</el-button>
+    </div>
+    <div>
+      <el-divider content-position="left">경력</el-divider>
+      <div>나의 경력 ({{ this.mycareer }})</div>
+      <el-select v-model="mycareer_ind" filterable placeholder="" style="align-text:center">
+        <el-option
+          v-for="item in this.careerlist"
+          :key="item.car_index"
+          :label="item.car_value"
+          :value="item.car_index"
+        >
+        </el-option>
+      </el-select>
+      <el-button @click="modifycareer">수정</el-button>
+    </div>
+    <div></div>
     <el-divider content-position="left">나의 태그</el-divider>
     <div style="align-text:center">
       <!-- select -->
-      <el-select
-        v-model="value"
-        filterable
-        placeholder="Choose tags"
-        style="align-text:center"
-      >
+      <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
         <el-option
           v-for="item in options_user"
           :key="item.taglist_index"
@@ -31,13 +55,13 @@
     >
       <el-tag
         v-for="item in mytags"
-        style="margin:5px"
-        :key="item.taglist_index"
+        style="margin: 0.1rem"
+        :key="item.tag_index"
         :type="warning"
         effect="plain"
         closable
         :disable-transitions="true"
-        @close="handleClose(tag, item.tag_index)"
+        @close="handleClose(item.tag_index)"
       >
         {{ item.taglist_name }}
       </el-tag>
@@ -64,6 +88,67 @@ export default {
     decoded = jwt_decode(token);
     index = decoded.index;
     this.user_index = index;
+
+    //자신의 직무, 경력을 불러온다
+    axios
+      .get("https://localhost:8443/poi/cap", {
+        headers: { Authorization: token },
+        params: {
+          index: index,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.mypart_ind = res.data.cat_index;
+        this.mycareer_ind = res.data.car_index;
+        this.mypart = res.data.cat_name;
+        this.mycareer = res.data.car_value;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    //커리어 목록 받아오기
+    axios
+      .get("https://localhost:8443/career/", {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        this.careerlist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+
+    //직무 목록 받아오기
+    axios
+      .get("https://localhost:8443/taglist/cat", {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        this.partlist = res.data;
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
 
     // 유저전용태그목록 불러오기
     axios
@@ -92,7 +177,6 @@ export default {
         },
       })
       .then((res) => {
-        console.log(res);
         this.mytags = res.data;
       })
       .catch((err) => {
@@ -114,6 +198,13 @@ export default {
       //나의 태그들
       mytags: [],
       getNewArray: false,
+      getNewInfo: false,
+      mypart: "",
+      mycareer: "",
+      mypart_ind: "",
+      mycareer_ind: "",
+      careerlist: [],
+      partlist: [],
     };
   },
   watch: {
@@ -127,7 +218,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("다시 불러오기 ");
           this.mytags = res.data;
         })
         .catch((err) => {
@@ -139,8 +229,75 @@ export default {
           }
         });
     },
+    getNewInfo() {
+      axios
+        .get("https://localhost:8443/poi/cap", {
+          headers: { Authorization: token },
+          params: {
+            index: index,
+          },
+        })
+        .then((res) => {
+          this.mypart_ind = res.data.cat_index;
+          this.mycareer_ind = res.data.car_index;
+          this.mypart = res.data.cat_name;
+          this.mycareer = res.data.car_value;
+        })
+        .catch((err) => {
+          console.log(err.response);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            console.log("token error");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
   },
   methods: {
+    modifypart() {
+      axios
+        .put("https://localhost:8443/poi/mpart", {
+          headers: { Authorization: token },
+          ind_index: index,
+          cat_index: this.mypart_ind,
+        })
+        .then(() => {
+          this.$message.info("직무가 변경 되었습니다");
+          this.getNewInfo = !this.getNewInfo;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
+    modifycareer() {
+      axios
+        .put("https://localhost:8443/poi/mcar", {
+          headers: { Authorization: token },
+          ind_index: index,
+          cat_index: this.mycareer_ind,
+        })
+        .then(() => {
+          this.$message.info("경력사항이 변경 되었습니다");
+          this.getNewInfo = !this.getNewInfo;
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
+
     plustag() {
       // 유저본인 태그추가
       console.log(this.value);
@@ -175,8 +332,26 @@ export default {
           });
       }
     },
-    handleClose(tag, tag_index) {
-      console.log(tag);
+
+    GetTagCompany(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          params: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
+    },
+    handleClose(tag_index) {
       console.log(tag_index);
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {

@@ -86,13 +86,7 @@ const routes = [
     path: "/company/findtag",
     name: "FinduserByTag",
     component: FinduserByTag,
-    beforeEnter: function(to, from, next) {
-      if (cookies.get("PID_AUTH") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
 ];
 
