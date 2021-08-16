@@ -1,30 +1,11 @@
 <template>
-  <!-- 면접메모 -->
-  <el-dialog v-model="InterviewDialogVisible">
-    <el-container>
-      <el-main>
-        <el-input
-          type="textarea"
-          :rows="10"
-          placeholder="Please input"
-          v-model="memo"
-        >
-        </el-input
-      ></el-main>
-      <el-footer>
-        <el-button @click="clickSaveBtn" type="info">저장</el-button>
-      </el-footer>
-    </el-container>
-  </el-dialog>
-
   <el-card class="box-card" style="margin-bottom:25px;" shadow="hover">
-    <!-- v-if="item.int_done == 'W'" -->
     <el-row :gutter="20">
       <el-col :span="8"
         ><div>
           <el-avatar
             shape="square"
-            :size="60"
+            :size="100"
             :src="squareUrl"
           ></el-avatar></div
       ></el-col>
@@ -35,14 +16,16 @@
             type="success"
             plain
             round
-            @click="sugpass(item.int_index), disabled"
+            :disabled="disablecard == true"
+            @click="intpass(item.int_index), disabled"
             >입사제안</el-button
           >
           <el-button
             type="danger"
             plain
             round
-            @click="sugfail(item.int_index), disabled"
+            :disabled="disablecard == true"
+            @click="intfail(item.int_index), disabled"
             >탈락</el-button
           >
         </div></el-col
@@ -68,34 +51,31 @@ export default {
     const index = decoded.index;
     return {
       InterviewDialogVisible: false,
-      memo: "",
       company_index: index,
+      disablecard: false,
     };
   },
   props: ["item"],
   methods: {
-    openInterviewMemo() {
-      console.log(this.p_ind);
-      this.InterviewDialogVisible = true;
-    },
-    closeInterviewMemo() {
-      this.InterviewDialogVisible = false;
-    },
-    clickSaveBtn() {
-      console.log(this.memo);
-      alert("저장되었습니다");
-    },
-    sugpass(intindex) {
+    intpass(intindex) {
       console.log(intindex);
-      axios.put(`https://i5d206.p.ssafy.io:8443/int/pass?index=${intindex}`, {
-        headers: { Authorization: this.token },
-      });
+      axios
+        .put(`https://i5d206.p.ssafy.io:8443/int/pass?index=${intindex}`, {
+          headers: { Authorization: this.token },
+        })
+        .then(() => {
+          this.disablecard = true;
+        });
     },
-    sugfail(intindex) {
+    intfail(intindex) {
       console.log(intindex);
-      axios.put(`https://i5d206.p.ssafy.io:8443/int/fail?index=${intindex}`, {
-        headers: { Authorization: this.token },
-      });
+      axios
+        .put(`https://i5d206.p.ssafy.io:8443/int/fail?index=${intindex}`, {
+          headers: { Authorization: this.token },
+        })
+        .then(() => {
+          this.disablecard = true;
+        });
     },
   },
 };
