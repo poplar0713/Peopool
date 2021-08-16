@@ -22,7 +22,7 @@
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer> </el-footer>
+      <el-footer> <button @click="message">click</button> </el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -48,18 +48,30 @@ export default {
     UserSchedule,
     headerSearchCompany,
   },
-  created() {},
-  mounted: function() {
-    console.log("mounted start - ", ws);
-
+  created() {
     if (ws == null) {
       setTimeout(() => {
         this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
       });
     }
+  },
+  mounted: function() {
+    console.log("mounted start - ", ws);
     ws.onopen = () => {
       console.log("loginpage - Websocket is connected!");
+      this.sendMessage({
+        id: "sessioncheck",
+      });
     };
+    ws.onmessage = (message) => {
+      console.log("ws onmessage- ", message);
+    };
+    // ws.onclose = function() {
+    //   setTimeout(
+    //     (this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall")),
+    //     300
+    //   ); // 웹소켓을 재연결하는 코드 삽입
+    // };
 
     console.log(server_url);
   },
@@ -114,6 +126,16 @@ export default {
     };
   },
   methods: {
+    message() {
+      this.sendMessage({
+        id: "sessioncheck",
+      });
+    },
+    sendMessage(message) {
+      var jsonMessage = JSON.stringify(message);
+      console.log("Sending message: " + jsonMessage);
+      ws.send(jsonMessage);
+    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);

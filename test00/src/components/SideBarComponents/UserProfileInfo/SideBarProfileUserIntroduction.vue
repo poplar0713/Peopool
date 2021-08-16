@@ -15,8 +15,9 @@
           :rules="rules"
           v-on:submit.prevent
           enctype="multipart/form-data"
+          ref="ruleForm"
         >
-          <el-form-item label="" prop="Introduction">
+          <el-form-item label="" prop="photointro">
             <input
               multiple="multiple"
               type="file"
@@ -27,16 +28,18 @@
               @change="changept(this)"
             />
           </el-form-item>
-
-          <el-input
-            id="introtextarea"
-            type="textarea"
-            v-model="userintroduce"
-          ></el-input>
-
+          <el-form-item label="">
+            <el-input
+              id="introtextarea"
+              type="textarea"
+              v-model="userintroduce"
+              maxlength="1000"
+              show-word-limit
+              autosize="true"
+            ></el-input>
+          </el-form-item>
           <div style="float:right">
             <el-form-item>
-              <el-button @click="resetForm('ruleForm')">Reset</el-button>
               <el-button
                 type="warning"
                 @click="submitForm('ruleForm')"
@@ -44,7 +47,6 @@
                 >Save</el-button
               >
             </el-form-item>
-            <!-- <div><img :src="photofilepath" width="200px" /></div> -->
           </div>
         </el-form>
       </div>
@@ -62,6 +64,7 @@ export default {
   props: {
     photofilepath: String,
     introduce: String,
+    curphoto: Boolean,
   },
   mounted() {
     const token = this.$cookies.get("PID_AUTH");
@@ -74,11 +77,13 @@ export default {
     console.log("this.path created- ", this.photofilepath);
     this.userintroduce = this.introduce;
   },
+
   data() {
     return {
       loading: false,
       userindex: "",
       userintroduce: this.introduce,
+      changeprofile: false,
       rules: {
         Introduction: [
           {
@@ -93,6 +98,7 @@ export default {
   },
   methods: {
     changept() {
+      this.changeprofile = true;
       let photoip = document.getElementById("photo");
       let imgtag = document.getElementById("profilephoto");
       imgtag.src = URL.createObjectURL(photoip.files[0]);
@@ -100,54 +106,68 @@ export default {
         URL.revokeObjectURL(imgtag.src);
       };
     },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.openFullScreen2();
-          console.log(this.$refs[formName]);
+    submitForm() {
+      if (!this.curphoto && !this.changeprofile) {
+        this.$message.error("사진을 업로드 해주세요.");
+        return;
+      }
+      // 저장하는 방법 찾아보기
+      if (this.changeprofile) {
+        var frm = new FormData();
+        var photodata = this.$refs.photo.files[0];
 
-          // 저장하는 방법 찾아보기
-          var frm = new FormData();
-          var photodata = this.$refs.photo.files[0];
-          var introduce = document.getElementById("introtextarea");
-          console.log(introduce.value);
-          console.log("userindex : ", this.userindex);
-          // var introducedata = this.$refs[]
-          frm.append("upfile", photodata);
-          // frm.append("introduce", introduce.value);
+        console.log("userindex : ", this.userindex);
+        // var introducedata = this.$refs[]
+        frm.append("upfile", photodata);
+        // frm.append("introduce", introduce.value);
 
-          axios
-            .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
-              headers: { Authorization: this.token },
-              params: {
-                index: this.userindex,
-                introduce: introduce.value,
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              <el-alert title="업로드 되었습니다" type="success"></el-alert>;
-              this.loading = true;
-              setTimeout(() => {
-                this.loading = false;
-                this.successmessage();
-              }, 2000);
-            })
-            .catch((err) => {
-              console.log("token error");
-              console.log(err.response);
-              if (err.response == 401) {
-                this.$message.error("로그인세션이 만료되었습니다");
-                localStorage.clear();
-                this.$router.push("/");
-              }
-            });
-        } else {
-          console.log("error submit!!");
+        axios
+          .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
+            headers: { Authorization: this.token },
+            params: {
+              index: this.userindex,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            this.$emit("uploadintro");
+          })
+          .catch((err) => {
+            this.failed();
+            console.log("token error");
+            console.log(err.response);
+            if (err.response == 401) {
+              this.$message.error("로그인세션이 만료되었습니다");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      }
+
+      axios
+        .post("https://i5d206.p.ssafy.io:8443/poi/intro", {
+          headers: { Authorization: this.token },
+          params: {
+            index: this.userindex,
+            ind_introduce: this.userintroduce,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+          // this.$emit("uploadintro");
+          // this.openFullScreen2();
+        })
+        .catch((err) => {
           this.failed();
-          return false;
-        }
-      });
+          console.log("token error");
+          console.log(err.response);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

@@ -28,7 +28,7 @@
         <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
       </el-form-item>
       <!-- 이메일 -->
-      <el-form-item label="Email" prop="UserEmail">
+      <el-form-item label="Email" prop="UserEmail" v-if="ruleForm.UserEmail">
         <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
       </el-form-item>
       <!-- 개인회원 PW -->
