@@ -71,7 +71,8 @@
 		<foreach collection="list" item='item' separator="," open="(" close=")">
 			#{item}
 		</foreach>
-		and ind_switch = 'T';
+		and ind_switch = 'T'
+		group by i.ind_index;
 	</select>
 	
 	<select id="countByTag" resultType="HashMap">
