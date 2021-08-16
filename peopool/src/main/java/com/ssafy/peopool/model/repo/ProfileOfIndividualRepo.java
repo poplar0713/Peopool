@@ -18,6 +18,9 @@ public interface ProfileOfIndividualRepo {
 	
 	// 프로필 수정
 	int modifyProfile(ProfileOfIndividual profileOfIndividual);
+	
+	// 자기소개 수정
+	int modifyIntro(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 공개
 	int modifySwitchOn(ProfileOfIndividual profileOfIndividual);

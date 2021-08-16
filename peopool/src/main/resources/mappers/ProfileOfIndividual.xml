@@ -22,6 +22,12 @@
 		where ind_index = #{ind_index}
 	</update>
 	
+	<update id="modifyIntro" parameterType="ProfileOfIndividual">
+		update ind_profile
+		set ind_introduce=#{ind_introduce}
+		where ind_index=#{ind_index}
+	</update>
+	
 	<update id="modifySwitchOn" parameterType="ProfileOfIndividual">
 		update ind_profile 
 		set ind_switch = 'T'
