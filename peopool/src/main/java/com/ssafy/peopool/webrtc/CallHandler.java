@@ -62,6 +62,12 @@ public class CallHandler extends TextWebSocketHandler {
     }
 
     switch (jsonMessage.get("id").getAsString()) {
+    case "sessioncheck":
+    	log.debug("session user: {}", user);
+    	synchronized (session) {
+			session.sendMessage(new TextMessage(user.toString()));
+		}
+    	break;
     case "chatting":
     	log.debug("chatting: {}", jsonMessage);
     	chatting(jsonMessage);
