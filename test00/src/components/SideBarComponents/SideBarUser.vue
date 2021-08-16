@@ -53,14 +53,6 @@
         </el-menu-item>
         <!--  -->
 
-<<<<<<< HEAD
-        <router-link :to="{ name: 'ViewCompany' }" style="color: black; text-decoration: none;"
-          ><el-menu-item index="6">
-            <span><i class="el-icon-office-building"></i>기업찾아보기</span></el-menu-item
-          ></router-link
-        >
-=======
->>>>>>> front_cho
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-setting"></i>

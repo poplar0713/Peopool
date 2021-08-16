@@ -100,30 +100,6 @@ export default {
           this.$router.push("/");
         }
       });
-<<<<<<< HEAD
-    // 본인 태그목록 불러오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
-        headers: { Authorization: token },
-        params: {
-          ent_index: index,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        this.mytags = res.data;
-        this.getNewArray = !this.getNewArray;
-      })
-      .catch((err) => {
-        if (err.response == 401) {
-          console.log("token error");
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-=======
->>>>>>> front_cho
     // 기업전용태그목록 불러오기
   },
   data() {

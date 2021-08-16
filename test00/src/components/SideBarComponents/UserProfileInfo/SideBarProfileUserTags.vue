@@ -61,11 +61,7 @@
         effect="plain"
         closable
         :disable-transitions="true"
-<<<<<<< HEAD
-        @close="handleClose(item.tag_index)"
-=======
         @close="handleClose(tag, item.tag_index)"
->>>>>>> front_cho
       >
         {{ item.taglist_name }}
       </el-tag>
@@ -336,31 +332,8 @@ export default {
           });
       }
     },
-<<<<<<< HEAD
-
-    GetTagCompany(keyword) {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      setTimeout(() => {
-        loading.close();
-        this.$router.push({
-          name: "SearchCompany",
-          params: { keyword: `${keyword}` },
-        });
-      }, 2000);
-      setTimeout(() => {
-        location.reload();
-      }, 2001);
-    },
-    handleClose(tag_index) {
-=======
     handleClose(tag, tag_index) {
       console.log(tag);
->>>>>>> front_cho
       console.log(tag_index);
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
