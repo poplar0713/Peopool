@@ -1,12 +1,15 @@
 <template>
   <div>
-    <el-text
-      type="text"
+    <el-card
+      shadow="hover"
+      style="margin-bottom:20px; text-align:center"
       @click="dialogVisible = true"
-      style="color:black; text-align:center; cursor:pointer"
-      size="mini"
-      >{{ this.userdata.ind_name }}
-    </el-text>
+      ><img
+        :src="userdata.photofilepath"
+        style="max-width: 100%; height: auto;"
+      />
+      <h3>{{ this.userdata.ind_name }}</h3>
+    </el-card>
     <div style="text-align:center">
       <el-dialog
         :title="this.userdata.ind_name"
@@ -150,7 +153,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "FollowOfCompanyUserInfo",
+  name: "SearchUserTagCard",
   components: {
     webviewer,
   },
@@ -174,6 +177,7 @@ export default {
       })
 
       .then((res) => {
+        // 팔로우가 되어있는것
         if (res.status == 200) {
           this.follow = true;
         }
@@ -184,6 +188,7 @@ export default {
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
+
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();

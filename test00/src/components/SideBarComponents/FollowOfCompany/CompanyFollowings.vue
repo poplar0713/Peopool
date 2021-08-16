@@ -54,6 +54,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name:"CompanyFollowings",
   mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");

@@ -6,44 +6,37 @@
           (!search ||
             data.name.toLowerCase().includes(search.toLowerCase()) ||
             data.sug_duty.toLowerCase().includes(search.toLowerCase())) &&
-          data.sug_state == 'C'
+          data.sug_state == 'W'
       )
     "
     height="600"
-    width="100"
+    
   >
-    <el-table-column align="center" label="요청일" prop="sug_send" width="160%">
+    <el-table-column align="center" label="요청일" prop="sug_send" >
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="name" width="100%">
+    <el-table-column align="center" label="피풀인" prop="name">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
+    <el-table-column align="center" label="직무" prop="sug_duty" >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안1"
       prop="sug_timeone"
-      width="160%"
+      width="170%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안2"
       prop="sug_timetwo"
-      width="160%"
+      width="170%"
     >
     </el-table-column>
     <el-table-column
       align="center"
       label="제안3"
       prop="sug_timethree"
-      width="160%"
-    >
-    </el-table-column>
-    <el-table-column
-      align="center"
-      label="응답일정"
-      prop="sug_decision"
-      width="160%"
+      width="170%"
     >
     </el-table-column>
     <el-table-column align="center">
@@ -63,6 +56,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name: "RecruitingBoardOfferTab",
   components: { UserInfo },
   data() {
     // 토큰으로 유저index 가져오기

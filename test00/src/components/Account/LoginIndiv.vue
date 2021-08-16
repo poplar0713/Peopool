@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: "LoginIndiv",
   components: {},
   data() {
     return {

@@ -80,7 +80,7 @@ import axios from "axios";
 import server_url from "@/server.js";
 // 'https://i5d206.p.ssafy.io' -->사진 및 확인
 export default {
-  name: "MainUser",
+  name: "ProfileUser",
   components: {
     SideBarUser,
     headerSearchCompany,
