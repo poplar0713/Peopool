@@ -77,10 +77,11 @@
           </el-row>
           <el-divider></el-divider>
         </el-main>
-        <el-table :data="this.resultList">
-          <el-table-column prop="ind_name" label="성명" />
-          <el-table-column prop="ind_phone" label="전화번호" />
-        </el-table>
+
+        <h3>결과 값</h3>
+        <el-space wrap>
+          <ResultCard v-for="ind in this.resultList" :key="ind" :user="ind" />
+        </el-space>
       </el-main>
     </el-container>
   </el-container>
@@ -89,6 +90,7 @@
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
+import ResultCard from "@/components/FinduserBytag/ResultCard.vue";
 import axios from "axios";
 //import jwt_decode from "jwt-decode";
 
@@ -104,7 +106,7 @@ export default {
     //    index = decoded.index;
 
     axios
-      .get("https://localhost:8443/taglist/cat", {
+      .get("https://i5d206.p.ssafy.io:8443/taglist/cat", {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -121,7 +123,7 @@ export default {
       });
 
     axios
-      .get("https://localhost:8443/career/", {
+      .get("https://i5d206.p.ssafy.io:8443/career/", {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -138,7 +140,7 @@ export default {
       });
 
     axios
-      .get("https://localhost:8443/taglist/", {
+      .get("https://i5d206.p.ssafy.io:8443/taglist/", {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -184,13 +186,19 @@ export default {
   components: {
     SideBarCompany,
     headerSearchUser,
+    ResultCard,
+  },
+  computed: {
+    hasResult() {
+      return this.resultList.length > 0;
+    },
   },
   watch: {
     cat_ind() {
       this.selected = [];
       if (this.cat_ind == 1) {
         axios
-          .get("https://localhost:8443/taglist/", {
+          .get("https://i5d206.p.ssafy.io:8443/taglist/", {
             headers: { Authorization: token },
           })
           .then((res) => {
@@ -207,7 +215,7 @@ export default {
           });
       } else {
         axios
-          .get(`https://localhost:8443/taglist/${this.cat_ind}`, {
+          .get(`https://i5d206.p.ssafy.io:8443/taglist/${this.cat_ind}`, {
             headers: { Authorization: token },
           })
           .then((res) => {
@@ -262,7 +270,7 @@ export default {
       console.log(this.isUnion);
       if (this.isUnion == "union") {
         axios
-          .get("https://localhost:8443/has/union", {
+          .get("https://i5d206.p.ssafy.io:8443/has/union", {
             headers: { Authorization: token },
             params: {
               list: this.selected,
@@ -285,7 +293,7 @@ export default {
           });
       } else if (this.isUnion == "inter") {
         axios
-          .get("https://localhost:8443/has/inter", {
+          .get("https://i5d206.p.ssafy.io:8443/has/inter", {
             headers: { Authorization: token },
             params: {
               list: this.selected,

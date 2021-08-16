@@ -77,7 +77,7 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
-    path: "/recruiting",
+    path: "/company/recruiting",
     name: "recruiting",
     component: Recruiting,
     beforeEnter: requireAuth,
