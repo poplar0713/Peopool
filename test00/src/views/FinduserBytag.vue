@@ -36,14 +36,6 @@
           <el-divider></el-divider>
           <el-row style="margin: 0.3rem">
             <el-col :span="24">
-              <el-checkbox
-                v-if="this.cat_ind != 1"
-                :indeterminate="isIndeterminate"
-                v-model="checkAll"
-                @change="handleCheckAllChange"
-                >전체 선택</el-checkbox
-              >
-              <div style="margin: 1rem 0;"></div>
               <el-checkbox-group v-model="this.selected" @change="handleCheckedChange">
                 <el-checkbox
                   v-for="item in this.taglist"
@@ -78,9 +70,14 @@
           <el-divider></el-divider>
         </el-main>
 
-        <h3>결과 값</h3>
+        <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
         <el-space wrap>
-          <ResultCard v-for="ind in this.resultList" :key="ind" :user="ind" />
+          <ResultCard
+            v-for="ind in this.resultList"
+            :key="ind"
+            :user="ind"
+            :ent_ind="this.ent_index"
+          />
         </el-space>
       </el-main>
     </el-container>
@@ -91,18 +88,18 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 import ResultCard from "@/components/FinduserBytag/ResultCard.vue";
+import jwt_decode from "jwt-decode";
 import axios from "axios";
 //import jwt_decode from "jwt-decode";
 
-var token;
-//var decoded;
-//var index;
 const qs = require("qs");
-
+var token;
 export default {
-  name:"FinduserBytag",
   mounted() {
     token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.ent_index = index;
     //    decoded = jwt_decode(token);
     //    index = decoded.index;
 
@@ -159,6 +156,7 @@ export default {
   },
   data() {
     return {
+      ent_index: null,
       checkAll: false,
       isIndeterminate: true,
       categorylist: [],
@@ -257,15 +255,6 @@ export default {
   },
 
   methods: {
-    handleCheckAllChange(val) {
-      this.selected = val ? this.taglist : [];
-      this.isIndeterminate = false;
-    },
-    handleCheckedChange(value) {
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.taglist.length;
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.taglist.length;
-    },
     getOriginList() {
       this.originlist = [];
       console.log(this.isUnion);
