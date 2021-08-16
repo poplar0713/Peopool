@@ -5,7 +5,9 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-header><h2>프로필</h2></el-header>
-      <el-main style="width:1000px; height:1000px">
+      <el-main
+        style="width:60%; text-align:center; margin:0 auto; padding: 70px 0;"
+      >
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
@@ -270,13 +272,8 @@ export default {
 
 <style scoped>
 .el-main {
-  margin: 1rem 1rem 1rem 1rem;
-  background-color: white;
-  border-radius: 20px;
 }
 #tabpane {
-  height: auto;
-  width: 1000px;
 }
 .fileDoc {
   margin: 20px;

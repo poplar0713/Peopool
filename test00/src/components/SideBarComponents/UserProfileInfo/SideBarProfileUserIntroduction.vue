@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:80%">
     <div class="box" style="background: #BDBDBD;">
       <img class="profile" id="profilephoto" :src="photofilepath" />
     </div>

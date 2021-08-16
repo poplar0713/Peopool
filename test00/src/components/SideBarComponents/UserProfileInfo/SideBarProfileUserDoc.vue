@@ -1,5 +1,5 @@
 <template>
-  <div id="formdiv">
+  <div id="formdiv" style="width:80%">
     <form v-on:submit.prevent enctype="multipart/form-data">
       <input multiple="multiple" type="file" ref="file" />
       <button @click="upload">
