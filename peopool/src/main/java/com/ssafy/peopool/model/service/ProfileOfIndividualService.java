@@ -14,6 +14,9 @@ public interface ProfileOfIndividualService {
 	
 	// 프로필 수정
 	boolean modifyProfile(ProfileOfIndividual profileOfIndividual);
+	
+	// 자기소개 수정
+	boolean modifyIntro(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 공개
 	boolean modifySwitchOn(ProfileOfIndividual profileOfIndividual);
