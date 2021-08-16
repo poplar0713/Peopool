@@ -24,7 +24,8 @@
           <img
             class="cprofile"
             id="cprofilephoto"
-            :src="'https://i5d206.p.ssafy.io/file/' + ruleForm.ent_image"
+            v-if="ruleForm.ent_image"
+            :src="ruleForm.ent_image"
           />
         </div>
         <!-- {{ this.ruleForm.ent_image }}<br /> -->
@@ -72,7 +73,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name:"SideBarProfileCompanyInfo",
+  name: "SideBarProfileCompanyInfo",
   components: {},
   mounted() {
     // 토큰가져오기
@@ -82,17 +83,22 @@ export default {
     this.userindex = index;
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log("this.company-", res);
-        this.ruleForm.ent_index = res.data.ent_index;
-        this.ruleForm.ent_image = res.data.ent_image;
-        this.ruleForm.ent_ceo = res.data.ent_ceo;
-        this.ruleForm.ent_history = res.data.ent_history;
-        this.ruleForm.ent_address = res.data.ent_address;
-        this.ruleForm.ent_website = res.data.ent_website;
+        let result = res.data[0];
+        console.log("company info res- ", res);
+        console.log("company info - ", result);
+        this.ruleForm.ent_index = result.ent_index;
+        this.ruleForm.ent_image =
+          "/file/" + result.image_savefolder + "/" + result.image_savefile;
+        this.ruleForm.ent_ceo = result.ent_ceo;
+        this.ruleForm.ent_history = result.ent_history;
+        this.ruleForm.ent_address = result.ent_address;
+        this.ruleForm.ent_website = result.ent_website;
+        this.ent_image_pk = result.ent_image;
+        console.log("axios ent_index: ", this.ent_image_pk);
       })
       .catch((err) => {
         console.log("token error");
@@ -118,6 +124,7 @@ export default {
     return {
       loading: false,
       userindex: "",
+      changeprofile: false,
       ruleForm: {
         ent_index: "",
         ent_image: "",
@@ -127,6 +134,7 @@ export default {
         ent_website: "",
         Password: "",
         PasswordConfirm: "",
+        ent_image_pk: "",
       },
       rules: {
         ent_ceo: [
@@ -186,16 +194,23 @@ export default {
       let photoip = document.getElementById("companyprofile");
       let imgtag = document.getElementById("cprofilephoto");
       imgtag.src = URL.createObjectURL(photoip.files[0]);
+      this.changeprofile = true;
       imgtag.onload = function() {
         URL.revokeObjectURL(imgtag.src);
       };
     },
     submitForm(formName) {
+      console.log("this ent_index - ", this.ent_image_pk);
+      console.log("this boolean ent_indx", !this.ent_image_pk);
+      if (!this.ent_image_pk && !this.changeprofile) {
+        this.failedprofile();
+        return;
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var frm = new FormData();
           var photodata = this.$refs.companyprofile.files[0];
-          if (photodata != "" && photodata != null) {
+          if (this.changeprofile) {
             frm.append("upfile", photodata);
             axios
               .post(
@@ -257,6 +272,9 @@ export default {
         message: "수정완료 되었습니다",
         type: "success",
       });
+    },
+    failedprofile() {
+      this.$message.error("기업 이미지를 선택해 주세요");
     },
     // 양식 다 안채우고 save눌렀을 때
     failed() {
