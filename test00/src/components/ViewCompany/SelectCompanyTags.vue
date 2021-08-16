@@ -55,7 +55,15 @@
       </el-tabs>
     </div>
   </div>
-  <div style="text-align:center"><el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button></div>
+  <div style="text-align:center">
+    <el-button
+      round
+      plain
+      style="margin-top:10px; width:100px"
+      @click="search()"
+      >검색</el-button
+    >
+  </div>
   <div v-if="this.selected_tags.length == 0" style="text-align:center">
     <h3>태그를 선택해주세요</h3>
   </div>
@@ -68,11 +76,16 @@
   </div>
   <br />
   <div v-show="this.searchresult == true">
-    <el-row :gutter="24">
-      <el-col :span="4" v-for="(item, i) in selected_list" :key="i">
-        <CompanyCardInfo :item="item.ent_index" />
-      </el-col>
-    </el-row>
+    <div v-if="this.selected_list.length>0">
+      <el-row :gutter="24">
+        <el-col :span="4" v-for="(item, i) in selected_list" :key="i">
+          <CompanyCardInfo :item="item.ent_index" />
+        </el-col>
+      </el-row>
+    </div>
+    <div v-else>
+      조건을 충족하는 결과가 없습니다
+    </div>
   </div>
 </template>
 
