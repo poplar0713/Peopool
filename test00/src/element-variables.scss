@@ -20,6 +20,34 @@ body {
   margin: 0;
   padding: 0;
 }
+.filebox .upload-name {
+  display: inline-block;
+  height: 30px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 20%;
+  color: #999999;
+}
+.filebox label {
+  display: inline-block;
+  padding: 5px 7px;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  cursor: pointer;
+  height: 20px;
+  margin-left: 10px;
+  font-size: 9px;
+}
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
 .el-main {
   padding-top: 5px;
   padding-bottom: 2px;
@@ -140,4 +168,18 @@ body {
   to {
     opacity: 0.9;
   }
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }

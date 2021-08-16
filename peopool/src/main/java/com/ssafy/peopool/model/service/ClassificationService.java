@@ -11,6 +11,8 @@ public interface ClassificationService {
 	
 	List<Map<Object, Object>> getClass(int index);
 	
+	List<Map<Object, Object>> getCase(List<Integer> list);
+	
 	boolean registerClass(Classification classification);
 	
 	boolean deleteClass(int index);

@@ -24,6 +24,7 @@ import DeleteUserAccount from "./DeleteUserAccount.vue";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 export default {
+  name:"SideBarProfileUser",
   components: {
     SideBarProfileUserInfo,
     SideBarProfileUserIntroduction,

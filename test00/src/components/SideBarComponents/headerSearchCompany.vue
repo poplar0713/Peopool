@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: "headerSearchCompany",
   data() {
     return {
       keyword: "",
@@ -23,12 +24,21 @@ export default {
 
   methods: {
     search() {
-      console.log(this.keyword);
-      // this.$router.push(`/searchcompany/${this.keyword}`);
-      this.$router.push({ path: 'SearchCompany', query: { keyword: this.keyword }});
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      //
+      this.$router.push({
+        name: "SearchCompany",
+        query: { keyword: this.keyword },
+      });
       setTimeout(() => {
         location.reload();
-      }, 1);
+        loading.close();
+      }, 1000);
     },
   },
 };

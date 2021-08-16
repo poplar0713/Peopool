@@ -6,33 +6,21 @@
       <el-header><headerSearchCompany /></el-header>
       <el-main>
         <el-row :gutter="20">
-          <el-col :span="12"
+          <el-col
+            :span="12"
+            style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">요청받은 인터뷰</el-divider
-              ><UserSugInterview /></div
+              <h4 style="text-align:center">요청받은 인터뷰</h4>
+              <UserSugInterview /></div
           ></el-col>
-          <el-col :span="12"
+          <el-col
+            :span="12"
+            style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 일정</el-divider
-              ><UserSchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4>
+              <UserSchedule /></div
           ></el-col>
         </el-row>
-        <!-- <div>
-          <el-divider content-position="left">오늘의 면접자</el-divider>
-          <FollowingEntsList />
-        </div> -->
-        <!-- <div v-for="tag in mytags" :key="tag">
-          <el-divider content-position="left"
-            >#{{ tag.taglist_name }} 관련 기업
-            <el-divider direction="vertical"></el-divider
-            ><span
-              @click="GetTagCompany(tag.taglist_name)"
-              style="cursor:pointer"
-              >전체보기</span
-            ></el-divider
-          >
-          <TagCompanyList :tag="tag.taglist_name" />
-        </div> -->
       </el-main>
       <el-footer> </el-footer>
     </el-container>
@@ -44,24 +32,35 @@ import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
-// import TagCompanyList from "@/components/MainUser/TagCompanyList.vue";
-// import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
+import wsocket from "@/components/utils/websocket.js";
 
+var ws = wsocket;
 export default {
   name: "MainUser",
   components: {
     SideBarUser,
-    // TagCompanyList,
-    // FollowingEntsList,
+
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
   },
-  mounted() {
+  created() {},
+  mounted: function() {
+    console.log("mounted start - ", ws);
+
+    if (ws == null) {
+      setTimeout(() => {
+        this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+      });
+    }
+    ws.onopen = () => {
+      console.log("loginpage - Websocket is connected!");
+    };
+
     console.log(server_url);
   },
   data() {
@@ -139,7 +138,7 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          path: "SearchCompany",
+          name: "SearchCompany",
           query: { keyword: keyword },
         });
       }, 2000);

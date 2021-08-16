@@ -56,12 +56,23 @@
         <div>
           <el-collapse v-model="activeName" accordion>
             <el-collapse-item title="Introduction" name="1">
-              <div>
-                <img :src="userdata.photofilepath" />
-              </div>
-              <div>
-                {{ this.userdata.ind_introduce }}
-              </div>
+              <el-row :gutter="20">
+                <el-col :span="6">
+                  <div class="box" style="background: #BDBDBD;">
+                    <img
+                      class="profile"
+                      id="profilephoto"
+                      :src="userdata.photofilepath"
+                      align="center"
+                    />
+                  </div>
+                </el-col>
+                <el-col :span="6" :offset="6">
+                  <div style="margin-top:30px">
+                    {{ this.userdata.ind_introduce }}
+                  </div>
+                </el-col>
+              </el-row>
             </el-collapse-item>
             <el-collapse-item title="자기소개영상" name="2">
               <div>
@@ -84,11 +95,14 @@
                 <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
                 <webviewer :initialDoc="userdata.resumefilepath" />
               </div>
-              <a
-                :href="userdata.resumefilepath"
-                :download="userdata.resume_originfile"
-                >이력서 다운로드</a
-              >
+              <div style="text-align: right;">
+                <a
+                  :href="userdata.resumefilepath"
+                  :download="userdata.resume_originfile"
+                  id="downatag"
+                  >📰 이력서 다운로드</a
+                >
+              </div>
             </el-collapse-item>
             <el-collapse-item title="reservation" name="5">
               <div style="text-align:center; width:50%; margin: 0 auto;">
@@ -155,7 +169,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "UserDetail",
+  name: "MainCompanyUserInfo",
   components: {
     webviewer,
   },
@@ -180,12 +194,16 @@ export default {
 
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -401,8 +419,8 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          name: "searchuser",
-          params: { keyword: `${keyword}` },
+          name: "SearchUser",
+          query: { keyword: `${keyword}` },
         });
       }, 2000);
       setTimeout(() => {
@@ -413,4 +431,22 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.box {
+  width: 150px;
+  height: 150px;
+  /* border-radius: 70%; */
+  overflow: hidden;
+  margin: 30px;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#downatag {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+}
+</style>

@@ -67,14 +67,13 @@
             <el-tag
               v-for="item in ent_tags"
               style="margin:5px"
-              :key="item.taglist_index"
+              :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
-              @click="GetTagCompany(item.taglist_name)"
+              @click="GetTagCompany(item.list_name)"
             >
-              {{ item.taglist_name }}
+              {{ item.list_name }}
             </el-tag>
           </div>
           <div v-else style="align-text:center">
@@ -96,6 +95,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name: "SearchCompanyCard",
   props: { item: Number },
   data() {
     // 토큰가져오기
@@ -112,12 +112,16 @@ export default {
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -126,20 +130,22 @@ export default {
       });
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.item}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${this.item}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        this.company_info.ent_index = res.data.ent_index;
-        this.company_info.ent_name = res.data.ent_name;
-        this.company_info.ent_image = res.data.ent_image;
-        this.company_info.ent_contact = res.data.ent_contact;
-        this.company_info.ent_address = res.data.ent_address;
-        this.company_info.ent_email = res.data.ent_email;
-        this.company_info.ent_history = res.data.ent_history;
-        this.company_info.ent_website = res.data.ent_website;
-        this.company_info.ent_introduce = res.data.ent_introduce;
-        this.company_info.ent_ceo = res.data.ent_ceo;
+        console.log(`searchcompany- ${res.data[0].ent_name}`, res);
+        let result = res.data[0];
+        this.company_info.ent_index = result.ent_index;
+        this.company_info.ent_name = result.ent_name;
+        this.company_info.ent_image = result.ent_image;
+        this.company_info.ent_contact = result.ent_contact;
+        this.company_info.ent_address = result.ent_address;
+        this.company_info.ent_email = result.ent_email;
+        this.company_info.ent_history = result.ent_history;
+        this.company_info.ent_website = result.ent_website;
+        this.company_info.ent_introduce = result.ent_introduce;
+        this.company_info.ent_ceo = result.ent_ceo;
       })
       .catch((err) => {
         console.log(err.response);

@@ -30,56 +30,47 @@
                 <el-divider></el-divider>
                 <div id="participants" class="wrapper"></div>
               </div>
-
-              <!-- <input type="text" v-model="chattext" @keyup.enter="sendchat" />
-            <el-button
-              type="warning"
-              icon="el-icon-chat-round"
-              circle
-              @click="sendchat"
-            ></el-button> -->
             </div>
           </div>
         </el-main>
         <el-footer v-if="this.options" class="footer">
-          <span>
+          <!-- 기존버튼 -->
+          <!-- <span>
             <el-button
               round
               v-if="this.audioOn"
-              type="warning"
               id="button-audio"
               v-on:click="AudioOnOff"
               value="Audio Off"
-              >음소거</el-button
+              ><i class="fas fa-microphone"></i>&nbsp;&nbsp;음소거</el-button
             >
             <el-button
               round
               v-else
-              type="success"
               id="button-audio"
               v-on:click="AudioOnOff"
               value="Audio On"
-              >음소거 해제</el-button
+              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거
+              해제</el-button
             ></span
           >
           <span
             ><el-button
               round
               v-if="this.videoOn"
-              type="warning"
               id="button-video"
               v-on:click="VideoOnOff"
               value="Video Off"
-              >비디오 Off</el-button
+              ><i class="fas fa-video"></i>&nbsp;&nbsp;비디오 Off</el-button
             >
             <el-button
               round
               v-else
-              type="success"
               id="button-video"
               v-on:click="VideoOnOff"
               value="Video On"
-              >비디오 On</el-button
+              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
+              On</el-button
             ></span
           ><span>
             <el-button
@@ -100,14 +91,74 @@
             >
               X</el-button
             >
-            </span
-          >
+          </span>
           <el-button
             type="warning"
             icon="el-icon-chat-round"
             circle
             @click="visiblechat"
-          ></el-button>
+          ></el-button> -->
+          <!-- 바뀐버튼 -->
+          <el-button-group>
+            <el-button
+              round
+              v-if="this.audioOn"
+              id="button-audio"
+              v-on:click="AudioOnOff"
+              value="Audio Off"
+              ><i class="fas fa-microphone"></i>&nbsp;&nbsp;음소거</el-button
+            >
+            <el-button
+              round
+              type="danger"
+              plain
+              v-else
+              id="button-audio"
+              v-on:click="AudioOnOff"
+              value="Audio On"
+              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거
+              해제</el-button
+            >
+            <el-button
+              round
+              v-if="this.videoOn"
+              id="button-video"
+              v-on:click="VideoOnOff"
+              value="Video Off"
+              ><i class="fas fa-video"></i>&nbsp;&nbsp;비디오 중지</el-button
+            >
+            <el-button
+              round
+              type="danger"
+              plain
+              v-else
+              id="button-video"
+              v-on:click="VideoOnOff"
+              value="Video On"
+              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
+              시작</el-button
+            >
+
+            <el-button type="success" plain @click="visiblechat"
+              ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간 채팅</el-button
+            >
+            <el-button
+              round
+              id="button-setting"
+              @click="this.dialogVisible = true"
+              value="Setting"
+              >설정</el-button
+            >
+            <el-button
+              round
+              type="danger"
+              id="button-leave"
+              @click="exitDiaVisible = true"
+            >
+              X</el-button
+            >
+          </el-button-group>
+          <!--  -->
         </el-footer>
       </el-container>
 
@@ -161,12 +212,14 @@
 import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
+import wsocket from "@/components/utils/websocket.js";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
 //const PARTICIPANT_CLASS = "participant";
-var ws = null;
+var ws = wsocket;
 var participants = {};
 
 export default {
+  name: "InterviewRoom",
   data() {
     return {
       room: null,
@@ -186,10 +239,9 @@ export default {
     BeforeMeeting,
   },
 
-  name: "InterviewRoom",
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    // ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
     this.username = localStorage.getItem("username");
     this.room = this.$route.params.url;
     ws.onmessage = (message) => {
@@ -232,7 +284,7 @@ export default {
     };
 
     ws.onopen = function() {
-      console.log("Websocket is connected!");
+      console.log("interviesroom - Websocket is connected!");
     };
   },
   methods: {
@@ -340,6 +392,7 @@ export default {
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
+      document.getElementById("chatdivtop").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
     },
@@ -597,7 +650,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .footer span {
   padding: 10px;

@@ -16,6 +16,9 @@ public interface ClassificationRepo {
 	// 기업별 등록된 분류 목록
 	List<Map<Object, Object>> getClass(int index);
 	
+	// 여러 조건의 기업 목록
+	List<Map<Object, Object>> getCase(List<Integer> list, int count);
+	
 	// 태그 등록
 	int registerClass(Classification classification);
 

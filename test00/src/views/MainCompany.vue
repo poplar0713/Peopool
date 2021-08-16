@@ -3,20 +3,23 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-
       <el-main>
         <el-row :gutter="20">
           <el-col :span="12"
+          style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">제안한 면접</el-divider
-              ><CompanySugInterview /></div
+              <h4 style="text-align:center">제안한 면접</h4><CompanySugInterview /></div
           ></el-col>
           <el-col :span="12"
+          style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 스케줄</el-divider
-              ><CompanySchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4><CompanySchedule /></div
           ></el-col>
         </el-row>
+        <div>
+          <el-divider content-position="left">오늘의 면접자</el-divider>
+          <TodayInterviewUser />
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -26,6 +29,7 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
+import TodayInterviewUser from "@/components/MainCompany/TodayInterviewUser.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 
 import jwt_decode from "jwt-decode";
@@ -38,13 +42,13 @@ export default {
     CompanySchedule,
     headerSearchUser,
     CompanySugInterview,
+    TodayInterviewUser,
   },
   mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    this.company_index = index;
     //팔로잉정보 가져오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
@@ -62,7 +66,7 @@ export default {
       .catch((err) => {
         console.log("token error");
         if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }

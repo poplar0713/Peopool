@@ -4,7 +4,7 @@
     @click="dialogVisible = true"
     style="color:black; text-align:center; cursor:pointer"
     size="mini"
-    >{{this.userdata.ind_name}}
+    >유저상세보기
   </el-text>
   <div style="text-align:center">
     <el-dialog
@@ -138,7 +138,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "UserInfo",
+  name: "RecruitingBoardUserInfo",
   components: {
     webviewer,
   },
@@ -163,12 +163,16 @@ export default {
 
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -394,8 +398,8 @@ export default {
       setTimeout(() => {
         loading.close();
         this.$router.push({
-          name: "searchuser",
-          params: { keyword: `${keyword}` },
+          name: "SearchUser",
+          query: { keyword: `${keyword}` },
         });
       }, 2000);
       setTimeout(() => {

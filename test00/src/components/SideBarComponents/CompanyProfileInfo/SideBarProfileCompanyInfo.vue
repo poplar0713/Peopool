@@ -9,8 +9,34 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
-        {{ this.ruleForm.ent_image }}<br />
-        <el-input type="" v-model="ruleForm.ent_image"></el-input>
+        <div
+          v-if="ruleForm.ent_image == ''"
+          class="box"
+          style="background: #BDBDBD;"
+        >
+          <img
+            class="cprofile"
+            id="cprofilephoto"
+            src="https://i5d206.p.ssafy.io/file/thumbuser.png"
+          />
+        </div>
+        <div v-else class="box" style="background: #BDBDBD;">
+          <img
+            class="cprofile"
+            id="cprofilephoto"
+            v-if="ruleForm.ent_image"
+            :src="ruleForm.ent_image"
+          />
+        </div>
+        <!-- {{ this.ruleForm.ent_image }}<br /> -->
+        <input
+          type="file"
+          id="companyprofile"
+          ref="companyprofile"
+          @change="changept(this)"
+          accept="image/jpeg, image/jpg, image/png"
+          multiple="multiple"
+        />
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">
@@ -28,14 +54,6 @@
       <el-form-item label="WebSite" prop="ent_website">
         <el-input v-model="ruleForm.ent_website"></el-input>
       </el-form-item>
-      <!-- 기업회원 PW -->
-      <!-- <el-form-item label="Password" prop="Password">
-        <el-input type="password" v-model="ruleForm.Password"></el-input>
-      </el-form-item> -->
-      <!-- 기업회원 PW 확인 -->
-      <!-- <el-form-item label="Password Confirmation" prop="PasswordConfirm">
-        <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
-      </el-form-item> -->
       <div style="float:right">
         <el-form-item>
           <el-button
@@ -55,24 +73,32 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
+  name: "SideBarProfileCompanyInfo",
   components: {},
   mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    this.userindex = index;
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        this.ruleForm.ent_index = res.data.ent_index;
-        this.ruleForm.ent_image = res.data.ent_image;
-        this.ruleForm.ent_ceo = res.data.ent_ceo;
-        this.ruleForm.ent_history = res.data.ent_history;
-        this.ruleForm.ent_address = res.data.ent_address;
-        this.ruleForm.ent_website = res.data.ent_website;
+        let result = res.data[0];
+        console.log("company info res- ", res);
+        console.log("company info - ", result);
+        this.ruleForm.ent_index = result.ent_index;
+        this.ruleForm.ent_image =
+          "/file/" + result.image_savefolder + "/" + result.image_savefile;
+        this.ruleForm.ent_ceo = result.ent_ceo;
+        this.ruleForm.ent_history = result.ent_history;
+        this.ruleForm.ent_address = result.ent_address;
+        this.ruleForm.ent_website = result.ent_website;
+        this.ent_image_pk = result.ent_image;
+        console.log("axios ent_index: ", this.ent_image_pk);
       })
       .catch((err) => {
         console.log("token error");
@@ -97,6 +123,8 @@ export default {
     };
     return {
       loading: false,
+      userindex: "",
+      changeprofile: false,
       ruleForm: {
         ent_index: "",
         ent_image: "",
@@ -106,6 +134,7 @@ export default {
         ent_website: "",
         Password: "",
         PasswordConfirm: "",
+        ent_image_pk: "",
       },
       rules: {
         ent_ceo: [
@@ -161,14 +190,50 @@ export default {
     };
   },
   methods: {
+    changept() {
+      let photoip = document.getElementById("companyprofile");
+      let imgtag = document.getElementById("cprofilephoto");
+      imgtag.src = URL.createObjectURL(photoip.files[0]);
+      this.changeprofile = true;
+      imgtag.onload = function() {
+        URL.revokeObjectURL(imgtag.src);
+      };
+    },
     submitForm(formName) {
+      console.log("this ent_index - ", this.ent_image_pk);
+      console.log("this boolean ent_indx", !this.ent_image_pk);
+      if (!this.ent_image_pk && !this.changeprofile) {
+        this.failedprofile();
+        return;
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          var frm = new FormData();
+          var photodata = this.$refs.companyprofile.files[0];
+          if (this.changeprofile) {
+            frm.append("upfile", photodata);
+            axios
+              .post(
+                `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
+                frm,
+                {
+                  headers: { Authorization: this.token },
+                }
+              )
+              .then((res) => {
+                console.log("cphoto: ", res);
+              })
+              .catch((err) => {
+                console.log("cerr: ", err);
+              });
+          }
+
           // 기업정보수정
+
           axios
             .put("https://i5d206.p.ssafy.io:8443/poe", {
               headers: { Authorization: this.token },
-              ent_image: this.ruleForm.ent_image,
+              // ent_image: this.ruleForm.ent_image,
               ent_index: this.ruleForm.ent_index,
               ent_ceo: this.ruleForm.ent_ceo,
               ent_history: this.ruleForm.ent_history,
@@ -208,6 +273,9 @@ export default {
         type: "success",
       });
     },
+    failedprofile() {
+      this.$message.error("기업 이미지를 선택해 주세요");
+    },
     // 양식 다 안채우고 save눌렀을 때
     failed() {
       this.$message.error("프로필양식을 확인해주세요");
@@ -216,4 +284,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.box {
+  width: 150px;
+  height: 150px;
+  /* border-radius: 70%; */
+  overflow: hidden;
+
+  margin: 30px;
+}
+.cprofile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>

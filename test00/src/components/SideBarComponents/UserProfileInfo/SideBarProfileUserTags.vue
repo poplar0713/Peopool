@@ -42,7 +42,12 @@
         </el-option>
       </el-select>
 
-      <el-button icon="el-icon-plus" circle @click="plustag" style="margin: 1em;"></el-button>
+      <el-button
+        icon="el-icon-plus"
+        circle
+        @click="plustag"
+        style="margin: 1em;"
+      ></el-button>
     </div>
     <div
       v-if="this.mytags.length > 0"
@@ -56,7 +61,7 @@
         effect="plain"
         closable
         :disable-transitions="true"
-        @close="handleClose(item.tag_index)"
+        @close="handleClose(tag, item.tag_index)"
       >
         {{ item.taglist_name }}
       </el-tag>
@@ -76,6 +81,7 @@ var decoded = "";
 var index = "";
 
 export default {
+  name: "SideBarProfileUserTags",
   mounted() {
     // 토큰가져오기
     token = this.$cookies.get("PID_AUTH");
@@ -326,26 +332,8 @@ export default {
           });
       }
     },
-
-    GetTagCompany(keyword) {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      setTimeout(() => {
-        loading.close();
-        this.$router.push({
-          name: "SearchCompany",
-          params: { keyword: `${keyword}` },
-        });
-      }, 2000);
-      setTimeout(() => {
-        location.reload();
-      }, 2001);
-    },
-    handleClose(tag_index) {
+    handleClose(tag, tag_index) {
+      console.log(tag);
       console.log(tag_index);
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
