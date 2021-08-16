@@ -41,6 +41,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name:"CompanyFollowers",
   components: { UserInfo },
   data() {
     // 토큰가져오기

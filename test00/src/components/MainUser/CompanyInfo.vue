@@ -6,7 +6,7 @@
     style="text-align:center; cursor:pointer"
     @click="dialogVisible = true"
   >
-    정보보기
+    기업정보
   </el-button>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
@@ -97,6 +97,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name:"MainUserCompanyInfo",
   props: { item: Number },
   data() {
     // 토큰가져오기
@@ -113,12 +114,12 @@ export default {
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res), (this.follow = true);
+        if (res.status==200){(this.follow = true)}
+        if (res.status==204){(this.follow = false)}
       })
       .catch((err) => {
         // 팔로우가 안되어있는것
         console.log(err);
-        this.follow = false;
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -259,7 +260,7 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {

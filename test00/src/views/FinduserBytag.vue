@@ -98,6 +98,7 @@ var token;
 const qs = require("qs");
 
 export default {
+  name:"FinduserBytag",
   mounted() {
     token = this.$cookies.get("PID_AUTH");
     //    decoded = jwt_decode(token);

@@ -8,7 +8,6 @@
       )
     "
     height="600"
-    width="100"
   >
     <el-table-column
       align="center"
@@ -17,7 +16,7 @@
       width="160%"
     >
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="name" width="100%">
+    <el-table-column align="center" label="피풀인" prop="ind_name" width="100%">
     </el-table-column>
     <el-table-column align="center" label="결과" prop="int_done" width="100%">
     </el-table-column>
@@ -38,6 +37,7 @@ import axios from "axios";
 import UserInfo from "@/components/MainCompany/UserInfo.vue";
 
 export default {
+  name:"PassUser",
   components: { UserInfo },
   data() {
     // 토큰으로 유저index 가져오기

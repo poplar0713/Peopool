@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <div id="formdiv">
+=======
+  <div>
+>>>>>>> front_cho
     <form v-on:submit.prevent enctype="multipart/form-data">
       <input multiple="multiple" type="file" ref="file" />
       <button @click="upload">
@@ -7,7 +11,10 @@
       </button>
     </form>
   </div>
+<<<<<<< HEAD
   <!-- <webviewer :initialDoc="this.resumefilepath" /> -->
+=======
+>>>>>>> front_cho
 </template>
 
 <script>
@@ -15,6 +22,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 // import webviewer from "@/components/MainCompany/webviewer.vue";
 export default {
+  name: "SideBarProfileUserDoc",
   props: {
     // resumefilePath:String
   },

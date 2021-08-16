@@ -1,18 +1,27 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       myinterview.filter(
         (data) =>
           (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
-          data.int_end == null
+          data.int_show == null
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
-    height="300"
+    height="500"
   >
-    <el-table-column align="center" label="Date" prop="int_start" sortable>
+    <el-table-column
+      align="center"
+      label="Date"
+      prop="int_start"
+      sortable
+      width="160%"
+    >
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="name">
+    <el-table-column align="center" label="피풀인" prop="ind_name" width="100%">
+    </el-table-column>
+    <el-table-column align="center" label="직무" prop="int_duty" width="120%">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
@@ -30,11 +39,13 @@
                 size="mini"
                 type="danger"
                 @click="
-                  GoToInteriewRoom(scope.row.name, scope.row.int_roomnumber)
+                  GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)
                 "
                 >Interview Room</el-button
               >
-              <el-button v-if="scope.row.int_end !== null" size="mini" disabled
+              <el-button
+                size="mini"
+                @click="FinishInterview(scope.row, scope.row.int_index)"
                 >면접종료</el-button
               >
             </div></el-col
@@ -51,6 +62,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
+  name: "CompanySchedule",
   components: { UserInfo },
   data() {
     const token = this.$cookies.get("PID_AUTH");
@@ -89,13 +101,28 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-        // this.$router.push(`interviewroom/${company}/${user}`);
         this.$router.push({
           name: "InterviewRoom",
           params: { company: company, url: url },
         });
-        // user/interviewroom으로 넘어감
       }, 1000);
+    },
+    FinishInterview(row, interviewindex) {
+      axios
+        .put("https://i5d206.p.ssafy.io:8443/int/finish", {
+          headers: { Authorization: this.token },
+          int_index: interviewindex,
+        })
+        .then(() => {
+          this.$message({
+            message: "수정완료 되었습니다",
+            type: "success",
+          });
+          this.myinterview.splice(this.myinterview.indexOf(row), 1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

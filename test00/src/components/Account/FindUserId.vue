@@ -29,6 +29,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "FindUserId",
   components: {},
   data() {
     return {
@@ -86,7 +87,7 @@ export default {
               console.log("token error");
               console.log(err.response);
               if (err.response == 401) {
-                this.$message.error('로그인세션이 만료되었습니다');
+                this.$message.error("로그인세션이 만료되었습니다");
                 localStorage.clear();
                 this.$router.push("/");
               }

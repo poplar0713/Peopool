@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: "LoginCompany",
   data() {
     return {
       ruleForm: {

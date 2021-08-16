@@ -1,5 +1,6 @@
 <template>
   <el-table
+  style="border-radius: 2em;"
     :data="
       InterviewReq.filter(
         (data) =>
@@ -24,9 +25,11 @@
       width="58"
     >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name" width="100">
+    <el-table-column align="center" label="Company" prop="name" width="100%">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="100">
+    <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
+    </el-table-column>
+    <el-table-column align="center" label="한마디" prop="sug_message">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
@@ -37,6 +40,7 @@
         &nbsp;
         <el-button
           v-if="scope.row.sug_state == 'W'"
+          type="primary"
           @click="dialogVisible = true"
           size="mini"
           >응답하기</el-button
@@ -52,13 +56,11 @@
         >
 
         <el-dialog
-          title="시간설정"
+          title="일정선택"
           v-model="dialogVisible"
           width="30%"
           :before-close="handleClose"
         >
-          <div style="text-align:center">{{ scope.row.sug_message }}</div>
-          <br />
           <div style="text-align:center">
             <el-button
               size="mini"
@@ -106,7 +108,7 @@
               size="mini"
               type="danger"
               style="margin:5px"
-              @click="reject(scope.$index, scope.row)"
+              @click="reject(scope.$index, scope.row, scope.row.sug_index)"
               >거절하기</el-button
             >
           </div>
@@ -122,6 +124,7 @@ import axios from "axios";
 import CompanyInfo from "./CompanyInfo.vue";
 
 export default {
+  name: "UserSugInterview",
   components: { CompanyInfo },
   mounted() {
     // 토큰으로 유저index 가져오기
@@ -183,7 +186,22 @@ export default {
           }
         });
     },
-    reject() {},
+    reject(index, row, sugindex) {
+      console.log(index, row);
+      axios
+        .put(`https://i5d206.p.ssafy.io:8443/sug/reject?index=${sugindex}`, {
+          headers: { Authorization: this.token },
+        })
+        .then(() => {
+          this.dialogVisible = false;
+          this.$message({
+            showClose: true,
+            message: "면접요청이 거절되었습니다",
+            type: "danger",
+          });
+          location.reload();
+        });
+    },
     filterHandler(value, row, column) {
       const property = column["property"];
       return row[property] === value;

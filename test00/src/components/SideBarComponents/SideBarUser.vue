@@ -10,18 +10,13 @@
             <span class="f">ool</span>
           </div>
         </div>
+        <!-- onclick="location.href = '/user'" -->
       </router-link>
-      <el-menu
-        default-active="2"
-        @open="handleOpen"
-        @close="handleClose"
-        background-color="#f1c40f"
-      >
-        <!--  -->
+      <el-menu background-color="#f1c40f">
         <el-menu-item index="1" onclick="location.href = '/user'">
-          <i class="fas fa-home"></i>&nbsp;&nbsp;Home
+          <i class="fas fa-home"></i><span style="margin:10px">Home</span>
         </el-menu-item>
-
+        <!--  -->
         <router-link
           :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
           style="color: black; text-decoration: none;"
@@ -29,31 +24,43 @@
             <i class="el-icon-user"></i><span>User</span></el-menu-item
           ></router-link
         >
-
         <!--  -->
         <el-menu-item index="3">
           <i class="el-icon-video-camera"></i>
           <span><UserInterviewManage /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="4">
+        <router-link
+          :to="{ name: 'ViewCompany' }"
+          style="color: black; text-decoration: none;"
+          ><el-menu-item index="4">
+            <span
+              ><i class="el-icon-office-building"></i>기업찾아보기</span
+            ></el-menu-item
+          ></router-link
+        >
+        <!--  -->
+        <el-menu-item index="5">
           <i class="el-icon-right"></i>
           <i class="el-icon-office-building"></i>
           <span><UserFollowings /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="5">
+        <el-menu-item index="6">
           <i class="el-icon-user-solid"></i>
           <i class="el-icon-back"></i>
           <span><UserFollowers /></span>
         </el-menu-item>
         <!--  -->
 
+<<<<<<< HEAD
         <router-link :to="{ name: 'ViewCompany' }" style="color: black; text-decoration: none;"
           ><el-menu-item index="6">
             <span><i class="el-icon-office-building"></i>기업찾아보기</span></el-menu-item
           ></router-link
         >
+=======
+>>>>>>> front_cho
         <!--  -->
         <el-menu-item index="7">
           <i class="el-icon-setting"></i>
@@ -78,6 +85,7 @@ import UserFollowings from "@/components/SideBarComponents/FollowOfUser/UserFoll
 import UserFollowers from "@/components/SideBarComponents/FollowOfUser/UserFollowers.vue";
 import jwt_decode from "jwt-decode";
 export default {
+  name: "SideBarUser",
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -97,12 +105,6 @@ export default {
   methods: {
     mvHome() {
       this.$router.replace("user");
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
     },
     // 로그아웃
     Logout() {
