@@ -1,10 +1,11 @@
 <template>
   <el-table
-  style="border-radius: 2em;"
+    style="border-radius: 2em;"
     :data="
       myinterview.filter(
         (data) =>
-          !search || data.name.toLowerCase().includes(search.toLowerCase())
+          (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
+          data.int_show == 'W'
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
@@ -18,17 +19,12 @@
       width="160%"
     >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="ent_name">
+    <el-table-column align="center" label="기업명" prop="ent_name">
     </el-table-column>
-    <el-table-column align="center">
-      <template #header>
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
-      </template>
+    <el-table-column align="center" label="면접장" prop="int_duty">
       <template #default="scope">
-        <CompanyInfo :item="scope.row.ent_index" />
-        &nbsp;
         <el-button
-          v-if="scope.row.int_end !== 'null'"
+          v-if="scope.row.int_show == 'W'"
           size="mini"
           type="danger"
           @click="
@@ -36,8 +32,15 @@
           "
           >Interview Room</el-button
         >
-
         <el-text v-else size="mini" disabled>인터뷰가 종료되었습니다</el-text>
+      </template>
+    </el-table-column>
+    <el-table-column align="center">
+      <template #header>
+        <el-input v-model="search" size="mini" placeholder="Type to search" />
+      </template>
+      <template #default="scope">
+        <CompanyInfo :item="scope.row.ent_index" />
       </template>
     </el-table-column>
   </el-table>

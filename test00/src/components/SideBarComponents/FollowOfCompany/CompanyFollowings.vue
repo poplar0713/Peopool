@@ -7,8 +7,10 @@
     title="Followings"
     v-model="dialogVisible"
     width="30%"
-    :before-close="handleClose"
   >
+    <h2 style="margin:0 auto; text-align:center">
+      {{ this.followingsNumber }}
+    </h2>
     <!--  -->
     <el-table
       :data="
@@ -54,7 +56,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo.vue";
 
 export default {
-  name:"CompanyFollowings",
+  name: "CompanyFollowings",
   mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -78,7 +80,28 @@ export default {
       .catch((err) => {
         console.log("token error");
         if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 팔로잉숫자 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/fol/counting", {
+        params: {
+          index: index,
+          type: 1,
+        },
+        headers: { Authorization: token },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.followingsNumber = res.data;
+      })
+      .catch((err) => {
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -91,6 +114,7 @@ export default {
       company_index: "",
       followings: [],
       search: "",
+      followingsNumber: 0,
     };
   },
   methods: {
@@ -113,7 +137,7 @@ export default {
         .catch((err) => {
           console.log("token error");
           if (err.response.data.status == 401) {
-            this.$message.error('로그인세션이 만료되었습니다');
+            this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
           }

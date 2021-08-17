@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;">
+  <div style="width:80%">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 학력 -->
       <el-form-item label="School" prop="School">

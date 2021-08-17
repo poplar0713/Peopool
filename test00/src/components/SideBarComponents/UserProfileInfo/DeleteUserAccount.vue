@@ -1,10 +1,12 @@
 <template>
-  회원탈퇴를 진행하게되면<br />
-  더이상 PeoPool의 서비스를 이용하실 수 없습니다.<br />
-  고객님의 정보는 즉시 폐기됩니다.<br />
-  탈퇴 후 재가입하신 다음 서비스를 이용하실 수 있습니다.<br />
-  <div style="text-align:center">
-    <el-button type="danger" @click="deleteaccountuser">회원탈퇴</el-button>
+  <div style="width:80%">
+    회원탈퇴를 진행하게되면<br />
+    더이상 PeoPool의 서비스를 이용하실 수 없습니다.<br />
+    고객님의 정보는 즉시 폐기됩니다.<br />
+    탈퇴 후 재가입하신 다음 서비스를 이용하실 수 있습니다.<br />
+    <div style="text-align:center">
+      <el-button type="danger" @click="deleteaccountuser">회원탈퇴</el-button>
+    </div>
   </div>
 </template>
 

@@ -9,13 +9,8 @@ import InterviewRoom from "../views/InterviewRoom.vue";
 import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
-import Inyh from "@/views/Interviewyh.vue";
 import FinduserByTag from "@/views/FinduserBytag";
 const routes = [
-  {
-    path: "/meetinter",
-    component: Inyh,
-  },
   {
     path: "/",
     name: "Start",
@@ -76,7 +71,7 @@ const routes = [
     beforeEnter: requireAuth,
   },
   {
-    path: "/recruiting",
+    path: "/company/recruiting",
     name: "recruiting",
     component: Recruiting,
     beforeEnter: requireAuth,

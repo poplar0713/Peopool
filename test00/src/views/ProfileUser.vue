@@ -5,7 +5,9 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-header><h2>프로필</h2></el-header>
-      <el-main style="width:1000px; height:1000px">
+      <el-main
+        style="width:60%; text-align:center; margin:0 auto; padding: 70px 0;"
+      >
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
@@ -14,6 +16,8 @@
               <SideBarProfileUserIntroduction
                 photofilepath="https://i5d206.p.ssafy.io/file/thumbuser.png"
                 :introduce="userdata.ind_introduce"
+                :curphoto="false"
+                @uploadintro="reloadintro"
               />
             </div>
             <div v-else>
@@ -21,6 +25,8 @@
                 v-if="userdata.ind_introduce"
                 :photofilepath="userdata.photofilepath"
                 :introduce="userdata.ind_introduce"
+                :curphoto="true"
+                @uploadintro="reloadintro"
               />
             </div>
           </el-tab-pane>
@@ -33,6 +39,7 @@
               <PRVideo
                 v-if="userdata.videofilepath"
                 :vediofilepath="userdata.videofilepath"
+                @uploadPR="reloadPR"
               />
             </div>
           </el-tab-pane>
@@ -41,7 +48,7 @@
             <SideBarProfileUserTags
           /></el-tab-pane>
           <el-tab-pane label="서류관리">
-            <SideBarProfileUserDoc />
+            <SideBarProfileUserDoc @uploadDoc="reloadDoc" />
 
             <div v-if="userdata.resume_index == ''" class="fileDoc">
               등록된 이력서 및 포트폴리오가 없습니다.
@@ -51,10 +58,6 @@
                 v-if="userdata.resumefilepath"
                 :initialDoc="userdata.resumefilepath"
               />
-            </div>
-            <div>
-              {{ userdata.resumefilepath }}
-              <webviewer :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
@@ -176,28 +179,19 @@ export default {
     };
   },
   methods: {
-    upload() {
-      const token = this.$cookies.get("PID_AUTH");
-      const decoded = jwt_decode(token);
-      const index = decoded.index;
-
-      var frm = new FormData();
-      var Filedata = this.$refs.file.files[0];
-      frm.append("upfile", Filedata);
-
-      axios
-        .post(`https://i5d206.p.ssafy.io:8443/poi/resume/${index}`, frm, {
-          headers: { Authorization: token },
-        })
-        .then((response) => {
-          if (response.status == 200) {
-            alert("업로드 되었습니다!");
-          }
-          this.test();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    reloadintro() {
+      this.test(this.userdata.photofilepath);
+    },
+    reloadPR() {
+      this.test(this.userdata.videofilepath);
+    },
+    reloadDoc() {
+      this.test(this.userdata.resumefilepath);
+      // this.userdata.resumefilepath = "";
+      // await this.userdataload;
+      // if (this.userdata.resumefilepath) {
+      //   console.log("change");
+      // }
     },
     async userdataload() {
       const token = this.$cookies.get("PID_AUTH");
@@ -212,11 +206,20 @@ export default {
         );
         var result = res.data[0];
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.photo_savefolder +
+          "/" +
+          result.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.resume_savefolder +
+          "/" +
+          result.resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.video_savefolder +
+          "/" +
+          result.video_savefile;
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
@@ -250,7 +253,7 @@ export default {
     testreload() {
       this.show = !this.show;
     },
-    test() {
+    test(data) {
       const loading = this.$loading({
         lock: true,
         text: "Loading",
@@ -258,10 +261,13 @@ export default {
         background: "rgba(0, 0, 0, 0.7)",
       });
       this.show = false;
+      this.userdata = [];
       this.userdataload();
       setTimeout(() => {
-        loading.close();
-      }, 2000);
+        if (data) {
+          loading.close();
+        }
+      });
       this.show = true;
     },
   },
@@ -270,13 +276,8 @@ export default {
 
 <style scoped>
 .el-main {
-  margin: 1rem 1rem 1rem 1rem;
-  background-color: white;
-  border-radius: 20px;
 }
 #tabpane {
-  height: auto;
-  width: 1000px;
 }
 .fileDoc {
   margin: 20px;

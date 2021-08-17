@@ -10,17 +10,19 @@
             :span="12"
             style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <h4 style="text-align:center">요청받은 인터뷰</h4><UserSugInterview /></div
+              <h4 style="text-align:center">요청받은 인터뷰</h4>
+              <UserSugInterview /></div
           ></el-col>
           <el-col
             :span="12"
             style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <h4 style="text-align:center">인터뷰 일정</h4><UserSchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4>
+              <UserSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer> </el-footer>
+      <el-footer> <button @click="message">click</button> </el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -34,7 +36,9 @@ import UserSchedule from "@/components/MainUser/UserSchedule.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
+import wsocket from "@/components/utils/websocket.js";
 
+var ws = wsocket;
 export default {
   name: "MainUser",
   components: {
@@ -44,7 +48,31 @@ export default {
     UserSchedule,
     headerSearchCompany,
   },
-  mounted() {
+  created() {
+    if (ws == null) {
+      setTimeout(() => {
+        this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+      });
+    }
+  },
+  mounted: function() {
+    console.log("mounted start - ", ws);
+    ws.onopen = () => {
+      console.log("loginpage - Websocket is connected!");
+      this.sendMessage({
+        id: "sessioncheck",
+      });
+    };
+    ws.onmessage = (message) => {
+      console.log("ws onmessage- ", message);
+    };
+    // ws.onclose = function() {
+    //   setTimeout(
+    //     (this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall")),
+    //     300
+    //   ); // 웹소켓을 재연결하는 코드 삽입
+    // };
+
     console.log(server_url);
   },
   data() {
@@ -98,6 +126,16 @@ export default {
     };
   },
   methods: {
+    message() {
+      this.sendMessage({
+        id: "sessioncheck",
+      });
+    },
+    sendMessage(message) {
+      var jsonMessage = JSON.stringify(message);
+      console.log("Sending message: " + jsonMessage);
+      ws.send(jsonMessage);
+    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);

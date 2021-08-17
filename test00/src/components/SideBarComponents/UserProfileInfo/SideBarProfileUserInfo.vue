@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:100%;"
+    style="width:80%"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
@@ -28,7 +28,7 @@
         <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
       </el-form-item>
       <!-- 이메일 -->
-      <el-form-item label="Email" prop="UserEmail">
+      <el-form-item label="Email" prop="UserEmail" v-if="ruleForm.UserEmail">
         <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
       </el-form-item>
       <!-- 개인회원 PW -->

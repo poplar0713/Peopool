@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 95%">
+  <div style="width:80%">
     <div>
       <div v-if="hasVideo">
         <video
@@ -16,16 +16,25 @@
       </div>
     </div>
     <div style="float:right;">
-      <!-- <el-upload
-        limit="1"
-        :action="indexpath"
-        :file-list="fileList"
-        accept="video/*"
-        style="margin-left:10%"
-      >
-        <el-button size="small" @click="upload">PR영상 업로드</el-button>
-      </el-upload> -->
-      <form v-on:submit.prevent enctype="multipart/form-data">
+      <div id="formdiv">
+        <span class="filetype">
+          <span class="file-text"></span>
+          <span class="file-btn">찾아보기</span>
+          <span class="file-select"
+            ><input
+              type="file"
+              class="input-file"
+              size="1"
+              @change="uploadChange"
+              ref="file"
+              multiple="multiple"
+          /></span>
+        </span>
+        <button @click="upload" class="summitbtn">
+          Upload
+        </button>
+      </div>
+      <!-- <form v-on:submit.prevent enctype="multipart/form-data">
         <input
           multiple="multiple"
           type="file"
@@ -36,7 +45,7 @@
         <button @click="upload">
           Upload
         </button>
-      </form>
+      </form> -->
     </div>
   </div>
 </template>
@@ -46,7 +55,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name:"PRVideo",
+  name: "PRVideo",
   props: {
     vediofilepath: String,
   },
@@ -67,6 +76,13 @@ export default {
     };
   },
   methods: {
+    uploadChange(file) {
+      document.getElementsByClassName("file-text")[1].innerHTML = "";
+      let filedata = file.target.files[0].name;
+      this.filename = filedata;
+      document.getElementsByClassName("file-text")[1].innerHTML = filedata;
+      console.log(filedata);
+    },
     upload() {
       const token = this.$cookies.get("PID_AUTH");
       const decoded = jwt_decode(token);
@@ -80,8 +96,11 @@ export default {
         .post(`https://i5d206.p.ssafy.io:8443/poi/video/${index}`, frm, {
           headers: { Authorization: token },
         })
-        .then((response) => {
-          console.log(response);
+        .then((res) => {
+          if (res.status == 200) {
+            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            this.$emit("uploadPR");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -104,4 +123,69 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#formdiv {
+  margin: 20px;
+}
+
+.filetype {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  *margin-right: 4px;
+}
+
+.filetype * {
+  vertical-align: middle;
+}
+
+.filetype .file-text {
+  position: relative;
+  width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  height: 25px;
+  background-color: #ecefef;
+  margin: 0;
+  border: 1px solid #cdd3d4;
+  line-height: 20px;
+  z-index: 10;
+}
+
+.filetype .file-select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  overflow: hidden;
+}
+
+.filetype .file-select .input-file {
+  width: 60px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  height: 20px;
+}
+.summitbtn {
+  background-color: #e6a23c;
+  color: rgba(255, 255, 255, 0.74) !important;
+  border: none;
+  height: 28px;
+  font-size: 15px;
+  padding: 2px 15px 0px 15px;
+}
+.filetype .file-text + .file-btn {
+  display: inline-block;
+  background-color: #e6a23c;
+  height: 27px;
+  line-height: 22px;
+  padding: 2px 15px 0px 15px;
+  color: rgba(255, 255, 255, 0.74) !important;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 15px;
+  margin-right: 5px;
+}
+</style>

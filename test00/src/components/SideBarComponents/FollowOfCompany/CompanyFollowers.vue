@@ -3,12 +3,8 @@
     >Followers</el-button
   >
 
-  <el-dialog
-    title="Followers"
-    v-model="dialogVisible"
-    width="30%"
-    :before-close="handleClose"
-  >
+  <el-dialog title="Followers" v-model="dialogVisible" width="30%">
+    <h2 style="margin:0 auto; text-align:center">{{ this.followersNumber }}</h2>
     <!--  -->
     <el-table
       :data="
@@ -37,11 +33,10 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-
 import UserInfo from "./UserInfo.vue";
 
 export default {
-  name:"CompanyFollowers",
+  name: "CompanyFollowers",
   components: { UserInfo },
   data() {
     // 토큰가져오기
@@ -65,9 +60,29 @@ export default {
         this.followers = res.data;
       })
       .catch((err) => {
-        console.log("token error");
         if (err.response.data.status == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 팔로워숫자 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/fol/counter", {
+        params: {
+          index: index,
+          type: 1,
+        },
+        headers: { Authorization: token },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.followersNumber = res.data;
+      })
+      .catch((err) => {
+        if (err.response.data.status == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -78,6 +93,7 @@ export default {
       followers: [],
       search: "",
       company_index: "",
+      followersNumber: 0,
     };
   },
   methods: {},
