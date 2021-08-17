@@ -1,29 +1,11 @@
 <template>
-  <el-card
-    shadow="hover"
-    style="margin-bottom:20px; cursor:pointer; height:110%"
+  <el-text
+    type="text"
     @click="dialogVisible = true"
-  >
-    <el-row>
-      <el-col :span="8">
-        <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
-        </div>
-      </el-col>
-      <el-col :span="16"
-        ><div>
-          <div>
-            <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
-          </div>
-          <div>직무 - {{ this.userdata.cat_name }}</div>
-          <div>{{ this.userdata.car_value }}</div>
-        </div></el-col
-      >
-    </el-row>
-  </el-card>
+    style="color:black; text-align:center; cursor:pointer"
+    size="mini"
+    >유저상세보기
+  </el-text>
 
   <el-dialog center v-model="dialogVisible" width="60%">
     <div style="text-align: center; font-size: 1.3rem; margin-bottom: 1rem">
@@ -35,7 +17,7 @@
         type="warning"
         v-for="item in this.ind_taglist"
         v-bind:key="item"
-        style="margin-right: 0.5rem"
+        style="margin-right: 0.5rem; cursor:pointer"
         @click="GetTagUser(item.taglist_name)"
         >{{ item.taglist_name }}</el-tag
       >
@@ -49,12 +31,13 @@
             ></el-col>
             <el-col :span="8"
               ><span>
-                <h4>성명 : {{ this.userdata.ind_name }}</h4>
                 <h4>
-                  직무 : {{ this.userdata.cat_name }} ({{
-                    this.userdata.car_value
+                  성명 : {{ this.userdata.ind_name }}({{
+                    this.userdata.ind_gender
                   }})
                 </h4>
+                <h4>직무 : {{ this.userdata.cat_name }}</h4>
+                <h4>경력 : {{ this.userdata.car_value }}</h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -97,6 +80,7 @@
       </span>
     </template>
   </el-dialog>
+  
 </template>
 
 <script>
@@ -105,7 +89,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 
 export default {
-  name: "UserInfoCard",
+  name: "UserInfoDetail",
   props: ["userindex"],
   components: {
     webviewer,
@@ -137,19 +121,6 @@ export default {
         { ind_introduce: "" },
         { cat_name: "" },
         { car_value: "" },
-      ],
-      reservationdata: [
-        { ent_index: 0 },
-        { ind_index: 0 },
-        { sug_decision: "string" },
-        { sug_duty: "string" },
-        { sug_index: 0 },
-        { sug_send: "string" },
-        { sug_state: "string" },
-        { sug_timeone: "string" },
-        { sug_timethree: "string" },
-        { sug_timetwo: "string" },
-        { sug_message: "string" },
       ],
     };
   },

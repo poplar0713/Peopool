@@ -2,7 +2,7 @@
   <!-- 카드 -->
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; text-align:center"
+    style="margin-bottom:20px; text-align:center; height:110%"
     @click="dialogVisible = true"
     ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
     <h3>{{ this.company_info.ent_name }}</h3>

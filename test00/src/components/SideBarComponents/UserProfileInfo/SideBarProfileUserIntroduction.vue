@@ -1,7 +1,7 @@
 <template>
   <div style="width:80%">
-    <div class="box" style="background: #BDBDBD;">
-      <img class="profile" id="profilephoto" :src="photofilepath" />
+    <div>
+      <img :src="photofilepath" height="150" width="150" />
     </div>
     <el-scrollbar>
       <div
@@ -215,19 +215,18 @@ export default {
 </script>
 
 <style scoped>
-.box {
+/* .box {
   width: 150px;
   height: 150px;
-  /* border-radius: 70%; */
+  border-radius: 70%;
   overflow: hidden;
-
   margin: 30px;
 }
 .profile {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .filetype {
   position: relative;

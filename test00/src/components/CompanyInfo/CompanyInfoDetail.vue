@@ -3,7 +3,7 @@
   <el-button
     size="mini"
     shadow="hover"
-    style="text-align:center; cursor:pointer"
+    style="text-align:center; cursor:pointer;"
     @click="dialogVisible = true"
   >
     기업정보

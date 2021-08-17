@@ -51,15 +51,7 @@
           <i class="el-icon-back"></i>
           <span><UserFollowers /></span>
         </el-menu-item>
-        <!--  -->
-
-        <!--  -->
         <el-menu-item index="7">
-          <i class="el-icon-setting"></i>
-          <span>settings</span>
-        </el-menu-item>
-        <!--  -->
-        <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
           <el-text @click="Logout">Logout</el-text>
         </el-menu-item>
@@ -112,7 +104,6 @@ export default {
           message: "로그아웃",
           type: "success",
         });
-        location.reload();
       }, 2000);
     },
   },
