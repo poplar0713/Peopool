@@ -5,4 +5,4 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Seoul
-RUN sudo apt-get install -y tzdata
+
