@@ -214,20 +214,6 @@ export default {
           this.$router.push("/");
         }
       });
-    // 교집합정보 가져오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/cla/case", {
-        headers: { Authorization: token },
-        params: {
-          list: this.selected_tags,
-        },
-      })
-      .then((res) => {
-        this.matchinglist = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     return {
       searchresult: false,
       tabPosition: "left",
