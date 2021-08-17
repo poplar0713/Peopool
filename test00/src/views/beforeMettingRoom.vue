@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside width="200px">
-      <div class="header name">{{ name }}님!</div>
+      <div class="header name" v-if="!noncookie">{{ name }}님!</div>
       <div class="header company">{{ company }}</div>
       <div class="header">면접장입니다.</div>
       <div class="header">준비되셨나요?</div>
