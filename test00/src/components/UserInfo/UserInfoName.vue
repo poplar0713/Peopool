@@ -67,14 +67,13 @@
       <span class="dialog-footer">
         <el-button
           v-if="this.follow"
-          plain
           round
           type="danger"
           @click="clickfollowBtn"
-          >팔로우 해제</el-button
+          ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
-          >팔로우</el-button
+          ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
         >
         <el-button type="success" plain round @click="this.innerVisible = true"
           >면접 제안</el-button

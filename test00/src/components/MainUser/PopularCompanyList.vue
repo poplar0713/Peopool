@@ -1,10 +1,10 @@
 <template>
-  <el-carousel :interval="2000" type="card" height="130px">
+  <el-carousel :interval="2000" type="card" height="200px">
     <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
       Rank #{{ i + 1 }}
       <el-card
         shadow="hover"
-        style="text-align:center; background-color:#F4F4EF"
+        style="text-align:center; background-color:#F4F4EF; height:110%;"
         @click="(dialogVisible = true), getcompanydata(item.ent_index)"
       >
         <el-row>
@@ -12,7 +12,7 @@
             {{ item.ent_image }}
           </el-col>
           <el-col :span="16">
-            <h3>{{ item.ent_name }}</h3>
+            <h1>{{ item.ent_name }}</h1>
           </el-col>
         </el-row>
       </el-card>

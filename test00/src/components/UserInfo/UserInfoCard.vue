@@ -1,16 +1,13 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer"
+    style="margin-bottom:20px; cursor:pointer; height:110%"
     @click="dialogVisible = true"
   >
     <el-row>
       <el-col :span="8">
         <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
+          <img :src="userdata.photofilepath" style="max-width: 100%; height: auto;" />
         </div>
       </el-col>
       <el-col :span="16"
@@ -50,11 +47,7 @@
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>
-                  직무 : {{ this.userdata.cat_name }} ({{
-                    this.userdata.car_value
-                  }})
-                </h4>
+                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -84,16 +77,11 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button
-          v-if="this.follow"
-          plain
-          round
-          type="danger"
-          @click="clickfollowBtn"
-          >팔로우 해제</el-button
+        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
+          ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
-          >팔로우</el-button
+          ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
         >
         <el-button type="success" plain round @click="this.innerVisible = true"
           >면접 제안</el-button
@@ -158,10 +146,7 @@
       ></el-input>
     </div>
     <div style="text-align:center; margin: 4%">
-      <el-button
-        @click="(dialogVisible = false), interviewrequest()"
-        type="success"
-        :plain="true"
+      <el-button @click="(dialogVisible = false), interviewrequest()" type="success" :plain="true"
         >요청 보내기</el-button
       >
     </div>
@@ -229,7 +214,6 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.companyindex = index;
-    // 팔로우했는지 체크해보기
 
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
