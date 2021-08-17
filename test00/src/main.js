@@ -15,7 +15,10 @@ installElementPlus(app);
 app.use(router);
 router.app = app;
 app.use(store);
-app.use(VueCooKie);
+app.use(VueCooKie, {
+  expireTime: "0",
+  secure:true,
+});
 // .use(AxiosPlugin)
 app.mount("#app");
 

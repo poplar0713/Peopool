@@ -1,6 +1,6 @@
 <template>
   <el-table
-  style="border-radius: 2em;"
+    style="border-radius: 2em;"
     :data="
       InterviewReq.filter(
         (data) =>
@@ -30,42 +30,24 @@
     <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
     </el-table-column>
     <el-table-column align="center" label="한마디" prop="sug_message">
-    </el-table-column>
-    <el-table-column align="center">
-      <template #header>
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
-      </template>
+    </el-table-column
+    ><el-table-column align="center" label="응답상태" prop="sug_message">
       <template #default="scope">
-        <CompanyInfo :item="scope.row.ent_index" />
-        &nbsp;
-        <el-button
+        <el-popover
+          placement="top"
+          :width="100"
+          trigger="click"
           v-if="scope.row.sug_state == 'W'"
-          type="primary"
-          @click="dialogVisible = true"
-          size="mini"
-          >응답하기</el-button
         >
-        <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini"
-          >응답완료</el-text
-        >
-        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini"
-          >응답거절</el-text
-        >
-        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini"
-          >취소된 요청입니다</el-text
-        >
-
-        <el-dialog
-          title="일정선택"
-          v-model="dialogVisible"
-          width="30%"
-          :before-close="handleClose"
-        >
+          <template #reference>
+            <el-button size="mini">응답하기</el-button>
+          </template>
           <div style="text-align:center">
             <el-button
               size="mini"
-              type="primary"
-              style="margin:5px"
+              plain
+              round
+              style="margin:5px;"
               @click="
                 select(
                   scope.$index,
@@ -78,7 +60,8 @@
             ><br />
             <el-button
               size="mini"
-              type="primary"
+              plain
+              round
               style="margin:5px"
               @click="
                 select(
@@ -92,7 +75,8 @@
             ><br />
             <el-button
               size="mini"
-              type="primary"
+              plain
+              round
               style="margin:5px"
               @click="
                 select(
@@ -112,7 +96,25 @@
               >거절하기</el-button
             >
           </div>
-        </el-dialog>
+        </el-popover>
+        <!--  -->
+        <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini"
+          >응답완료</el-text
+        >
+        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini"
+          >응답거절</el-text
+        >
+        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini"
+          >취소된 요청입니다</el-text
+        >
+      </template>
+    </el-table-column>
+    <el-table-column align="center">
+      <template #header>
+        <el-input v-model="search" size="mini" placeholder="Type to search" />
+      </template>
+      <template #default="scope">
+        <CompanyInfo :item="scope.row.ent_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -153,7 +155,6 @@ export default {
   data() {
     return {
       InterviewReq: [],
-      dialogVisible: false,
       search: "",
     };
   },
@@ -174,7 +175,8 @@ export default {
             message: "수락되었습니다",
             type: "success",
           });
-          this.InterviewReq.splice(this.InterviewReq.indexOf(row), 1);
+          // this.InterviewReq.splice(this.InterviewReq.indexOf(row), 1);
+          location.reload();
         })
         .catch((err) => {
           console.log("token error");

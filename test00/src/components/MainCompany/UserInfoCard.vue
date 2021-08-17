@@ -4,10 +4,7 @@
       shadow="hover"
       style="margin-bottom:20px; text-align:center"
       @click="dialogVisible = true"
-      ><img
-        :src="userdata.photofilepath"
-        style="max-width: 100%; height: auto;"
-      />
+      ><img :src="userdata.photofilepath" style="max-width: 100%; height: auto;" />
       <h3>{{ this.userdata.ind_name }}</h3>
     </el-card>
     <div style="text-align:center">
@@ -19,20 +16,11 @@
       >
         <!-- 팔로우가 되어있을때 -->
         <div v-if="follow" style="color: Tomato;">
-          <i
-            class="fas fa-heart fa-2x"
-            size:7x
-            @click="clickfollowBtn"
-            style="cursor:pointer"
-          ></i>
+          <i class="fas fa-heart fa-2x" size:7x @click="clickfollowBtn" style="cursor:pointer"></i>
         </div>
         <!-- 팔로우가 안되어있을때 -->
         <div v-if="follow == false" style="color: Tomato;">
-          <i
-            @click="clickfollowBtn"
-            class="far fa-heart fa-2x"
-            style="cursor:pointer"
-          ></i>
+          <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
         </div>
         <br />
         <!-- 태그 -->

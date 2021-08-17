@@ -1,56 +1,68 @@
 <template>
   <el-table
-  style="border-radius: 2em;"
+    style="border-radius: 2em;"
     :data="
       myinterview.filter(
         (data) =>
           (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
-          data.int_show == null
+          data.int_show == 'W'
       )
     "
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="500"
   >
-    <el-table-column
-      align="center"
-      label="Date"
-      prop="int_start"
-      sortable
-      width="160%"
-    >
+    <el-table-column align="center" label="Date" prop="int_start" sortable>
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="ind_name" width="100%">
+    <el-table-column align="center" label="피풀인" prop="ind_name">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="int_duty" width="120%">
+    <el-table-column align="center" label="면접장" prop="int_duty">
+      <template #default="scope">
+        <el-button
+          v-if="scope.row.int_show == 'W'"
+          size="mini"
+          type="danger"
+          @click="
+            GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)
+          "
+          >Interview Room</el-button
+        >
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="종료" prop="int_duty">
+      <el-popover placement="left" :width="200" trigger="click">
+        <template #reference>
+          <el-button type="success" plain size="mini">면접종료</el-button>
+        </template>
+        <div style="text-align:center">
+          <div style="margin-bottom:10px">
+            <el-button
+              size="mini"
+              type="success"
+              plain
+              round
+              @click="FinishInterview(scope.row, scope.row.int_index)"
+              >면접종료</el-button
+            >
+          </div>
+          <div>
+            <el-button
+              type="danger"
+              plain
+              round
+              size="mini"
+              @click="Noshow(scope.row, scope.row.int_index)"
+              >노쇼로 인한 면접종료</el-button
+            >
+          </div>
+        </div>
+      </el-popover>
     </el-table-column>
     <el-table-column align="center">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <el-row>
-          <el-col :span="12"
-            ><div><UserInfo :userindex="scope.row.ind_index" /></div
-          ></el-col>
-          <el-col :span="12"
-            ><div>
-              <el-button
-                v-if="scope.row.int_end == null"
-                size="mini"
-                type="danger"
-                @click="
-                  GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)
-                "
-                >Interview Room</el-button
-              >
-              <el-button
-                size="mini"
-                @click="FinishInterview(scope.row, scope.row.int_index)"
-                >면접종료</el-button
-              >
-            </div></el-col
-          >
-        </el-row>
+        <UserInfo :userindex="scope.row.ind_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -115,13 +127,27 @@ export default {
         })
         .then(() => {
           this.$message({
-            message: "수정완료 되었습니다",
+            message: "면접이 정상적으로 종료되었습니다",
             type: "success",
           });
           this.myinterview.splice(this.myinterview.indexOf(row), 1);
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    Noshow(row, interviewindex) {
+      axios
+        .put("https://i5d206.p.ssafy.io:8443/int/show", {
+          headers: { Authorization: this.token },
+          int_index: interviewindex,
+        })
+        .then(() => {
+          this.$message({
+            message: "지원자의 노쇼행위로 인해 면접이 종료되었습니다",
+            type: "success",
+          });
+          this.myinterview.splice(this.myinterview.indexOf(row), 1);
         });
     },
   },

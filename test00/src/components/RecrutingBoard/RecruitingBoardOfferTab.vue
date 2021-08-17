@@ -10,13 +10,12 @@
       )
     "
     height="600"
-    
   >
-    <el-table-column align="center" label="요청일" prop="sug_send" >
+    <el-table-column align="center" label="요청일" prop="sug_send">
     </el-table-column>
     <el-table-column align="center" label="피풀인" prop="name">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" >
+    <el-table-column align="center" label="직무" prop="sug_duty">
     </el-table-column>
     <el-table-column
       align="center"
