@@ -188,8 +188,8 @@ export default {
   },
   created() {
     this.username = localStorage.getItem("username");
-    const token = this.$cookies.get("PID_AUTH");
-    if (!this.username && !token) {
+    const token = this.getCookie("PID_AUTH");
+    if (!this.username && (token == null || token == "")) {
       this.noncookie = true;
     }
   },
@@ -243,6 +243,11 @@ export default {
     };
   },
   methods: {
+    getCookie(name) {
+      var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+      console.log(value);
+      return value ? value[2] : null;
+    },
     noncookieuser(name) {
       this.noncookieusername = name;
       this.username = this.noncookieusername;
