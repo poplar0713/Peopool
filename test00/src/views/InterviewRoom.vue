@@ -82,13 +82,21 @@
               placement="top-start"
               title="실시간채팅"
               :width="300"
-              trigger="hover"
+              trigger="click"
             >
               <template #reference>
-                <el-button type="success" plain
-                  ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간
-                  채팅</el-button
-                >
+                <el-button
+                  type="success"
+                  plain
+                  style="position:relative"
+                  @click="alaramcheck"
+                  ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간 채팅
+                  <div
+                    id="circle2"
+                    style="position:absolute"
+                    v-if="readchat"
+                  ></div
+                ></el-button>
               </template>
               <div class="scroll type1" id="chatdiv">
                 <div
@@ -180,9 +188,24 @@ export default {
       exitDiaVisible: false,
       noncookie: null,
       noncookieusername: "",
+      alaram: "",
+      readchat: false,
     };
   },
-  watch: {},
+  watch: {
+    chatlist: {
+      deep: true,
+      handler() {
+        let popdiv = document.getElementsByClassName("el-popover")[0];
+        let opencheck = popdiv.getAttribute("aria-hidden");
+        if (opencheck == "false") {
+          this.readchat = false;
+        } else {
+          this.readchat = true;
+        }
+      },
+    },
+  },
   components: {
     BeforeMeeting,
   },
@@ -243,6 +266,15 @@ export default {
     };
   },
   methods: {
+    alaramcheck() {
+      let popdiv = document.getElementsByClassName("el-popover")[0];
+
+      let opencheck = popdiv.getAttribute("aria-hidden");
+      if (opencheck == "true") {
+        this.readchat = false;
+      }
+    },
+
     getCookie(name) {
       var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
       console.log(value);
@@ -722,5 +754,19 @@ export default {
     transform: translateZ(-800px) rotateY(90deg);
     opacity: 0;
   }
+}
+#circle2 {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+  width: 15px;
+  height: 15px;
+  border-radius: 75px;
+  text-align: center;
+  margin: -30px 0px 0px 110px;
+  /* font-size: 12px;
+  color: #fff; */
+
+  /* vertical-align: middle; */
+  /* line-height: 100px; */
 }
 </style>

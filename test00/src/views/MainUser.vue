@@ -22,7 +22,7 @@
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer> <button @click="message">click</button> </el-footer>
+      <el-footer> </el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -129,11 +129,6 @@ export default {
     };
   },
   methods: {
-    message() {
-      this.sendMessage({
-        id: "sessioncheck",
-      });
-    },
     sendMessage(message) {
       var jsonMessage = JSON.stringify(message);
       console.log("Sending message: " + jsonMessage);
