@@ -25,7 +25,25 @@
           <i class="fas fa-check"></i>
           NoShow는 절대 안돼요!
         </p>
+        <div v-if="noncookie">
+          <p class="check">
+            <i class="fas fa-check"></i>
+            면접장에 사용될 이름을 설정해 주세요.
+            <br />
+            <el-input
+              type="text"
+              placeholder="Please input"
+              v-model="nonuserneme"
+              maxlength="10"
+              show-word-limit
+              style="width:200px; margin:10px 30px"
+              @keyup="usernamereq"
+            >
+            </el-input>
+          </p>
+        </div>
       </div>
+
       <div id="testzone">
         <div id="webcam">
           <video autoplay="true" id="videotag"></video>
@@ -40,14 +58,18 @@
         <div class="block" id="micdiv">
           <span class="demonstration">마이크 감도</span>
           <el-slider v-model="decibals" max="50"></el-slider>
-        </div></div
-    ></el-main>
+        </div>
+      </div>
+    </el-main>
   </el-container>
 </template>
 
 <script>
 import DecibelMeter from "decibel-meter";
 export default {
+  props: {
+    noncookie: Boolean,
+  },
   name: "beforeMettngRoom",
   data() {
     return {
@@ -56,9 +78,14 @@ export default {
       decibals: 0,
       color1: "black",
       color2: "#5f2d9a",
+      username: "",
+      nonuserneme: "",
     };
   },
   methods: {
+    usernamereq() {
+      this.$emit("nonuser", this.nonuserneme);
+    },
     micCheck() {
       const meter = new DecibelMeter("mictest");
       meter.sources.then((sources) => {
@@ -110,7 +137,7 @@ export default {
   text-align: center;
 }
 #videotag {
-  width: 600px;
+  width: 450px;
 }
 .manner {
   font-size: 20px;
