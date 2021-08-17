@@ -1,54 +1,11 @@
 <template>
-  <!-- <div
-    class="nameCard"
-    :class="[isHover ? 'backside' : 'frontside']"
-    @click="this.dialogVisible = true"
-    @mouseover="changeBack"
-    @mouseleave="changeFront"
-  >
-    <el-row style="text-align: center;">
-      <el-col :span="10">
-        <div v-if="userdata.photo_index == ''">
-          <img src="https://i5d206.p.ssafy.io/file/thumbuser.png" />
-        </div>
-        <div v-else>
-          <img src="this.userdata.photofilepath" />
-        </div>
-      </el-col>
-      <el-col :span="14">
-        <div>
-          <h3>{{ this.userdata.ind_name }}</h3>
-        </div>
-        <div>
-          <h3>직무 : {{ this.userdata.cat_name }}</h3>
-        </div>
-        <div>
-          <h3>[{{ this.userdata.car_value }}]</h3>
-        </div>
-      </el-col>
-    </el-row>
-  </div> -->
-  <el-card
-    shadow="hover"
-    style="margin-bottom:20px; text-align:center"
+  <el-text
+    type="text"
     @click="dialogVisible = true"
-  >
-    <el-row>
-      <el-col :span="12">
-        <div>
-          <img :src="userdata.photofilepath" style="max-width: 100%; height: auto;" />
-        </div>
-      </el-col>
-      <el-divider direction="vertical"></el-divider>
-      <el-col :span="12">
-        <div>
-          <p>{{ this.userdata.ind_name }}</p>
-          <p>{{ this.userdata.cat_name }}</p>
-          <p>{{ this.userdata.car_value }}</p>
-        </div>
-      </el-col>
-    </el-row>
-  </el-card>
+    style="color:black; text-align:center; cursor:pointer"
+    size="mini"
+    >유저상세보기
+  </el-text>
 
   <el-dialog center v-model="dialogVisible" width="60%">
     <div style="text-align: center; font-size: 1.3rem; margin-bottom: 1rem">
@@ -60,7 +17,7 @@
         type="warning"
         v-for="item in this.ind_taglist"
         v-bind:key="item"
-        style="margin-right: 0.5rem"
+        style="margin-right: 0.5rem; cursor:pointer"
         @click="GetTagUser(item.taglist_name)"
         >{{ item.taglist_name }}</el-tag
       >
@@ -70,15 +27,17 @@
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
             <el-col :span="12"
-              ><span v-if="userdata.photo_index == ''"
-                ><img src="https://i5d206.p.ssafy.io/file/thumbuser.png"
-              /></span>
-              <span v-else><img src="this.userdata.photofilepath" /> </span>
-            </el-col>
+              ><span> <img :src="this.userdata.photofilepath" /> </span
+            ></el-col>
             <el-col :span="8"
               ><span>
-                <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
+                <h4>
+                  성명 : {{ this.userdata.ind_name }}({{
+                    this.userdata.ind_gender
+                  }})
+                </h4>
+                <h4>직무 : {{ this.userdata.cat_name }}</h4>
+                <h4>경력 : {{ this.userdata.car_value }}</h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -86,30 +45,39 @@
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
         </el-tab-pane>
-        <el-tab-pane label="이력서">
-          <div v-if="userdata.resume_index == ''" class="fileDoc">
-            등록된 이력서 및 포트폴리오가 없습니다.
-          </div>
-          <div v-else>
-            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+        <el-tab-pane label="연락처" style="padding : 2%">
+          <div style="text-align:center">
+            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
+            <h4>이메일: {{ this.userdata.ind_email }}</h4>
           </div>
         </el-tab-pane>
+        <el-tab-pane label="이력서">
+          <webviewer :initialDoc="userdata.resumefilepath" />
+        </el-tab-pane>
         <el-tab-pane label="PR 영상">
-          <div v-if="userdata.video_index == ''">
-            소개영상이 없습니다.
-          </div>
-          <div v-else>
-            <span v-if="userdata.videofilepath"> <video src="userdata.videofilepath" /> </span>
-          </div>
+          <video
+            :src="userdata.videofilepath"
+            height="360"
+            width="640"
+            controls=""
+            style="width: 100%; height: 100%;"
+          ></video>
         </el-tab-pane>
       </el-tabs>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" plain round type="danger" @click="clickfollowBtn"
+        <el-button
+          v-if="this.follow"
+          plain
+          round
+          type="danger"
+          @click="clickfollowBtn"
           >팔로우 해제</el-button
         >
-        <el-button v-else type="danger" plain round @click="clickfollowBtn">팔로우</el-button>
+        <el-button v-else type="danger" plain round @click="clickfollowBtn"
+          >팔로우</el-button
+        >
         <el-button type="success" plain round @click="this.innerVisible = true"
           >면접 제안</el-button
         >
@@ -173,7 +141,10 @@
       ></el-input>
     </div>
     <div style="text-align:center; margin: 4%">
-      <el-button @click="(dialogVisible = false), interviewrequest()" type="success" :plain="true"
+      <el-button
+        @click="(dialogVisible = false), interviewrequest()"
+        type="success"
+        :plain="true"
         >요청 보내기</el-button
       >
     </div>
@@ -186,6 +157,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 
 export default {
+  name: "UserInfoDetail",
   props: ["userindex"],
   components: {
     webviewer,
@@ -421,27 +393,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap");
-.nameCard {
-  width: 380px;
-  height: 180px;
-  font-size: 1rem;
-  font-family: "Gothic A1", sans-serif;
-  cursor: pointer;
-  padding: 1rem;
-  border-radius: 3%;
-}
-.frontside {
-  border-width: 0.2rem;
-  border-color: gold;
-  border-style: solid;
-}
-.backside {
-  border-width: 0.2rem;
-  border-style: solid;
-  background-color: gold;
-  color: purple;
-  box-shadow: 10px 5px 5px purple;
-}
-</style>
+<style></style>

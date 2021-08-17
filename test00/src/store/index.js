@@ -13,8 +13,13 @@ export default createStore({
     findCompanyPw: false,
     type: -1,
     othertype: -1,
+    userindex: null,
   },
-  mutations: {},
+  mutations: {
+    userindexstore(index) {
+      this.state.userindex = index;
+    },
+  },
   actions: {
     requestLoginind({ state }, payload) {
       console.log("requestLoginind", state, payload);

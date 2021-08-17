@@ -2,8 +2,13 @@
   <div class="select-section" style="width:80%">
     <div>
       <el-divider content-position="left">직무</el-divider>
-      <div>나의 직무 ({{ this.mypart }})</div>
-      <el-select v-model="mypart_ind" filterable placeholder="" style="align-text:center">
+      <div style="margin-bottom:10px">나의 직무 ({{ this.mypart }})</div>
+      <el-select
+        v-model="mypart_ind"
+        filterable
+        placeholder=""
+        style="align-text:center"
+      >
         <el-option
           v-for="item in this.partlist"
           :key="item.cat_index"
@@ -12,12 +17,19 @@
         >
         </el-option>
       </el-select>
-      <el-button @click="modifypart">수정</el-button>
+      <el-button style="margin-left:10px" @click="modifypart" round
+        >수정</el-button
+      >
     </div>
     <div>
       <el-divider content-position="left">경력</el-divider>
-      <div>나의 경력 ({{ this.mycareer }})</div>
-      <el-select v-model="mycareer_ind" filterable placeholder="" style="align-text:center">
+      <div style="margin-bottom:10px">나의 경력 ({{ this.mycareer }})</div>
+      <el-select
+        v-model="mycareer_ind"
+        filterable
+        placeholder=""
+        style="align-text:center"
+      >
         <el-option
           v-for="item in this.careerlist"
           :key="item.car_index"
@@ -26,13 +38,20 @@
         >
         </el-option>
       </el-select>
-      <el-button @click="modifycareer">수정</el-button>
+      <el-button style="margin-left:10px" @click="modifycareer" round
+        >수정</el-button
+      >
     </div>
     <div></div>
     <el-divider content-position="left">나의 태그</el-divider>
     <div style="align-text:center">
       <!-- select -->
-      <el-select v-model="value" filterable placeholder="Choose tags" style="align-text:center">
+      <el-select
+        v-model="value"
+        filterable
+        placeholder="Choose tags"
+        style="align-text:center"
+      >
         <el-option
           v-for="item in options_user"
           :key="item.taglist_index"
@@ -55,7 +74,7 @@
     >
       <el-tag
         v-for="item in mytags"
-        style="margin: 0.1rem"
+        style="margin: 0.2rem"
         :key="item.tag_index"
         :type="warning"
         effect="plain"
@@ -91,7 +110,7 @@ export default {
 
     //자신의 직무, 경력을 불러온다
     axios
-      .get("https://localhost:8443/poi/cap", {
+      .get("https://i5d206.p.ssafy.io:8443/poi/cap", {
         headers: { Authorization: token },
         params: {
           index: index,
@@ -116,7 +135,7 @@ export default {
 
     //커리어 목록 받아오기
     axios
-      .get("https://localhost:8443/career/", {
+      .get("https://i5d206.p.ssafy.io:8443/career/", {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -134,7 +153,7 @@ export default {
 
     //직무 목록 받아오기
     axios
-      .get("https://localhost:8443/taglist/cat", {
+      .get("https://i5d206.p.ssafy.io:8443/taglist/cat", {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -231,7 +250,7 @@ export default {
     },
     getNewInfo() {
       axios
-        .get("https://localhost:8443/poi/cap", {
+        .get("https://i5d206.p.ssafy.io:8443/poi/cap", {
           headers: { Authorization: token },
           params: {
             index: index,
@@ -257,7 +276,7 @@ export default {
   methods: {
     modifypart() {
       axios
-        .put("https://localhost:8443/poi/mpart", {
+        .put("https://i5d206.p.ssafy.io:8443/poi/mpart", {
           headers: { Authorization: token },
           ind_index: index,
           cat_index: this.mypart_ind,
@@ -278,7 +297,7 @@ export default {
     },
     modifycareer() {
       axios
-        .put("https://localhost:8443/poi/mcar", {
+        .put("https://i5d206.p.ssafy.io:8443/poi/mcar", {
           headers: { Authorization: token },
           ind_index: index,
           cat_index: this.mycareer_ind,

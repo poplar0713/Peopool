@@ -22,7 +22,6 @@
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer> </el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -48,18 +47,33 @@ export default {
     UserSchedule,
     headerSearchCompany,
   },
-  created() {},
-  mounted: function() {
-    console.log("mounted start - ", ws);
-
+  created() {
     if (ws == null) {
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
       setTimeout(() => {
-        this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+        this.ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
       });
     }
+  },
+  mounted: function() {
+    console.log("mounted start - ", ws);
     ws.onopen = () => {
       console.log("loginpage - Websocket is connected!");
+      this.sendMessage({
+        id: "sessioncheck",
+      });
     };
+    ws.onmessage = (message) => {
+      console.log("ws onmessage- ", message);
+    };
+    // ws.onclose = function() {
+    //   setTimeout(
+    //     (this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall")),
+    //     300
+    //   ); // 웹소켓을 재연결하는 코드 삽입
+    // };
 
     console.log(server_url);
   },
@@ -68,6 +82,8 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    console.log("타입확인");
+    console.log(decoded.type);
     // 회원정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
@@ -114,6 +130,11 @@ export default {
     };
   },
   methods: {
+    sendMessage(message) {
+      var jsonMessage = JSON.stringify(message);
+      console.log("Sending message: " + jsonMessage);
+      ws.send(jsonMessage);
+    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);

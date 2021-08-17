@@ -22,7 +22,7 @@
         </template>
         <template #default="scope">
           <div class="grid-content bg-purple">
-            <CompanyInfo :item="scope.row.following" />
+            <CompanyInfoName :companydata="scope.row.following" />
           </div>
         </template>
       </el-table-column>
@@ -34,11 +34,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import CompanyInfo from "./CompanyInfo.vue";
+import CompanyInfoName from "@/components/CompanyInfo/CompanyInfoName.vue";
 
 export default {
   name: "UserFollowers",
-  components: { CompanyInfo },
+  components: { CompanyInfoName },
   data() {
     return {
       dialogVisible: false,

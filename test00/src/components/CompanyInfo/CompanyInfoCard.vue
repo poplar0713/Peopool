@@ -1,11 +1,11 @@
 <template>
-  <!-- 정보열기 -->
+  <!-- 카드 -->
   <el-card
     shadow="hover"
     style="margin-bottom:20px; text-align:center"
     @click="dialogVisible = true"
-  >
-    <h1>{{ this.company_info.ent_name }}</h1>
+    ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
+    <h3>{{ this.company_info.ent_name }}</h3>
   </el-card>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
@@ -70,6 +70,7 @@
               :key="item.list_index"
               :type="warning"
               effect="plain"
+              closable
               :disable-transitions="true"
               @click="GetTagCompany(item.list_name)"
             >
@@ -95,8 +96,8 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "SearchCompanyCard",
-  props: { item: Number },
+  name:"CompanyCardInfo",
+  props: { companyindex: Number },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -107,21 +108,16 @@ export default {
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
         fol_type: 0,
-        follower: this.item,
+        follower: this.companyindex,
         following: index,
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        if (res.status == 200) {
-          this.follow = true;
-        }
-        if (res.status == 204) {
-          this.follow = false;
-        }
+        console.log(res)
+        if (res.status==200){(this.follow = true)}
+        if (res.status==204){(this.follow = false)}
       })
       .catch((err) => {
-        // 팔로우가 안되어있는것
-        console.log(err);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
@@ -130,22 +126,20 @@ export default {
       });
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${this.item}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.companyindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(`searchcompany- ${res.data[0].ent_name}`, res);
-        let result = res.data[0];
-        this.company_info.ent_index = result.ent_index;
-        this.company_info.ent_name = result.ent_name;
-        this.company_info.ent_image = result.ent_image;
-        this.company_info.ent_contact = result.ent_contact;
-        this.company_info.ent_address = result.ent_address;
-        this.company_info.ent_email = result.ent_email;
-        this.company_info.ent_history = result.ent_history;
-        this.company_info.ent_website = result.ent_website;
-        this.company_info.ent_introduce = result.ent_introduce;
-        this.company_info.ent_ceo = result.ent_ceo;
+        this.company_info.ent_index = res.data.ent_index;
+        this.company_info.ent_name = res.data.ent_name;
+        this.company_info.ent_image = res.data.ent_image;
+        this.company_info.ent_contact = res.data.ent_contact;
+        this.company_info.ent_address = res.data.ent_address;
+        this.company_info.ent_email = res.data.ent_email;
+        this.company_info.ent_history = res.data.ent_history;
+        this.company_info.ent_website = res.data.ent_website;
+        this.company_info.ent_introduce = res.data.ent_introduce;
+        this.company_info.ent_ceo = res.data.ent_ceo;
       })
       .catch((err) => {
         console.log(err.response);
@@ -161,7 +155,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          ent_index: this.item,
+          ent_index : this.companyindex,
         },
       })
       .then((res) => {
@@ -201,14 +195,14 @@ export default {
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
-        console.log(this.user_index, this.item);
+        console.log(this.user_index, this.companyindex);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.token },
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.item,
+              follower: this.companyindex,
             },
           })
           .then((res) => {
@@ -231,7 +225,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 0,
             following: this.user_index,
-            follower: this.item,
+            follower: this.companyindex,
           })
           .then((res) => {
             console.log(res);

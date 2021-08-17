@@ -114,7 +114,7 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <CompanyInfo :item="scope.row.ent_index" />
+        <CompanyInfoDetail :companyindex="scope.row.ent_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -123,11 +123,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import CompanyInfo from "./CompanyInfo.vue";
+import CompanyInfoDetail from "@/components/CompanyInfo/CompanyInfoDetail.vue";
 
 export default {
   name: "UserSugInterview",
-  components: { CompanyInfo },
+  components: { CompanyInfoDetail },
   mounted() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");

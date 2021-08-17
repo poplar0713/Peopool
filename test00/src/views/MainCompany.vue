@@ -5,15 +5,19 @@
       <el-header><headerSearchUser /></el-header>
       <el-main>
         <el-row :gutter="20">
-          <el-col :span="12"
-          style="background-color:#FAFAFA; border-radius: 2em;"
+          <el-col
+            :span="12"
+            style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <h4 style="text-align:center">제안한 면접</h4><CompanySugInterview /></div
+              <h4 style="text-align:center">제안한 면접</h4>
+              <CompanySugInterview /></div
           ></el-col>
-          <el-col :span="12"
-          style="background-color:#FAFAFA; border-radius: 2em;"
+          <el-col
+            :span="12"
+            style="background-color:#FAFAFA; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <h4 style="text-align:center">인터뷰 일정</h4><CompanySchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4>
+              <CompanySchedule /></div
           ></el-col>
         </el-row>
         <div>
@@ -49,6 +53,8 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    console.log("타입확인");
+    console.log(decoded.type);
     //팔로잉정보 가져오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/fol/follower", {

@@ -21,7 +21,7 @@
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template #default="scope">
-          <UserInfo :userindex="scope.row.following" />
+          <UserInfoName :userindex="scope.row.following" />
           <!-- 유저정보 -->
         </template>
       </el-table-column>
@@ -33,11 +33,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfo from "./UserInfo.vue";
+import UserInfoName from "@/components/UserInfo/UserInfoName.vue";
 
 export default {
   name: "CompanyFollowers",
-  components: { UserInfo },
+  components: { UserInfoName },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
