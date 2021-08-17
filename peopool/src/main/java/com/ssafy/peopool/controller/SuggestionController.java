@@ -2,6 +2,8 @@ package com.ssafy.peopool.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.peopool.model.SugCard;
 import com.ssafy.peopool.model.Suggestion;
 import com.ssafy.peopool.model.service.SuggestionService;
+import com.ssafy.peopool.webrtc.EchoHandler;
+import com.ssafy.peopool.webrtc.Usermap;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -30,7 +34,9 @@ public class SuggestionController {
 	private static final String FAIL = "fail";
 	@Autowired
 	SuggestionService suggestionService;
-
+	@Autowired
+	Usermap map;
+	private static final Logger log = LoggerFactory.getLogger(SuggestionController.class);
 	@ApiOperation(value = "개인회원의 인덱스로 면접 요청 기록 조회", response = String.class)
 	@GetMapping("{index}")
 	public ResponseEntity<List<SugCard>> getSuggestion(@PathVariable("index") int index) {
@@ -49,6 +55,9 @@ public class SuggestionController {
 	@PostMapping()
 	public ResponseEntity<String> registerSuggestion(@RequestBody Suggestion suggestion) {
 		if (suggestionService.registerSuggestion(suggestion)) {
+			log.info("면접요청 컨트롤러 진입");
+			map.getsession(suggestion.getInd_index());
+			log.info("면접요청 getsession 실행 후");
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
