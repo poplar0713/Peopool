@@ -42,8 +42,12 @@
         >
         <!--  -->
         <el-menu-item index="3" @click="goToTagSearch"
-          ><el-svg-icon> <list /> </el-svg-icon><span>인재 찾기</span>
+          ><i
+            class="el-icon-s-custom
+"
+          /><span>인재 찾기</span>
         </el-menu-item>
+
         <el-menu-item index="4">
           <i class="el-icon-right"></i>
           <i class="el-icon-user-solid"></i>
