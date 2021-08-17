@@ -39,9 +39,9 @@ import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
-import wsocket from "@/components/utils/websocket.js";
+// import wsocket from "@/components/utils/websocket.js";
 
-var ws = wsocket;
+let ws = null;
 export default {
   name: "MainUser",
   components: {
@@ -52,14 +52,10 @@ export default {
     headerSearchCompany,
   },
   created() {
-    if (ws == null) {
-      const token = this.$cookies.get("PID_AUTH");
-      const decoded = jwt_decode(token);
-      const index = decoded.index;
-      setTimeout(() => {
-        this.ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
-      });
-    }
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
   },
   mounted: function() {
     console.log("mounted start - ", ws);
