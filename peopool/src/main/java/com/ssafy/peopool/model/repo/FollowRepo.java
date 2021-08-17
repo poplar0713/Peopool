@@ -18,6 +18,12 @@ public interface FollowRepo {
 
 	// 팔로우 삭제
 	int deleteFollow(Follow follow) throws SQLException;
+	
+	// 회원탈퇴시 팔로우 기록 삭제
+	int deleteFollower(Follow follow) throws SQLException;
+	
+	// 회원탈퇴시 팔로우 기록 삭제
+	int deleteFollowing(Follow follow) throws SQLException;
 
 	// 팔로우 숫자 조회
 	int getFollowerCount(String index, String type) throws SQLException;
