@@ -158,10 +158,10 @@
 import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
-import wsocket from "@/components/utils/websocket.js";
+// import wsocket from "@/components/utils/websocket.js";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
 //const PARTICIPANT_CLASS = "participant";
-var ws = wsocket;
+var ws = null;
 var participants = {};
 
 export default {
@@ -195,7 +195,7 @@ export default {
   },
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    // ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
     this.username = localStorage.getItem("username");
 
     this.room = this.$route.params.url;
@@ -276,20 +276,28 @@ export default {
       this.options = true;
 
       if (this.noncookie) {
-        message = {
-          id: "joinRoom",
-          name: this.noncookieusername,
-          room: this.room,
-        };
+        if (
+          this.noncookieusername.replace(" ", "") == "" ||
+          this.noncookieusername == null
+        ) {
+          this.$message.error("사용자 이름을 입력해주세요.");
+          return;
+        } else {
+          message = {
+            id: "joinRoom",
+            name: this.noncookieusername,
+            room: this.room,
+          };
+          this.sendMessage(message);
+        }
       } else {
         message = {
           id: "joinRoom",
           name: this.username,
           room: this.room,
         };
+        this.sendMessage(message);
       }
-
-      this.sendMessage(message);
     },
 
     onNewParticipant(request) {
