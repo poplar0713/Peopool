@@ -4,7 +4,10 @@
   >
 
   <el-dialog title="Followings" v-model="dialogVisible" width="30%">
-    <!--  -->
+    <h2 style="margin:0 auto; text-align:center">
+      {{ this.followingsNumber }}
+    </h2>
+
     <el-table
       :data="
         followings.filter(
@@ -57,6 +60,7 @@ export default {
       user_index: "",
       followings: [],
       search: "",
+      followingsNumber: 0,
     };
   },
   mounted() {
@@ -83,6 +87,27 @@ export default {
         console.log("token error");
         console.log(err.response);
         if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 팔로잉숫자 가져오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/fol/counting", {
+        params: {
+          index: index,
+          type: 0,
+        },
+        headers: { Authorization: token },
+      })
+      // 팔로워데이터 넣어주기
+      .then((res) => {
+        console.log(res);
+        this.followingsNumber = res.data;
+      })
+      .catch((err) => {
+        if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");

@@ -28,6 +28,7 @@
                       </el-col>
                       <el-col :span="12">
                         <el-button
+                          v-if="scope.row.int_show == 'W'"
                           size="mini"
                           type="danger"
                           @click="
@@ -37,8 +38,20 @@
                             )
                           "
                           >Interview Room</el-button
-                        ></el-col
-                      >
+                        >
+                        <el-button
+                          v-else-if="scope.row.int_show == 'F'"
+                          size="mini"
+                          disabled
+                          >NoShow</el-button
+                        >
+                        <el-button
+                          v-else-if="scope.row.int_show == 'T'"
+                          size="mini"
+                          disabled
+                          >면접종료</el-button
+                        >
+                      </el-col>
                     </el-row>
                   </template>
                 </el-table-column>

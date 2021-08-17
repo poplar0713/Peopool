@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:80%">
     <div class="box" style="background: #BDBDBD;">
       <img class="profile" id="profilephoto" :src="photofilepath" />
     </div>
@@ -55,8 +55,6 @@
 <script>
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-
-// import jwt_decode from "jwt-decode";
 export default {
   name: "SideBarProfileUserIntroduction",
   props: {

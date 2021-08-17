@@ -12,10 +12,11 @@
       <h3 style="text-align:center; margin-top:10px; margin-bottom:10px">
         #tags
       </h3>
-      <el-tabs type="card" :tab-position="tabPosition" style="height: 200px;">
-        <el-tab-pane label="개발"
+      <el-tabs type="card" :tab-position="top" style="height: 100%;">
+        <el-tab-pane label="서비스업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
             <el-checkbox
+              style="margin:10px"
               v-for="tag in tag1"
               :label="tag"
               :value="tag"
@@ -24,32 +25,114 @@
             >
           </el-checkbox-group></el-tab-pane
         >
-        <el-tab-pane label="경영·비즈니스"
+        <el-tab-pane label="금융·은행업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox v-for="tag in tag2" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag2"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
-        <el-tab-pane label="마케팅·광고"
+        <el-tab-pane label="IT·정보통신업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox v-for="tag in tag3" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag3"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
-        <el-tab-pane label="고객서비스·리테일"
+        <el-tab-pane label="판매·유통업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox v-for="tag in tag4" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag4"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
-        <el-tab-pane label="미디어"
+        <el-tab-pane label="제조·생산·화학업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox v-for="tag in tag5" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag5"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
+          </el-checkbox-group></el-tab-pane
+        >
+        <el-tab-pane label="교육업"
+          ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag6"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
+          </el-checkbox-group></el-tab-pane
+        >
+        <el-tab-pane label="건설업"
+          ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag7"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
+          </el-checkbox-group></el-tab-pane
+        >
+        <el-tab-pane label="의료·제약업"
+          ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag8"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
+          </el-checkbox-group></el-tab-pane
+        >
+        <el-tab-pane label="미디어·광고업"
+          ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag9"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
+          </el-checkbox-group></el-tab-pane
+        >
+        <el-tab-pane label="문화·예술·디자인업"
+          ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag10"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
+          </el-checkbox-group></el-tab-pane
+        >
+        <el-tab-pane label="기관·협회"
+          ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag11"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
       </el-tabs>
@@ -76,7 +159,7 @@
   </div>
   <br />
   <div v-show="this.searchresult == true">
-    <div v-if="this.selected_list.length>0">
+    <div v-if="this.selected_list.length > 0">
       <el-row :gutter="24">
         <el-col :span="4" v-for="(item, i) in selected_list" :key="i">
           <CompanyCardInfo :item="item.ent_index" />
@@ -110,11 +193,17 @@ export default {
       .then((res) => {
         console.log(res.data);
         this.sizes = res.data.slice(0, 4);
-        this.tag1 = res.data.slice(4, 7);
-        this.tag2 = res.data.slice(7, 10);
-        this.tag3 = res.data.slice(10, 13);
-        this.tag4 = res.data.slice(13, 16);
-        this.tag5 = res.data.slice(16);
+        this.tag1 = res.data.slice(4, 14);
+        this.tag2 = res.data.slice(14, 17);
+        this.tag3 = res.data.slice(17, 27);
+        this.tag4 = res.data.slice(27, 30);
+        this.tag5 = res.data.slice(30, 42);
+        this.tag6 = res.data.slice(42, 46);
+        this.tag7 = res.data.slice(46, 50);
+        this.tag8 = res.data.slice(50, 54);
+        this.tag9 = res.data.slice(54, 60);
+        this.tag10 = res.data.slice(60, 62);
+        this.tag11 = res.data.slice(62, 66);
       })
       .catch((err) => {
         console.log(err.response);
@@ -150,6 +239,12 @@ export default {
       tag3: [],
       tag4: [],
       tag5: [],
+      tag6: [],
+      tag7: [],
+      tag8: [],
+      tag9: [],
+      tag10: [],
+      tag11: [],
       selected_tags: [],
       selected: [],
       selected_list: [],
