@@ -1,5 +1,6 @@
 package com.ssafy.peopool.webrtc;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +13,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.google.gson.JsonObject;
 import com.ssafy.peopool.model.SocketSession;
 import com.ssafy.peopool.model.service.SocketSessionService;
 import com.ssafy.peopool.model.service.SocketSessionServiceImpl;
@@ -25,6 +27,9 @@ public class EchoHandler extends TextWebSocketHandler {
 
 	@Autowired
 	SocketSessionServiceImpl socketSessionService;
+	
+	@Autowired
+	Usermap map;
 	
 	// 클라이언트가 서버로 연결시
 	@Override
@@ -40,17 +45,26 @@ public class EchoHandler extends TextWebSocketHandler {
 		 
 		if (senderId != null) { // 로그인 값이 있는 경우만
 			log(senderId + " 연결 됨");
-			users.put(senderId, session); // 로그인중 개별유저 저장
+			map.usersadd(tmp[lastindex], session);
+			log.info("---map add :{}",tmp[lastindex]);
+			users.put(tmp[lastindex], session); // 로그인중 개별유저 저장
+			JsonObject response = new JsonObject();
+			response.addProperty("connect", tmp[lastindex]);
+			
+			synchronized(session) {
+				session.sendMessage(new TextMessage(response.toString()));
+			}
 		}
 		
-		log.info(users.toString());
-		SocketSession socketSession = new SocketSession();
-		socketSession.setInd_index(Integer.parseInt(tmp[lastindex]));
-		socketSession.setSessionid(senderId);
-		log.info("socketSession : {}", socketSession);
 		
+		
+//		SocketSession socketSession = new SocketSession();
+//		socketSession.setInd_index(Integer.parseInt(tmp[lastindex]));
+//		socketSession.setSessionid(senderId);
+//		log.info("socketSession : {}", socketSession);
+//		
 //		SocketSessionServiceImpl socketSessionService = new SocketSessionServiceImpl();
-		socketSessionService.updateWebSocketSession(socketSession);
+//		socketSessionService.updateWebSocketSession(socketSession);
 	}
 
 	// 클라이언트가 Data 전송 시
