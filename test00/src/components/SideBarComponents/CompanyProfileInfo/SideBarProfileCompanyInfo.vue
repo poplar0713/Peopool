@@ -97,8 +97,8 @@ export default {
         this.ruleForm.ent_history = result.ent_history;
         this.ruleForm.ent_address = result.ent_address;
         this.ruleForm.ent_website = result.ent_website;
-        this.ent_image_pk = result.ent_image;
-        console.log("axios ent_index: ", this.ent_image_pk);
+        this.ruleForm.ent_image_pk = result.ent_image;
+        console.log("axios ent_index: ", this.ruleForm.ent_image_pk);
       })
       .catch((err) => {
         console.log("token error");
@@ -134,7 +134,7 @@ export default {
         ent_website: "",
         Password: "",
         PasswordConfirm: "",
-        ent_image_pk: "",
+        ent_image_pk: 0,
       },
       rules: {
         ent_ceo: [
@@ -200,40 +200,39 @@ export default {
       };
     },
     submitForm(formName) {
-      console.log("this ent_index - ", this.ent_image_pk);
-      console.log("this boolean ent_indx", !this.ent_image_pk);
-      if (!this.ent_image_pk && !this.changeprofile) {
+      console.log("this ent_index - ", this.ruleForm.ent_image_pk);
+      console.log("this boolean ent_indx", !this.ruleForm.ent_image_pk);
+      if (!this.ruleForm.ent_image_pk && !this.changeprofile) {
         this.failedprofile();
         return;
       }
+
+      if (this.changeprofile) {
+        var frm = new FormData();
+        var photodata = this.$refs.companyprofile.files[0];
+        frm.append("upfile", photodata);
+        axios
+          .post(
+            `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
+            frm,
+            {
+              headers: { Authorization: this.token },
+            }
+          )
+          .then((res) => {
+            console.log("cphoto: ", res);
+          })
+          .catch((err) => {
+            console.log("cerr: ", err);
+          });
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          var frm = new FormData();
-          var photodata = this.$refs.companyprofile.files[0];
-          if (this.changeprofile) {
-            frm.append("upfile", photodata);
-            axios
-              .post(
-                `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
-                frm,
-                {
-                  headers: { Authorization: this.token },
-                }
-              )
-              .then((res) => {
-                console.log("cphoto: ", res);
-              })
-              .catch((err) => {
-                console.log("cerr: ", err);
-              });
-          }
-
           // 기업정보수정
-
           axios
             .put("https://i5d206.p.ssafy.io:8443/poe", {
               headers: { Authorization: this.token },
-              // ent_image: this.ruleForm.ent_image,
+              ent_image: this.ruleForm.ent_image_pk,
               ent_index: this.ruleForm.ent_index,
               ent_ceo: this.ruleForm.ent_ceo,
               ent_history: this.ruleForm.ent_history,
