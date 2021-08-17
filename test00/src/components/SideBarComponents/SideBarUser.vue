@@ -51,15 +51,7 @@
           <i class="el-icon-back"></i>
           <span><UserFollowers /></span>
         </el-menu-item>
-        <!--  -->
-
-        <!--  -->
         <el-menu-item index="7">
-          <i class="el-icon-setting"></i>
-          <span>settings</span>
-        </el-menu-item>
-        <!--  -->
-        <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
           <el-text @click="Logout">Logout</el-text>
         </el-menu-item>
@@ -95,14 +87,8 @@ export default {
     UserFollowers,
   },
   methods: {
-    mvHome() {
-      this.$router.replace("user");
-    },
     // 로그아웃
     Logout() {
-      // 깔끔하게 비우기
-      this.$cookies.remove("token");
-      localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
@@ -118,7 +104,6 @@ export default {
           message: "로그아웃",
           type: "success",
         });
-        location.reload();
       }, 2000);
     },
   },

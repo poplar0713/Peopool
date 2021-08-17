@@ -1,12 +1,23 @@
 <template>
-  <!-- 정보열기 -->
-  <el-card
-    shadow="hover"
-    style="margin-bottom:20px; text-align:center"
-    @click="dialogVisible = true"
-  >
-    <h1>{{ this.company_info.ent_name }}</h1>
-  </el-card>
+  <el-carousel :interval="2000" type="card" height="200px">
+    <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
+      Rank #{{ i + 1 }}
+      <el-card
+        shadow="hover"
+        style="text-align:center; background-color:#F4F4EF; height:110%;"
+        @click="(dialogVisible = true), getcompanydata(item.ent_index)"
+      >
+        <el-row>
+          <el-col :span="8">
+            {{ item.ent_image }}
+          </el-col>
+          <el-col :span="16">
+            <h1>{{ item.ent_name }}</h1>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-carousel-item>
+  </el-carousel>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
     <el-container style="text-align:center">
@@ -41,8 +52,7 @@
               <el-aside width="300px"
                 ><el-image
                   style="width: 300px; height: 300px"
-                  :src="company_info.ent_image_path"
-                  v-if="company_info.ent_image_path"
+                  :src="ent_img"
                 ></el-image
               ></el-aside>
               <!--  -->
@@ -71,6 +81,7 @@
               :key="item.list_index"
               :type="warning"
               effect="plain"
+              closable
               :disable-transitions="true"
               @click="GetTagCompany(item.list_name)"
             >
@@ -95,95 +106,24 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+
 export default {
-  name: "SearchCompanyCard",
-  props: { item: Number },
+  name: "PopularCompanyList",
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    // 팔로우했는지 체크해보기
-    axios
-      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-        headers: { Authorization: token },
-        fol_type: 0,
-        follower: this.item,
-        following: index,
-      })
-      .then((res) => {
-        // 팔로우가 되어있는것
-        if (res.status == 200) {
-          this.follow = true;
-        }
-        if (res.status == 204) {
-          this.follow = false;
-        }
-      })
-      .catch((err) => {
-        // 팔로우가 안되어있는것
-        console.log(err);
-        if (err.response == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 기업정보 가져오기
-    axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${this.item}`, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        console.log(`searchcompany- ${res.data[0].ent_name}`, res);
-        let result = res.data[0];
-        this.company_info.ent_index = result.ent_index;
-        this.company_info.ent_name = result.ent_name;
-        this.company_info.ent_image_path =
-          "/file/" + result.image_savefolder + "/" + "image_savefile";
-        this.company_info.ent_image = result.ent_image;
-        this.company_info.ent_contact = result.ent_contact;
-        this.company_info.ent_address = result.ent_address;
-        this.company_info.ent_email = result.ent_email;
-        this.company_info.ent_history = result.ent_history;
-        this.company_info.ent_website = result.ent_website;
-        this.company_info.ent_introduce = result.ent_introduce;
-        this.company_info.ent_ceo = result.ent_ceo;
-      })
-      .catch((err) => {
-        console.log(err.response);
-        if (err.response == 401) {
-          console.log("token error");
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 기업본인 태그목록 불러오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
-        headers: { Authorization: token },
-        params: {
-          ent_index: this.item,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        this.ent_tags = res.data;
-      })
-      .catch((err) => {
-        if (err.response == 401) {
-          console.log("token error");
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
+
+    axios.get("https://i5d206.p.ssafy.io:8443/poe/ByFollower").then((res) => {
+      this.popularlist = res.data;
+    });
     return {
       activeNames: ["1"],
       dialogVisible: false,
       follow: false,
       user_index: index,
+      popularlist: [],
       ent_tags: [],
       company_info: {
         ent_index: "",
@@ -196,11 +136,84 @@ export default {
         ent_address: "",
         ent_website: "",
         ent_introduce: null,
-        ent_image_path: "",
       },
     };
   },
   methods: {
+    getcompanydata(companyindex) {
+      // 팔로우했는지 체크해보기
+      axios
+        .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+          headers: { Authorization: this.token },
+          fol_type: 0,
+          follower: companyindex,
+          following: this.user_index,
+        })
+        .then((res) => {
+          // 팔로우가 되어있는것
+          if (res.status == 200) {
+            this.follow = true;
+          }
+          if (res.status == 204) {
+            this.follow = false;
+          }
+        })
+        .catch((err) => {
+          // 팔로우가 안되어있는것
+          console.log(err);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+      // 기업정보 가져오기
+      axios
+        .get(`https://i5d206.p.ssafy.io:8443/poe/index/${companyindex}`, {
+          headers: { Authorization: this.token },
+        })
+        .then((res) => {
+          this.company_info.ent_index = res.data.ent_index;
+          this.company_info.ent_name = res.data.ent_name;
+          this.company_info.ent_image = res.data.ent_image;
+          this.company_info.ent_contact = res.data.ent_contact;
+          this.company_info.ent_address = res.data.ent_address;
+          this.company_info.ent_email = res.data.ent_email;
+          this.company_info.ent_history = res.data.ent_history;
+          this.company_info.ent_website = res.data.ent_website;
+          this.company_info.ent_introduce = res.data.ent_introduce;
+          this.company_info.ent_ceo = res.data.ent_ceo;
+        })
+        .catch((err) => {
+          console.log(err.response);
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+      // 기업본인 태그목록 불러오기
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/cla/list", {
+          headers: { Authorization: this.token },
+          params: {
+            ent_index: companyindex,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.ent_tags = res.data;
+        })
+        .catch((err) => {
+          if (err.response == 401) {
+            console.log("token error");
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
     //팔로잉버튼
     clickfollowBtn() {
       if (this.follow) {
@@ -212,7 +225,7 @@ export default {
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.item,
+              follower: this.company_info.ent_index,
             },
           })
           .then((res) => {
@@ -235,7 +248,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 0,
             following: this.user_index,
-            follower: this.item,
+            follower: this.company_info.ent_index,
           })
           .then((res) => {
             console.log(res);
@@ -252,35 +265,8 @@ export default {
           });
       }
     },
-    handleClose() {
-      this.dialogVisible = false;
-    },
-    // 해당 태그의 기업들 검색으로
-    GetTagCompany(keyword) {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      setTimeout(() => {
-        loading.close();
-        this.$router.push({
-          name: "SearchCompany",
-          query: { keyword: `${keyword}` },
-        });
-      }, 2000);
-      setTimeout(() => {
-        location.reload();
-      }, 2001);
-    },
   },
 };
 </script>
 
-<style>
-.info {
-  padding: 3%;
-  width: "50%";
-}
-</style>
+<style></style>

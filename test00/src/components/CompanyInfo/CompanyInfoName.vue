@@ -98,7 +98,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
   name: "FollowOfUserCompanyInfo",
-  props: { item: Number },
+  props: { companydata: Number },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -109,7 +109,7 @@ export default {
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
         fol_type: 0,
-        follower: this.item,
+        follower: this.companydata,
         following: index,
       })
       .then((res) => {
@@ -132,7 +132,7 @@ export default {
       });
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.item}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.companydata}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -161,7 +161,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
         headers: { Authorization: token },
         params: {
-          index: this.item,
+          index: this.companydata,
           type: 1,
         },
       })
@@ -202,14 +202,14 @@ export default {
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
-        console.log(this.user_index, this.item);
+        console.log(this.user_index, this.companydata);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.token },
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.item,
+              follower: this.companydata,
             },
           })
           .then((res) => {
@@ -232,7 +232,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 0,
             following: this.user_index,
-            follower: this.item,
+            follower: this.companydata,
           })
           .then((res) => {
             console.log(res);

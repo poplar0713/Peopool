@@ -18,6 +18,7 @@
             class="cprofile"
             id="cprofilephoto"
             src="https://i5d206.p.ssafy.io/file/thumbuser.png"
+            height="150" width="150"
           />
         </div>
         <div v-else class="box" style="background: #BDBDBD;">
@@ -26,6 +27,7 @@
             id="cprofilephoto"
             v-if="ruleForm.ent_image"
             :src="ruleForm.ent_image"
+            height="150" width="150"
           />
         </div>
         <!-- {{ this.ruleForm.ent_image }}<br /> -->
@@ -321,19 +323,19 @@ export default {
 </script>
 
 <style scoped>
-.box {
+/* .box {
   width: 150px;
-  height: 150px;
+  height: 150px; */
   /* border-radius: 70%; */
-  overflow: hidden;
+  /* overflow: hidden;
 
   margin: 30px;
-}
-.cprofile {
+} */
+/* .cprofile {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .filetype {
   position: relative;

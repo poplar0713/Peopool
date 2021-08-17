@@ -179,6 +179,7 @@ export default {
           headers: { Authorization: this.token },
         })
         .then(() => {
+          this.$message.info("태그가 삭제되었습니다");
           this.getNewArray = !this.getNewArray;
         })
         .catch((err) => {

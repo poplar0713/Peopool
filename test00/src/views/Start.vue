@@ -64,7 +64,47 @@
 <script>
 import Login from "@/components/Account/Login.vue";
 import NotLoginMain from "@/components/MainBasic/NotLoginMain.vue";
+import jwt_decode from "jwt-decode";
 export default {
+  mounted() {
+    if (this.$cookies.get("PID_AUTH")) {
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const type = decoded.type;
+      if (type == 0) {
+        const loading = this.$loading({
+          lock: true,
+          text: "Loading",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)",
+        });
+        setTimeout(() => {
+          loading.close();
+          this.$router.push("/user");
+          this.$message({
+            message: "이미 로그인되어있습니다",
+            type: "success",
+          });
+        }, 1000);
+      }
+      if (type == 1) {
+        const loading = this.$loading({
+          lock: true,
+          text: "Loading",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)",
+        });
+        setTimeout(() => {
+          loading.close();
+          this.$router.push("/company");
+          this.$message({
+            message: "이미 로그인되어있습니다",
+            type: "success",
+          });
+        }, 1000);
+      }
+    }
+  },
   name: "start",
   components: {
     Login,

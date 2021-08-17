@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true" style="color:black"
+  <el-button type="text" @click="getFollowings" style="color:black"
     >Followings</el-button
   >
 
@@ -26,7 +26,7 @@
           <el-row>
             <el-col :span="12"
               ><div class="grid-content bg-purple">
-                <CompanyInfo :item="scope.row.follower" /></div
+                <CompanyInfoName :companydata="scope.row.follower" /></div
             ></el-col>
             <el-col :span="12"
               ><div class="grid-content bg-purple-light">
@@ -49,11 +49,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import CompanyInfo from "./CompanyInfo.vue";
+import CompanyInfoName from "@/components/CompanyInfo/CompanyInfoName.vue";
 
 export default {
   name: "UserFollowings",
-  components: { CompanyInfo },
+  components: { CompanyInfoName },
   data() {
     return {
       dialogVisible: false,
@@ -69,52 +69,55 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.user_index = index;
-    //팔로잉정보 가져오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/fol/following", {
-        params: {
-          index: index,
-          type: 0,
-        },
-        headers: { Authorization: token },
-      })
-      // 팔로워데이터 넣어주기
-      .then((res) => {
-        console.log(res);
-        this.followings = res.data;
-      })
-      .catch((err) => {
-        console.log("token error");
-        console.log(err.response);
-        if (err.response == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 팔로잉숫자 가져오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/fol/counting", {
-        params: {
-          index: index,
-          type: 0,
-        },
-        headers: { Authorization: token },
-      })
-      // 팔로워데이터 넣어주기
-      .then((res) => {
-        console.log(res);
-        this.followingsNumber = res.data;
-      })
-      .catch((err) => {
-        if (err.response.data.status == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
   },
   methods: {
+    getFollowings() {
+      this.dialogVisible = true;
+      //팔로잉정보 가져오기
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/fol/following", {
+          params: {
+            index: this.user_index,
+            type: 0,
+          },
+          headers: { Authorization: this.token },
+        })
+        // 팔로워데이터 넣어주기
+        .then((res) => {
+          console.log(res);
+          this.followings = res.data;
+        })
+        .catch((err) => {
+          console.log("token error");
+          console.log(err.response);
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+      // 팔로잉숫자 가져오기
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/fol/counting", {
+          params: {
+            index: this.user_index,
+            type: 0,
+          },
+          headers: { Authorization: this.token },
+        })
+        // 팔로워데이터 넣어주기
+        .then((res) => {
+          console.log(res);
+          this.followingsNumber = res.data;
+        })
+        .catch((err) => {
+          if (err.response.data.status == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
     unfollow(row) {
       console.log(row.following, row.follower);
       // 언팔로우

@@ -1,37 +1,11 @@
 <template>
-  <!-- <div
-    class="nameCard"
-    :class="[isHover ? 'backside' : 'frontside']"
-    @click="this.dialogVisible = true"
-    @mouseover="changeBack"
-    @mouseleave="changeFront"
-  >
-    <el-row style="text-align: center;">
-      <el-col :span="10">
-        <div>
-          <img :src="this.userdata.photofilepath" />
-        </div>
-      </el-col>
-      <el-col :span="14">
-        <div>
-          <h3>{{ this.userdata.ind_name }}</h3>
-        </div>
-        <div>
-          <h3>직무 : {{ this.userdata.cat_name }}</h3>
-        </div>
-        <div>
-          <h3>[{{ this.userdata.car_value }}]</h3>
-        </div>
-      </el-col>
-    </el-row>
-  </div> -->
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; text-align:center"
+    style="margin-bottom:20px; cursor:pointer; height:110%"
     @click="dialogVisible = true"
   >
     <el-row>
-      <el-col :span="12">
+      <el-col :span="8">
         <div>
           <img
             :src="userdata.photofilepath"
@@ -39,14 +13,15 @@
           />
         </div>
       </el-col>
-      <el-divider direction="vertical"></el-divider>
-      <el-col :span="12">
-        <div>
-          <p>{{ this.userdata.ind_name }}</p>
-          <p>{{ this.userdata.cat_name }}</p>
-          <p>{{ this.userdata.car_value }}</p>
-        </div>
-      </el-col>
+      <el-col :span="16"
+        ><div>
+          <div>
+            <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
+          </div>
+          <div>직무 - {{ this.userdata.cat_name }}</div>
+          <div>{{ this.userdata.car_value }}</div>
+        </div></el-col
+      >
     </el-row>
   </el-card>
 
@@ -87,6 +62,12 @@
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
         </el-tab-pane>
+        <el-tab-pane label="연락처" style="padding : 2%">
+          <div style="text-align:center">
+            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
+            <h4>이메일: {{ this.userdata.ind_email }}</h4>
+          </div>
+        </el-tab-pane>
         <el-tab-pane label="이력서">
           <webviewer :initialDoc="userdata.resumefilepath" />
         </el-tab-pane>
@@ -105,14 +86,13 @@
       <span class="dialog-footer">
         <el-button
           v-if="this.follow"
-          plain
           round
           type="danger"
           @click="clickfollowBtn"
-          >팔로우 해제</el-button
+          ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
-          >팔로우</el-button
+          ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
         >
         <el-button type="success" plain round @click="this.innerVisible = true"
           >면접 제안</el-button
@@ -193,6 +173,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 
 export default {
+  name: "UserInfoCard",
   props: ["userindex"],
   components: {
     webviewer,
@@ -247,7 +228,6 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.companyindex = index;
-    // 팔로우했는지 체크해보기
 
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
@@ -428,27 +408,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap");
-.nameCard {
-  width: 380px;
-  height: 180px;
-  font-size: 1rem;
-  font-family: "Gothic A1", sans-serif;
-  cursor: pointer;
-  padding: 1rem;
-  border-radius: 3%;
-}
-.frontside {
-  border-width: 0.2rem;
-  border-color: gold;
-  border-style: solid;
-}
-.backside {
-  border-width: 0.2rem;
-  border-style: solid;
-  background-color: gold;
-  color: purple;
-  box-shadow: 10px 5px 5px purple;
-}
-</style>
+<style></style>

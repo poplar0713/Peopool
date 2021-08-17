@@ -1,7 +1,7 @@
 <template>
   <div style="width:80%">
-    <div class="box" style="background: #BDBDBD;">
-      <img class="profile" id="profilephoto" :src="photofilepath" />
+    <div>
+      <img :src="photofilepath" height="150" width="150" />
     </div>
     <el-scrollbar>
       <div
@@ -153,7 +153,6 @@ export default {
           })
           .catch((err) => {
             this.failed();
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
@@ -216,19 +215,18 @@ export default {
 </script>
 
 <style scoped>
-.box {
+/* .box {
   width: 150px;
   height: 150px;
-  /* border-radius: 70%; */
+  border-radius: 70%;
   overflow: hidden;
-
   margin: 30px;
 }
 .profile {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .filetype {
   position: relative;

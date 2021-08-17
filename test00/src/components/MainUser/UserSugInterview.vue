@@ -44,6 +44,7 @@
           </template>
           <div style="text-align:center">
             <el-button
+              v-if="scope.row.sug_timeone"
               size="mini"
               plain
               round
@@ -57,8 +58,18 @@
                 )
               "
               >{{ scope.row.sug_timeone }}</el-button
+            >
+            <el-button
+              v-else
+              disabled
+              size="mini"
+              plain
+              round
+              style="margin:5px;"
+              >일정 없음</el-button
             ><br />
             <el-button
+              v-if="scope.row.sug_timetwo"
               size="mini"
               plain
               round
@@ -72,8 +83,17 @@
                 )
               "
               >{{ scope.row.sug_timetwo }}</el-button
+            ><el-button
+              v-else
+              disabled
+              size="mini"
+              plain
+              round
+              style="margin:5px;"
+              >일정 없음</el-button
             ><br />
             <el-button
+              v-if="scope.row.sug_timethree"
               size="mini"
               plain
               round
@@ -87,6 +107,14 @@
                 )
               "
               >{{ scope.row.sug_timethree }}</el-button
+            ><el-button
+              v-else
+              disabled
+              size="mini"
+              plain
+              round
+              style="margin:5px;"
+              >일정 없음</el-button
             ><br />
             <el-button
               size="mini"
@@ -114,7 +142,7 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <CompanyInfo :item="scope.row.ent_index" />
+        <CompanyInfoDetail :companyindex="scope.row.ent_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -123,11 +151,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import CompanyInfo from "./CompanyInfo.vue";
+import CompanyInfoDetail from "@/components/CompanyInfo/CompanyInfoDetail.vue";
 
 export default {
   name: "UserSugInterview",
-  components: { CompanyInfo },
+  components: { CompanyInfoDetail },
   mounted() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");

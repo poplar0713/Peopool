@@ -1,216 +1,212 @@
 <template>
-  <div>
-    <el-text
-      type="text"
-      @click="dialogVisible = true"
-      style="color:black; text-align:center; cursor:pointer"
-      size="mini"
-      >상세보기
-    </el-text>
-    <div style="text-align:center">
-      <el-dialog
-        :title="this.userdata.ind_name"
-        v-model="dialogVisible"
-        width="50%"
-        style="color:black"
-      >
-        <!-- 팔로우가 되어있을때 -->
-        <div v-if="follow" style="color: Tomato;">
-          <i
-            class="fas fa-heart fa-2x"
-            size:7x
-            @click="clickfollowBtn"
-            style="cursor:pointer"
-          ></i>
-        </div>
-        <!-- 팔로우가 안되어있을때 -->
-        <div v-if="follow == false" style="color: Tomato;">
-          <i
-            @click="clickfollowBtn"
-            class="far fa-heart fa-2x"
-            style="cursor:pointer"
-          ></i>
-        </div>
-        <br />
-        <!-- 태그 -->
-        <div
-          v-if="this.user_tags.length > 0"
-          style="width:100%; word-break:break-all;word-wrap:break-word;"
-        >
-          <el-tag
-            v-for="item in user_tags"
-            style="margin:5px"
-            :key="item.taglist_index"
-            :type="warning"
-            effect="plain"
-            :disable-transitions="true"
-            @click="GetTagUser(item.taglist_name)"
-          >
-            {{ item.taglist_name }}
-          </el-tag>
-        </div>
-        <div v-else style="align-text:center">
-          선택된 태그가 없습니다
-        </div>
-        <br />
-        <div>
-          <el-collapse v-model="activeName" accordion>
-            <el-collapse-item title="Introduction" name="1">
-              <el-row :gutter="20">
-                <el-col :span="6">
-                  <div class="box" style="background: #BDBDBD;">
-                    <img
-                      class="profile"
-                      id="profilephoto"
-                      :src="userdata.photofilepath"
-                      align="center"
-                    />
-                  </div>
-                </el-col>
-                <el-col :span="6" :offset="6">
-                  <div style="margin-top:30px">
-                    {{ this.userdata.ind_introduce }}
-                  </div>
-                </el-col>
-              </el-row>
-            </el-collapse-item>
-            <el-collapse-item title="자기소개영상" name="2">
-              <div>
-                <video
-                  :src="userdata.videofilepath"
-                  height="360"
-                  width="640"
-                  controls=""
-                  style="width: 100%; height: 100%;"
-                ></video>
-              </div>
-            </el-collapse-item>
-            <el-collapse-item title="연락처" name="3">
-              <div>Tel : {{ this.userdata.ind_phone }}</div>
-              <div>E-mail : {{ this.userdata.ind_email }}</div>
-            </el-collapse-item>
-            <el-collapse-item title="Documents" name="4">
-              <div>
-                <!-- 웹뷰어 되는것 확인 -->
-                <!-- <webviewer initialDoc="/docx_pdf/test.pdf"></webviewer> -->
-                <webviewer :initialDoc="userdata.resumefilepath" />
-              </div>
-              <div style="text-align: right;">
-                <a
-                  :href="userdata.resumefilepath"
-                  :download="userdata.resume_originfile"
-                  id="downatag"
-                  >📰 이력서 다운로드</a
-                >
-              </div>
-            </el-collapse-item>
-            <el-collapse-item title="reservation" name="5">
-              <div style="text-align:center; width:50%; margin: 0 auto;">
-                <el-input
-                  v-model="reservationdata.sug_duty"
-                  placeholder="채용직군을 입력해주세요"
-                ></el-input>
-              </div>
-              <div style="text-align:center; margin:10px">
-                <el-date-picker
-                  value-format="YYYY-MM-DD HH:mm:ss"
-                  v-model="reservationdata.sug_timeone"
-                  type="datetime"
-                  placeholder="Select date and time"
-                >
-                </el-date-picker>
-              </div>
-              <div style="text-align:center; margin:5px">
-                <el-date-picker
-                  value-format="YYYY-MM-DD HH:mm:ss"
-                  v-model="reservationdata.sug_timetwo"
-                  type="datetime"
-                  placeholder="Select date and time"
-                >
-                </el-date-picker>
-              </div>
-              <div style="text-align:center; margin:10px">
-                <el-date-picker
-                  value-format="YYYY-MM-DD HH:mm:ss"
-                  v-model="reservationdata.sug_timethree"
-                  type="datetime"
-                  placeholder="Select date and time"
-                >
-                </el-date-picker>
-              </div>
-              <div>
-                <el-input
-                  v-model="reservationdata.sug_message"
-                  placeholder="전하고싶은 메시지를 입력해주세요"
-                ></el-input>
-              </div>
-              <el-button
-                @click="(dialogVisible = false), interviewrequest()"
-                type="success"
-                style="float: right; margin:10px;"
-                :plain="true"
-                >Interview Request</el-button
-              >
-            </el-collapse-item>
-          </el-collapse>
-        </div>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancel</el-button>
-          </span>
-        </template>
-      </el-dialog>
+  <el-text
+    type="text"
+    @click="dialogVisible = true"
+    style="color:black; text-align:center; cursor:pointer"
+    size="mini"
+    >유저상세보기
+  </el-text>
+
+  <el-dialog center v-model="dialogVisible" width="60%">
+    <div style="text-align: center; font-size: 1.3rem; margin-bottom: 1rem">
+      <span>{{ this.userdata.ind_name }}님의 프로필</span>
+      <span> </span>
     </div>
-  </div>
+    <div style="text-align:center; margin-bottom: 2rem">
+      <el-tag
+        type="warning"
+        v-for="item in this.ind_taglist"
+        v-bind:key="item"
+        style="margin-right: 0.5rem; cursor:pointer"
+        @click="GetTagUser(item.taglist_name)"
+        >{{ item.taglist_name }}</el-tag
+      >
+    </div>
+    <div>
+      <el-tabs type="border-card">
+        <el-tab-pane label="소개" style="padding : 2%">
+          <el-row>
+            <el-col :span="12"
+              ><span> <img :src="this.userdata.photofilepath" /> </span
+            ></el-col>
+            <el-col :span="8"
+              ><span>
+                <h4>성명 : {{ this.userdata.ind_name }}</h4>
+                <h4>
+                  직무 : {{ this.userdata.cat_name }} ({{
+                    this.userdata.car_value
+                  }})
+                </h4>
+              </span></el-col
+            >
+            <el-divider></el-divider>
+          </el-row>
+          <h3>자기소개</h3>
+          <div>{{ this.userdata.ind_introduce }}</div>
+        </el-tab-pane>
+        <el-tab-pane label="이력서">
+          <webviewer :initialDoc="userdata.resumefilepath" />
+        </el-tab-pane>
+        <el-tab-pane label="PR 영상">
+          <video
+            :src="userdata.videofilepath"
+            height="360"
+            width="640"
+            controls=""
+            style="width: 100%; height: 100%;"
+          ></video>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button
+          v-if="this.follow"
+          plain
+          round
+          type="danger"
+          @click="clickfollowBtn"
+          >팔로우 해제</el-button
+        >
+        <el-button v-else type="danger" plain round @click="clickfollowBtn"
+          >팔로우</el-button
+        >
+        <el-button type="success" plain round @click="this.innerVisible = true"
+          >면접 제안</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
+  <!-- 면접제안하는부분 -->
+  <el-dialog
+    width="40%"
+    v-model="innerVisible"
+    append-to-body
+    style="padding: 2%; text-align:center;"
+  >
+    <h2>면접 제안하기</h2>
+    <div style="text-align:center; width:30%; margin: 0 auto;">
+      <h3>1. 직군 입력</h3>
+      <el-input
+        v-model="this.reservationdata.sug_duty"
+        placeholder="채용직군을 입력해주세요"
+      ></el-input>
+    </div>
+    <el-divider></el-divider>
+    <div div style="text-align:center;">
+      <h3>2. 제안할 면접일 선택</h3>
+      <span style="text-align:center; margin:10px">
+        <el-date-picker
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="this.reservationdata.sug_timeone"
+          type="datetime"
+          placeholder="면접 일정 후보 1"
+        >
+        </el-date-picker>
+      </span>
+      <span style="text-align:center; margin:5px">
+        <el-date-picker
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="this.reservationdata.sug_timetwo"
+          type="datetime"
+          placeholder="면접 일정 후보 2"
+        >
+        </el-date-picker>
+      </span>
+      <span style="text-align:center; margin:10px">
+        <el-date-picker
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="reservationdata.sug_timethree"
+          type="datetime"
+          placeholder="면접 일정 후보 3"
+        >
+        </el-date-picker>
+      </span>
+    </div>
+    <el-divider></el-divider>
+    <div style="text-align: center; margin: 3%">
+      <h3>3. 메세지 입력</h3>
+      <el-input
+        type="textarea"
+        :rows="3"
+        v-model="reservationdata.sug_message"
+        placeholder="전하고 싶은 메시지를 입력해주세요"
+      ></el-input>
+    </div>
+    <div style="text-align:center; margin: 4%">
+      <el-button
+        @click="(dialogVisible = false), interviewrequest()"
+        type="success"
+        :plain="true"
+        >요청 보내기</el-button
+      >
+    </div>
+  </el-dialog>
 </template>
 
 <script>
+import axios from "axios";
 import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+
 export default {
-  name: "MainCompanyUserInfo",
+  name: "RecruitingBoardUserInfo",
+  props: ["userindex"],
   components: {
     webviewer,
   },
-  created() {},
-  props: {
-    user: Object,
-    userindex: Object,
-  },
   data() {
+    return {
+      dialogVisible: false,
+      innerVisible: false,
+      ind_taglist: [],
+      isHover: false,
+      follow: "",
+      companyindex: "",
+      userdata: [
+        { ind_name: "" },
+        { ind_gender: "" },
+        { ind_phone: "" },
+        { ind_email: "" },
+        { photofilepath: "" },
+        { resume_originfile: "" },
+        { photo_index: "" },
+        { resume_index: "" },
+        { video_index: "" },
+        { ind_index: 0 },
+        { video_originfile: "" },
+        { videofilepath: "" },
+        { photo_originfile: "" },
+        { resumefilepath: "" },
+        { ind_switch: "" },
+        { ind_introduce: "" },
+        { cat_name: "" },
+        { car_value: "" },
+      ],
+      reservationdata: [
+        { ent_index: 0 },
+        { ind_index: 0 },
+        { sug_decision: "string" },
+        { sug_duty: "string" },
+        { sug_index: 0 },
+        { sug_send: "string" },
+        { sug_state: "string" },
+        { sug_timeone: "string" },
+        { sug_timethree: "string" },
+        { sug_timetwo: "string" },
+        { sug_message: "string" },
+      ],
+    };
+  },
+
+  mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    this.companyindex = index;
     // 팔로우했는지 체크해보기
-    axios
-      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-        headers: { Authorization: token },
-        fol_type: 1,
-        follower: this.userindex,
-        following: index,
-      })
 
-      .then((res) => {
-        // 팔로우가 되어있는것
-        if (res.status == 200) {
-          this.follow = true;
-        }
-        if (res.status == 204) {
-          this.follow = false;
-        }
-      })
-      .catch((err) => {
-        // 팔로우가 안되어있는것
-        console.log(err);
-        if (err.response == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 유저정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
@@ -236,69 +232,55 @@ export default {
         this.userdata.ind_email = result.ind_email;
         this.userdata.ind_phone = result.ind_phone;
         this.userdata.ind_gender = result.ind_gender;
+        this.userdata.cat_name = result.cat_name;
+        this.userdata.car_value = result.car_value;
       });
-    // 유저 태그목록 불러오기
+
+    axios
+      .post("https://i5d206.p.ssafy.io:8443/fol/check", {
+        headers: { Authorization: token },
+        fol_type: 1,
+        follower: this.userindex,
+        following: this.companyindex,
+      })
+
+      .then((res) => {
+        // 팔로우가 되어있는것
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
+      });
+
     axios
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
-        headers: { Authorization: token },
         params: {
           index: this.userindex,
           type: 0,
         },
       })
       .then((res) => {
-        console.log(res);
-        this.user_tags = res.data;
+        this.ind_taglist = res.data;
       })
       .catch((err) => {
+        console.log(err.response);
         if (err.response == 401) {
-          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
+          console.log("token error");
           localStorage.clear();
           this.$router.push("/");
         }
       });
-    return {
-      follow: false,
-      company_index: index,
-      dialogVisible: false,
-      // activeNames: ["1"],
-      activeName: "1",
-      user_tags: [],
-      userdata: [
-        { ind_name: "" },
-        { ind_gender: "" },
-        { ind_phone: "" },
-        { ind_email: "" },
-        { photofilepath: "" },
-        { resume_originfile: "" },
-        { photo_index: "" },
-        { resume_index: "" },
-        { video_index: "" },
-        { ind_index: 0 },
-        { video_originfile: "" },
-        { videofilepath: "" },
-        { photo_originfile: "" },
-        { resumefilepath: "" },
-        { ind_switch: "" },
-        { ind_introduce: "" },
-      ],
-      reservationdata: [
-        { ent_index: 0 },
-        { ind_index: 0 },
-        { sug_decision: "string" },
-        { sug_duty: "string" },
-        { sug_index: 0 },
-        { sug_send: "string" },
-        { sug_state: "string" },
-        { sug_timeone: "string" },
-        { sug_timethree: "string" },
-        { sug_timetwo: "string" },
-        { sug_message: "string" },
-      ],
-    };
   },
   methods: {
+    changeFront() {
+      this.isHover = false;
+    },
+    changeBack() {
+      this.isHover = true;
+    },
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
@@ -306,7 +288,7 @@ export default {
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             data: {
               fol_type: 1,
-              following: this.company_index,
+              following: this.companyindex,
               follower: this.userindex,
             },
             headers: { Authorization: this.token },
@@ -330,7 +312,7 @@ export default {
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.token },
             fol_type: 1,
-            following: this.company_index,
+            following: this.companyindex,
             follower: this.userindex,
           })
           .then((res) => {
@@ -348,41 +330,12 @@ export default {
           });
       }
     },
-    handleClose(done) {
-      this.$confirm("창을 닫으시겠습니까?")
-        .then(() => {
-          done();
-          this.dialogVisible = false;
-        })
-        .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
-          if (err.response == 401) {
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
-    },
-    successmessage() {
-      this.$message({
-        message: "Congrats, this is a success message.",
-        type: "success",
-      });
-    },
     interviewrequest() {
-      console.log(this.company_index);
-      console.log(this.userindex);
-      console.log(this.reservationdata.sug_duty);
-      console.log(this.reservationdata.sug_timeone);
-      console.log(this.reservationdata.sug_timetwo);
-      console.log(this.reservationdata.sug_timethree);
-      console.log(this.reservationdata.sug_message);
       //요청보내기
       axios
         .post("https://i5d206.p.ssafy.io:8443/sug", {
           headers: { Authorization: this.token },
-          ent_index: this.company_index,
+          ent_index: this.companyindex,
           ind_index: this.userindex,
           sug_duty: this.reservationdata.sug_duty,
           sug_timeone: this.reservationdata.sug_timeone,
@@ -407,6 +360,8 @@ export default {
             this.$router.push("/");
           }
         });
+
+      this.innerVisible = false;
     },
     // 해당 태그의 기업들 검색으로
     GetTagUser(keyword) {
@@ -431,22 +386,4 @@ export default {
 };
 </script>
 
-<style>
-.box {
-  width: 150px;
-  height: 150px;
-  /* border-radius: 70%; */
-  overflow: hidden;
-  margin: 30px;
-}
-.profile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-#downatag {
-  color: #000;
-  text-decoration: none;
-  font-size: 18px;
-}
-</style>
+<style></style>

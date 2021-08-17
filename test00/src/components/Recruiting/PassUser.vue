@@ -25,7 +25,7 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <UserInfo :userindex="scope.row.ind_index" />
+        <UserInfoDetail :userindex="scope.row.ind_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -34,11 +34,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfo from "@/components/MainCompany/UserInfo.vue";
+import UserInfoDetail from "@/components/UserInfo/UserInfoDetail.vue";
 
 export default {
   name:"PassUser",
-  components: { UserInfo },
+  components: { UserInfoDetail },
   data() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
