@@ -91,7 +91,6 @@ const router = createRouter({
 
 function requireAuth(to, from, next) {
   const { $cookies } = router.app.config.globalProperties;
-  console.log($cookies.get("PID_AUTH"));
   if ($cookies.get("PID_AUTH") == null) {
     alert("로그인이 필요한 서비스입니다");
     return next("/");

@@ -29,30 +29,50 @@
           />
         </div>
         <!-- {{ this.ruleForm.ent_image }}<br /> -->
-        <input
+
+        <span class="filetype">
+          <span class="file-text"></span>
+          <span class="file-btn">찾아보기</span>
+          <span class="file-select"
+            ><input
+              type="file"
+              class="input-file"
+              size="1"
+              @change="changept(this)"
+              id="companyprofile"
+              ref="companyprofile"
+              multiple="multiple"
+              accept="image/jpeg, image/jpg, image/png"
+          /></span>
+        </span>
+        <!-- <input
           type="file"
           id="companyprofile"
           ref="companyprofile"
           @change="changept(this)"
           accept="image/jpeg, image/jpg, image/png"
           multiple="multiple"
-        />
+        /> -->
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">
         <el-input v-model="ruleForm.ent_ceo"></el-input>
       </el-form-item>
       <!-- 기업역사 -->
-      <el-form-item label="History" prop="ent_history">
+      <el-form-item label="창립" prop="ent_history">
         <el-input v-model="ruleForm.ent_history"></el-input>
       </el-form-item>
       <!-- 기업주소 -->
-      <el-form-item label="Address" prop="ent_address">
+      <el-form-item label="주소" prop="ent_address">
         <el-input v-model="ruleForm.ent_address"></el-input>
       </el-form-item>
       <!-- 기업웹사이트 -->
-      <el-form-item label="WebSite" prop="ent_website">
+      <el-form-item label="사이트" prop="ent_website">
         <el-input v-model="ruleForm.ent_website"></el-input>
+      </el-form-item>
+
+      <el-form-item label="소개" prop="ent_introduce">
+        <el-input v-model="ruleForm.ent_introduce"></el-input>
       </el-form-item>
       <div style="float:right">
         <el-form-item>
@@ -98,6 +118,8 @@ export default {
         this.ruleForm.ent_address = result.ent_address;
         this.ruleForm.ent_website = result.ent_website;
         this.ruleForm.ent_image_pk = result.ent_image;
+        this.ruleForm.ent_introduce = result.ent_introduce;
+
         console.log("axios ent_index: ", this.ruleForm.ent_image_pk);
       })
       .catch((err) => {
@@ -135,6 +157,7 @@ export default {
         Password: "",
         PasswordConfirm: "",
         ent_image_pk: 0,
+        ent_introduce: "",
       },
       rules: {
         ent_ceo: [
@@ -185,6 +208,13 @@ export default {
           },
           { validator: checkPWCF, trigger: "blur" },
         ],
+        ent_introduce: [
+          {
+            required: true,
+            message: "기업소개를 확인해주세요",
+            trigger: "blur",
+          },
+        ],
       },
       fullscreenLoading: false,
     };
@@ -198,6 +228,11 @@ export default {
       imgtag.onload = function() {
         URL.revokeObjectURL(imgtag.src);
       };
+      document.getElementsByClassName("file-text")[0].innerHTML = "";
+      let filedata = photoip.files[0].name;
+      this.filename = filedata;
+      document.getElementsByClassName("file-text")[0].innerHTML = filedata;
+      console.log(filedata);
     },
     submitForm(formName) {
       console.log("this ent_index - ", this.ruleForm.ent_image_pk);
@@ -221,6 +256,7 @@ export default {
           )
           .then((res) => {
             console.log("cphoto: ", res);
+            document.getElementsByClassName("file-text")[0].innerHTML = "";
           })
           .catch((err) => {
             console.log("cerr: ", err);
@@ -238,6 +274,7 @@ export default {
               ent_history: this.ruleForm.ent_history,
               ent_address: this.ruleForm.ent_address,
               ent_website: this.ruleForm.ent_website,
+              ent_introduce: this.ruleForm.ent_introduce,
             })
             .then((res) => {
               console.log(res);
@@ -296,5 +333,66 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.filetype {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  *margin-right: 4px;
+}
+
+.filetype * {
+  vertical-align: middle;
+}
+
+.filetype .file-text {
+  position: relative;
+  width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  height: 25px;
+  background-color: #ecefef;
+  margin: 0;
+  border: 1px solid #cdd3d4;
+  line-height: 20px;
+  z-index: 10;
+}
+
+.filetype .file-select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  overflow: hidden;
+}
+
+.filetype .file-select .input-file {
+  width: 60px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  height: 20px;
+}
+.summitbtn {
+  background-color: #e6a23c;
+  color: rgba(255, 255, 255, 0.74) !important;
+  border: none;
+  height: 28px;
+  font-size: 15px;
+  padding: 2px 15px 0px 15px;
+}
+.filetype .file-text + .file-btn {
+  display: inline-block;
+  background-color: #e6a23c;
+  height: 27px;
+  line-height: 22px;
+  padding: 2px 15px 0px 15px;
+  color: rgba(255, 255, 255, 0.74) !important;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 15px;
+  margin-right: 5px;
 }
 </style>
