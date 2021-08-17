@@ -3,9 +3,7 @@
     <div class="grid-content bg-purple" style="text-align:center">
       <h3 style="padding-top:10px; margin-bottom:10px">규모</h3>
       <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{
-          tag.list_name
-        }}</el-checkbox>
+        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{ tag.list_name }}</el-checkbox>
       </el-checkbox-group>
     </div>
     <div class="grid-content bg-purple">
@@ -139,22 +137,14 @@
     </div>
   </div>
   <div style="text-align:center">
-    <el-button
-      round
-      plain
-      style="margin-top:10px; width:100px"
-      @click="search()"
-      >검색</el-button
-    >
+    <el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button>
   </div>
   <div v-if="this.selected_tags.length == 0" style="text-align:center">
     <h3>태그를 선택해주세요</h3>
   </div>
   <div style="text-align:center">
     <h3>
-      <span v-for="tag in selected_tags" :key="tag" style="margin:5px"
-        >#{{ tag.list_name }}</span
-      >
+      <span v-for="tag in selected_tags" :key="tag" style="margin:5px">#{{ tag.list_name }}</span>
     </h3>
   </div>
   <br />

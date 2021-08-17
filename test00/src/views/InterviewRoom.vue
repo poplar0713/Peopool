@@ -18,9 +18,7 @@
               <div id="join" class="animate join">
                 <before-meeting></before-meeting>
                 <div style="text-align:center">
-                  <el-button type="warning" id="go" @click="register"
-                    >입장하기</el-button
-                  >
+                  <el-button type="warning" id="go" @click="register">입장하기</el-button>
                 </div>
               </div>
               <div id="room" style="display: none;">
@@ -52,8 +50,7 @@
               id="button-audio"
               v-on:click="AudioOnOff"
               value="Audio On"
-              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거
-              해제</el-button
+              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거 해제</el-button
             >
             <el-button
               round
@@ -71,8 +68,7 @@
               id="button-video"
               v-on:click="VideoOnOff"
               value="Video On"
-              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
-              시작</el-button
+              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오 시작</el-button
             >
             <!-- 실시간채팅버튼 -->
             <el-popover
@@ -118,12 +114,7 @@
               value="Setting"
               >설정</el-button
             >
-            <el-button
-              round
-              type="danger"
-              id="button-leave"
-              @click="exitDiaVisible = true"
-            >
+            <el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
               X</el-button
             >
           </el-button-group>
@@ -155,9 +146,10 @@
 import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
+import wsocket from "@/components/utils/websocket.js";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
 //const PARTICIPANT_CLASS = "participant";
-var ws = null;
+var ws = wsocket;
 var participants = {};
 
 export default {
@@ -183,7 +175,7 @@ export default {
 
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    // ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
     this.username = localStorage.getItem("username");
     this.room = this.$route.params.url;
     ws.onmessage = (message) => {
@@ -226,7 +218,7 @@ export default {
     };
 
     ws.onopen = function() {
-      console.log("Websocket is connected!");
+      console.log("interviesroom - Websocket is connected!");
     };
   },
   methods: {
@@ -269,12 +261,9 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(
-        result.sdpAnswer,
-        function(error) {
-          if (error) return console.error(error);
-        }
-      );
+      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
+        if (error) return console.error(error);
+      });
     },
 
     callResponse(message) {
@@ -310,15 +299,14 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -334,6 +322,7 @@ export default {
 
       document.getElementById("join").style.display = "block";
       document.getElementById("room").style.display = "none";
+      document.getElementById("chatdivtop").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
     },
@@ -348,15 +337,14 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
     },
 
     onParticipantLeft(request) {
