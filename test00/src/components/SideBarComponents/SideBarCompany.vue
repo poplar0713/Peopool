@@ -43,17 +43,7 @@
         >
         <!--  -->
         <el-menu-item index="3" @click="goToTagSearch"
-<<<<<<< HEAD
-          ><i
-            class="el-icon-s-custom
-"
-          /><span>인재 찾기</span>
-=======
-          ><span
-            ><i class="far fa-address-card" style="margin-right:10px"></i>인재
-            찾기</span
-          >
->>>>>>> fc11f0426831a10cd6bdcc9370f446ad4f42fde1
+          ><span><i class="far fa-address-card" style="margin-right:10px"></i>인재 찾기</span>
         </el-menu-item>
 
         <el-menu-item index="4">
