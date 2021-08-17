@@ -22,10 +22,6 @@
           ></el-col>
         </el-row>
       </el-main>
-<<<<<<< HEAD
-=======
-      <el-footer> </el-footer>
->>>>>>> 82fe06dc9ffc33f2ae4d538454f9fedd4a516640
     </el-container>
   </el-container>
   <router-view></router-view>
