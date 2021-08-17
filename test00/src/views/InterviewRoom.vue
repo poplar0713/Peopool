@@ -34,70 +34,6 @@
           </div>
         </el-main>
         <el-footer v-if="this.options" class="footer">
-          <!-- 기존버튼 -->
-          <!-- <span>
-            <el-button
-              round
-              v-if="this.audioOn"
-              id="button-audio"
-              v-on:click="AudioOnOff"
-              value="Audio Off"
-              ><i class="fas fa-microphone"></i>&nbsp;&nbsp;음소거</el-button
-            >
-            <el-button
-              round
-              v-else
-              id="button-audio"
-              v-on:click="AudioOnOff"
-              value="Audio On"
-              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거
-              해제</el-button
-            ></span
-          >
-          <span
-            ><el-button
-              round
-              v-if="this.videoOn"
-              id="button-video"
-              v-on:click="VideoOnOff"
-              value="Video Off"
-              ><i class="fas fa-video"></i>&nbsp;&nbsp;비디오 Off</el-button
-            >
-            <el-button
-              round
-              v-else
-              id="button-video"
-              v-on:click="VideoOnOff"
-              value="Video On"
-              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
-              On</el-button
-            ></span
-          ><span>
-            <el-button
-              round
-              type="success"
-              id="button-setting"
-              @click="this.dialogVisible = true"
-              value="Setting"
-              >설정</el-button
-            ></span
-          >
-          <span
-            ><el-button
-              round
-              type="danger"
-              id="button-leave"
-              @click="exitDiaVisible = true"
-            >
-              X</el-button
-            >
-          </span>
-          <el-button
-            type="warning"
-            icon="el-icon-chat-round"
-            circle
-            @click="visiblechat"
-          ></el-button> -->
           <!-- 바뀐버튼 -->
           <el-button-group>
             <el-button
@@ -138,10 +74,43 @@
               ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
               시작</el-button
             >
-
-            <el-button type="success" plain @click="visiblechat"
-              ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간 채팅</el-button
+            <!-- 실시간채팅버튼 -->
+            <el-popover
+              placement="top-start"
+              title="실시간채팅"
+              :width="300"
+              trigger="hover"
             >
+              <template #reference>
+                <el-button type="success" plain
+                  ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간
+                  채팅</el-button
+                >
+              </template>
+              <div class="scroll type1" id="chatdiv">
+                <div
+                  v-for="(item, index) in chatlist"
+                  :key="index"
+                  :class="[item.name == username ? 'itemright' : 'itemleft']"
+                >
+                  <p v-if="item.name == username" class="speech-bubble">
+                    {{ item.text }}
+                  </p>
+                  <p v-else class="speech-bubble-left">
+                    {{ item.name }}<br />
+                    {{ item.text }}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <el-input
+                  v-model="chattext"
+                  @keyup.enter="sendchat"
+                  placeholder="메시지를 입력해주세요"
+                >
+                </el-input>
+              </div>
+            </el-popover>
             <el-button
               round
               id="button-setting"
@@ -158,34 +127,8 @@
               X</el-button
             >
           </el-button-group>
-          <!--  -->
         </el-footer>
       </el-container>
-
-      <el-aside
-        v-if="visible"
-        id="chatdivtop"
-        style="margin-top:40px; width:300px; position:flexed"
-      >
-        <div class="scroll type1" id="chatdiv">
-          <div
-            v-for="(item, index) in chatlist"
-            :key="index"
-            :class="[item.name == username ? 'itemright' : 'itemleft']"
-          >
-            <p v-if="item.name == username" class="speech-bubble">
-              {{ item.text }}
-            </p>
-            <p v-else class="speech-bubble-left">
-              {{ item.name }}<br />
-              {{ item.text }}
-            </p>
-          </div>
-        </div>
-        <div>
-          <el-input v-model="chattext" @keyup.enter="sendchat"> </el-input>
-        </div>
-      </el-aside>
     </el-container>
   </el-container>
 
@@ -552,7 +495,7 @@ export default {
   width: 300px;
   padding: 0px 13px 0px 13px;
   overflow-y: scroll;
-  height: 650px;
+  height: 400px;
   box-sizing: border-box;
   color: black;
   font-family: "Nanum Gothic";
@@ -591,7 +534,7 @@ export default {
   position: relative;
   background: #f2f3f4;
   border-radius: 0.4em;
-  width: 200px;
+  /* width: 200px; */
   margin-right: 20px;
   word-break: break-all;
   padding: 5px;
@@ -616,7 +559,7 @@ export default {
   position: relative;
   background: #ffc000;
   border-radius: 0.4em;
-  width: 200px;
+  /* width: 200px; */
   margin-left: 20px;
   word-break: break-all;
   padding: 5px;
