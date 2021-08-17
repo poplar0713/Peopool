@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.Individual;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
+import com.ssafy.peopool.model.service.FollowService;
 //import com.ssafy.api.request.UserLoginPostReq;
 //import com.ssafy.api.request.UserRegiserIdGetReq;
 //import com.ssafy.api.request.UserRegisterPostReq;
@@ -58,6 +60,9 @@ public class IndividualController {
 	@Autowired
 	IndividualService individualService;
 	
+	@Autowired
+	FollowService followService;
+	
 	@ApiOperation(value = "개인 회원 전체 조회", response = String.class)
 	@GetMapping()
 	public ResponseEntity<List<Individual>> getAllUser() throws SQLException{
@@ -92,6 +97,16 @@ public class IndividualController {
 	@ApiOperation(value = "개인 회원 탈퇴", response = String.class)
 	@DeleteMapping("{index}")
 	public ResponseEntity<String> deleteIndividual(@PathVariable("index")int index) throws SQLException{
+		
+		Follow follow = new Follow();
+		follow.setFol_type(0);
+		follow.setFollowing(index);
+		followService.deleteFollowing(follow);
+		
+		follow.setFol_type(1);
+		follow.setFollower(index);
+		followService.deleteFollower(follow);
+		
 		if(individualService.deleteIndividual(index)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
