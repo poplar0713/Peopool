@@ -1,8 +1,12 @@
 // new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
 import jwt_decode from "jwt-decode";
 const token = getCookie("PID_AUTH");
-const decoded = jwt_decode(token);
-const index = decoded.index;
+let index = null;
+if (token != null && token != "") {
+  const decoded = jwt_decode(token);
+  index = decoded.index;
+}
+
 const ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
 
 export default ws;
