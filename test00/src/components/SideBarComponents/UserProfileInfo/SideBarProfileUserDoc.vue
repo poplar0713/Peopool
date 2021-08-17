@@ -89,7 +89,7 @@ export default {
           if (response.status == 200) {
             <el-alert title="업로드 되었습니다" type="success"></el-alert>;
             this.$emit("uploadDoc");
-            document.getElementsByClassName("file-text")[1].innerHTML = "";
+            document.getElementsByClassName("file-text")[2].innerHTML = "";
           }
         })
         .catch((error) => {
@@ -97,10 +97,10 @@ export default {
         });
     },
     uploadChange(file) {
-      document.getElementsByClassName("file-text")[1].innerHTML = "";
+      document.getElementsByClassName("file-text")[2].innerHTML = "";
       let filedata = file.target.files[0].name;
       this.filename = filedata;
-      document.getElementsByClassName("file-text")[1].innerHTML = filedata;
+      document.getElementsByClassName("file-text")[2].innerHTML = filedata;
       console.log(filedata);
     },
   },
@@ -167,7 +167,7 @@ body {
 }
 .filetype .file-text + .file-btn {
   display: inline-block;
-  background-color: #E6A23C;
+  background-color: #e6a23c;
   height: 27px;
   line-height: 22px;
   padding: 2px 15px 0px 15px;
