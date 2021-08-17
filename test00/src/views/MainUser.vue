@@ -50,8 +50,11 @@ export default {
   },
   created() {
     if (ws == null) {
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
       setTimeout(() => {
-        this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+        this.ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
       });
     }
   },
