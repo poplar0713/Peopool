@@ -6,4 +6,4 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Seoul
 
-RUN apk install -y tzdata
+RUN apk add --no-cache tzdata
