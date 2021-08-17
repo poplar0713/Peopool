@@ -26,7 +26,7 @@
           <el-row>
             <el-col :span="12"
               ><div class="grid-content bg-purple">
-                <CompanyInfo :item="scope.row.follower" /></div
+                <CompanyInfoName :companydata="scope.row.follower" /></div
             ></el-col>
             <el-col :span="12"
               ><div class="grid-content bg-purple-light">
@@ -49,11 +49,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import CompanyInfo from "./CompanyInfo.vue";
+import CompanyInfoName from "@/components/CompanyInfo/CompanyInfoName.vue";
 
 export default {
   name: "UserFollowings",
-  components: { CompanyInfo },
+  components: { CompanyInfoName },
   data() {
     return {
       dialogVisible: false,

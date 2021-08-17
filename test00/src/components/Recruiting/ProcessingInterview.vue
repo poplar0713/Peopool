@@ -24,7 +24,7 @@
                   <template #default="scope">
                     <el-row>
                       <el-col :span="12">
-                        <UserInfo :userindex="scope.row.ind_index" />
+                        <UserInfoDetail :userindex="scope.row.ind_index" />
                       </el-col>
                       <el-col :span="12">
                         <el-button
@@ -69,12 +69,12 @@
 
 <script>
 import InterviewCalender from "./InterviewCalender.vue";
-import UserInfo from "./UserInfo.vue";
+import UserInfoDetail from "@/components/UserInfo/UserInfoDetail.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
   name: "ProcessingInterview",
-  components: { InterviewCalender, UserInfo },
+  components: { InterviewCalender, UserInfoDetail },
   computed: {
     getInterviewDays() {
       var InterviewDays = {};

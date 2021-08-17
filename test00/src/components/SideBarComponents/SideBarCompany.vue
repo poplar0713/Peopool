@@ -32,6 +32,7 @@
         <router-link
           :to="{
             name: 'recruiting',
+            params: { companyindex: companyindex },
           }"
           style="text-decoration: none; color:black"
         >

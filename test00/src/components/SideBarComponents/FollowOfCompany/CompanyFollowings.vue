@@ -30,7 +30,7 @@
           <el-row>
             <el-col :span="12"
               ><div class="grid-content bg-purple">
-                <UserInfo :userindex="scope.row.follower" /></div
+                <UserInfoName :userindex="scope.row.follower" /></div
             ></el-col>
             <el-col :span="12"
               ><div class="grid-content bg-purple-light">
@@ -53,7 +53,8 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfo from "./UserInfo.vue";
+import UserInfoName from "@/components/UserInfo/UserInfoName.vue";
+
 
 export default {
   name: "CompanyFollowings",
@@ -107,7 +108,7 @@ export default {
         }
       });
   },
-  components: { UserInfo },
+  components: { UserInfoName },
   data() {
     return {
       dialogVisible: false,

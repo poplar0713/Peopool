@@ -22,7 +22,6 @@
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer> <button @click="message">click</button> </el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -80,8 +79,8 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    console.log('타입확인')
-    console.log(decoded.type)
+    console.log("타입확인");
+    console.log(decoded.type);
     // 회원정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
