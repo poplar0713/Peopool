@@ -41,8 +41,11 @@
       <el-tabs type="border-card">
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
-            <el-col :span="12"
-              ><span> <img :src="this.userdata.photofilepath" /> </span
+            <el-col :span="12">
+              <span v-if="userdata.photo_index == ''">
+                <el-image src="https://i5d206.p.ssafy.io/file/thumbuser.png"
+              /></span>
+              <span> <el-image :src="this.userdata.photofilepath" /> </span
             ></el-col>
             <el-col :span="8"
               ><span>
@@ -54,24 +57,31 @@
           </el-row>
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
-        </el-tab-pane>
-        <el-tab-pane label="연락처" style="padding : 2%">
-          <div style="text-align:center">
-            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
-            <h4>이메일: {{ this.userdata.ind_email }}</h4>
-          </div>
+          <el-divider></el-divider>
+          <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
+          <h4>이메일: {{ this.userdata.ind_email }}</h4>
         </el-tab-pane>
         <el-tab-pane label="이력서">
-          <webviewer :initialDoc="userdata.resumefilepath" />
+          <div v-if="userdata.resume_index == ''" class="fileDoc">
+            등록된 이력서 및 포트폴리오가 없습니다.
+          </div>
+          <div v-else>
+            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+          </div>
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
-          <video
-            :src="userdata.videofilepath"
-            height="360"
-            width="640"
-            controls=""
-            style="width: 100%; height: 100%;"
-          ></video>
+          <div v-if="userdata.video_index == ''">
+            소개영상이 없습니다.
+          </div>
+          <div v-else>
+            <video
+              :src="userdata.videofilepath"
+              height="auto"
+              width="640"
+              controls=""
+              style="width: 100%; height: 100%;"
+            ></video>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
