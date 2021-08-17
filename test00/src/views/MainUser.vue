@@ -5,6 +5,9 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
+        <h1>인기있는 기업 랭킹</h1>
+        <PopularCompanyList />
+        <br>
         <el-row :gutter="20">
           <el-col
             :span="12"
@@ -31,6 +34,7 @@ import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
+import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -42,7 +46,7 @@ export default {
   name: "MainUser",
   components: {
     SideBarUser,
-
+    PopularCompanyList,
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,

@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.todayinterviewuser !== null">
     <el-row :gutter="24">
-      <el-col :span="4" v-for="(item, i) in todayinterviewuser" :key="i">
+      <el-col :span="6" v-for="(item, i) in todayinterviewuser" :key="i">
         <UserInfoCardNoSug :userindex="item.ind_index" />
       </el-col>
     </el-row>

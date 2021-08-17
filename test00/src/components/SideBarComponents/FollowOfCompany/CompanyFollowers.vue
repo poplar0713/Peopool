@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="dialogVisible = true" style="color:black"
+  <el-button type="text" @click="getFollowers" style="color:black"
     >Followers</el-button
   >
 
@@ -45,48 +45,7 @@ export default {
     const index = decoded.index;
     // 내정보 가져오기
     this.company_index = index;
-    //팔로워정보 가져오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
-        params: {
-          index: index,
-          type: 1,
-        },
-        headers: { Authorization: token },
-      })
-      // 팔로워데이터 넣어주기
-      .then((res) => {
-        console.log(res);
-        this.followers = res.data;
-      })
-      .catch((err) => {
-        if (err.response.data.status == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
-    // 팔로워숫자 가져오기
-    axios
-      .get("https://i5d206.p.ssafy.io:8443/fol/counter", {
-        params: {
-          index: index,
-          type: 1,
-        },
-        headers: { Authorization: token },
-      })
-      // 팔로워데이터 넣어주기
-      .then((res) => {
-        console.log(res);
-        this.followersNumber = res.data;
-      })
-      .catch((err) => {
-        if (err.response.data.status == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
-      });
+
     return {
       dialogVisible: false,
       dialogVisible_user: false,
@@ -96,7 +55,53 @@ export default {
       followersNumber: 0,
     };
   },
-  methods: {},
+  methods: {
+    getFollowers() {
+      this.dialogVisible = true;
+      //팔로워정보 가져오기
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
+          params: {
+            index: this.company_index,
+            type: 1,
+          },
+          headers: { Authorization: this.token },
+        })
+        // 팔로워데이터 넣어주기
+        .then((res) => {
+          console.log(res);
+          this.followers = res.data;
+        })
+        .catch((err) => {
+          if (err.response.data.status == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+      // 팔로워숫자 가져오기
+      axios
+        .get("https://i5d206.p.ssafy.io:8443/fol/counter", {
+          params: {
+            index: this.company_index,
+            type: 1,
+          },
+          headers: { Authorization: this.token },
+        })
+        // 팔로워데이터 넣어주기
+        .then((res) => {
+          console.log(res);
+          this.followersNumber = res.data;
+        })
+        .catch((err) => {
+          if (err.response.data.status == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
+  },
 };
 </script>
 

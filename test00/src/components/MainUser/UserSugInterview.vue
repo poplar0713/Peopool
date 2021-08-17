@@ -44,6 +44,7 @@
           </template>
           <div style="text-align:center">
             <el-button
+              v-if="scope.row.sug_timeone"
               size="mini"
               plain
               round
@@ -57,8 +58,18 @@
                 )
               "
               >{{ scope.row.sug_timeone }}</el-button
+            >
+            <el-button
+              v-else
+              disabled
+              size="mini"
+              plain
+              round
+              style="margin:5px;"
+              >일정 없음</el-button
             ><br />
             <el-button
+              v-if="scope.row.sug_timetwo"
               size="mini"
               plain
               round
@@ -72,8 +83,17 @@
                 )
               "
               >{{ scope.row.sug_timetwo }}</el-button
+            ><el-button
+              v-else
+              disabled
+              size="mini"
+              plain
+              round
+              style="margin:5px;"
+              >일정 없음</el-button
             ><br />
             <el-button
+              v-if="scope.row.sug_timethree"
               size="mini"
               plain
               round
@@ -87,6 +107,14 @@
                 )
               "
               >{{ scope.row.sug_timethree }}</el-button
+            ><el-button
+              v-else
+              disabled
+              size="mini"
+              plain
+              round
+              style="margin:5px;"
+              >일정 없음</el-button
             ><br />
             <el-button
               size="mini"

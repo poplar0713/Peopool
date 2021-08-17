@@ -1,7 +1,7 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer"
+    style="margin-bottom:20px; cursor:pointer; height:110%"
     @click="dialogVisible = true"
   >
     <el-row>
@@ -86,14 +86,13 @@
       <span class="dialog-footer">
         <el-button
           v-if="this.follow"
-          plain
           round
           type="danger"
           @click="clickfollowBtn"
-          >팔로우 해제</el-button
+          ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
-          >팔로우</el-button
+          ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
         >
         <el-button type="success" plain round @click="this.innerVisible = true"
           >면접 제안</el-button
@@ -229,7 +228,6 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.companyindex = index;
-    // 팔로우했는지 체크해보기
 
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
