@@ -1,54 +1,11 @@
 <template>
-  <!-- <div
-    class="nameCard"
-    :class="[isHover ? 'backside' : 'frontside']"
-    @click="this.dialogVisible = true"
-    @mouseover="changeBack"
-    @mouseleave="changeFront"
-  >
-    <el-row style="text-align: center;">
-      <el-col :span="10">
-        <div>
-          <img :src="this.userdata.photofilepath" />
-        </div>
-      </el-col>
-      <el-col :span="14">
-        <div>
-          <h3>{{ this.userdata.ind_name }}</h3>
-        </div>
-        <div>
-          <h3>직무 : {{ this.userdata.cat_name }}</h3>
-        </div>
-        <div>
-          <h3>[{{ this.userdata.car_value }}]</h3>
-        </div>
-      </el-col>
-    </el-row>
-  </div> -->
-  <el-card
-    shadow="hover"
-    style="margin-bottom:20px; text-align:center"
+  <el-text
+    type="text"
     @click="dialogVisible = true"
-  >
-    <el-row>
-      <el-col :span="12">
-        <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
-        </div>
-      </el-col>
-      <el-divider direction="vertical"></el-divider>
-      <el-col :span="12">
-        <div>
-          <p>{{ this.userdata.ind_name }}</p>
-          <p>{{ this.userdata.cat_name }}</p>
-          <p>{{ this.userdata.car_value }}</p>
-        </div>
-      </el-col>
-    </el-row>
-  </el-card>
+    style="color:black; text-align:center; cursor:pointer"
+    size="mini"
+    >유저상세보기
+  </el-text>
 
   <el-dialog center v-model="dialogVisible" width="60%">
     <div style="text-align: center; font-size: 1.3rem; margin-bottom: 1rem">
@@ -60,7 +17,7 @@
         type="warning"
         v-for="item in this.ind_taglist"
         v-bind:key="item"
-        style="margin-right: 0.5rem"
+        style="margin-right: 0.5rem; cursor:pointer"
         @click="GetTagUser(item.taglist_name)"
         >{{ item.taglist_name }}</el-tag
       >
@@ -193,6 +150,7 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 
 export default {
+  name: "RecruitingBoardUserInfo",
   props: ["userindex"],
   components: {
     webviewer,

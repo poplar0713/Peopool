@@ -1,18 +1,19 @@
 <template>
-  <!-- 카드 -->
-  <el-card
+  <!-- 정보열기 -->
+  <el-button
+    size="mini"
     shadow="hover"
-    style="margin-bottom:20px; text-align:center"
+    style="text-align:center; cursor:pointer"
     @click="dialogVisible = true"
-    ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
-    <h1>{{ item.name }}</h1>
-  </el-card>
+  >
+    기업정보
+  </el-button>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
     <el-container style="text-align:center">
       <el-header>
         <h2>
-          {{ this.ent_info.ent_name }}&nbsp;&nbsp;
+          {{ this.company_info.ent_name }}&nbsp;&nbsp;
           <!-- 팔로우일경우 -->
           <span v-if="follow" style="color: Tomato;">
             <i
@@ -46,17 +47,17 @@
               ></el-aside>
               <!--  -->
               <el-main>
-                <h4>기업 대표 : {{ this.ent_info.ent_ceo }}</h4>
-                {{ this.ent_info.ent_info }}
+                <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
+                {{ this.company_info.ent_info }}
                 <br />
-                {{ this.ent_info.ent_introduce }}</el-main
+                {{ this.company_info.ent_introduce }}</el-main
               >
             </el-container>
           </div>
         </el-collapse-item>
         <el-collapse-item title="역사" name="2">
           <div>
-            {{ this.ent_info.ent_history }}
+            {{ this.company_info.ent_history }}
           </div>
         </el-collapse-item>
         <el-collapse-item title="태그" name="3">
@@ -82,10 +83,10 @@
           </div>
         </el-collapse-item>
         <el-collapse-item title="연락처 및 찾아오는주소" name="4">
-          <div>Tel. {{ this.ent_info.ent_contact }}</div>
-          <div>email. {{ this.ent_info.ent_email }}</div>
-          <div>address. {{ this.ent_info.ent_address }}</div>
-          <div>website. {{ this.ent_info.ent_website }}</div>
+          <div>Tel. {{ this.company_info.ent_contact }}</div>
+          <div>email. {{ this.company_info.ent_email }}</div>
+          <div>address. {{ this.company_info.ent_address }}</div>
+          <div>website. {{ this.company_info.ent_website }}</div>
         </el-collapse-item>
       </el-collapse>
     </el-container>
@@ -96,6 +97,8 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
+  name: "MainUserCompanyInfo",
+  props: { companyindex: Number },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -106,7 +109,7 @@ export default {
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
         fol_type: 0,
-        follower: this.item.follower,
+        follower: this.companyindex,
         following: index,
       })
       .then((res) => {
@@ -127,26 +130,27 @@ export default {
           this.$router.push("/");
         }
       });
-    //기업정보 가져오기
+    // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.item.follower}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.companyindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        this.ent_info.ent_name = res.data.ent_name;
-        this.ent_info.ent_contact = res.data.ent_contact;
-        this.ent_info.ent_email = res.data.ent_email;
-        this.ent_info.ent_image = res.data.ent_image;
-        this.ent_info.ent_ceo = res.data.ent_ceo;
-        this.ent_info.ent_history = res.data.ent_history;
-        this.ent_info.ent_address = res.data.ent_address;
-        this.ent_info.ent_website = res.data.ent_website;
-        this.ent_info.ent_introduce = res.data.ent_introduce;
+        this.company_info.ent_index = res.data.ent_index;
+        this.company_info.ent_name = res.data.ent_name;
+        this.company_info.ent_image = res.data.ent_image;
+        this.company_info.ent_contact = res.data.ent_contact;
+        this.company_info.ent_address = res.data.ent_address;
+        this.company_info.ent_email = res.data.ent_email;
+        this.company_info.ent_history = res.data.ent_history;
+        this.company_info.ent_website = res.data.ent_website;
+        this.company_info.ent_introduce = res.data.ent_introduce;
+        this.company_info.ent_ceo = res.data.ent_ceo;
       })
       .catch((err) => {
-        console.log("token error");
         console.log(err.response);
         if (err.response == 401) {
+          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -157,7 +161,7 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
         headers: { Authorization: token },
         params: {
-          index: this.item.follower,
+          index: this.companyindex,
           type: 1,
         },
       })
@@ -178,35 +182,34 @@ export default {
       dialogVisible: false,
       follow: false,
       user_index: index,
-      ent_index: this.item.follower,
       ent_tags: [],
-      ent_info: {
+      company_info: {
+        ent_index: "",
         ent_name: "",
+        ent_image: "",
         ent_contact: "",
         ent_email: "",
-        ent_image: "",
         ent_ceo: "",
         ent_history: "",
         ent_address: "",
         ent_website: "",
-        ent_introduce: "",
+        ent_introduce: null,
       },
     };
   },
-  props: { item: Object },
   methods: {
-    // 팔로우버튼
+    //팔로잉버튼
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
-        console.log(this.user_index, this.item.ent_index);
+        console.log(this.user_index, this.companyindex);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.token },
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.ent_index,
+              follower: this.companyindex,
             },
           })
           .then((res) => {
@@ -229,7 +232,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 0,
             following: this.user_index,
-            follower: this.item.ent_index,
+            follower: this.companyindex,
           })
           .then((res) => {
             console.log(res);
@@ -246,7 +249,6 @@ export default {
           });
       }
     },
-    // 창닫기
     handleClose() {
       this.dialogVisible = false;
     },
@@ -262,7 +264,7 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          params: { keyword: `${keyword}` },
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {

@@ -36,8 +36,11 @@
           <el-divider></el-divider>
           <el-row style="margin: 0.3rem">
             <el-col :span="24">
-              <el-checkbox-group v-model="this.selected" @change="handleCheckedChange">
-                <el-checkbox
+              <el-checkbox-group
+                v-model="this.selected"
+                @change="handleCheckedChange"
+              >
+                <el-checkbox style="margin:5px"
                   v-for="item in this.taglist"
                   :label="item.taglist_index"
                   :key="item.taglist_index"
@@ -62,7 +65,10 @@
               </el-switch
             ></el-col>
             <el-col :span="2"
-              ><el-button type="success" icon="el-icon-search" @click="this.getOriginList"
+              ><el-button
+                type="success"
+                icon="el-icon-search"
+                @click="this.getOriginList"
                 >검색</el-button
               >
             </el-col>
@@ -71,14 +77,11 @@
         </el-main>
 
         <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
-        <el-space wrap>
-          <ResultCard
-            v-for="ind in this.resultList"
-            :key="ind"
-            :user="ind"
-            :ent_ind="this.ent_index"
-          />
-        </el-space>
+        <el-row :gutter="24">
+          <el-col :span="4" v-for="item in resultList" :key="item">
+            <UserInfoCard :userindex="item.ind_index" />
+          </el-col>
+        </el-row>
       </el-main>
     </el-container>
   </el-container>
@@ -87,7 +90,7 @@
 <script>
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
-import ResultCard from "@/components/FinduserBytag/ResultCard.vue";
+import UserInfoCard from "@/components/UserInfo/UserInfoCard.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 //import jwt_decode from "jwt-decode";
@@ -185,7 +188,7 @@ export default {
   components: {
     SideBarCompany,
     headerSearchUser,
-    ResultCard,
+    UserInfoCard,
   },
   computed: {
     hasResult() {

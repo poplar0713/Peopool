@@ -48,15 +48,14 @@
 <script>
 import SideBarCompany from "../components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "../components/SideBarComponents/headerSearchUser.vue";
-import ExamineCard from "../components/RecrutingBoard/ExamineCard.vue";
-import RecruitingBoardOfferTab from "../components/RecrutingBoard/RecruitingBoardOfferTab.vue";
-import RecruitingBoardRejectOfferTab from "../components/RecrutingBoard/RecruitingBoardRejectOfferTab.vue";
-import ProcessingInterview from "../components/RecrutingBoard/ProcessingInterview.vue";
-import PassUser from "../components/RecrutingBoard/PassUser.vue";
+import ExamineCard from "../components/Recruiting/ExamineCard.vue";
+import RecruitingBoardOfferTab from "../components/Recruiting/RecruitingBoardOfferTab.vue";
+import RecruitingBoardRejectOfferTab from "../components/Recruiting/RecruitingBoardRejectOfferTab.vue";
+import ProcessingInterview from "../components/Recruiting/ProcessingInterview.vue";
+import PassUser from "../components/Recruiting/PassUser.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name: "Recruiting",
   components: {
     SideBarCompany,
     headerSearchUser,
