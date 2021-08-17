@@ -16,9 +16,14 @@
           <div id="container">
             <div>
               <div id="join" class="animate join">
-                <before-meeting></before-meeting>
+                <before-meeting
+                  @nonuser="noncookieuser"
+                  :noncookie="noncookie"
+                ></before-meeting>
                 <div style="text-align:center">
-                  <el-button type="warning" id="go" @click="register">입장하기</el-button>
+                  <el-button type="warning" id="go" @click="register"
+                    >입장하기</el-button
+                  >
                 </div>
               </div>
               <div id="room" style="display: none;">
@@ -50,7 +55,8 @@
               id="button-audio"
               v-on:click="AudioOnOff"
               value="Audio On"
-              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거 해제</el-button
+              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거
+              해제</el-button
             >
             <el-button
               round
@@ -68,20 +74,29 @@
               id="button-video"
               v-on:click="VideoOnOff"
               value="Video On"
-              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오 시작</el-button
+              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
+              시작</el-button
             >
             <!-- 실시간채팅버튼 -->
             <el-popover
               placement="top-start"
               title="실시간채팅"
               :width="300"
-              trigger="hover"
+              trigger="click"
             >
               <template #reference>
-                <el-button type="success" plain
-                  ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간
-                  채팅</el-button
-                >
+                <el-button
+                  type="success"
+                  plain
+                  style="position:relative"
+                  @click="alaramcheck"
+                  ><i class="far fa-comments"></i>&nbsp;&nbsp;실시간 채팅
+                  <div
+                    id="circle2"
+                    style="position:absolute"
+                    v-if="readchat"
+                  ></div
+                ></el-button>
               </template>
               <div class="scroll type1" id="chatdiv">
                 <div
@@ -114,7 +129,12 @@
               value="Setting"
               >설정</el-button
             >
-            <el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
+            <el-button
+              round
+              type="danger"
+              id="button-leave"
+              @click="exitDiaVisible = true"
+            >
               X</el-button
             >
           </el-button-group>
@@ -146,10 +166,10 @@
 import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
-import wsocket from "@/components/utils/websocket.js";
+// import wsocket from "@/components/utils/websocket.js";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
 //const PARTICIPANT_CLASS = "participant";
-var ws = wsocket;
+var ws = null;
 var participants = {};
 
 export default {
@@ -166,17 +186,41 @@ export default {
       chatlist: [],
       visible: false,
       exitDiaVisible: false,
+      noncookie: null,
+      noncookieusername: "",
+      alaram: "",
+      readchat: false,
     };
   },
-  watch: {},
+  watch: {
+    chatlist: {
+      deep: true,
+      handler() {
+        let popdiv = document.getElementsByClassName("el-popover")[0];
+        let opencheck = popdiv.getAttribute("aria-hidden");
+        if (opencheck == "false") {
+          this.readchat = false;
+        } else {
+          this.readchat = true;
+        }
+      },
+    },
+  },
   components: {
     BeforeMeeting,
   },
-
+  created() {
+    this.username = localStorage.getItem("username");
+    const token = this.getCookie("PID_AUTH");
+    if (!this.username && (token == null || token == "")) {
+      this.noncookie = true;
+    }
+  },
   mounted: function() {
     console.log(adapter.browserDetails.browser);
-    // ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
+    ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
     this.username = localStorage.getItem("username");
+
     this.room = this.$route.params.url;
     ws.onmessage = (message) => {
       var parsedMessage = JSON.parse(message.data);
@@ -222,6 +266,24 @@ export default {
     };
   },
   methods: {
+    alaramcheck() {
+      let popdiv = document.getElementsByClassName("el-popover")[0];
+
+      let opencheck = popdiv.getAttribute("aria-hidden");
+      if (opencheck == "true") {
+        this.readchat = false;
+      }
+    },
+
+    getCookie(name) {
+      var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+      console.log(value);
+      return value ? value[2] : null;
+    },
+    noncookieuser(name) {
+      this.noncookieusername = name;
+      this.username = this.noncookieusername;
+    },
     visiblechat() {
       var s = document.getElementById("chatdiv");
       this.visible = !this.visible;
@@ -246,14 +308,33 @@ export default {
       document.getElementById("join").style.display = "none";
       document.getElementById("room").style.display = "block";
       this.username = localStorage.getItem("username");
-      this.options = true;
-      var message = {
-        id: "joinRoom",
-        name: this.username,
-        room: this.room,
-      };
 
-      this.sendMessage(message);
+      var message;
+      this.options = true;
+
+      if (this.noncookie) {
+        if (
+          this.noncookieusername.replace(" ", "") == "" ||
+          this.noncookieusername == null
+        ) {
+          this.$message.error("사용자 이름을 입력해주세요.");
+          return;
+        } else {
+          message = {
+            id: "joinRoom",
+            name: this.noncookieusername,
+            room: this.room,
+          };
+          this.sendMessage(message);
+        }
+      } else {
+        message = {
+          id: "joinRoom",
+          name: this.username,
+          room: this.room,
+        };
+        this.sendMessage(message);
+      }
     },
 
     onNewParticipant(request) {
@@ -261,9 +342,12 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
-        if (error) return console.error(error);
-      });
+      participants[result.name].rtcPeer.processAnswer(
+        result.sdpAnswer,
+        function(error) {
+          if (error) return console.error(error);
+        }
+      );
     },
 
     callResponse(message) {
@@ -299,14 +383,15 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -337,14 +422,15 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
-        error
-      ) {
-        if (error) {
-          return console.error(error);
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+        options,
+        function(error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
         }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-      });
+      );
     },
 
     onParticipantLeft(request) {
@@ -668,5 +754,19 @@ export default {
     transform: translateZ(-800px) rotateY(90deg);
     opacity: 0;
   }
+}
+#circle2 {
+  background-color: #ff0000;
+  border: 1px solid #ff0000;
+  width: 15px;
+  height: 15px;
+  border-radius: 75px;
+  text-align: center;
+  margin: -30px 0px 0px 110px;
+  /* font-size: 12px;
+  color: #fff; */
+
+  /* vertical-align: middle; */
+  /* line-height: 100px; */
 }
 </style>
