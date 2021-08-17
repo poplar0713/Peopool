@@ -3,9 +3,7 @@
     <div class="grid-content bg-purple" style="text-align:center">
       <h3 style="padding-top:10px; margin-bottom:10px">규모</h3>
       <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{
-          tag.list_name
-        }}</el-checkbox>
+        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{ tag.list_name }}</el-checkbox>
       </el-checkbox-group>
     </div>
     <div class="grid-content bg-purple">
@@ -15,13 +13,9 @@
       <el-tabs type="card" :tab-position="tabPosition" style="height: 200px;">
         <el-tab-pane label="개발"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              v-for="tag in tag1"
-              :label="tag"
-              :value="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox v-for="tag in tag1" :label="tag" :value="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="경영·비즈니스"
@@ -56,27 +50,19 @@
     </div>
   </div>
   <div style="text-align:center">
-    <el-button
-      round
-      plain
-      style="margin-top:10px; width:100px"
-      @click="search()"
-      >검색</el-button
-    >
+    <el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button>
   </div>
   <div v-if="this.selected_tags.length == 0" style="text-align:center">
     <h3>태그를 선택해주세요</h3>
   </div>
   <div style="text-align:center">
     <h3>
-      <span v-for="tag in selected_tags" :key="tag" style="margin:5px"
-        >#{{ tag.list_name }}</span
-      >
+      <span v-for="tag in selected_tags" :key="tag" style="margin:5px">#{{ tag.list_name }}</span>
     </h3>
   </div>
   <br />
   <div v-show="this.searchresult == true">
-    <div v-if="this.selected_list.length>0">
+    <div v-if="this.selected_list.length > 0">
       <el-row :gutter="24">
         <el-col :span="4" v-for="(item, i) in selected_list" :key="i">
           <CompanyCardInfo :item="item.ent_index" />
