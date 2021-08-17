@@ -18,9 +18,7 @@
               <div id="join" class="animate join">
                 <before-meeting></before-meeting>
                 <div style="text-align:center">
-                  <el-button type="warning" id="go" @click="register"
-                    >입장하기</el-button
-                  >
+                  <el-button type="warning" id="go" @click="register">입장하기</el-button>
                 </div>
               </div>
               <div id="room" style="display: none;">
@@ -52,8 +50,7 @@
               id="button-audio"
               v-on:click="AudioOnOff"
               value="Audio On"
-              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거
-              해제</el-button
+              ><i class="fas fa-microphone-alt-slash"></i>&nbsp;&nbsp;음소거 해제</el-button
             >
             <el-button
               round
@@ -71,8 +68,7 @@
               id="button-video"
               v-on:click="VideoOnOff"
               value="Video On"
-              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오
-              시작</el-button
+              ><i class="fas fa-video-slash"></i>&nbsp;&nbsp;비디오 시작</el-button
             >
             <!-- 실시간채팅버튼 -->
             <el-popover
@@ -118,12 +114,7 @@
               value="Setting"
               >설정</el-button
             >
-            <el-button
-              round
-              type="danger"
-              id="button-leave"
-              @click="exitDiaVisible = true"
-            >
+            <el-button round type="danger" id="button-leave" @click="exitDiaVisible = true">
               X</el-button
             >
           </el-button-group>
@@ -270,12 +261,9 @@ export default {
     },
 
     receiveVideoResponse(result) {
-      participants[result.name].rtcPeer.processAnswer(
-        result.sdpAnswer,
-        function(error) {
-          if (error) return console.error(error);
-        }
-      );
+      participants[result.name].rtcPeer.processAnswer(result.sdpAnswer, function(error) {
+        if (error) return console.error(error);
+      });
     },
 
     callResponse(message) {
@@ -311,15 +299,14 @@ export default {
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
 
       msg.data.forEach(this.receiveVideo);
     },
@@ -350,15 +337,14 @@ export default {
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
 
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
-        options,
-        function(error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(
+        error
+      ) {
+        if (error) {
+          return console.error(error);
         }
-      );
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
     },
 
     onParticipantLeft(request) {

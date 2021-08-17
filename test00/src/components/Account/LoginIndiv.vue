@@ -72,7 +72,7 @@ export default {
             .then((result) => {
               // alert("accessToken: " + result.data.accessToken);
 
-              this.$cookies.set("PID_AUTH", "Bearer" + result.data.accessToken);
+              this.$cookies.set("PID_AUTH", "Bearer" + result.data.accessToken,0);
               this.$store.state.type = "0";
               this.$store.state.othertype = "1";
               this.ruleForm.LoginIndivID = "";
