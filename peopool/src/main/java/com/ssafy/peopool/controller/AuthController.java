@@ -60,7 +60,7 @@ public class AuthController {
 		int index = ind.getInd_index();
 		
 		if(passwordEncoder.matches(password, ind.getInd_password())) {
-			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index)));
+			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index, 0)));
 		}
 		return ResponseEntity.status(401).body(LoginRes.of(401, "Invalid Password", null));
 	}
@@ -82,7 +82,7 @@ public class AuthController {
 		int index = ent.getEnt_index();
 		
 		if(passwordEncoder.matches(password, ent.getEnt_password())) {
-			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index)));
+			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index, 1)));
 		}
 		return ResponseEntity.status(401).body(LoginRes.of(401, "Invalid Password", null));
 	}

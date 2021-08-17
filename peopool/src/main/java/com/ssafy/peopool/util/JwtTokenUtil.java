@@ -48,10 +48,11 @@ public class JwtTokenUtil {
                 .build();
     }
     
-    public static String getToken(String userId, int index) {
+    public static String getToken(String userId, int index, int type) {
     		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
         return JWT.create()
         		.withClaim("index", index)
+        		.withClaim("type", type)
                 .withSubject(userId)
                 .withExpiresAt(expires)
                 .withIssuer(ISSUER)
