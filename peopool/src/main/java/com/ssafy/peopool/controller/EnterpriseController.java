@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.Enterprise;
+import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.Individual;
 import com.ssafy.peopool.model.service.EnterpriseService;
+import com.ssafy.peopool.model.service.FollowService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -36,6 +38,9 @@ public class EnterpriseController {
 	
 	@Autowired
 	EnterpriseService enterpriseService;
+	
+	@Autowired
+	FollowService followService;
 	
 	@ApiOperation(value = "기업 회원 전체 조회", response = String.class)
 	@GetMapping()
@@ -85,6 +90,16 @@ public class EnterpriseController {
 	@ApiOperation(value = "기업회원 회원 탈퇴", response = String.class)
 	@DeleteMapping("{index}")
 	public ResponseEntity<String> deleteEnterprise(@PathVariable("index")int index) throws SQLException{
+		
+		Follow follow = new Follow();
+		follow.setFol_type(1);
+		follow.setFollowing(index);
+		followService.deleteFollowing(follow);
+		
+		follow.setFol_type(0);
+		follow.setFollower(index);
+		followService.deleteFollower(follow);
+		
 		if(enterpriseService.deleteEnterprise(index)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
