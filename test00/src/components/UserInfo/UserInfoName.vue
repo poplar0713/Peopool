@@ -31,24 +31,19 @@
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>
-                  직무 : {{ this.userdata.cat_name }} ({{
-                    this.userdata.car_value
-                  }})
-                </h4>
+                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
               </span></el-col
             >
             <el-divider></el-divider>
           </el-row>
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
+          <el-divider></el-divider>
         </el-tab-pane>
-        <el-tab-pane label="연락처" style="padding : 2%">
-          <div style="text-align:center">
-            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
-            <h4>이메일: {{ this.userdata.ind_email }}</h4>
-          </div>
-        </el-tab-pane>
+        <div style="text-align:center">
+          <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
+          <h4>이메일: {{ this.userdata.ind_email }}</h4>
+        </div>
         <el-tab-pane label="이력서">
           <webviewer :initialDoc="userdata.resumefilepath" />
         </el-tab-pane>
@@ -65,11 +60,7 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button
-          v-if="this.follow"
-          round
-          type="danger"
-          @click="clickfollowBtn"
+        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
@@ -138,10 +129,7 @@
       ></el-input>
     </div>
     <div style="text-align:center; margin: 4%">
-      <el-button
-        @click="(dialogVisible = false), interviewrequest()"
-        type="success"
-        :plain="true"
+      <el-button @click="(dialogVisible = false), interviewrequest()" type="success" :plain="true"
         >요청 보내기</el-button
       >
     </div>

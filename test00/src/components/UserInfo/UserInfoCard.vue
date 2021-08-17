@@ -1,16 +1,18 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer; height:110%"
+    style="margin:1%; cursor:pointer; height:200px; width 360px"
     @click="dialogVisible = true"
   >
     <el-row>
       <el-col :span="8">
         <div>
-          <img :src="userdata.photofilepath" style="max-width: 100%; height: auto;" />
+          <span v-if="this.userdata.photo_index == '-'"> <el-image :src="this.nonImage"/></span>
+          <span v-else> <el-image :src="this.userdata.photofilepath" /> </span>
         </div>
       </el-col>
-      <el-col :span="16"
+      <el-col :span="2"></el-col>
+      <el-col :span="14"
         ><div>
           <div>
             <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
@@ -42,10 +44,8 @@
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
             <el-col :span="12">
-              <span v-if="userdata.photo_index == ''">
-                <el-image src="https://i5d206.p.ssafy.io/file/thumbuser.png"
-              /></span>
-              <span> <el-image :src="this.userdata.photofilepath" /> </span
+              <span v-if="this.userdata.photo_index == '-'"> <el-image :src="this.nonImage"/></span>
+              <span v-else> <el-image :src="this.userdata.photofilepath" /> </span
             ></el-col>
             <el-col :span="8"
               ><span>
@@ -62,7 +62,7 @@
           <h4>이메일: {{ this.userdata.ind_email }}</h4>
         </el-tab-pane>
         <el-tab-pane label="이력서">
-          <div v-if="userdata.resume_index == ''" class="fileDoc">
+          <div v-if="userdata.resume_index == '-'" class="fileDoc">
             등록된 이력서 및 포트폴리오가 없습니다.
           </div>
           <div v-else>
@@ -70,14 +70,14 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
-          <div v-if="userdata.video_index == ''">
+          <div v-if="userdata.video_index == '-'">
             소개영상이 없습니다.
           </div>
           <div v-else>
             <video
-              :src="userdata.videofilepath"
+              :src="this.userdata.videofilepath"
               height="auto"
-              width="640"
+              width="100%"
               controls=""
               style="width: 100%; height: 100%;"
             ></video>
@@ -176,6 +176,7 @@ export default {
   },
   data() {
     return {
+      hasSearched: false,
       dialogVisible: false,
       innerVisible: false,
       ind_taglist: [],
@@ -187,16 +188,16 @@ export default {
         { ind_gender: "" },
         { ind_phone: "" },
         { ind_email: "" },
-        { photofilepath: "" },
-        { resume_originfile: "" },
+        { photofilepath: "string" },
+        { resume_originfile: "string" },
         { photo_index: "" },
         { resume_index: "" },
         { video_index: "" },
         { ind_index: 0 },
-        { video_originfile: "" },
-        { videofilepath: "" },
-        { photo_originfile: "" },
-        { resumefilepath: "" },
+        { video_originfile: "string" },
+        { videofilepath: "string" },
+        { photo_originfile: "string" },
+        { resumefilepath: "string" },
         { ind_switch: "" },
         { ind_introduce: "" },
         { cat_name: "" },
@@ -215,6 +216,7 @@ export default {
         { sug_timetwo: "string" },
         { sug_message: "string" },
       ],
+      nonImage: "https://i5d206.p.ssafy.io/file/thumbuser.png",
     };
   },
 
@@ -224,6 +226,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.companyindex = index;
+    console.log(index);
 
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
@@ -232,11 +235,11 @@ export default {
       .then((res) => {
         var result = res.data[0];
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "/file/" + res.data.resume_savefolder + "/" + res.data.resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+          "/file/" + res.data.video_savefolder + "/" + res.data.video_savefile;
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
@@ -293,12 +296,6 @@ export default {
       });
   },
   methods: {
-    changeFront() {
-      this.isHover = false;
-    },
-    changeBack() {
-      this.isHover = true;
-    },
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
