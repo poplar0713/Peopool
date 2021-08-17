@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:80%;"
+    style="width:30rem;"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
@@ -8,24 +8,24 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이름 -->
-      <el-form-item label="Name" prop="CompanyName">
+      <el-form-item label="> 회사명 : " prop="CompanyName">
         <strong>{{ this.ruleForm.CompanyName }}</strong>
       </el-form-item>
       <!-- 기업연락처 -->
-      <el-form-item label="Tel" prop="UserTel">
-        <el-input type="tel" v-model="ruleForm.CompanyTel"></el-input>
+      <el-form-item label="> 회사 대표 번호 : " prop="UserTel">
+        <el-input type="tel" v-model="this.ruleForm.CompanyTel"></el-input>
       </el-form-item>
       <!-- 기업이메일 -->
-      <el-form-item label="Email" prop="UserEmail">
-        <el-input type="email" v-model="ruleForm.CompanyEmail"></el-input>
+      <el-form-item label="> 회사 대표 Email : " prop="UserEmail">
+        <el-input type="email" v-model="this.ruleForm.CompanyEmail"></el-input>
       </el-form-item>
       <!-- 기업회원 PW -->
-      <el-form-item label="Password" prop="Password">
-        <el-input type="password" v-model="ruleForm.Password"></el-input>
+      <el-form-item label="계정 Password" prop="Password">
+        <el-input type="password" v-model="this.ruleForm.Password"></el-input>
       </el-form-item>
       <!-- 기업회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
-        <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
+      <el-form-item label="계정 Password 확인" prop="PasswordConfirm">
+        <el-input type="password" v-model="this.ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
       <div style="float:right">
         <el-form-item>
@@ -46,7 +46,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
-  name:"SideBarProfileCompanyBasicInfo",
+  name: "SideBarProfileCompanyBasicInfo",
   components: {},
   mounted() {
     // 토큰가져오기
@@ -67,7 +67,7 @@ export default {
         console.log("token error");
         console.log(err.response);
         if (err.response == 401) {
-          this.$message.error('로그인세션이 만료되었습니다');
+          this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -176,7 +176,7 @@ export default {
               console.log("token error");
               console.log(err.response);
               if (err.response == 401) {
-                this.$message.error('로그인세션이 만료되었습니다');
+                this.$message.error("로그인세션이 만료되었습니다");
                 localStorage.clear();
                 this.$router.push("/");
               }
