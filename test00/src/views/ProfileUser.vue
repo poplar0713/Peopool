@@ -5,9 +5,7 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-header><h2>프로필</h2></el-header>
-      <el-main
-        style="width:60%; text-align:center; margin:0 auto; padding: 70px 0;"
-      >
+      <el-main style="width:60%; text-align:center; margin:0 auto; padding: 70px 0;">
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
@@ -22,7 +20,7 @@
             </div>
             <div v-else>
               <SideBarProfileUserIntroduction
-                v-if="userdata.ind_introduce"
+                v-if="userdata.ind_introduce && userdata.photofilepath"
                 :photofilepath="userdata.photofilepath"
                 :introduce="userdata.ind_introduce"
                 :curphoto="true"
@@ -44,9 +42,7 @@
             </div>
           </el-tab-pane>
 
-          <el-tab-pane label="태그관리">
-            <SideBarProfileUserTags
-          /></el-tab-pane>
+          <el-tab-pane label="태그관리"> <SideBarProfileUserTags /></el-tab-pane>
           <el-tab-pane label="서류관리">
             <SideBarProfileUserDoc @uploadDoc="reloadDoc" />
 
@@ -54,10 +50,7 @@
               등록된 이력서 및 포트폴리오가 없습니다.
             </div>
             <div v-else>
-              <webviewer
-                v-if="userdata.resumefilepath"
-                :initialDoc="userdata.resumefilepath"
-              />
+              <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
@@ -197,28 +190,19 @@ export default {
       const decoded = jwt_decode(token);
       const index = decoded.index;
       try {
-        const res = await axios.get(
-          `https://i5d206.p.ssafy.io:8443/poi/${index}`,
-          {
-            headers: { Authorization: token },
-          }
-        );
+        const res = await axios.get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+          headers: { Authorization: token },
+        });
         var result = res.data[0];
         this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io/file/" +
-          result.photo_savefolder +
-          "/" +
-          result.photo_savefile;
+          "https://i5d206.p.ssafy.io/file/" + result.photo_savefolder + "/" + result.photo_savefile;
         this.userdata.resumefilepath =
           "https://i5d206.p.ssafy.io/file/" +
           result.resume_savefolder +
           "/" +
           result.resume_savefile;
         this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io/file/" +
-          result.video_savefolder +
-          "/" +
-          result.video_savefile;
+          "https://i5d206.p.ssafy.io/file/" + result.video_savefolder + "/" + result.video_savefile;
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
@@ -274,10 +258,6 @@ export default {
 </script>
 
 <style scoped>
-.el-main {
-}
-#tabpane {
-}
 .fileDoc {
   margin: 20px;
 }
