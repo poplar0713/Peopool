@@ -25,11 +25,7 @@
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
-            <i
-              @click="clickfollowBtn"
-              class="far fa-heart fa-2x"
-              style="cursor:pointer"
-            ></i>
+            <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
           </span>
         </h2>
       </el-header>
@@ -40,10 +36,7 @@
             <el-container>
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
-                ><el-image
-                  style="width: 300px; height: 300px"
-                  :src="ent_img"
-                ></el-image
+                ><el-image style="width: 300px; height: 300px" :src="ent_img"></el-image
               ></el-aside>
               <!--  -->
               <el-main>
@@ -146,6 +139,11 @@ export default {
         this.company_info.ent_website = res.data.ent_website;
         this.company_info.ent_introduce = res.data.ent_introduce;
         this.company_info.ent_ceo = res.data.ent_ceo;
+        this.company_info.ent_image_path =
+          "https://i5d206.p.ssafy.io/file/" +
+          this.res.data.image_savefolder +
+          "/" +
+          this.res.data.image_savefile;
       })
       .catch((err) => {
         console.log(err.response);
@@ -194,7 +192,9 @@ export default {
         ent_address: "",
         ent_website: "",
         ent_introduce: null,
+        ent_image_path: "",
       },
+      nonImage: "https://i5d206.p.ssafy.io/file/nonphoCom.png",
     };
   },
   methods: {
