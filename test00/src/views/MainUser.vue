@@ -52,7 +52,6 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
-    // NotLoginMainVue,
   },
   created() {},
   mounted: function() {

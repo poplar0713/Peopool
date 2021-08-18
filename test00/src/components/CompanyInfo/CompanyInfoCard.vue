@@ -5,7 +5,10 @@
     style="margin-bottom:20px; text-align:center; height:100%"
     @click="dialogVisible = true"
     ><div v-if="this.company_info.ent_image">
-      <img style="width: 100%; height: auto" :src="this.company_info.ent_image_path" />
+      <img
+        style="width: 100%; height: auto"
+        :src="this.company_info.ent_image_path"
+      />
     </div>
     <div v-else>
       <img style="width: 100%; height: auto" :src="this.nonImage" />
@@ -29,7 +32,11 @@
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
-            <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
+            <i
+              @click="clickfollowBtn"
+              class="far fa-heart fa-2x"
+              style="cursor:pointer"
+            ></i>
           </span>
         </h2>
       </el-header>
@@ -41,7 +48,10 @@
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
                 ><div v-if="this.company_info.ent_image">
-                  <img style="width: 100%; height: auto" :src="this.company_info.ent_image_path" />
+                  <img
+                    style="width: 100%; height: auto"
+                    :src="this.company_info.ent_image_path"
+                  />
                 </div>
                 <div v-else>
                   <img style="width: 100%; height: auto" :src="this.nonImage" />
