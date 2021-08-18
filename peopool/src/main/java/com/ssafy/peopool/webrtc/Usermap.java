@@ -44,7 +44,9 @@ public class Usermap {
 			log.info("session:----{}",session);
 			try {
 				log.info("responseee -------{}",session);
-				session.sendMessage(new TextMessage(response.toString()));
+				synchronized(session) {
+					session.sendMessage(new TextMessage(response.toString()));
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
