@@ -70,7 +70,6 @@
               :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
               @click="GetTagCompany(item.list_name)"
             >
