@@ -41,7 +41,7 @@ public interface ProfileOfIndividualRepo {
 	int modifyVideo(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
-	List<Map<Object, Object>> getProfile(int index);
+	Map<Object, Object> getProfile(int index);
 	
 	// 인덱스로 조회
 	IndCard getIndexOfProfile(int index);

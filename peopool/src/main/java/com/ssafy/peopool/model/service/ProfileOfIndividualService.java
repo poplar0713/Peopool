@@ -37,7 +37,7 @@ public interface ProfileOfIndividualService {
 	boolean modifyVideo(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 조회
-	List<Map<Object, Object>> getProfile(int index);
+	Map<Object, Object> getProfile(int index);
 	
 	// 기술스택을 가진 사용자 프로필 조회
 	List<IndCard> getTagOfProfile(String word);
