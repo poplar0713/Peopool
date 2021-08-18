@@ -92,4 +92,9 @@
 		where tag_index = #{index}
 	</delete>
 	
+	<delete id="deleteWithdraw" parameterType="int">
+		delete from hashtag
+		where tag_target=#{index}
+	</delete>
+	
 </mapper>
