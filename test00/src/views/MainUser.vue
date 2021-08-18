@@ -42,7 +42,7 @@ import server_url from "@/server.js";
 // import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
 // import wsocket from "@/components/utils/websocket.js";
 
-let ws = null;
+let wsmain = null;
 export default {
   name: "MainUser",
   components: {
@@ -57,17 +57,17 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
+    wsmain = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
   },
   mounted: function() {
-    console.log("mounted start - ", ws);
-    ws.onopen = () => {
+    console.log("mounted start - ", wsmain);
+    wsmain.onopen = () => {
       console.log("loginpage - Websocket is connected!");
       this.sendMessage({
         id: "sessioncheck",
       });
     };
-    ws.onmessage = (message) => {
+    wsmain.onmessage = (message) => {
       console.log("ws onmessage- ", message);
     };
     // ws.onclose = function() {
@@ -139,7 +139,7 @@ export default {
     sendMessage(message) {
       var jsonMessage = JSON.stringify(message);
       console.log("Sending message: " + jsonMessage);
-      ws.send(jsonMessage);
+      wsmain.send(jsonMessage);
     },
     uploadFile() {},
     handleRemove(file, fileList) {
