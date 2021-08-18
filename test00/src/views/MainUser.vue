@@ -52,7 +52,6 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
-    // NotLoginMainVue,
   },
   created() {
     const token = this.$cookies.get("PID_AUTH");
