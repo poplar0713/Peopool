@@ -8,9 +8,11 @@
       <el-col :span="8">
         <div>
           <span v-if="this.userdata.photo_index">
-            <img :src="this.userdata.photofilepath" />
+            <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
           </span>
-          <span v-else> <img :src="this.nonImage" /> </span>
+          <span v-else>
+            <img :src="this.nonImage" style="width:100%; heigth: auto" />
+          </span>
         </div>
       </el-col>
       <el-col :span="16"
@@ -164,17 +166,17 @@ export default {
       })
       .then((res) => {
         this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data.photo_savefolder +
           "/" +
           res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data.resume_savefolder +
           "/" +
           res.data.resume_savefile;
         this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data.video_savefolder +
           "/" +
           res.data.video_savefile;

@@ -26,10 +26,13 @@
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
             <el-col :span="12"
-              ><span v-if="this.userdata.photo_index">
-                <img :src="this.userdata.photofilepath" />
-              </span>
-              <span v-else> <img :src="this.nonImage" /> </span
+              ><div>
+                <span v-if="this.userdata.photo_index">
+                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+                </span>
+                <span v-else>
+                  <img :src="this.nonImage" style="width:100%; heigth: auto" />
+                </span></div
             ></el-col>
             <el-col :span="8"
               ><span>
@@ -209,17 +212,17 @@ export default {
       })
       .then((res) => {
         this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data[0].photo_savefolder +
           "/" +
           res.data[0].photo_savefile;
         this.userdata.resumefilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data[0].resume_savefolder +
           "/" +
           res.data[0].resume_savefile;
         this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data[0].video_savefolder +
           "/" +
           res.data[0].video_savefile;
