@@ -37,10 +37,7 @@
           <el-divider></el-divider>
           <el-row style="margin: 0.3rem">
             <el-col :span="24">
-              <el-checkbox-group
-                v-model="this.selected"
-                @change="handleCheckedChange"
-              >
+              <el-checkbox-group v-model="this.selected" @change="handleCheckedChange">
                 <el-checkbox
                   style="margin:5px"
                   v-for="item in this.taglist"
@@ -67,10 +64,7 @@
               </el-switch
             ></el-col>
             <el-col :span="2"
-              ><el-button
-                type="success"
-                icon="el-icon-search"
-                @click="this.getOriginList"
+              ><el-button type="success" icon="el-icon-search" @click="this.getOriginList"
                 >검색</el-button
               >
             </el-col>
@@ -80,7 +74,7 @@
 
         <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
         <el-row :gutter="24">
-          <el-col :span="4" v-for="item in resultList" :key="item">
+          <el-col :span="6" v-for="item in resultList" :key="item">
             <UserInfoCard :userindex="item.ind_index" />
           </el-col>
         </el-row>
@@ -263,7 +257,23 @@ export default {
     getOriginList() {
       this.originlist = [];
       console.log(this.isUnion);
-      if (this.isUnion == "union") {
+
+      if (this.selected.length <= 0) {
+        axios
+          .get("https://i5d206.p.ssafy.io:8443/poi", {})
+          .then((res) => {
+            this.originlist = res.data;
+            console.log(this.originlist);
+          })
+          .catch((err) => {
+            if (err.response == 401) {
+              this.$cookies.remove("PID_AUTH");
+              this.$message.error("로그인세션이 만료되었습니다");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      } else if (this.isUnion == "union") {
         axios
           .get("https://i5d206.p.ssafy.io:8443/has/union", {
             headers: { Authorization: token },
