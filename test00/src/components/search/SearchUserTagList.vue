@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.result.length > 0">
+  <div v-if="this.result.length > 0" style="align-">
     <el-row :gutter="24">
       <el-col :span="6" v-for="item in nowPageData" :key="item">
         <UserInfoCard :userindex="item.ind_index" />

@@ -2,9 +2,17 @@
   <!-- 카드 -->
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; text-align:center; height:110%"
+    style="margin-bottom:20px; text-align:center; height:100%"
     @click="dialogVisible = true"
-    ><el-avatar shape="square" :size="60" :src="squareUrl"></el-avatar>
+    ><div v-if="this.company_info.ent_image">
+      <img
+        style="width: 100%; height: auto"
+        :src="this.company_info.ent_image_path"
+      />
+    </div>
+    <div v-else>
+      <img style="width: 100%; height: auto" :src="this.nonImage" />
+    </div>
     <h3>{{ this.company_info.ent_name }}</h3>
   </el-card>
   <!-- 모달창 -->
@@ -39,11 +47,16 @@
             <el-container>
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
-                ><el-image
-                  style="width: 300px; height: 300px"
-                  :src="ent_img"
-                ></el-image
-              ></el-aside>
+                ><div v-if="this.company_info.ent_image">
+                  <img
+                    style="width: 100%; height: auto"
+                    :src="this.company_info.ent_image_path"
+                  />
+                </div>
+                <div v-else>
+                  <img style="width: 100%; height: auto" :src="this.nonImage" />
+                </div>
+              </el-aside>
               <!--  -->
               <el-main>
                 <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
@@ -70,7 +83,6 @@
               :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
               @click="GetTagCompany(item.list_name)"
             >
@@ -96,7 +108,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name:"CompanyCardInfo",
+  name: "MainUserCompanyInfo",
   props: { companyindex: Number },
   data() {
     // 토큰가져오기
@@ -113,39 +125,51 @@ export default {
       })
       .then((res) => {
         // 팔로우가 되어있는것
-        console.log(res)
-        if (res.status==200){(this.follow = true)}
-        if (res.status==204){(this.follow = false)}
+        if (res.status == 200) {
+          this.follow = true;
+        }
+        if (res.status == 204) {
+          this.follow = false;
+        }
       })
       .catch((err) => {
+        // 팔로우가 안되어있는것
+        console.log(err);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
       });
     // 기업정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poe/index/${this.companyindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poe/path/${this.companyindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        this.company_info.ent_index = res.data.ent_index;
-        this.company_info.ent_name = res.data.ent_name;
-        this.company_info.ent_image = res.data.ent_image;
-        this.company_info.ent_contact = res.data.ent_contact;
-        this.company_info.ent_address = res.data.ent_address;
-        this.company_info.ent_email = res.data.ent_email;
-        this.company_info.ent_history = res.data.ent_history;
-        this.company_info.ent_website = res.data.ent_website;
-        this.company_info.ent_introduce = res.data.ent_introduce;
-        this.company_info.ent_ceo = res.data.ent_ceo;
+        console.log(res.data);
+        this.company_info.ent_index = res.data[0].ent_index;
+        this.company_info.ent_name = res.data[0].ent_name;
+        this.company_info.ent_contact = res.data[0].ent_contact;
+        this.company_info.ent_address = res.data[0].ent_address;
+        this.company_info.ent_email = res.data[0].ent_email;
+        this.company_info.ent_history = res.data[0].ent_history;
+        this.company_info.ent_website = res.data[0].ent_website;
+        this.company_info.ent_introduce = res.data[0].ent_introduce;
+        this.company_info.ent_ceo = res.data[0].ent_ceo;
+        this.company_info.ent_image = res.data[0].ent_image;
+        this.company_info.ent_image_path =
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data[0].image_savefolder +
+          "/" +
+          res.data[0].image_savefile;
       })
       .catch((err) => {
         console.log(err.response);
         if (err.response == 401) {
-          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -155,17 +179,17 @@ export default {
       .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          ent_index : this.companyindex,
+          ent_index: this.companyindex,
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         this.ent_tags = res.data;
       })
       .catch((err) => {
         if (err.response == 401) {
-          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -187,7 +211,9 @@ export default {
         ent_address: "",
         ent_website: "",
         ent_introduce: null,
+        ent_image_path: "",
       },
+      nonImage: "https://i5d206.p.ssafy.io/file/nonphoCom.png",
     };
   },
   methods: {
@@ -210,10 +236,10 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -232,10 +258,10 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -257,7 +283,7 @@ export default {
         loading.close();
         this.$router.push({
           name: "SearchCompany",
-          query: { keyword: `${keyword}` },
+          query: { keyword: keyword },
         });
       }, 2000);
       setTimeout(() => {

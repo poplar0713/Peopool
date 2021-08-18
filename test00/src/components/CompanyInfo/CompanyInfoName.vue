@@ -25,11 +25,7 @@
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
-            <i
-              @click="clickfollowBtn"
-              class="far fa-heart fa-2x"
-              style="cursor:pointer"
-            ></i>
+            <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
           </span>
         </h2>
       </el-header>
@@ -40,10 +36,7 @@
             <el-container>
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
-                ><el-image
-                  style="width: 300px; height: 300px"
-                  :src="ent_img"
-                ></el-image
+                ><el-image style="width: 300px; height: 300px" :src="ent_img"></el-image
               ></el-aside>
               <!--  -->
               <el-main>
@@ -68,14 +61,14 @@
             <el-tag
               v-for="item in ent_tags"
               style="margin:5px"
-              :key="item.taglist_index"
+              :key="item.list_index"
               :type="warning"
               effect="plain"
               closable
               :disable-transitions="true"
-              @click="GetTagCompany(item.taglist_name)"
+              @click="GetTagCompany(item.list_name)"
             >
-              {{ item.taglist_name }}
+              {{ item.list_name }}
             </el-tag>
           </div>
           <div v-else style="align-text:center">
@@ -126,6 +119,7 @@ export default {
         console.log(err);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -146,23 +140,28 @@ export default {
         this.company_info.ent_website = res.data.ent_website;
         this.company_info.ent_introduce = res.data.ent_introduce;
         this.company_info.ent_ceo = res.data.ent_ceo;
+        this.company_info.ent_image_path =
+          "https://i5d206.p.ssafy.io/file/" +
+          this.res.data.image_savefolder +
+          "/" +
+          this.res.data.image_savefile;
       })
       .catch((err) => {
         console.log(err.response);
         if (err.response == 401) {
           console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
       });
     // 기업본인 태그목록 불러오기
     axios
-      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+      .get("https://i5d206.p.ssafy.io:8443/cla/list", {
         headers: { Authorization: token },
         params: {
-          index: this.companydata,
-          type: 1,
+          ent_index: this.companyindex,
         },
       })
       .then((res) => {
@@ -171,8 +170,8 @@ export default {
       })
       .catch((err) => {
         if (err.response == 401) {
-          console.log("token error");
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -194,7 +193,9 @@ export default {
         ent_address: "",
         ent_website: "",
         ent_introduce: null,
+        ent_image_path: "",
       },
+      nonImage: "https://i5d206.p.ssafy.io/file/nonphoCom.png",
     };
   },
   methods: {
@@ -217,10 +218,10 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -239,10 +240,10 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }

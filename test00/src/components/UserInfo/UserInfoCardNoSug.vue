@@ -7,10 +7,12 @@
     <el-row>
       <el-col :span="8">
         <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
+          <span v-if="this.userdata.photo_index">
+            <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+          </span>
+          <span v-else>
+            <img :src="this.nonImage" style="width:100%; heigth: auto" />
+          </span>
         </div>
       </el-col>
       <el-col :span="16"
@@ -45,25 +47,24 @@
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
             <el-col :span="12"
-              ><span> <img :src="this.userdata.photofilepath" /> </span
+              ><div>
+                <span v-if="this.userdata.photo_index == '-'">
+                  <el-image :src="this.nonImage"
+                /></span>
+                <span v-else> <el-image :src="this.userdata.photofilepath" /> </span></div
             ></el-col>
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>
-                  직무 : {{ this.userdata.cat_name }} ({{
-                    this.userdata.car_value
-                  }})
-                </h4>
+                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
               </span></el-col
             >
             <el-divider></el-divider>
           </el-row>
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
-        </el-tab-pane>
-        <el-tab-pane label="연락처" style="padding : 2%">
-          <div style="text-align:center">
+          <el-divider></el-divider>
+          <div>
             <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
             <h4>이메일: {{ this.userdata.ind_email }}</h4>
           </div>
@@ -84,11 +85,7 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button
-          v-if="this.follow"
-          round
-          type="danger"
-          @click="clickfollowBtn"
+        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
@@ -151,6 +148,7 @@ export default {
         { sug_timetwo: "string" },
         { sug_message: "string" },
       ],
+      nonImage: "https://i5d206.p.ssafy.io/file/thumbuser.png",
     };
   },
 
@@ -167,28 +165,36 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        var result = res.data[0];
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data.photo_savefolder +
+          "/" +
+          res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data.resume_savefolder +
+          "/" +
+          res.data.resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
-        this.userdata.resume_originfile = result.resume_originfile;
-        this.userdata.photo_originfile = result.photo_originfile;
-        this.userdata.video_originfile = result.video_originfile;
-        this.userdata.ind_switch = result.ind_switch;
-        this.userdata.ind_introduce = result.ind_introduce;
-        this.userdata.photo_index = result.photo_index;
-        this.userdata.resume_index = result.resume_index;
-        this.userdata.video_index = result.resume_index;
-        this.userdata.ind_index = result.ind_index;
-        this.userdata.ind_name = result.ind_name;
-        this.userdata.ind_email = result.ind_email;
-        this.userdata.ind_phone = result.ind_phone;
-        this.userdata.ind_gender = result.ind_gender;
-        this.userdata.cat_name = result.cat_name;
-        this.userdata.car_value = result.car_value;
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data.video_savefolder +
+          "/" +
+          res.data.video_savefile;
+        this.userdata.resume_originfile = res.data.resume_originfile;
+        this.userdata.photo_originfile = res.data.photo_originfile;
+        this.userdata.video_originfile = res.data.video_originfile;
+        this.userdata.ind_switch = res.data.ind_switch;
+        this.userdata.ind_introduce = res.data.ind_introduce;
+        this.userdata.photo_index = res.data.photo_index;
+        this.userdata.resume_index = res.data.resume_index;
+        this.userdata.video_index = res.data.resume_index;
+        this.userdata.ind_index = res.data.ind_index;
+        this.userdata.ind_name = res.data.ind_name;
+        this.userdata.ind_email = res.data.ind_email;
+        this.userdata.ind_phone = res.data.ind_phone;
+        this.userdata.ind_gender = res.data.ind_gender;
+        this.userdata.cat_name = res.data.cat_name;
+        this.userdata.car_value = res.data.car_value;
       });
 
     axios
@@ -223,7 +229,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -253,11 +259,10 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log("token error");
-            console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
+              this.$cookies.remove("PID_AUTH");
               this.$router.push("/");
             }
           });
@@ -275,10 +280,9 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
-            console.log("token error");
-            console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }

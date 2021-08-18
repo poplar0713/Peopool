@@ -3,7 +3,7 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-      <el-main style="width:60%;  text-align:center; margin:0 auto; padding: 70px 0;">
+      <el-main style="width:70%">
         <SideBarProfileCompany />
       </el-main>
     </el-container>
@@ -49,6 +49,7 @@ export default {
         console.log("token error");
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
