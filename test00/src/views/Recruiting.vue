@@ -37,6 +37,7 @@
           </el-tabs>
         </div>
       </el-main>
+      <Footer/>
     </el-container>
   </el-container>
 </template>
@@ -55,6 +56,8 @@ import ProcessingInterview from "../components/Recruiting/ProcessingInterview.vu
 import PassUser from "../components/Recruiting/PassUser.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import Footer from "@/components/Footer.vue";
+
 export default {
   components: {
     SideBarCompany,
@@ -64,6 +67,7 @@ export default {
     RecruitingBoardRejectOfferTab,
     ProcessingInterview,
     PassUser,
+    Footer
   },
   data() {
     const token = this.$cookies.get("PID_AUTH");

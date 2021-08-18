@@ -13,7 +13,7 @@
       </router-link>
       <el-menu background-color="#f1c40f">
         <el-menu-item index="1" onclick="location.href = '/company'">
-          <i class="fas fa-home"></i><span style="margin:10px">Home</span>
+          <i class="fas fa-home"></i><span style="margin:10px">홈</span>
         </el-menu-item>
         <!--  -->
         <router-link
@@ -25,7 +25,7 @@
         >
           <el-menu-item index="2">
             <i class="el-icon-office-building"></i>
-            company
+            회사프로필
           </el-menu-item></router-link
         >
         <!--  -->
@@ -128,7 +128,7 @@ export default {
   z-index: 1000;
 }
 .el-menu {
-  height: 90%;
+  height: 91.91%;
 }
 .title {
   margin: 2%;
