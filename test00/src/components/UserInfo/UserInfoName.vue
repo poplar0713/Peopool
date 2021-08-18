@@ -26,10 +26,13 @@
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
             <el-col :span="12"
-              ><span v-if="this.userdata.photo_index">
-                <img :src="this.userdata.photofilepath" />
-              </span>
-              <span v-else> <img :src="this.nonImage" /> </span
+              ><div>
+                <span v-if="this.userdata.photo_index">
+                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+                </span>
+                <span v-else>
+                  <img :src="this.nonImage" style="width:100%; heigth: auto" />
+                </span></div
             ></el-col>
             <el-col :span="8"
               ><span>
