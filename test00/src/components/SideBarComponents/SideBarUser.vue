@@ -118,12 +118,13 @@ img {
 .sidebar {
   position: fixed;
   height: 100%;
+  bottom: 0px;
   overflow: auto;
   font-size: 30px;
   z-index: 1000;
 }
 .el-menu {
-  height: 90%;
+  height: 91.91%;
 }
 .title span {
   font-family: "Work Sans", sans-serif;

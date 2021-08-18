@@ -66,7 +66,9 @@
 
 <script>
 import DecibelMeter from "decibel-meter";
+
 export default {
+  components: {  },
   props: {
     noncookie: Boolean,
   },

@@ -26,52 +26,51 @@
       <el-tabs type="border-card">
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
-            <el-col :span="12"
-              ><div>
+            <el-col :span="12" style="text-align: center">
+              <div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+                  <img :src="this.userdata.photofilepath" style="width:70%; heigth: auto" />
                 </span>
                 <span v-else>
-                  <img :src="this.nonImage" style="width:100%; heigth: auto" />
-                </span></div
-            ></el-col>
+                  <img :src="this.nonImage" style="width:70%; heigth: auto" />
+                </span>
+                <el-divider direction="vertical"></el-divider>
+              </div>
+            </el-col>
             <el-col :span="8"
               ><span>
-                <h4>성명 : {{ this.userdata.ind_name }}({{ this.userdata.ind_gender }})</h4>
-                <h4>직무 : {{ this.userdata.cat_name }}</h4>
-                <h4>경력 : {{ this.userdata.car_value }}</h4>
+                <h3>성명 : {{ this.userdata.ind_name }}</h3>
+                <h3>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h3>
+                <el-divider></el-divider>
+                <h3>연락처 : {{ this.userdata.ind_phone }}</h3>
+                <h3>이메일: {{ this.userdata.ind_email }}</h3>
               </span></el-col
             >
             <el-divider></el-divider>
           </el-row>
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
-          <el-divider></el-divider>
-          <div>
-            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
-            <h4>이메일: {{ this.userdata.ind_email }}</h4>
-          </div>
         </el-tab-pane>
-        <el-tab-pane label="이력서">
-          <div v-if="userdata.resume_index">
+        <el-tab-pane label="이력서" style="text-align: center">
+          <div v-if="userdata.resume_index" class="fileDoc">
             <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
           </div>
           <div v-else>
-            <h3>해당 회원은 아직 이력서를 올리지 않았습니다.</h3>
+            <h3>등록된 이력서 및 포트폴리오가 없습니다.</h3>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="PR 영상">
+        <el-tab-pane label="PR 영상" style="text-align: center">
           <div v-if="userdata.video_index">
             <video
-              :src="userdata.videofilepath"
-              height="360"
-              width="640"
+              :src="this.userdata.videofilepath"
+              height="auto"
+              width="100%"
               controls=""
-              style="width: 100%; height: 100%;"
+              style="width: 85%; height: auto;"
             ></video>
           </div>
           <div v-else>
-            <h3>해당 회원은 아직 PR 영상을 올리지 않았습니다.</h3>
+            <h3>소개영상이 없습니다.</h3>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -225,19 +224,19 @@ export default {
       .then((res) => {
         this.userdata.photofilepath =
           "https://i5d206.p.ssafy.io/file/" +
-          res.data[0].photo_savefolder +
+          res.data.photo_savefolder +
           "/" +
-          res.data[0].photo_savefile;
+          res.data.photo_savefile;
         this.userdata.resumefilepath =
           "https://i5d206.p.ssafy.io/file/" +
-          res.data[0].resume_savefolder +
+          res.data.resume_savefolder +
           "/" +
-          res.data[0].resume_savefile;
+          res.data.resume_savefile;
         this.userdata.videofilepath =
           "https://i5d206.p.ssafy.io/file/" +
-          res.data[0].video_savefolder +
+          res.data.video_savefolder +
           "/" +
-          res.data[0].video_savefile;
+          res.data.video_savefile;
         this.userdata.resume_originfile = res.data.resume_originfile;
         this.userdata.photo_originfile = res.data.photo_originfile;
         this.userdata.video_originfile = res.data.video_originfile;
