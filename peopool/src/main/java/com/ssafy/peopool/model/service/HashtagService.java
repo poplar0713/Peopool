@@ -23,6 +23,9 @@ public interface HashtagService {
 
 	// 태그 삭제
 	boolean deleteHashtag(int index);
+	
+	// 회원 탈퇴시에 태그 삭제
+	boolean deleteWithdraw(int index);
 
 	// 선택된 태그를 모두 포함하는 사용자 교집합 목록
 	List<Map<Object, Object>> userTagIntersection(List<Integer> list);

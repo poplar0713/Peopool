@@ -58,6 +58,12 @@ public class HashtagServiceImpl implements HashtagService {
 		return hashtagRepo.userTagUnion(list, count);
 	}
 
+	@Override
+	public boolean deleteWithdraw(int index) {
+		// TODO Auto-generated method stub
+		return hashtagRepo.deleteWithdraw(index) == 1;
+	}
+
 	
 
 }
