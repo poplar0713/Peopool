@@ -51,9 +51,9 @@
           <i class="el-icon-back"></i>
           <span><UserFollowers /></span>
         </el-menu-item>
-        <el-menu-item index="7">
+        <el-menu-item index="7" @click="Logout">
           <i class="el-icon-turn-off"></i>
-          <el-text @click="Logout">Logout</el-text>
+          <el-text>Logout</el-text>
         </el-menu-item>
         <!--  -->
       </el-menu>

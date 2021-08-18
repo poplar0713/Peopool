@@ -32,7 +32,7 @@ public class ClassListController {
 	
 	@ApiOperation(value = "name을 포함한 분류 목록 받아오기", response = List.class)
 	@GetMapping("/name")
-	public ResponseEntity<List<ClassList>> getTagList(@RequestParam("name")String name) {
+	public ResponseEntity<List<ClassList>> getTagList(@RequestParam("name") String name) {
 		return new ResponseEntity<>(classListService.getName(name), HttpStatus.OK);
 	}
 

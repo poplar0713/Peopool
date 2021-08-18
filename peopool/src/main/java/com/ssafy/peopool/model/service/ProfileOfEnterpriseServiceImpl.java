@@ -2,6 +2,7 @@ package com.ssafy.peopool.model.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +82,12 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 			logger.debug("파일 번호 : {}", profileOfEnterprise.getEnt_image());
 		}
 		return profileOfEnterpriseRepo.modifyProfileOfEnterprise(profileOfEnterprise) == 1;
+	}
+
+	@Override
+	public List<Map<Object, Object>> getProfile(int index) {
+		// TODO Auto-generated method stub
+		return profileOfEnterpriseRepo.getProfile(index);
 	}
 
 	

@@ -17,6 +17,8 @@ public interface InterviewRepo {
 	List<IntCard> getLastInterviews(int index) throws SQLException; // 지난 일정 조회
 
 	int finishInterview(Interview interview) throws SQLException; // 면접 종료
+	
+	int cancleInterview(Interview interview) throws SQLException; // 면접 취소
 
 	int isInterview(Interview interview) throws SQLException; // 면접 노쇼
 

@@ -7,24 +7,25 @@
       <el-main>
         <h1>인기있는 기업 랭킹</h1>
         <PopularCompanyList />
-        <br>
+        <br />
         <el-row :gutter="20">
           <el-col
             :span="12"
-            style="background-color:#FAFAFA; border-radius: 2em;"
+            style="background-color:#F4F6F6; border-radius: 2em;"
             ><div class="grid-content bg-purple">
               <h4 style="text-align:center">요청받은 인터뷰</h4>
               <UserSugInterview /></div
           ></el-col>
           <el-col
             :span="12"
-            style="background-color:#FAFAFA; border-radius: 2em;"
+            style="background-color:#F4F6F6; border-radius: 2em;"
             ><div class="grid-content bg-purple">
               <h4 style="text-align:center">인터뷰 일정</h4>
               <UserSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
+      <el-footer></el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -39,9 +40,10 @@ import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
+// import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
 // import wsocket from "@/components/utils/websocket.js";
-
-let ws = null;
+//기존 소켓
+let wsmain = null;
 export default {
   name: "MainUser",
   components: {
@@ -50,22 +52,23 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
+    // NotLoginMainVue,
   },
   created() {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    ws = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
+    wsmain = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
   },
   mounted: function() {
-    console.log("mounted start - ", ws);
-    ws.onopen = () => {
+    console.log("mounted start - ", wsmain);
+    wsmain.onopen = () => {
       console.log("loginpage - Websocket is connected!");
       this.sendMessage({
         id: "sessioncheck",
       });
     };
-    ws.onmessage = (message) => {
+    wsmain.onmessage = (message) => {
       console.log("ws onmessage- ", message);
     };
     // ws.onclose = function() {
@@ -82,6 +85,10 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    const name = decoded.name;
+    console.log("username-", name);
+    localStorage.setItem("username", name);
+
     console.log("타입확인");
     console.log(decoded.type);
     // 회원정보 가져오기
@@ -99,6 +106,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -118,7 +126,7 @@ export default {
       })
       .catch((err) => {
         if (err.response == 401) {
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -133,7 +141,7 @@ export default {
     sendMessage(message) {
       var jsonMessage = JSON.stringify(message);
       console.log("Sending message: " + jsonMessage);
-      ws.send(jsonMessage);
+      wsmain.send(jsonMessage);
     },
     uploadFile() {},
     handleRemove(file, fileList) {
