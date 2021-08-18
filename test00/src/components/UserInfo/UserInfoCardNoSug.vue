@@ -49,12 +49,18 @@
                 <span v-if="this.userdata.photo_index == '-'">
                   <el-image :src="this.nonImage"
                 /></span>
-                <span v-else> <el-image :src="this.userdata.photofilepath" /> </span></div
+                <span v-else>
+                  <el-image :src="this.userdata.photofilepath" />
+                </span></div
             ></el-col>
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
+                <h4>
+                  직무 : {{ this.userdata.cat_name }} ({{
+                    this.userdata.car_value
+                  }})
+                </h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -83,7 +89,11 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
+        <el-button
+          v-if="this.follow"
+          round
+          type="danger"
+          @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
@@ -159,22 +169,22 @@ export default {
     // 팔로우했는지 체크해보기
 
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
         this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data.photo_savefolder +
           "/" +
           res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data.resume_savefolder +
           "/" +
           res.data.resume_savefile;
         this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
+          "https://i5d206.p.ssafy.io/file/" +
           res.data.video_savefolder +
           "/" +
           res.data.video_savefile;
