@@ -165,34 +165,34 @@ export default {
       .then((res) => {
         this.userdata.photofilepath =
           "https://i5d206.p.ssafy.io:8443/file/" +
-          res.data[0].photo_savefolder +
+          res.data.photo_savefolder +
           "/" +
-          res.data[0].photo_savefile;
+          res.data.photo_savefile;
         this.userdata.resumefilepath =
           "https://i5d206.p.ssafy.io:8443/file/" +
-          res.data[0].resume_savefolder +
+          res.data.resume_savefolder +
           "/" +
-          res.data[0].resume_savefile;
+          res.data.resume_savefile;
         this.userdata.videofilepath =
           "https://i5d206.p.ssafy.io:8443/file/" +
-          res.data[0].video_savefolder +
+          res.data.video_savefolder +
           "/" +
-          res.data[0].video_savefile;
-        this.userdata.resume_originfile = res.data[0].resume_originfile;
-        this.userdata.photo_originfile = res.data[0].photo_originfile;
-        this.userdata.video_originfile = res.data[0].video_originfile;
-        this.userdata.ind_switch = res.data[0].ind_switch;
-        this.userdata.ind_introduce = res.data[0].ind_introduce;
-        this.userdata.photo_index = res.data[0].photo_index;
-        this.userdata.resume_index = res.data[0].resume_index;
-        this.userdata.video_index = res.data[0].resume_index;
-        this.userdata.ind_index = res.data[0].ind_index;
-        this.userdata.ind_name = res.data[0].ind_name;
-        this.userdata.ind_email = res.data[0].ind_email;
-        this.userdata.ind_phone = res.data[0].ind_phone;
-        this.userdata.ind_gender = res.data[0].ind_gender;
-        this.userdata.cat_name = res.data[0].cat_name;
-        this.userdata.car_value = res.data[0].car_value;
+          res.data.video_savefile;
+        this.userdata.resume_originfile = res.data.resume_originfile;
+        this.userdata.photo_originfile = res.data.photo_originfile;
+        this.userdata.video_originfile = res.data.video_originfile;
+        this.userdata.ind_switch = res.data.ind_switch;
+        this.userdata.ind_introduce = res.data.ind_introduce;
+        this.userdata.photo_index = res.data.photo_index;
+        this.userdata.resume_index = res.data.resume_index;
+        this.userdata.video_index = res.data.resume_index;
+        this.userdata.ind_index = res.data.ind_index;
+        this.userdata.ind_name = res.data.ind_name;
+        this.userdata.ind_email = res.data.ind_email;
+        this.userdata.ind_phone = res.data.ind_phone;
+        this.userdata.ind_gender = res.data.ind_gender;
+        this.userdata.cat_name = res.data.cat_name;
+        this.userdata.car_value = res.data.car_value;
       });
 
     axios
