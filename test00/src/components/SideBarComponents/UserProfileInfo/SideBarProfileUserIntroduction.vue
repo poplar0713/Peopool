@@ -169,23 +169,23 @@ export default {
             },
             ind_index: this.userindex,
             ind_introduce: this.userintroduce,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          <el-alert title="업로드 되었습니다" type="success"></el-alert>;
-          // this.$emit("uploadintro");
-          // this.openFullScreen2();
-        })
-        .catch((err) => {
-          this.failed();
-          if (err.response == 401) {
-            this.$message.error("로그인세션이 만료되었습니다");
-            this.$cookies.remove("PID_AUTH");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
+          })
+          .then((res) => {
+            console.log(res);
+            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            // this.$emit("uploadintro");
+            // this.openFullScreen2();
+          })
+          .catch((err) => {
+            this.failed();
+            if (err.response == 401) {
+              this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
