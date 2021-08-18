@@ -9,7 +9,7 @@
       </el-checkbox-group>
     </div>
     <div class="grid-content bg-purple">
-      <h3 style="text-align:center; margin-top:10px; margin-bottom:10px">
+      <h3 style="text-align:center;">
         #tags
       </h3>
       <el-tabs type="card" :tab-position="top" style="height: 100%;">

@@ -1,24 +1,24 @@
 <template>
-<div style="width:70%; margin:0 auto">
-  <el-carousel :interval="2000" type="card" height="200px">
-    <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
-      Rank #{{ i + 1 }}
-      <el-card
-        shadow="hover"
-        style="text-align:center; background-color:#F4F4EF; height:110%;"
-        @click="(dialogVisible = true), getcompanydata(item.ent_index)"
-      >
-        <el-row>
-          <el-col :span="8">
-            {{ item.ent_image }}
-          </el-col>
-          <el-col :span="16">
-            <h1>{{ item.ent_name }}</h1>
-          </el-col>
-        </el-row>
-      </el-card>
-    </el-carousel-item>
-  </el-carousel>
+  <div style="width:70%; margin:0 auto">
+    <el-carousel :interval="2000" type="card" height="200px">
+      <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
+        Rank #{{ i + 1 }}
+        <el-card
+          shadow="hover"
+          style="text-align:center; background-color:#F4F4EF; height:110%;"
+          @click="(dialogVisible = true), getcompanydata(item.ent_index)"
+        >
+          <el-row>
+            <el-col :span="8">
+              {{ item.ent_image }}
+            </el-col>
+            <el-col :span="16">
+              <h1>{{ item.ent_name }}</h1>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-carousel-item>
+    </el-carousel>
   </div>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
@@ -37,7 +37,11 @@
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
-            <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
+            <i
+              @click="clickfollowBtn"
+              class="far fa-heart fa-2x"
+              style="cursor:pointer"
+            ></i>
           </span>
         </h2>
       </el-header>
@@ -48,7 +52,10 @@
             <el-container>
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
-                ><el-image style="width: 300px; height: 300px" :src="ent_img"></el-image
+                ><el-image
+                  style="width: 300px; height: 300px"
+                  :src="ent_img"
+                ></el-image
               ></el-aside>
               <!--  -->
               <el-main>
@@ -272,6 +279,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
