@@ -19,7 +19,7 @@
     </div>
   </div>
   <div v-if="this.result.length == 0" style="text-align:center">
-    태그에 해당하는 기업정보가 없습니다
+    태그에 해당하는 유저정보가 없습니다
   </div>
 </template>
 

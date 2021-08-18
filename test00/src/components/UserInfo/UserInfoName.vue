@@ -223,19 +223,19 @@ export default {
       .then((res) => {
         this.userdata.photofilepath =
           "https://i5d206.p.ssafy.io/file/" +
-          res.data[0].photo_savefolder +
+          res.data.photo_savefolder +
           "/" +
-          res.data[0].photo_savefile;
+          res.data.photo_savefile;
         this.userdata.resumefilepath =
           "https://i5d206.p.ssafy.io/file/" +
-          res.data[0].resume_savefolder +
+          res.data.resume_savefolder +
           "/" +
-          res.data[0].resume_savefile;
+          res.data.resume_savefile;
         this.userdata.videofilepath =
           "https://i5d206.p.ssafy.io/file/" +
-          res.data[0].video_savefolder +
+          res.data.video_savefolder +
           "/" +
-          res.data[0].video_savefile;
+          res.data.video_savefile;
         this.userdata.resume_originfile = res.data.resume_originfile;
         this.userdata.photo_originfile = res.data.photo_originfile;
         this.userdata.video_originfile = res.data.video_originfile;

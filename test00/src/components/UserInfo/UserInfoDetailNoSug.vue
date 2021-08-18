@@ -29,7 +29,7 @@
             <el-col :span="12" style="text-align: center">
               <div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:70%; heigth: auto" />
+                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
                 </span>
                 <span v-else>
                   <img :src="this.nonImage" style="width:70%; heigth: auto" />

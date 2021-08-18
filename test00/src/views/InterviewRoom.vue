@@ -36,7 +36,7 @@
             </div>
           </div>
         </el-main>
-        <el-footer v-if="this.options" class="footer">
+        <el-footer v-if="this.options" class="footer" style="left:0px">
           <!-- 바뀐버튼 -->
           <el-button-group>
             <el-button

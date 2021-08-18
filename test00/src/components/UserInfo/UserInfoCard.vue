@@ -8,9 +8,11 @@
       <el-col :span="8">
         <div style="margin:0 auto;">
           <span v-if="this.userdata.photo_index">
-            <img :src="this.userdata.photofilepath" style="width:100%; heigth:auto; " />
+            <img :src="this.userdata.photofilepath" style="width:100%; heigth:auto" />
           </span>
-          <span v-else> <img :src="this.nonImage" style="width:100%; heigth:auto" /> </span>
+          <span v-else>
+            <img :src="this.nonImage" style="width:100%; heigth:auto" />
+          </span>
         </div>
       </el-col>
       <el-col :span="2"></el-col>

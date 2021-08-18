@@ -233,7 +233,7 @@ export default {
             list_index: this.value,
           })
           .then(() => {
-            this.$message.info("기업 정보가 변경되었습니다.1");
+            this.$message.info("기업 정보가 변경되었습니다.");
             this.getNewArray = !this.getNewArray;
           })
           .catch((err) => {

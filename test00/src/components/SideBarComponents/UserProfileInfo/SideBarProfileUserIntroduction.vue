@@ -13,47 +13,14 @@
       >
         <el-upload
           class="avatar-uploader"
+          :auto-upload="false"
           :show-file-list="false"
           :on-change="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" id="avatar" />
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <!-- <input type="file" @change="filecheck" id="checkinput" /> -->
-        <!-- <el-form
-          :rules="rules"
-          v-on:submit.prevent
-          enctype="multipart/form-data"
-          ref="ruleForm"
-        > -->
-        <!-- <el-form-item label="" prop="photointro"> -->
-        <!-- <span class="filetype">
-              <span class="file-text"></span>
-              <span class="file-btn">찾아보기</span>
-              <span class="file-select"
-                ><input
-                  type="file"
-                  class="input-file"
-                  size="1"
-                  name="photo"
-                  id="photo"
-                  ref="photo"
-                  accept="image/jpeg, image/jpg, image/png"
-                  @change="changept(this)"
-                  multiple="multiple"
-              /></span>
-            </span> -->
-        <!-- <input
-              multiple="multiple"
-              type="file"
-              name="photo"
-              id="photo"
-              ref="photo"
-              accept="image/jpeg, image/jpg, image/png"
-              @change="changept(this)"
-            /> -->
-        <!-- </el-form-item> -->
+
         <el-form-item label="">
           <el-input
             id="introtextarea"
@@ -61,7 +28,8 @@
             v-model="userintroduce"
             maxlength="1000"
             show-word-limit
-            autosize="true"
+            :autosize="{ minRows: 8, maxRows: 10 }"
+            placeholder="자기소개를 입력해주세요\n안녕하세요 저는 리더십있는 000입니다.\n 저는 다음과 같은 역량을 가지고 있습니다!\n#1 ..."
           ></el-input>
         </el-form-item>
         <div style="float:right">
@@ -109,6 +77,7 @@ export default {
       imageUrl: this.photofilepath,
       userintroduce: this.introduce,
       changeprofile: false,
+      // fileList: [],
       rules: {
         Introduction: [
           {
@@ -127,56 +96,17 @@ export default {
       console.log(file);
       console.log(file.files[0]);
     },
-    handleAvatarSuccess(file) {
-      console.log("success-", file.raw);
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpg";
-      const isPNG = file.type === "image/png";
-      const isJPEG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG && !isPNG && !isJPEG) {
-        this.$message.error("JPG, JPEG, PNG 형식을 올려주세요");
-        return;
+    handleAvatarSuccess(res, file) {
+      if (file != null) {
+        console.log("why?-", file);
+        console.log("file2'-", this.$refs.photo);
+        this.changeprofile = true;
+        this.imageUrl = URL.createObjectURL(file[0].raw);
+      } else {
+        console.log("why null-", file);
       }
-
-      if (!isLt2M) {
-        this.$message.error("Avatar picture size can not exceed 2MB!");
-        return;
-      }
-      // var frm = new FormData();
-      // frm.append("upfile", file.raw);
-      // axios
-      //   .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
-      //     headers: { Authorization: this.token },
-      //     params: {
-      //       index: this.userindex,
-      //     },
-      //   })
-      //   .then((res) => {
-      //     console.log(res);
-      //     this.$emit("uploadintro");
-      //   })
-      //   .catch((err) => {
-      //     this.failed();
-      //     alert("err");
-      //     console.log(err.response);
-      //     if (err.response == 401) {
-      //       this.$message.error("로그인세션이 만료되었습니다");
-      //       localStorage.clear();
-      //       this.$router.push("/");
-      //     }
-      //   });
-      // if (!isPNG) {
-      //   this.$message.error("JPG, JPEG, PNG 형식을 올려주세요");
-      // }
-      // if (!isJPEG) {
-      //   this.$message.error("JPG, JPEG, PNG 형식을 올려주세요");
-      // }
-      // return (isJPG || isPNG || isJPEG) && isLt2M;
     },
+    beforeAvatarUpload() {},
     changept() {
       this.changeprofile = true;
       let photoip = document.getElementById("photo");
@@ -192,16 +122,19 @@ export default {
       console.log(filedata);
     },
     submitForm() {
-      // if (!this.curphoto && !this.changeprofile) {
-      //   this.$message.error("사진을 업로드 해주세요.");
-      //   return;
-      // }
+      console.log("submitform-", this.changeprofile);
+      if (this.curphoto == 2) {
+        this.$message.error("사진을 업로드 해주세요.");
+        return;
+      }
       // 저장하는 방법 찾아보기
       if (this.changeprofile) {
+        let uploadinput = document.getElementsByClassName(
+          "el-upload__input"
+        )[0];
         var frm = new FormData();
-        var photodata = this.$refs.photo.files[0];
-
-        console.log("userindex : ", this.userindex);
+        var photodata = uploadinput.files[0];
+        console.log(photodata);
         // var introducedata = this.$refs[]
         frm.append("upfile", photodata);
         // frm.append("introduce", introduce.value);
@@ -211,10 +144,12 @@ export default {
             headers: { Authorization: this.token },
             params: {
               index: this.userindex,
+              introduce: this.userintroduce,
             },
           })
           .then((res) => {
             console.log(res);
+            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
             this.$emit("uploadintro");
           })
           .catch((err) => {
@@ -226,31 +161,31 @@ export default {
               this.$router.push("/");
             }
           });
-      }
-
-      axios
-        .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
-          headers: { Authorization: this.token },
-          params: {
+      } else {
+        axios
+          .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
+            headers: {
+              Authorization: this.token,
+            },
             ind_index: this.userindex,
             ind_introduce: this.userintroduce,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          <el-alert title="업로드 되었습니다" type="success"></el-alert>;
-          // this.$emit("uploadintro");
-          // this.openFullScreen2();
-        })
-        .catch((err) => {
-          this.failed();
-          if (err.response == 401) {
-            this.$message.error("로그인세션이 만료되었습니다");
-            this.$cookies.remove("PID_AUTH");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
+          })
+          .then((res) => {
+            console.log(res);
+            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            // this.$emit("uploadintro");
+            // this.openFullScreen2();
+          })
+          .catch((err) => {
+            this.failed();
+            if (err.response == 401) {
+              this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -300,8 +235,10 @@ export default {
 }
 .avatar {
   width: 178px;
-  height: 178px;
+  height: 200px;
   display: block;
+  margin: 10px;
+  /* object-fit: cover; */
 }
 /* .box {
   width: 150px;

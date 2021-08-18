@@ -37,7 +37,10 @@
           <el-divider></el-divider>
           <el-row style="margin: 0.3rem">
             <el-col :span="24">
-              <el-checkbox-group v-model="this.selected" @change="handleCheckedChange">
+              <el-checkbox-group
+                v-model="this.selected"
+                @change="handleCheckedChange"
+              >
                 <el-checkbox
                   style="margin:5px"
                   v-for="item in this.taglist"
@@ -64,7 +67,10 @@
               </el-switch
             ></el-col>
             <el-col :span="2"
-              ><el-button type="success" icon="el-icon-search" @click="this.getOriginList"
+              ><el-button
+                type="success"
+                icon="el-icon-search"
+                @click="this.getOriginList"
                 >검색</el-button
               >
             </el-col>
@@ -72,17 +78,19 @@
           <el-divider></el-divider>
         </el-main>
 
-        <div v-if="this.hasSearched" style="margin-top:3%">
-          <el-divider />
-          <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
+        <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
+
+        <div v-infinite-scroll="load" style="overflow:auto; height:500px">
+          <div>
+            <el-row :gutter="20">
+              <el-col :span="6" v-for="item in resultList" :key="item">
+                <UserInfoCard :userindex="item.ind_index" />
+              </el-col>
+            </el-row>
+          </div>
         </div>
-        <el-row :gutter="24">
-          <el-col :span="6" v-for="item in resultList" :key="item">
-            <UserInfoCard :userindex="item.ind_index" />
-          </el-col>
-        </el-row>
-        <el-divider />
       </el-main>
+      <Footer/>
     </el-container>
   </el-container>
 </template>
@@ -93,7 +101,7 @@ import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vu
 import UserInfoCard from "@/components/UserInfo/UserInfoCard.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-//import jwt_decode from "jwt-decode";
+import Footer from "@/components/Footer.vue";
 
 const qs = require("qs");
 var token;
@@ -189,6 +197,7 @@ export default {
     SideBarCompany,
     headerSearchUser,
     UserInfoCard,
+    Footer
   },
   computed: {
     hasResult() {
@@ -258,6 +267,9 @@ export default {
   },
 
   methods: {
+    load() {
+      this.count += 2;
+    },
     getOriginList() {
       this.hasSearched = true;
       this.originlist = [];

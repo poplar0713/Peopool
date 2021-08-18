@@ -51,20 +51,15 @@
         <NotLoginMain />
       </div>
       <div></div>
-      <el-footer></el-footer>
     </el-container>
   </div>
-  <!-- <div style="text-align: center; align-items: center; margin-top: 10px;">
-    <Login />
-    <br />
-    <NotLoginMain />
-  </div> -->
 </template>
 
 <script>
 import Login from "@/components/Account/Login.vue";
 import NotLoginMain from "@/components/MainBasic/NotLoginMain.vue";
 import jwt_decode from "jwt-decode";
+
 export default {
   mounted() {
     if (this.$cookies.get("PID_AUTH")) {
