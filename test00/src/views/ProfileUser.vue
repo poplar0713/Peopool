@@ -10,7 +10,7 @@
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개">
-            <div v-if="userdata.photo_index == ''">
+            <div v-if="userdata.photo_index == 1">
               <SideBarProfileUserIntroduction
                 photofilepath="https://i5d206.p.ssafy.io/file/thumbuser.png"
                 :introduce="userdata.ind_introduce"
@@ -30,7 +30,7 @@
           </el-tab-pane>
 
           <el-tab-pane label="소개영상">
-            <div v-if="userdata.video_index == ''">
+            <div v-if="userdata.video_index == '0'">
               소개영상이 없습니다.
             </div>
             <div v-else>
@@ -46,7 +46,7 @@
           <el-tab-pane label="서류관리">
             <SideBarProfileUserDoc @uploadDoc="reloadDoc" />
 
-            <div v-if="userdata.resume_index == ''" class="fileDoc">
+            <div v-if="userdata.resume_index == '0'" class="fileDoc">
               등록된 이력서 및 포트폴리오가 없습니다.
             </div>
             <div v-else>
