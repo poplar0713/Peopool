@@ -88,10 +88,9 @@ export default {
           this.followings = res.data;
         })
         .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }
@@ -113,6 +112,7 @@ export default {
         .catch((err) => {
           if (err.response.data.status == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }
@@ -135,10 +135,9 @@ export default {
             this.followings.splice(this.followings.indexOf(row), 1);
         })
         .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }

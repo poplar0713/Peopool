@@ -27,7 +27,7 @@
         <div>
           <el-divider content-position="left"
             ><h1>
-              '{{ $route.query.keyword }}'' 키워드를 포함하고 있는 기업
+              '{{ $route.query.keyword }}' 키워드를 포함하고 있는 기업
             </h1></el-divider
           >
           <SearchCompanyRelatedInfo />
