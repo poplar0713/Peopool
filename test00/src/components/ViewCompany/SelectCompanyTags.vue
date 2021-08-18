@@ -3,9 +3,7 @@
     <div class="grid-content bg-purple" style="text-align:center">
       <h3 style="padding-top:10px; margin-bottom:10px">규모</h3>
       <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{
-          tag.list_name
-        }}</el-checkbox>
+        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{ tag.list_name }}</el-checkbox>
       </el-checkbox-group>
     </div>
     <div class="grid-content bg-purple">
@@ -27,134 +25,86 @@
         >
         <el-tab-pane label="금융·은행업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag2"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag2" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="IT·정보통신업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag3"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag3" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="판매·유통업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag4"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag4" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="제조·생산·화학업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag5"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag5" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="교육업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag6"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag6" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="건설업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag7"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag7" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="의료·제약업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag8"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag8" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="미디어·광고업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag9"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag9" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="문화·예술·디자인업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag10"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag10" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="기관·협회"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox
-              style="margin:10px"
-              v-for="tag in tag11"
-              :label="tag"
-              :key="tag"
-              >{{ tag.list_name }}</el-checkbox
-            >
+            <el-checkbox style="margin:10px" v-for="tag in tag11" :label="tag" :key="tag">{{
+              tag.list_name
+            }}</el-checkbox>
           </el-checkbox-group></el-tab-pane
         >
       </el-tabs>
     </div>
   </div>
   <div style="text-align:center">
-    <el-button
-      round
-      plain
-      style="margin-top:10px; width:100px"
-      @click="search()"
-      >검색</el-button
-    >
+    <el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button>
   </div>
   <div v-if="this.selected_tags.length == 0" style="text-align:center">
     <h3>태그를 선택해주세요</h3>
   </div>
   <div style="text-align:center">
     <h3>
-      <span v-for="tag in selected_tags" :key="tag" style="margin:5px"
-        >#{{ tag.list_name }}</span
-      >
+      <span v-for="tag in selected_tags" :key="tag" style="margin:5px">#{{ tag.list_name }}</span>
     </h3>
   </div>
   <br />
@@ -209,7 +159,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -275,23 +225,39 @@ export default {
       }
       console.log(indexlist);
       const qs = require("qs");
-      axios
-        .get("https://i5d206.p.ssafy.io:8443/cla/case", {
-          headers: { Authorization: this.token },
-          params: {
-            list: indexlist,
-          },
-          paramsSerializer: (params) => {
-            return qs.stringify(params, { arrayFormat: "repeat" });
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          this.selected_list = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+      if (indexlist.length <= 0) {
+        axios
+          .get("https://i5d206.p.ssafy.io:8443/poe", {
+            headers: { Authorization: this.token },
+          })
+          .then((res) => {
+            console.log(res.data);
+            this.selected_list = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .get("https://i5d206.p.ssafy.io:8443/cla/case", {
+            headers: { Authorization: this.token },
+            params: {
+              list: indexlist,
+            },
+            paramsSerializer: (params) => {
+              return qs.stringify(params, { arrayFormat: "repeat" });
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            this.selected_list = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
       setTimeout(() => {
         loading.close();
         this.searchresult = true;
