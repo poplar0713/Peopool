@@ -72,12 +72,16 @@
           <el-divider></el-divider>
         </el-main>
 
-        <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
+        <div v-if="this.hasSearched" style="margin-top:3%">
+          <el-divider />
+          <h3>검색 결과 (상세 정보를 보려면 클릭하세요)</h3>
+        </div>
         <el-row :gutter="24">
           <el-col :span="6" v-for="item in resultList" :key="item">
             <UserInfoCard :userindex="item.ind_index" />
           </el-col>
         </el-row>
+        <el-divider />
       </el-main>
     </el-container>
   </el-container>
@@ -255,6 +259,7 @@ export default {
 
   methods: {
     getOriginList() {
+      this.hasSearched = true;
       this.originlist = [];
       console.log(this.isUnion);
 
