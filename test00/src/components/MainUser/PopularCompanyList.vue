@@ -1,6 +1,6 @@
 <template>
-  <div style="width:70%; margin:0 auto">
-    <el-carousel :interval="2000" type="card" height="200px">
+  <div style="width:60%; margin:0 auto">
+    <el-carousel :interval="2000" type="card" height="250px">
       <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
         Rank #{{ i + 1 }}
         <el-card
@@ -8,14 +8,19 @@
           style="text-align:center; background-color:#F4F4EF; height:110%;"
           @click="(dialogVisible = true), getcompanydata(item.ent_index)"
         >
-          <el-row>
+          <div style="margin-bottom:60px">
+            <!-- <el-row>
             <el-col :span="8">
               {{ item.ent_image }}
             </el-col>
             <el-col :span="16">
               <h1>{{ item.ent_name }}</h1>
             </el-col>
-          </el-row>
+          </el-row> -->
+          </div>
+          <div id="carouselname">
+            <h1>{{ item.ent_name }}</h1>
+          </div>
         </el-card>
       </el-carousel-item>
     </el-carousel>
@@ -84,7 +89,6 @@
               :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
               @click="GetTagCompany(item.list_name)"
             >
@@ -278,4 +282,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@font-face {
+  font-family: "SDSamliphopangche_Basic";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+#carouselname {
+  font-family: "SDSamliphopangche_Basic";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 50px;
+}
+</style>

@@ -52,7 +52,7 @@ export default {
       result.value = res.data;
       console.log(res);
       initData();
-    })();
+    });
     //
     console.log(result);
     //

@@ -27,6 +27,7 @@
           <SearchCompanyRelatedInfo />
         </div>
       </el-main>
+       <Footer/>
     </el-container>
   </el-container>
 </template>
@@ -38,6 +39,7 @@ import SearchCompanyList from "@/components/search/SearchCompanyList.vue";
 import SearchCompanyTagList from "@/components/search/SearchCompanyTagList.vue";
 import SearchCompanyRelatedTags from "@/components/search/SearchCompanyRelatedTags.vue";
 import SearchCompanyRelatedInfo from "@/components/search/SearchCompanyRelatedInfo.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "SearchCompany",
@@ -48,6 +50,7 @@ export default {
     SearchCompanyTagList,
     SearchCompanyRelatedTags,
     SearchCompanyRelatedInfo,
+    Footer
   },
 };
 </script>

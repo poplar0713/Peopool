@@ -56,7 +56,7 @@
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
       </el-main>
-      <el-footer> </el-footer>
+      <Footer/>
     </el-container>
     <router-view></router-view>
   </el-container>
@@ -74,6 +74,8 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
+import Footer from "@/components/Footer.vue";
+
 // 'https://i5d206.p.ssafy.io' -->사진 및 확인
 export default {
   name: "ProfileUser",
@@ -87,6 +89,7 @@ export default {
     SideBarProfileUserDoc,
     DeleteUserAccount,
     webviewer,
+    Footer
   },
   async created() {
     await this.userdataload();

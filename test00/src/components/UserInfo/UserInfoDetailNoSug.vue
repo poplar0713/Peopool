@@ -29,7 +29,10 @@
             <el-col :span="12"
               ><div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+                  <img
+                    :src="this.userdata.photofilepath"
+                    style="width:100%; heigth: auto"
+                  />
                 </span>
                 <span v-else>
                   <img :src="this.nonImage" style="width:100%; heigth: auto" />
@@ -37,7 +40,11 @@
             ></el-col>
             <el-col :span="8"
               ><span>
-                <h4>성명 : {{ this.userdata.ind_name }}({{ this.userdata.ind_gender }})</h4>
+                <h4>
+                  성명 : {{ this.userdata.ind_name }}({{
+                    this.userdata.ind_gender
+                  }})
+                </h4>
                 <h4>직무 : {{ this.userdata.cat_name }}</h4>
                 <h4>경력 : {{ this.userdata.car_value }}</h4>
               </span></el-col
@@ -68,7 +75,11 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
+        <el-button
+          v-if="this.follow"
+          round
+          type="danger"
+          @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"

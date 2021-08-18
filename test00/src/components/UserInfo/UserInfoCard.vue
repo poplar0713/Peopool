@@ -8,9 +8,14 @@
       <el-col :span="8">
         <div>
           <span v-if="this.userdata.photo_index">
-            <img :src="this.userdata.photofilepath" style="width:100%; heigth:auto" />
+            <img
+              :src="this.userdata.photofilepath"
+              style="width:100%; heigth:auto"
+            />
           </span>
-          <span v-else> <img :src="this.nonImage" style="width:100%; heigth:auto" /> </span>
+          <span v-else>
+            <img :src="this.nonImage" style="width:100%; heigth:auto" />
+          </span>
         </div>
       </el-col>
       <el-col :span="2"></el-col>
@@ -48,7 +53,10 @@
             <el-col :span="12">
               <div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+                  <img
+                    :src="this.userdata.photofilepath"
+                    style="width:100%; heigth: auto"
+                  />
                 </span>
                 <span v-else>
                   <img :src="this.nonImage" style="width:100%; heigth: auto" />
@@ -58,7 +66,11 @@
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
+                <h4>
+                  직무 : {{ this.userdata.cat_name }} ({{
+                    this.userdata.car_value
+                  }})
+                </h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -74,7 +86,10 @@
             등록된 이력서 및 포트폴리오가 없습니다.
           </div>
           <div v-else>
-            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+            <webviewer
+              v-if="userdata.resumefilepath"
+              :initialDoc="userdata.resumefilepath"
+            />
           </div>
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
@@ -95,7 +110,11 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
+        <el-button
+          v-if="this.follow"
+          round
+          type="danger"
+          @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
@@ -164,7 +183,10 @@
       ></el-input>
     </div>
     <div style="text-align:center; margin: 4%">
-      <el-button @click="(dialogVisible = false), interviewrequest()" type="success" :plain="true"
+      <el-button
+        @click="(dialogVisible = false), interviewrequest()"
+        type="success"
+        :plain="true"
         >요청 보내기</el-button
       >
     </div>
