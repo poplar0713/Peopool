@@ -1,4 +1,5 @@
 <template>
+<div style="width:70%; margin:0 auto">
   <el-carousel :interval="2000" type="card" height="200px">
     <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
       Rank #{{ i + 1 }}
@@ -18,6 +19,7 @@
       </el-card>
     </el-carousel-item>
   </el-carousel>
+  </div>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
     <el-container style="text-align:center">
@@ -270,4 +272,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>
