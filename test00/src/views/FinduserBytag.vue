@@ -271,6 +271,7 @@ export default {
       this.count += 2;
     },
     getOriginList() {
+      this.hasSearched = true;
       this.originlist = [];
       console.log(this.isUnion);
 
