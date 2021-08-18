@@ -28,10 +28,10 @@
           <el-row>
             <el-col :span="12"
               ><div>
-                <span v-if="this.userdata.photo_index == '-'">
-                  <el-image :src="this.nonImage"
-                /></span>
-                <span v-else> <el-image :src="this.userdata.photofilepath" /> </span></div
+                <span v-if="this.userdata.photo_index">
+                  <img :src="this.userdata.photofilepath" />
+                </span>
+                <span v-else> <img :src="this.nonImage" /> </span></div
             ></el-col>
             <el-col :span="8"
               ><span>
@@ -51,16 +51,26 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="이력서">
-          <webviewer :initialDoc="userdata.resumefilepath" />
+          <div v-if="userdata.resume_index">
+            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+          </div>
+          <div v-else>
+            <h3>해당 회원은 아직 이력서를 올리지 않았습니다.</h3>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
-          <video
-            :src="userdata.videofilepath"
-            height="360"
-            width="640"
-            controls=""
-            style="width: 100%; height: 100%;"
-          ></video>
+          <div v-if="userdata.video_index">
+            <video
+              :src="userdata.videofilepath"
+              height="360"
+              width="640"
+              controls=""
+              style="width: 100%; height: 100%;"
+            ></video>
+          </div>
+          <div v-else>
+            <h3>해당 회원은 아직 PR 영상을 올리지 않았습니다.</h3>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -194,6 +204,7 @@ export default {
         { sug_timetwo: "string" },
         { sug_message: "string" },
       ],
+      nonImage: "https://i5d206.p.ssafy.io/file/thumbuser.png",
     };
   },
 
@@ -210,28 +221,36 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        var result = res.data[0];
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].photo_savefolder +
+          "/" +
+          res.data[0].photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].resume_savefolder +
+          "/" +
+          res.data[0].resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
-        this.userdata.resume_originfile = result.resume_originfile;
-        this.userdata.photo_originfile = result.photo_originfile;
-        this.userdata.video_originfile = result.video_originfile;
-        this.userdata.ind_switch = result.ind_switch;
-        this.userdata.ind_introduce = result.ind_introduce;
-        this.userdata.photo_index = result.photo_index;
-        this.userdata.resume_index = result.resume_index;
-        this.userdata.video_index = result.resume_index;
-        this.userdata.ind_index = result.ind_index;
-        this.userdata.ind_name = result.ind_name;
-        this.userdata.ind_email = result.ind_email;
-        this.userdata.ind_phone = result.ind_phone;
-        this.userdata.ind_gender = result.ind_gender;
-        this.userdata.cat_name = result.cat_name;
-        this.userdata.car_value = result.car_value;
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].video_savefolder +
+          "/" +
+          res.data[0].video_savefile;
+        this.userdata.resume_originfile = res.data[0].resume_originfile;
+        this.userdata.photo_originfile = res.data[0].photo_originfile;
+        this.userdata.video_originfile = res.data[0].video_originfile;
+        this.userdata.ind_switch = res.data[0].ind_switch;
+        this.userdata.ind_introduce = res.data[0].ind_introduce;
+        this.userdata.photo_index = res.data[0].photo_index;
+        this.userdata.resume_index = res.data[0].resume_index;
+        this.userdata.video_index = res.data[0].resume_index;
+        this.userdata.ind_index = res.data[0].ind_index;
+        this.userdata.ind_name = res.data[0].ind_name;
+        this.userdata.ind_email = res.data[0].ind_email;
+        this.userdata.ind_phone = res.data[0].ind_phone;
+        this.userdata.ind_gender = res.data[0].ind_gender;
+        this.userdata.cat_name = res.data[0].cat_name;
+        this.userdata.car_value = res.data[0].car_value;
       });
 
     axios
