@@ -29,7 +29,10 @@
             <el-col :span="12"
               ><div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+                  <img
+                    :src="this.userdata.photofilepath"
+                    style="width:100%; heigth: auto"
+                  />
                 </span>
                 <span v-else>
                   <img :src="this.nonImage" style="width:100%; heigth: auto" />
@@ -139,7 +142,7 @@ export default {
     // 팔로우했는지 체크해보기
 
     axios
-      .get(`https://i5d206.p.ssafy.io/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {

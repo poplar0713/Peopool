@@ -219,7 +219,7 @@ export default {
     // 팔로우했는지 체크해보기
 
     axios
-      .get(`https://i5d206.p.ssafy.io/poi/${this.userindex}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
