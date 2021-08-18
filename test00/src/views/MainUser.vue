@@ -7,7 +7,7 @@
       <el-main>
         <h1>인기있는 기업 랭킹</h1>
         <PopularCompanyList />
-        <br>
+        <br />
         <el-row :gutter="20">
           <el-col
             :span="12"
@@ -82,6 +82,7 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    // const name = decoded.name;
     console.log("타입확인");
     console.log(decoded.type);
     // 회원정보 가져오기
