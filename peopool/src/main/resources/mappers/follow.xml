@@ -14,6 +14,16 @@
 		where follower = #{follower} and following = #{following} and fol_type=#{fol_type}
 	</delete>
 	
+	<delete id="deleteFollower" parameterType="Follow">
+		delete from follow 
+		where follower = #{follower} and fol_type=#{fol_type}
+	</delete>
+	
+	<delete id="deleteFollowing" parameterType="Follow">
+		delete from follow 
+		where following = #{following} and fol_type=#{fol_type}
+	</delete>
+	
 	<select id="getFollowingCount" parameterType="String" resultType="int">
 		select count(*) 
 		from follow 

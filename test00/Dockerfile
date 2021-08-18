@@ -15,3 +15,6 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage ./test00/dist /usr/share/nginx/html/homepage
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+RUN apk add --no-cache tzdata
+ENV TZ=Asia/Seoul

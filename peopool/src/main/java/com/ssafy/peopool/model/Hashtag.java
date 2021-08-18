@@ -6,9 +6,6 @@ public class Hashtag {
 	int tag_target;
 	int taglist_index;
 
-	public Hashtag() {
-	}
-
 	public int getTag_index() {
 		return tag_index;
 	}

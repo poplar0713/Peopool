@@ -12,7 +12,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
-  name:"DeleteCompanyAccount",
+  name: "DeleteCompanyAccount",
   data() {
     return {};
   },
@@ -34,6 +34,7 @@ export default {
           localStorage.clear();
           setTimeout(() => {
             localStorage.clear();
+            this.$cookies.remove("PID_AUTH");
             this.$message({
               message: "PeoPool을 사랑해주셔서 감사합니다",
               type: "success",
@@ -50,6 +51,7 @@ export default {
           });
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }

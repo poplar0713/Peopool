@@ -32,6 +32,49 @@
 		
 	</select>
 	
+	<select id="userTagIntersection" parameterType="List" resultType="HashMap">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, p.car_index, car_value, cat_name, ind_resume, ind_video, ind_photo, ind_introduce
+		from individual i 
+		join hashtag h 
+		on i.ind_index = h.tag_target
+		join ind_profile p
+		on i.ind_index = p.ind_index
+		join user_main_category c
+		on p.cat_index = c.cat_index
+		join ind_career r
+		on p.car_index = r.car_index
+		where i.ind_index in (select tag_target
+						from hashtag
+						where taglist_index in
+						<foreach collection="list" item="item" open="(" close=")" separator=",">
+						#{item}
+						</foreach>
+						group by tag_target
+						having count(*) = #{count})
+		and ind_switch ='T'
+		group by i.ind_index;
+						
+	</select>
+	
+	<select id="userTagUnion" parameterType="List" resultType="HashMap">
+		select i.ind_index, ind_name, ind_gender, ind_phone, ind_email, p.car_index, car_value, cat_name, ind_resume, ind_video, ind_photo, ind_introduce
+		from individual i 
+		join hashtag h 
+		on i.ind_index = h.tag_target
+		join ind_profile p
+		on i.ind_index = p.ind_index
+		join user_main_category c
+		on p.cat_index = c.cat_index
+		join ind_career r
+		on p.car_index = r.car_index
+		where h.taglist_index in
+		<foreach collection="list" item='item' separator="," open="(" close=")">
+			#{item}
+		</foreach>
+		and ind_switch = 'T'
+		group by i.ind_index;
+	</select>
+	
 	<select id="countByTag" resultType="HashMap">
 		select taglist_name, count(*) cnt
 		from hashtag h left outer join taglist t 
@@ -47,6 +90,11 @@
 	<delete id="deleteHashtag" parameterType="int">
 		delete from hashtag 
 		where tag_index = #{index}
+	</delete>
+	
+	<delete id="deleteWithdraw" parameterType="int">
+		delete from hashtag
+		where tag_target=#{index}
 	</delete>
 	
 </mapper>

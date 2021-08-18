@@ -14,6 +14,9 @@ public interface ProfileOfIndividualService {
 	
 	// 프로필 수정
 	boolean modifyProfile(ProfileOfIndividual profileOfIndividual);
+	
+	// 자기소개 수정
+	boolean modifyIntro(ProfileOfIndividual profileOfIndividual);
 
 	// 프로필 공개
 	boolean modifySwitchOn(ProfileOfIndividual profileOfIndividual);
@@ -44,6 +47,15 @@ public interface ProfileOfIndividualService {
 	
 	//인덱스로 가져오기
 	IndCard getIndexOfProfile(int index);
+
+	// 인덱스로 직무 번호 변경
+	boolean modifyPart(ProfileOfIndividual profileOfIndividual);
+
+	// 인덱스로 경력과 직무 가져오기
+	IndCard getIndexOfCareerAndPart(int index);
+
+	//인덱스로 경력 번호 변경
+	boolean modifyCareer(ProfileOfIndividual profileOfIndividual);
 	
 
 }

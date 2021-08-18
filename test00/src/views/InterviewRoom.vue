@@ -1,6 +1,6 @@
 <template>
   <el-container class="base">
-    <el-header class="titleBox">
+    <el-header class="titleBox" style="margin-top:30px">
       <div class="title">
         <div>
           <span class="f">P</span>
@@ -122,37 +122,43 @@
                 </el-input>
               </div>
             </el-popover>
-            <el-button
+            <!-- <el-button
               round
               id="button-setting"
               @click="this.dialogVisible = true"
               value="Setting"
               >설정</el-button
+            > -->
+
+            <el-popconfirm
+              confirmButtonText="OK"
+              @confirm="leaveRoom"
+              cancelButtonText="No, Thanks"
+              icon="el-icon-info"
+              iconColor="red"
+              title="면접장을 나가시겠습니까?"
             >
-            <el-button
-              round
-              type="danger"
-              id="button-leave"
-              @click="exitDiaVisible = true"
-            >
-              X</el-button
-            >
+              <!-- @click="exitDiaVisible = true" -->
+              <template #reference>
+                <el-button round type="danger" id="button-leave"> X</el-button>
+              </template>
+            </el-popconfirm>
           </el-button-group>
         </el-footer>
       </el-container>
     </el-container>
   </el-container>
 
-  <el-dialog
+  <!-- <el-dialog
     v-model="this.dialogVisible"
     style="width: 100%; height:100%"
     title="설정"
     :before-close="handleClose"
   >
     설정을 할 수 있는 곳이 될 것
-  </el-dialog>
+  </el-dialog> -->
 
-  <el-dialog v-model="exitDiaVisible" width="30%">
+  <!-- <el-dialog v-model="exitDiaVisible" width="30%">
     <span>면접장에서 나가시겠습니까?</span>
     <template #footer>
       <span class="dialog-footer">
@@ -160,12 +166,13 @@
         <el-button type="danger" @click="leaveRoom">퇴장하기</el-button>
       </span>
     </template>
-  </el-dialog>
+  </el-dialog> -->
 </template>
 <script>
 import BeforeMeeting from "./beforeMettingRoom.vue";
 import kurentoUtils from "kurento-utils";
 import adapter from "webrtc-adapter";
+import jwt_decode from "jwt-decode";
 // import wsocket from "@/components/utils/websocket.js";
 //const PARTICIPANT_MAIN_CLASS = "participant main";
 //const PARTICIPANT_CLASS = "participant";
@@ -210,9 +217,12 @@ export default {
     BeforeMeeting,
   },
   created() {
-    this.username = localStorage.getItem("username");
-    const token = this.getCookie("PID_AUTH");
-    if (!this.username && (token == null || token == "")) {
+    if (localStorage.getItem("username") != null) {
+      this.username = localStorage.getItem("username");
+    }
+
+    const token = this.$cookies.get("PID_AUTH");
+    if (token == null || token == "") {
       this.noncookie = true;
     }
   },
@@ -274,15 +284,10 @@ export default {
         this.readchat = false;
       }
     },
-
-    getCookie(name) {
-      var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-      console.log(value);
-      return value ? value[2] : null;
-    },
     noncookieuser(name) {
       this.noncookieusername = name;
       this.username = this.noncookieusername;
+      console.log(this.username);
     },
     visiblechat() {
       var s = document.getElementById("chatdiv");
@@ -305,21 +310,17 @@ export default {
       this.chattext = "";
     },
     register() {
-      document.getElementById("join").style.display = "none";
-      document.getElementById("room").style.display = "block";
-      this.username = localStorage.getItem("username");
-
       var message;
-      this.options = true;
 
       if (this.noncookie) {
-        if (
-          this.noncookieusername.replace(" ", "") == "" ||
-          this.noncookieusername == null
-        ) {
+        let user = this.noncookieusername.replace(" ", "");
+        if (user == "" || this.noncookieusername == null) {
           this.$message.error("사용자 이름을 입력해주세요.");
           return;
         } else {
+          document.getElementById("join").style.display = "none";
+          document.getElementById("room").style.display = "block";
+          this.options = true;
           message = {
             id: "joinRoom",
             name: this.noncookieusername,
@@ -328,6 +329,10 @@ export default {
           this.sendMessage(message);
         }
       } else {
+        this.username = localStorage.getItem("username");
+        document.getElementById("join").style.display = "none";
+        document.getElementById("room").style.display = "block";
+        this.options = true;
         message = {
           id: "joinRoom",
           name: this.username,
@@ -405,13 +410,55 @@ export default {
         participants[key].dispose();
       }
 
-      document.getElementById("join").style.display = "block";
-      document.getElementById("room").style.display = "none";
-      document.getElementById("chatdivtop").style.display = "none";
+      // document.getElementById("join").style.display = "block";
+      // document.getElementById("room").style.display = "none";
+      // document.getElementById("chatdivtop").style.display = "none";
       this.exitDiaVisible = false;
       this.options = false;
+      // 로그인, 비로그인에 따라 화면push
+      if (this.$cookies.get("PID_AUTH")) {
+        console.log(1);
+        const token = this.$cookies.get("PID_AUTH");
+        const decoded = jwt_decode(token);
+        const type = decoded.type;
+        if (type == 0) {
+          const loading = this.$loading({
+            lock: true,
+            text: "Loading",
+            spinner: "el-icon-loading",
+            background: "rgba(0, 0, 0, 0.7)",
+          });
+          setTimeout(() => {
+            loading.close();
+            this.$router.push("/user");
+          }, 1000);
+        }
+        if (type == 1) {
+          const loading = this.$loading({
+            lock: true,
+            text: "Loading",
+            spinner: "el-icon-loading",
+            background: "rgba(0, 0, 0, 0.7)",
+          });
+          setTimeout(() => {
+            loading.close();
+            this.$router.push("/company");
+          }, 1000);
+        }
+      } else {
+        const loading = this.$loading({
+          lock: true,
+          text: "Loading",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)",
+        });
+        setTimeout(() => {
+          loading.close();
+          this.$router.push("/");
+        }, 1000);
+      }
     },
-
+    //
     receiveVideo(sender) {
       var participant = new this.Participant(sender, this.sendMessage);
       participants[sender] = participant;
@@ -544,22 +591,22 @@ export default {
         this.videoOn = true;
       }
     },
-    handleClose(done) {
-      this.$confirm("설정을 완료 하시겠습니까?")
-        .then(() => {
-          done();
-          this.dialogVisible = false;
-        })
-        .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
-          if (err.response == 401) {
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
-    },
+    // handleClose(done) {
+    //   this.$confirm("설정을 완료 하시겠습니까?")
+    //     .then(() => {
+    //       done();
+    //       this.dialogVisible = false;
+    //     })
+    //     .catch((err) => {
+    //       console.log("token error");
+    //       console.log(err.response);
+    //       if (err.response == 401) {
+    //         this.$message.error("로그인세션이 만료되었습니다");
+    //         localStorage.clear();
+    //         this.$router.push("/");
+    //       }
+    //     });
+    // },
   },
 };
 </script>

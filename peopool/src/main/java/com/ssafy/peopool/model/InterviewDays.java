@@ -38,6 +38,4 @@ public class InterviewDays implements Comparable<InterviewDays> {
 	public int compareTo(InterviewDays o) {
 		return this.date.compareTo(o.date);
 	}
-	
-	
 }

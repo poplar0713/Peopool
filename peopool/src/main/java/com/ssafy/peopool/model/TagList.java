@@ -3,8 +3,14 @@ package com.ssafy.peopool.model;
 public class TagList {
 	int taglist_index;
 	String taglist_name;
+	int cat_index;
 
-	public TagList() {
+	public int getCat_index() {
+		return cat_index;
+	}
+
+	public void setCat_index(int cat_index) {
+		this.cat_index = cat_index;
 	}
 
 	public int getTaglist_index() {

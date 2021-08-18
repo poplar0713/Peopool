@@ -10,6 +10,10 @@ public class ProfileOfIndividual {
 	String ind_switch; // On-Off 스위치
 	String ind_introduce; // 회원 자기소개
 	List<FileInfo> fileInfos; // 파일정보
+	int cat_index; // 직무 인덱스
+	int car_index; // 경력 인덱스
+	String cat_name; // 직무 정보
+	String car_value; // 경력 정보
 
 	public ProfileOfIndividual() {
 	}
@@ -64,6 +68,38 @@ public class ProfileOfIndividual {
 
 	public List<FileInfo> getFileInfos() {
 		return fileInfos;
+	}
+
+	public int getCat_index() {
+		return cat_index;
+	}
+
+	public void setCat_index(int cat_index) {
+		this.cat_index = cat_index;
+	}
+
+	public int getCar_index() {
+		return car_index;
+	}
+
+	public void setCar_index(int car_index) {
+		this.car_index = car_index;
+	}
+
+	public String getCat_name() {
+		return cat_name;
+	}
+
+	public void setCat_name(String cat_name) {
+		this.cat_name = cat_name;
+	}
+
+	public String getCar_value() {
+		return car_value;
+	}
+
+	public void setCar_value(String car_value) {
+		this.car_value = car_value;
 	}
 
 	public void setFileInfos(List<FileInfo> fileInfos) {
