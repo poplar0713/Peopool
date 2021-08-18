@@ -49,7 +49,7 @@ public class EchoHandler extends TextWebSocketHandler {
 			log.info("---map add :{}",tmp[lastindex]);
 			users.put(tmp[lastindex], session); // 로그인중 개별유저 저장
 			JsonObject response = new JsonObject();
-			response.addProperty("connect", tmp[lastindex]);
+			response.addProperty("new", tmp[lastindex]);
 			
 			synchronized(session) {
 				session.sendMessage(new TextMessage(response.toString()));
