@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -65,6 +66,13 @@ public class ProfileOfEnterpriseController {
 	@GetMapping("/index/{index}")
 	public ResponseEntity<EntCard> getProfileOfEnterprise(@PathVariable("index")int index) throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getProfileOfEnterprise(index), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "index에 해당하는 프로필과 파일 경로를 가져온다.", response = String.class)
+	@GetMapping("/path/{index}")
+	public ResponseEntity<List<Map<Object, Object>>> getProfile(@PathVariable("index")int index) throws SQLException{
+		return new ResponseEntity<>(profileOfEnterpriseService.getProfile(index), HttpStatus.OK);
 		
 	}
 	

@@ -88,7 +88,15 @@ public class InterviewController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-		
+	}
+	
+	@ApiOperation(value = "면접 취소", response = String.class)
+	@PutMapping("/cancle")
+	public ResponseEntity<String> cancleInterview(@RequestBody Interview interview) throws SQLException{
+		if(interviewService.cancleInterview(interview)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 	@ApiOperation(value = "기업의 모든 면접 일정 조회", response = String.class)

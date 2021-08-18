@@ -58,9 +58,10 @@ public class AuthController {
 		
 		Individual ind = individualService.getUserId(userId);
 		int index = ind.getInd_index();
+		String name = ind.getInd_name();
 		
 		if(passwordEncoder.matches(password, ind.getInd_password())) {
-			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index)));
+			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index, 0, name)));
 		}
 		return ResponseEntity.status(401).body(LoginRes.of(401, "Invalid Password", null));
 	}
@@ -80,9 +81,10 @@ public class AuthController {
 		
 		Enterprise ent = enterpriseService.getUserId(userId);
 		int index = ent.getEnt_index();
+		String name = ent.getEnt_name();
 		
 		if(passwordEncoder.matches(password, ent.getEnt_password())) {
-			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index)));
+			return ResponseEntity.ok(LoginRes.of(200, "Success", JwtTokenUtil.getToken(userId, index, 1, name)));
 		}
 		return ResponseEntity.status(401).body(LoginRes.of(401, "Invalid Password", null));
 	}

@@ -11,7 +11,19 @@ public class IndCard {
 	String ind_photo; // 회원 사진
 	String ind_switch; // On-Off 스위치
 	String ind_introduce; // 회원 자기소개
+	String cat_name; // 회원 직무
+	String car_value; // 회원 경력
+	int cat_index; // 직무 인덱스
+	int car_index; // 경력 인덱스
 	
+	public String getCat_name() {
+		return cat_name;
+	}
+
+	public void setCat_name(String cat_name) {
+		this.cat_name = cat_name;
+	}
+
 	public IndCard() {
 		
 	}
@@ -94,6 +106,32 @@ public class IndCard {
 
 	public void setInd_introduce(String ind_introduce) {
 		this.ind_introduce = ind_introduce;
+	}
+	
+	
+
+	public String getCar_value() {
+		return car_value;
+	}
+
+	public void setCar_value(String car_value) {
+		this.car_value = car_value;
+	}
+
+	public int getCat_index() {
+		return cat_index;
+	}
+
+	public void setCat_index(int cat_index) {
+		this.cat_index = cat_index;
+	}
+
+	public int getCar_index() {
+		return car_index;
+	}
+
+	public void setCar_index(int car_index) {
+		this.car_index = car_index;
 	}
 
 	@Override

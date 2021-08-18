@@ -38,6 +38,12 @@ public class InterviewServiceImpl implements InterviewService{
 	}
 
 	@Override
+	public boolean cancleInterview(Interview interview) throws SQLException {
+		// TODO Auto-generated method stub
+		return interviewRepo.finishInterview(interview) == 1;
+	}
+
+	@Override
 	public List<IntCard> getLastInterviews(int index) throws SQLException {
 		// TODO Auto-generated method stub
 		return interviewRepo.getLastInterviews(index);

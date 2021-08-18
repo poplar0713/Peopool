@@ -217,9 +217,12 @@ export default {
     BeforeMeeting,
   },
   created() {
-    this.username = localStorage.getItem("username");
-    const token = this.getCookie("PID_AUTH");
-    if (!this.username && (token == null || token == "")) {
+    if (localStorage.getItem("username") != null) {
+      this.username = localStorage.getItem("username");
+    }
+
+    const token = this.$cookies.get("PID_AUTH");
+    if (token == null || token == "") {
       this.noncookie = true;
     }
   },
@@ -281,15 +284,10 @@ export default {
         this.readchat = false;
       }
     },
-
-    getCookie(name) {
-      var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-      console.log(value);
-      return value ? value[2] : null;
-    },
     noncookieuser(name) {
       this.noncookieusername = name;
       this.username = this.noncookieusername;
+      console.log(this.username);
     },
     visiblechat() {
       var s = document.getElementById("chatdiv");
@@ -312,21 +310,17 @@ export default {
       this.chattext = "";
     },
     register() {
-      document.getElementById("join").style.display = "none";
-      document.getElementById("room").style.display = "block";
-      this.username = localStorage.getItem("username");
-
       var message;
-      this.options = true;
 
       if (this.noncookie) {
-        if (
-          this.noncookieusername.replace(" ", "") == "" ||
-          this.noncookieusername == null
-        ) {
+        let user = this.noncookieusername.replace(" ", "");
+        if (user == "" || this.noncookieusername == null) {
           this.$message.error("사용자 이름을 입력해주세요.");
           return;
         } else {
+          document.getElementById("join").style.display = "none";
+          document.getElementById("room").style.display = "block";
+          this.options = true;
           message = {
             id: "joinRoom",
             name: this.noncookieusername,
@@ -335,6 +329,10 @@ export default {
           this.sendMessage(message);
         }
       } else {
+        this.username = localStorage.getItem("username");
+        document.getElementById("join").style.display = "none";
+        document.getElementById("room").style.display = "block";
+        this.options = true;
         message = {
           id: "joinRoom",
           name: this.username,
