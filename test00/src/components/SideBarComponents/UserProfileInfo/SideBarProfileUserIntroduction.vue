@@ -11,14 +11,23 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
+        <el-upload
+          class="avatar-uploader"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
         <el-form
           :rules="rules"
           v-on:submit.prevent
           enctype="multipart/form-data"
           ref="ruleForm"
         >
-          <el-form-item label="" prop="photointro">
-            <span class="filetype">
+          <!-- <el-form-item label="" prop="photointro"> -->
+          <!-- <span class="filetype">
               <span class="file-text"></span>
               <span class="file-btn">찾아보기</span>
               <span class="file-select"
@@ -33,8 +42,8 @@
                   @change="changept(this)"
                   multiple="multiple"
               /></span>
-            </span>
-            <!-- <input
+            </span> -->
+          <!-- <input
               multiple="multiple"
               type="file"
               name="photo"
@@ -43,7 +52,7 @@
               accept="image/jpeg, image/jpg, image/png"
               @change="changept(this)"
             /> -->
-          </el-form-item>
+          <!-- </el-form-item> -->
           <el-form-item label="">
             <el-input
               id="introtextarea"
@@ -96,6 +105,7 @@ export default {
     return {
       loading: false,
       userindex: "",
+      imageUrl: "",
       userintroduce: this.introduce,
       changeprofile: false,
       rules: {
@@ -111,6 +121,21 @@ export default {
     };
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("Avatar picture must be JPG format!");
+      }
+      if (!isLt2M) {
+        this.$message.error("Avatar picture size can not exceed 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
     changept() {
       this.changeprofile = true;
       let photoip = document.getElementById("photo");
@@ -126,10 +151,10 @@ export default {
       console.log(filedata);
     },
     submitForm() {
-      if (!this.curphoto && !this.changeprofile) {
-        this.$message.error("사진을 업로드 해주세요.");
-        return;
-      }
+      // if (!this.curphoto && !this.changeprofile) {
+      //   this.$message.error("사진을 업로드 해주세요.");
+      //   return;
+      // }
       // 저장하는 방법 찾아보기
       if (this.changeprofile) {
         var frm = new FormData();
@@ -215,6 +240,29 @@ export default {
 </script>
 
 <style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 /* .box {
   width: 150px;
   height: 150px;
