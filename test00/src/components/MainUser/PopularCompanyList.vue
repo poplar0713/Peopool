@@ -1,6 +1,6 @@
 <template>
-  <div style="width:70%; margin:0 auto">
-    <el-carousel :interval="2000" type="card" height="200px">
+  <div style="width:60%; margin:0 auto">
+    <el-carousel :interval="2000" type="card" height="250px">
       <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
         Rank #{{ i + 1 }}
         <el-card
@@ -8,14 +8,19 @@
           style="text-align:center; background-color:#F4F4EF; height:110%;"
           @click="(dialogVisible = true), getcompanydata(item.ent_index)"
         >
-          <el-row>
+          <div style="margin-bottom:60px">
+            <!-- <el-row>
             <el-col :span="8">
               {{ item.ent_image }}
             </el-col>
             <el-col :span="16">
               <h1>{{ item.ent_name }}</h1>
             </el-col>
-          </el-row>
+          </el-row> -->
+          </div>
+          <div id="carouselname">
+            <h1>{{ item.ent_name }}</h1>
+          </div>
         </el-card>
       </el-carousel-item>
     </el-carousel>
@@ -52,11 +57,16 @@
             <el-container>
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
-                ><el-image
-                  style="width: 300px; height: 300px"
-                  :src="ent_img"
-                ></el-image
-              ></el-aside>
+                ><div v-if="this.company_info.ent_image">
+                  <img
+                    style="width: 100%; height: auto"
+                    :src="this.company_info.ent_image_path"
+                  />
+                </div>
+                <div v-else>
+                  <img style="width: 100%; height: auto" :src="this.nonImage" />
+                </div>
+              </el-aside>
               <!--  -->
               <el-main>
                 <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
@@ -83,7 +93,6 @@
               :key="item.list_index"
               :type="warning"
               effect="plain"
-              closable
               :disable-transitions="true"
               @click="GetTagCompany(item.list_name)"
             >
@@ -174,31 +183,32 @@ export default {
         });
       // 기업정보 가져오기
       axios
-        .get(`https://i5d206.p.ssafy.io:8443/poe/index/${companyindex}`, {
+        .get(`https://i5d206.p.ssafy.io:8443/poe/path/${companyindex}`, {
           headers: { Authorization: this.token },
         })
         .then((res) => {
-          this.company_info.ent_index = res.data.ent_index;
-          this.company_info.ent_name = res.data.ent_name;
-          this.company_info.ent_image = res.data.ent_image;
-          this.company_info.ent_contact = res.data.ent_contact;
-          this.company_info.ent_address = res.data.ent_address;
-          this.company_info.ent_email = res.data.ent_email;
-          this.company_info.ent_history = res.data.ent_history;
-          this.company_info.ent_website = res.data.ent_website;
-          this.company_info.ent_introduce = res.data.ent_introduce;
-          this.company_info.ent_ceo = res.data.ent_ceo;
+          console.log(res.data);
+          this.company_info.ent_index = res.data[0].ent_index;
+          this.company_info.ent_name = res.data[0].ent_name;
+          this.company_info.ent_contact = res.data[0].ent_contact;
+          this.company_info.ent_address = res.data[0].ent_address;
+          this.company_info.ent_email = res.data[0].ent_email;
+          this.company_info.ent_history = res.data[0].ent_history;
+          this.company_info.ent_website = res.data[0].ent_website;
+          this.company_info.ent_introduce = res.data[0].ent_introduce;
+          this.company_info.ent_ceo = res.data[0].ent_ceo;
+          this.company_info.ent_image = res.data[0].ent_image;
           this.company_info.ent_image_path =
             "https://i5d206.p.ssafy.io/file/" +
-            this.res.data.image_savefolder +
+            res.data[0].image_savefolder +
             "/" +
-            this.res.data.image_savefile;
+            res.data[0].image_savefile;
         })
         .catch((err) => {
           console.log(err.response);
           if (err.response == 401) {
-            this.$cookies.remove("PID_AUTH");
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }
@@ -279,4 +289,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@font-face {
+  font-family: "SDSamliphopangche_Basic";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+#carouselname {
+  font-family: "SDSamliphopangche_Basic";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 50px;
+}
+</style>
