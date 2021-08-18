@@ -238,21 +238,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
-          res.data[0].photo_savefolder +
-          "/" +
-          res.data[0].photo_savefile;
-        this.userdata.resumefilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
-          res.data[0].resume_savefolder +
-          "/" +
-          res.data[0].resume_savefile;
-        this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io:8443/file/" +
-          res.data[0].video_savefolder +
-          "/" +
-          res.data[0].video_savefile;
         this.userdata.resume_originfile = res.data[0].resume_originfile;
         this.userdata.photo_originfile = res.data[0].photo_originfile;
         this.userdata.video_originfile = res.data[0].video_originfile;
@@ -268,6 +253,21 @@ export default {
         this.userdata.ind_gender = res.data[0].ind_gender;
         this.userdata.cat_name = res.data[0].cat_name;
         this.userdata.car_value = res.data[0].car_value;
+        this.userdata.photofilepath =
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].photo_savefolder +
+          "/" +
+          res.data[0].photo_savefile;
+        this.userdata.resumefilepath =
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].resume_savefolder +
+          "/" +
+          res.data[0].resume_savefile;
+        this.userdata.videofilepath =
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].video_savefolder +
+          "/" +
+          res.data[0].video_savefile;
       });
 
     axios
