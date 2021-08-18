@@ -95,15 +95,15 @@ public class EchoHandler extends TextWebSocketHandler {
 	}
 
 	// 연결 해제될 때
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		String senderId = getMemberId(session);
-		if (senderId != null) { // 로그인 값이 있는 경우만
-			log(senderId + " 연결 종료됨");
-			users.remove(senderId);
-//			sessions.remove(session);
-		}
-	}
+//	@Override
+//	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+//		String senderId = getMemberId(session);
+//		if (senderId != null) { // 로그인 값이 있는 경우만
+//			log(senderId + " 연결 종료됨");
+//			users.remove(senderId);
+////			sessions.remove(session);
+//		}
+//	}
 
 	// 에러 발생시
 	@Override
