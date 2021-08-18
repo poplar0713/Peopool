@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:80%;"
+    style="width: 70%;"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
@@ -9,11 +9,7 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
-        <div
-          v-if="ruleForm.ent_image == ''"
-          class="box"
-          style="background: #BDBDBD;"
-        >
+        <div v-if="ruleForm.ent_image == ''" class="box" style="background: #BDBDBD;">
           <img
             class="cprofile"
             id="cprofilephoto"
@@ -113,8 +109,7 @@ export default {
         console.log("company info res- ", res);
         console.log("company info - ", result);
         this.ruleForm.ent_index = result.ent_index;
-        this.ruleForm.ent_image =
-          "/file/" + result.image_savefolder + "/" + result.image_savefile;
+        this.ruleForm.ent_image = "/file/" + result.image_savefolder + "/" + result.image_savefile;
         this.ruleForm.ent_ceo = result.ent_ceo;
         this.ruleForm.ent_history = result.ent_history;
         this.ruleForm.ent_address = result.ent_address;
@@ -249,13 +244,9 @@ export default {
         var photodata = this.$refs.companyprofile.files[0];
         frm.append("upfile", photodata);
         axios
-          .post(
-            `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
-            frm,
-            {
-              headers: { Authorization: this.token },
-            }
-          )
+          .post(`https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`, frm, {
+            headers: { Authorization: this.token },
+          })
           .then((res) => {
             console.log("cphoto: ", res);
             document.getElementsByClassName("file-text")[0].innerHTML = "";
@@ -266,6 +257,22 @@ export default {
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          var frm = new FormData();
+          var photodata = this.$refs.companyprofile.files[0];
+          if (this.changeprofile) {
+            frm.append("upfile", photodata);
+            axios
+              .post(`https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`, frm, {
+                headers: { Authorization: this.token },
+              })
+              .then((res) => {
+                console.log("cphoto: ", res);
+              })
+              .catch((err) => {
+                console.log("cerr: ", err);
+              });
+          }
+
           // 기업정보수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/poe", {

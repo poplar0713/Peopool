@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.result.length > 0">
-    <el-row :gutter="24">
-      <el-col :span="6" v-for="item in nowPageData" :key="item">
+    <el-row :gutter="24" style="align-items:center">
+      <el-col :span="4" v-for="item in nowPageData" :key="item">
         <CompanyInfoCard :companyindex="item.ent_index" />
       </el-col>
     </el-row>

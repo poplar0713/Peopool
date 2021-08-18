@@ -11,25 +11,16 @@
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="500"
   >
-    <el-table-column
-      align="center"
-      label="Date"
-      prop="int_start"
-      sortable
-      width="160%"
-    >
+    <el-table-column align="center" label="Date" prop="int_start" sortable width="160%">
     </el-table-column>
-    <el-table-column align="center" label="기업명" prop="ent_name">
-    </el-table-column>
+    <el-table-column align="center" label="기업명" prop="ent_name"> </el-table-column>
     <el-table-column align="center" label="면접장" prop="int_duty">
       <template #default="scope">
         <el-button
           v-if="scope.row.int_show == 'W'"
           size="mini"
           type="danger"
-          @click="
-            GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)
-          "
+          @click="GoToInteriewRoom(scope.row.ent_name, scope.row.int_roomnumber)"
           >Interview Room</el-button
         >
         <el-text v-else size="mini" disabled>인터뷰가 종료되었습니다</el-text>

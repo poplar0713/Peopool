@@ -1,13 +1,11 @@
 <template>
-  <el-container class="mainLayout">
+  <el-container style="text-align">
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
         <div>
-          <el-divider content-position="left"
-            ><h1>연관태그</h1></el-divider
-          >
+          <el-divider content-position="left"><h1>연관태그</h1></el-divider>
           <SearchCompanyRelatedTags />
         </div>
         <div>
@@ -18,17 +16,13 @@
         </div>
         <div>
           <el-divider content-position="left"
-            ><h1>
-              #{{ $route.query.keyword }} 태그에 해당하는 기업
-            </h1></el-divider
+            ><h1>#{{ $route.query.keyword }} 태그에 해당하는 기업</h1></el-divider
           >
           <SearchCompanyTagList />
         </div>
         <div>
           <el-divider content-position="left"
-            ><h1>
-              '{{ $route.query.keyword }}'' 키워드를 포함하고 있는 기업
-            </h1></el-divider
+            ><h1>'{{ $route.query.keyword }}'' 키워드를 포함하고 있는 기업</h1></el-divider
           >
           <SearchCompanyRelatedInfo />
         </div>
