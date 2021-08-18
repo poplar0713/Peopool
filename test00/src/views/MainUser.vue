@@ -41,7 +41,7 @@ import axios from "axios";
 import server_url from "@/server.js";
 // import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
 // import wsocket from "@/components/utils/websocket.js";
-
+//기존 소켓
 let wsmain = null;
 export default {
   name: "MainUser",
