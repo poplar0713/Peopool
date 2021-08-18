@@ -25,6 +25,7 @@ import com.ssafy.peopool.model.Follow;
 import com.ssafy.peopool.model.Individual;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 import com.ssafy.peopool.model.service.FollowService;
+import com.ssafy.peopool.model.service.HashtagService;
 //import com.ssafy.api.request.UserLoginPostReq;
 //import com.ssafy.api.request.UserRegiserIdGetReq;
 //import com.ssafy.api.request.UserRegisterPostReq;
@@ -62,6 +63,9 @@ public class IndividualController {
 	
 	@Autowired
 	FollowService followService;
+	
+	@Autowired
+	HashtagService hashtagService;
 	
 	@ApiOperation(value = "개인 회원 전체 조회", response = String.class)
 	@GetMapping()
@@ -106,6 +110,8 @@ public class IndividualController {
 		follow.setFol_type(1);
 		follow.setFollower(index);
 		followService.deleteFollower(follow);
+		
+		hashtagService.deleteWithdraw(index);
 		
 		if(individualService.deleteIndividual(index)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
