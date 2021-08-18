@@ -1,31 +1,31 @@
 <template>
-<div style="width:70%; margin:0 auto">
-  <el-carousel :interval="2000" type="card" height="200px">
-    <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
-      Rank #{{ i + 1 }}
-      <el-card
-        shadow="hover"
-        style="text-align:center; background-color:#F4F4EF; height:110%;"
-        @click="(dialogVisible = true), getcompanydata(item.ent_index)"
-      >
-        <el-row>
-          <el-col :span="8">
-            {{ item.ent_image }}
-          </el-col>
-          <el-col :span="16">
-            <h1>{{ item.ent_name }}</h1>
-          </el-col>
-        </el-row>
-      </el-card>
-    </el-carousel-item>
-  </el-carousel>
+  <div style="width:70%; margin:0 auto">
+    <el-carousel :interval="2000" type="card" height="200px">
+      <el-carousel-item v-for="(item, i) in popularlist.slice(0, 10)" :key="i">
+        Rank #{{ i + 1 }}
+        <el-card
+          shadow="hover"
+          style="text-align:center; background-color:#F4F4EF; height:110%;"
+          @click="(dialogVisible = true), getcompanydata(item.ent_index)"
+        >
+          <el-row>
+            <el-col :span="8">
+              {{ item.ent_image }}
+            </el-col>
+            <el-col :span="16">
+              <h1>{{ item.ent_name }}</h1>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-carousel-item>
+    </el-carousel>
   </div>
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
     <el-container style="text-align:center">
       <el-header>
         <h2>
-          {{ this.company_info.ent_name }}&nbsp;&nbsp;
+          {{ this.datacompany.ent_name }}&nbsp;&nbsp;
           <!-- 팔로우일경우 -->
           <span v-if="follow" style="color: Tomato;">
             <i
@@ -37,7 +37,11 @@
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
-            <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
+            <i
+              @click="clickfollowBtn"
+              class="far fa-heart fa-2x"
+              style="cursor:pointer"
+            ></i>
           </span>
         </h2>
       </el-header>
@@ -48,21 +52,25 @@
             <el-container>
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
-                ><el-image style="width: 300px; height: 300px" :src="ent_img"></el-image
-              ></el-aside>
+                ><img
+                  style="width: 300px; height: 300px"
+                  v-if="filepath"
+                  :src="filepath"
+              /></el-aside>
+
               <!--  -->
               <el-main>
-                <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
-                {{ this.company_info.ent_info }}
+                <h4>기업 대표 : {{ this.datacompany.ent_ceo }}</h4>
+                {{ this.datacompany.ent_info }}
                 <br />
-                {{ this.company_info.ent_introduce }}</el-main
+                {{ this.datacompany.ent_introduce }}</el-main
               >
             </el-container>
           </div>
         </el-collapse-item>
         <el-collapse-item title="역사" name="2">
           <div>
-            {{ this.company_info.ent_history }}
+            {{ this.datacompany.ent_history }}
           </div>
         </el-collapse-item>
         <el-collapse-item title="태그" name="3">
@@ -88,10 +96,10 @@
           </div>
         </el-collapse-item>
         <el-collapse-item title="연락처 및 찾아오는주소" name="4">
-          <div>Tel. {{ this.company_info.ent_contact }}</div>
-          <div>email. {{ this.company_info.ent_email }}</div>
-          <div>address. {{ this.company_info.ent_address }}</div>
-          <div>website. {{ this.company_info.ent_website }}</div>
+          <div>Tel. {{ this.datacompany.ent_contact }}</div>
+          <div>email. {{ this.datacompany.ent_email }}</div>
+          <div>address. {{ this.datacompany.ent_address }}</div>
+          <div>website. {{ this.datacompany.ent_website }}</div>
         </el-collapse-item>
       </el-collapse>
     </el-container>
@@ -131,12 +139,40 @@ export default {
         ent_address: "",
         ent_website: "",
         ent_introduce: null,
-        ent_image_path: "",
+        entfilepath: null,
       },
-      nonImage: "https://i5d206.p.ssafy.io/file/nonphoCom.png",
+      datacompany: {},
+      filepath: "",
     };
   },
   methods: {
+    async companyasync(companyindex) {
+      try {
+        let res = await axios.get(
+          `https://i5d206.p.ssafy.io:8443/poe/path/${companyindex}`,
+          {
+            headers: { Authorization: this.token },
+          }
+        );
+
+        this.datacompany = await res.data[0];
+        console.log("wwhhyyss?-", this.datacompany[0]);
+
+        this.filepath =
+          "https://i5d206.p.ssafy.io/file/" +
+          this.datacompany.image_savefolder +
+          "/" +
+          this.datacompany.image_savefile;
+      } catch (err) {
+        console.log(err);
+        if (err.response == 401) {
+          console.log("token error");
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      }
+    },
     getcompanydata(companyindex) {
       // 팔로우했는지 체크해보기
       axios
@@ -160,42 +196,12 @@ export default {
           console.log(err);
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
-            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }
         });
       // 기업정보 가져오기
-      axios
-        .get(`https://i5d206.p.ssafy.io:8443/poe/index/${companyindex}`, {
-          headers: { Authorization: this.token },
-        })
-        .then((res) => {
-          this.company_info.ent_index = res.data.ent_index;
-          this.company_info.ent_name = res.data.ent_name;
-          this.company_info.ent_image = res.data.ent_image;
-          this.company_info.ent_contact = res.data.ent_contact;
-          this.company_info.ent_address = res.data.ent_address;
-          this.company_info.ent_email = res.data.ent_email;
-          this.company_info.ent_history = res.data.ent_history;
-          this.company_info.ent_website = res.data.ent_website;
-          this.company_info.ent_introduce = res.data.ent_introduce;
-          this.company_info.ent_ceo = res.data.ent_ceo;
-          this.company_info.ent_image_path =
-            "https://i5d206.p.ssafy.io/file/" +
-            this.res.data.image_savefolder +
-            "/" +
-            this.res.data.image_savefile;
-        })
-        .catch((err) => {
-          console.log(err.response);
-          if (err.response == 401) {
-            this.$cookies.remove("PID_AUTH");
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
+      this.companyasync(companyindex);
       // 기업본인 태그목록 불러오기
       axios
         .get("https://i5d206.p.ssafy.io:8443/cla/list", {
@@ -210,8 +216,8 @@ export default {
         })
         .catch((err) => {
           if (err.response == 401) {
+            console.log("token error");
             this.$message.error("로그인세션이 만료되었습니다");
-            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }
@@ -236,10 +242,10 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
+            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
-              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -258,9 +264,9 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
+            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
-              this.$cookies.remove("PID_AUTH");
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -272,6 +278,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
