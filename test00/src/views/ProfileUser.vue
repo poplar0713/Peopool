@@ -12,7 +12,7 @@
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개">
-            <div v-if="userdata.photo_index == '2'">
+            <div v-if="userdata.photo_index == 1">
               <SideBarProfileUserIntroduction
                 photofilepath="https://i5d206.p.ssafy.io/file/thumbuser.png"
                 :introduce="userdata.ind_introduce"
@@ -204,7 +204,7 @@ export default {
             headers: { Authorization: token },
           }
         );
-        var result = res.data[0];
+        var result = res.data;
         this.userdata.photofilepath =
           "https://i5d206.p.ssafy.io/file/" +
           result.photo_savefolder +

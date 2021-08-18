@@ -1,8 +1,8 @@
 <template>
   <div style="width:80%">
-    <div>
+    <!-- <div>
       <img :src="photofilepath" height="150" width="150" />
-    </div>
+    </div> -->
     <el-scrollbar>
       <div
         style="width:100%;"
@@ -14,20 +14,21 @@
         <el-upload
           class="avatar-uploader"
           :show-file-list="false"
-          :on-success="handleAvatarSuccess"
+          :on-change="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" id="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-form
+        <!-- <input type="file" @change="filecheck" id="checkinput" /> -->
+        <!-- <el-form
           :rules="rules"
           v-on:submit.prevent
           enctype="multipart/form-data"
           ref="ruleForm"
-        >
-          <!-- <el-form-item label="" prop="photointro"> -->
-          <!-- <span class="filetype">
+        > -->
+        <!-- <el-form-item label="" prop="photointro"> -->
+        <!-- <span class="filetype">
               <span class="file-text"></span>
               <span class="file-btn">찾아보기</span>
               <span class="file-select"
@@ -43,7 +44,7 @@
                   multiple="multiple"
               /></span>
             </span> -->
-          <!-- <input
+        <!-- <input
               multiple="multiple"
               type="file"
               name="photo"
@@ -52,28 +53,28 @@
               accept="image/jpeg, image/jpg, image/png"
               @change="changept(this)"
             /> -->
-          <!-- </el-form-item> -->
-          <el-form-item label="">
-            <el-input
-              id="introtextarea"
-              type="textarea"
-              v-model="userintroduce"
-              maxlength="1000"
-              show-word-limit
-              autosize="true"
-            ></el-input>
+        <!-- </el-form-item> -->
+        <el-form-item label="">
+          <el-input
+            id="introtextarea"
+            type="textarea"
+            v-model="userintroduce"
+            maxlength="1000"
+            show-word-limit
+            autosize="true"
+          ></el-input>
+        </el-form-item>
+        <div style="float:right">
+          <el-form-item>
+            <el-button
+              type="warning"
+              @click="submitForm('ruleForm')"
+              v-loading.fullscreen.lock="fullscreenLoading"
+              >Save</el-button
+            >
           </el-form-item>
-          <div style="float:right">
-            <el-form-item>
-              <el-button
-                type="warning"
-                @click="submitForm('ruleForm')"
-                v-loading.fullscreen.lock="fullscreenLoading"
-                >Save</el-button
-              >
-            </el-form-item>
-          </div>
-        </el-form>
+        </div>
+        <!-- </el-form> -->
       </div>
     </el-scrollbar>
   </div>
@@ -105,7 +106,7 @@ export default {
     return {
       loading: false,
       userindex: "",
-      imageUrl: "",
+      imageUrl: this.photofilepath,
       userintroduce: this.introduce,
       changeprofile: false,
       rules: {
@@ -121,20 +122,60 @@ export default {
     };
   },
   methods: {
-    handleAvatarSuccess(res, file) {
+    filecheck() {
+      let file = document.getElementById("checkinput");
+      console.log(file);
+      console.log(file.files[0]);
+    },
+    handleAvatarSuccess(file) {
+      console.log("success-", file.raw);
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      const isJPG = file.type === "image/jpg";
+      const isPNG = file.type === "image/png";
+      const isJPEG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error("Avatar picture must be JPG format!");
+      if (!isJPG && !isPNG && !isJPEG) {
+        this.$message.error("JPG, JPEG, PNG 형식을 올려주세요");
+        return;
       }
+
       if (!isLt2M) {
         this.$message.error("Avatar picture size can not exceed 2MB!");
+        return;
       }
-      return isJPG && isLt2M;
+      // var frm = new FormData();
+      // frm.append("upfile", file.raw);
+      // axios
+      //   .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
+      //     headers: { Authorization: this.token },
+      //     params: {
+      //       index: this.userindex,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //     this.$emit("uploadintro");
+      //   })
+      //   .catch((err) => {
+      //     this.failed();
+      //     alert("err");
+      //     console.log(err.response);
+      //     if (err.response == 401) {
+      //       this.$message.error("로그인세션이 만료되었습니다");
+      //       localStorage.clear();
+      //       this.$router.push("/");
+      //     }
+      //   });
+      // if (!isPNG) {
+      //   this.$message.error("JPG, JPEG, PNG 형식을 올려주세요");
+      // }
+      // if (!isJPEG) {
+      //   this.$message.error("JPG, JPEG, PNG 형식을 올려주세요");
+      // }
+      // return (isJPG || isPNG || isJPEG) && isLt2M;
     },
     changept() {
       this.changeprofile = true;
