@@ -32,6 +32,7 @@
         <router-link
           :to="{
             name: 'recruiting',
+            params: { companyindex: companyindex },
           }"
           style="text-decoration: none; color:black"
         >
@@ -42,7 +43,10 @@
         >
         <!--  -->
         <el-menu-item index="3" @click="goToTagSearch"
-          ><el-svg-icon> <list /> </el-svg-icon><span>인재 찾기</span>
+          ><span
+            ><i class="far fa-address-card" style="margin-right:10px"></i>인재
+            찾기</span
+          >
         </el-menu-item>
         <el-menu-item index="4">
           <i class="el-icon-right"></i>
@@ -55,15 +59,7 @@
           <i class="el-icon-back"></i>
           <span><CompanyFollowers /></span>
         </el-menu-item>
-        <el-menu-item index="6" @click="GoToRecruit">
-          <i class="el-icon-star-on"></i>
-          <span>Recruitment</span>
-        </el-menu-item>
         <el-menu-item index="7">
-          <i class="el-icon-setting"></i>
-          <span>setting</span>
-        </el-menu-item>
-        <el-menu-item index="8">
           <i class="el-icon-turn-off"></i>
           <span @click="Logout">Logout</span>
         </el-menu-item>

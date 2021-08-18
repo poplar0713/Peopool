@@ -21,6 +21,8 @@ public interface InterviewService {
 	List<IntCard> getELastInterviews(int index) throws SQLException; // 기업의 지난 면접 조회
 	
 	boolean finishInterview(Interview interview) throws SQLException; // 면접 종료
+	
+	boolean cancleInterview(Interview interview) throws SQLException; // 면접 취소
 
 	boolean isInterview(Interview interview) throws SQLException; // 면접 노쇼
 

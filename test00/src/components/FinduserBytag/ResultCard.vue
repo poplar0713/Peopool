@@ -1,5 +1,5 @@
 <template>
-  <div
+  <!-- <div
     class="nameCard"
     :class="[isHover ? 'backside' : 'frontside']"
     @click="this.dialogVisible = true"
@@ -14,87 +14,45 @@
       </el-col>
       <el-col :span="14">
         <div>
-          <h3>{{ this.user.ind_name }}</h3>
+          <h3>{{ this.userdata.ind_name }}</h3>
         </div>
         <div>
-          <h3>직무 : {{ this.user.cat_name }}</h3>
+          <h3>직무 : {{ this.userdata.cat_name }}</h3>
         </div>
         <div>
-          <h3>[{{ this.user.car_value }}]</h3>
+          <h3>[{{ this.userdata.car_value }}]</h3>
         </div>
       </el-col>
     </el-row>
-  </div>
+  </div> -->
+  <el-card
+    shadow="hover"
+    style="margin-bottom:20px; text-align:center"
+    @click="dialogVisible = true"
+  >
+    <el-row>
+      <el-col :span="12">
+        <div>
+          <img
+            :src="userdata.photofilepath"
+            style="max-width: 100%; height: auto;"
+          />
+        </div>
+      </el-col>
+      <el-divider direction="vertical"></el-divider>
+      <el-col :span="12">
+        <div>
+          <p>{{ this.userdata.ind_name }}</p>
+          <p>{{ this.userdata.cat_name }}</p>
+          <p>{{ this.userdata.car_value }}</p>
+        </div>
+      </el-col>
+    </el-row>
+  </el-card>
 
   <el-dialog center v-model="dialogVisible" width="60%">
-    <template>
-      <el-dialog
-        width="40%"
-        v-model="innerVisible"
-        append-to-body
-        style="padding: 2%; text-align:center;"
-      >
-        <h2>면접 제안하기</h2>
-        <div style="text-align:center; width:30%; margin: 0 auto;">
-          <h3>1. 직군 입력</h3>
-          <el-input
-            v-model="this.reservationdata.sug_duty"
-            placeholder="채용직군을 입력해주세요"
-          ></el-input>
-        </div>
-        <el-divider></el-divider>
-        <div div style="text-align:center;">
-          <h3>2. 제안할 면접일 선택</h3>
-          <span style="text-align:center; margin:10px">
-            <el-date-picker
-              value-format="YYYY-MM-DD HH:mm:ss"
-              v-model="this.reservationdata.sug_timeone"
-              type="datetime"
-              placeholder="면접 일정 후보 1"
-            >
-            </el-date-picker>
-          </span>
-          <span style="text-align:center; margin:5px">
-            <el-date-picker
-              value-format="YYYY-MM-DD HH:mm:ss"
-              v-model="this.reservationdata.sug_timetwo"
-              type="datetime"
-              placeholder="면접 일정 후보 2"
-            >
-            </el-date-picker>
-          </span>
-          <span style="text-align:center; margin:10px">
-            <el-date-picker
-              value-format="YYYY-MM-DD HH:mm:ss"
-              v-model="reservationdata.sug_timethree"
-              type="datetime"
-              placeholder="면접 일정 후보 3"
-            >
-            </el-date-picker>
-          </span>
-        </div>
-        <el-divider></el-divider>
-        <div style="text-align: center; margin: 3%">
-          <h3>3. 메세지 입력</h3>
-          <el-input
-            type="textarea"
-            :rows="3"
-            v-model="reservationdata.sug_message"
-            placeholder="전하고 싶은 메시지를 입력해주세요"
-          ></el-input>
-        </div>
-        <div style="text-align:center; margin: 4%">
-          <el-button
-            @click="(dialogVisible = false), interviewrequest()"
-            type="success"
-            :plain="true"
-            >요청 보내기</el-button
-          >
-        </div>
-      </el-dialog>
-    </template>
     <div style="text-align: center; font-size: 1.3rem; margin-bottom: 1rem">
-      <span>{{ this.user.ind_name }}님의 프로필</span>
+      <span>{{ this.userdata.ind_name }}님의 프로필</span>
       <span> </span>
     </div>
     <div style="text-align:center; margin-bottom: 2rem">
@@ -103,6 +61,7 @@
         v-for="item in this.ind_taglist"
         v-bind:key="item"
         style="margin-right: 0.5rem"
+        @click="GetTagUser(item.taglist_name)"
         >{{ item.taglist_name }}</el-tag
       >
     </div>
@@ -115,8 +74,12 @@
             ></el-col>
             <el-col :span="8"
               ><span>
-                <h4>성명 : {{ this.user.ind_name }}</h4>
-                <h4>직무 : {{ this.user.cat_name }} ({{ this.user.car_value }})</h4>
+                <h4>성명 : {{ this.userdata.ind_name }}</h4>
+                <h4>
+                  직무 : {{ this.userdata.cat_name }} ({{
+                    this.userdata.car_value
+                  }})
+                </h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -125,7 +88,7 @@
           <div>{{ this.userdata.ind_introduce }}</div>
         </el-tab-pane>
         <el-tab-pane label="이력서">
-          <webviewer :initialDoc="user.resumefilepath" />
+          <webviewer :initialDoc="userdata.resumefilepath" />
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
           <video
@@ -140,20 +103,97 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" type="danger" @click="clickfollowBtn">팔로우 해제</el-button>
-        <el-button v-else type="danger" @click="clickfollowBtn">팔로우</el-button>
-        <el-button type="success" @click="this.innerVisible = true">면접 제안</el-button>
+        <el-button
+          v-if="this.follow"
+          plain
+          round
+          type="danger"
+          @click="clickfollowBtn"
+          >팔로우 해제</el-button
+        >
+        <el-button v-else type="danger" plain round @click="clickfollowBtn"
+          >팔로우</el-button
+        >
+        <el-button type="success" plain round @click="this.innerVisible = true"
+          >면접 제안</el-button
+        >
       </span>
     </template>
+  </el-dialog>
+  <!-- 면접제안하는부분 -->
+  <el-dialog
+    width="40%"
+    v-model="innerVisible"
+    append-to-body
+    style="padding: 2%; text-align:center;"
+  >
+    <h2>면접 제안하기</h2>
+    <div style="text-align:center; width:30%; margin: 0 auto;">
+      <h3>1. 직군 입력</h3>
+      <el-input
+        v-model="this.reservationdata.sug_duty"
+        placeholder="채용직군을 입력해주세요"
+      ></el-input>
+    </div>
+    <el-divider></el-divider>
+    <div div style="text-align:center;">
+      <h3>2. 제안할 면접일 선택</h3>
+      <span style="text-align:center; margin:10px">
+        <el-date-picker
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="this.reservationdata.sug_timeone"
+          type="datetime"
+          placeholder="면접 일정 후보 1"
+        >
+        </el-date-picker>
+      </span>
+      <span style="text-align:center; margin:5px">
+        <el-date-picker
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="this.reservationdata.sug_timetwo"
+          type="datetime"
+          placeholder="면접 일정 후보 2"
+        >
+        </el-date-picker>
+      </span>
+      <span style="text-align:center; margin:10px">
+        <el-date-picker
+          value-format="YYYY-MM-DD HH:mm:ss"
+          v-model="reservationdata.sug_timethree"
+          type="datetime"
+          placeholder="면접 일정 후보 3"
+        >
+        </el-date-picker>
+      </span>
+    </div>
+    <el-divider></el-divider>
+    <div style="text-align: center; margin: 3%">
+      <h3>3. 메세지 입력</h3>
+      <el-input
+        type="textarea"
+        :rows="3"
+        v-model="reservationdata.sug_message"
+        placeholder="전하고 싶은 메시지를 입력해주세요"
+      ></el-input>
+    </div>
+    <div style="text-align:center; margin: 4%">
+      <el-button
+        @click="(dialogVisible = false), interviewrequest()"
+        type="success"
+        :plain="true"
+        >요청 보내기</el-button
+      >
+    </div>
   </el-dialog>
 </template>
 
 <script>
 import axios from "axios";
 import webviewer from "@/components/MainCompany/webviewer.vue";
-var token;
+import jwt_decode from "jwt-decode";
+
 export default {
-  props: ["user", "ent_ind"],
+  props: ["userindex"],
   components: {
     webviewer,
   },
@@ -164,7 +204,27 @@ export default {
       ind_taglist: [],
       isHover: false,
       follow: "",
-      userdata: Object,
+      companyindex: "",
+      userdata: [
+        { ind_name: "" },
+        { ind_gender: "" },
+        { ind_phone: "" },
+        { ind_email: "" },
+        { photofilepath: "" },
+        { resume_originfile: "" },
+        { photo_index: "" },
+        { resume_index: "" },
+        { video_index: "" },
+        { ind_index: 0 },
+        { video_originfile: "" },
+        { videofilepath: "" },
+        { photo_originfile: "" },
+        { resumefilepath: "" },
+        { ind_switch: "" },
+        { ind_introduce: "" },
+        { cat_name: "" },
+        { car_value: "" },
+      ],
       reservationdata: [
         { ent_index: 0 },
         { ind_index: 0 },
@@ -182,10 +242,15 @@ export default {
   },
 
   mounted() {
-    token = this.$cookies.get("PID_AUTH");
+    // 토큰가져오기
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    this.companyindex = index;
+    // 팔로우했는지 체크해보기
 
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.user.ind_index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -199,18 +264,26 @@ export default {
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
+        this.userdata.ind_switch = result.ind_switch;
         this.userdata.ind_introduce = result.ind_introduce;
         this.userdata.photo_index = result.photo_index;
         this.userdata.resume_index = result.resume_index;
         this.userdata.video_index = result.resume_index;
+        this.userdata.ind_index = result.ind_index;
+        this.userdata.ind_name = result.ind_name;
+        this.userdata.ind_email = result.ind_email;
+        this.userdata.ind_phone = result.ind_phone;
+        this.userdata.ind_gender = result.ind_gender;
+        this.userdata.cat_name = result.cat_name;
+        this.userdata.car_value = result.car_value;
       });
 
     axios
       .post("https://i5d206.p.ssafy.io:8443/fol/check", {
         headers: { Authorization: token },
         fol_type: 1,
-        follower: this.user.ind_index,
-        following: this.ent_ind,
+        follower: this.userindex,
+        following: this.companyindex,
       })
 
       .then((res) => {
@@ -221,22 +294,12 @@ export default {
         if (res.status == 204) {
           this.follow = false;
         }
-      })
-      .catch((err) => {
-        // 팔로우가 안되어있는것
-        console.log(err);
-
-        if (err.response == 401) {
-          this.$message.error("로그인세션이 만료되었습니다");
-          localStorage.clear();
-          this.$router.push("/");
-        }
       });
 
     axios
       .get("https://i5d206.p.ssafy.io:8443/has/tag", {
         params: {
-          index: this.user.ind_index,
+          index: this.userindex,
           type: 0,
         },
       })
@@ -267,8 +330,8 @@ export default {
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             data: {
               fol_type: 1,
-              following: this.ent_index,
-              follower: this.user.ind_index,
+              following: this.companyindex,
+              follower: this.userindex,
             },
             headers: { Authorization: this.token },
           })
@@ -291,8 +354,8 @@ export default {
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.token },
             fol_type: 1,
-            following: this.ent_index,
-            follower: this.user.ind_index,
+            following: this.companyindex,
+            follower: this.userindex,
           })
           .then((res) => {
             console.log(res);
@@ -314,8 +377,8 @@ export default {
       axios
         .post("https://i5d206.p.ssafy.io:8443/sug", {
           headers: { Authorization: this.token },
-          ent_index: this.ent_ind,
-          ind_index: this.user.ind_index,
+          ent_index: this.companyindex,
+          ind_index: this.userindex,
           sug_duty: this.reservationdata.sug_duty,
           sug_timeone: this.reservationdata.sug_timeone,
           sug_timetwo: this.reservationdata.sug_timetwo,
@@ -341,6 +404,25 @@ export default {
         });
 
       this.innerVisible = false;
+    },
+    // 해당 태그의 기업들 검색으로
+    GetTagUser(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchUser",
+          query: { keyword: `${keyword}` },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };

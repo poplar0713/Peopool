@@ -12,7 +12,7 @@
 	
 	<select id="getInterviews" parameterType="int" resultType="IntCard">
 		select a.*,b.ind_name
-		from (select int_index, ind_index, e.ent_index, int_start, int_roomnumber, e.ent_name, int_duty
+		from (select int_index, ind_index, e.ent_index, int_start, int_roomnumber, e.ent_name, int_duty, int_show
 		from interview join enterprise e
 		on interview.ent_index = e.ent_index
 		where ind_index= #{index} and int_start > now()) a join individual b on a.ind_index = b.ind_index;
@@ -28,7 +28,7 @@
 	
 	<select id="getEInterviews" parameterType="int" resultType="IntCard">
 		select j.*, e.ent_name
-		from (select int_index, i.ind_index, ent_index, int_start, int_roomnumber, i.ind_name, int_duty
+		from (select int_index, i.ind_index, ent_index, int_start, int_roomnumber, i.ind_name, int_duty, int_show
 				from interview 
 					join individual i 
 					on 
@@ -53,13 +53,19 @@
 	
 	<update id="finishInterview" parameterType="Interview">
 		update interview
-		set int_end=#{int_end}
+		set int_end= now(), int_show= 'T'
 		where int_index=#{int_index}
 	</update>
 	
 	<update id="isInterview" parameterType="Interview">
 		update interview
-		set int_show=#{int_show}
+		set int_end= now(), int_show= 'F'
+		where int_index=#{int_index}
+	</update>
+	
+	<update id="cancleInterview" parameterType="Interview">
+		update interview
+		set int_end = now(), int_show= 'C'
 		where int_index=#{int_index}
 	</update>
 	

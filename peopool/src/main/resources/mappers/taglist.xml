@@ -6,7 +6,19 @@
 
 	<select id="getTagList" resultType="TagList">
 	select *
-	from taglist;
+	from taglist
+	order by cat_index
+	</select>
+	
+	<select id="getCTagList" parameterType="int" resultType="TagList">
+	select *
+	from taglist
+	where cat_index= #{index};
+	</select>
+	
+	<select id="getCategoryList" resultType="CateList">
+	select *
+	from user_main_category;
 	</select>
 	
 </mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.ssafy.peopool.model.repo.SocketSessionRepo">
+
+	<update id="updateWebSocketSession" parameterType="SocketSession">
+		update user_session set sessionid= #{sessionid} where ind_index = #{ind_index};
+	</update>
+	
+	<select id="getSocketSessionID" parameterType="int" resultType="SocketSession">
+		select *
+		from user_session
+		where ind_index = #{ind_index}
+	</select>
+	
+</mapper>

@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -16,6 +17,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 import com.ssafy.peopool.webrtc.CallHandler;
+import com.ssafy.peopool.webrtc.EchoHandler;
 import com.ssafy.peopool.webrtc.RoomManager;
 import com.ssafy.peopool.webrtc.UserRegistry;
 
@@ -66,6 +68,10 @@ public class PeopoolApplication implements WebSocketConfigurer {
 	public KurentoClient kurentoClient() {
 		return KurentoClient.create();
 	}
+	@Bean
+	public EchoHandler ehcoHandler() {
+		return new EchoHandler();
+	}
 
 	@Bean
 	public ServletServerContainerFactoryBean createServletServerContainerFactoryBean() {
@@ -77,5 +83,6 @@ public class PeopoolApplication implements WebSocketConfigurer {
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(groupCallHandler(), "/groupcall").setAllowedOrigins("*");
+		registry.addHandler(ehcoHandler(), "/ws/{index}").setAllowedOrigins("*");
 	}
 }

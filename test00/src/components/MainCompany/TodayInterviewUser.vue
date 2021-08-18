@@ -1,8 +1,8 @@
 <template>
   <div v-if="this.todayinterviewuser !== null">
     <el-row :gutter="24">
-      <el-col :span="4" v-for="(item, i) in todayinterviewuser" :key="i">
-        <UserInfoCard :userindex="item.ind_index" />
+      <el-col :span="6" v-for="(item, i) in todayinterviewuser" :key="i">
+        <UserInfoCardNoSug :userindex="item.ind_index" />
       </el-col>
     </el-row>
   </div>
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import UserInfoCard from "./UserInfoCard.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import UserInfoCardNoSug from "@/components/UserInfo/UserInfoCardNoSug.vue";
 
 export default {
   name: "TodayInterviewUser",
-  components: { UserInfoCard },
+  components: { UserInfoCardNoSug },
   data() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");

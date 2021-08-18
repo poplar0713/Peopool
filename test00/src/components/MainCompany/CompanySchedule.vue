@@ -62,7 +62,7 @@
         <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
-        <UserInfo :userindex="scope.row.ind_index" />
+        <UserInfoDetailNoSug :userindex="scope.row.ind_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -71,11 +71,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfo from "./UserInfo.vue";
+import UserInfoDetailNoSug from "@/components/UserInfo/UserInfoDetailNoSug.vue";
 
 export default {
   name: "CompanySchedule",
-  components: { UserInfo },
+  components: { UserInfoDetailNoSug },
   data() {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);

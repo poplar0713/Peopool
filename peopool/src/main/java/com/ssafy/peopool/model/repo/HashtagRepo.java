@@ -24,5 +24,13 @@ public interface HashtagRepo {
 
 	// 태그 삭제
 	int deleteHashtag(int index);
+	
+	// 회원 탈퇴시에 태그들 삭제
+	int deleteWithdraw(int index);
 
+	// 태그를 모두 포함하는 사용자 교집합 목록
+	List<Map<Object, Object>> userTagIntersection(List<Integer> list, int count);
+	
+	// 태그를 포함하는 사용자 합집합 목록
+	List<Map<Object, Object>> userTagUnion(List<Integer> list, int count);
 }

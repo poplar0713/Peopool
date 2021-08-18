@@ -2,6 +2,7 @@ package com.ssafy.peopool.model.repo;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,9 @@ public interface ProfileOfEnterpriseRepo {
 
 	// 프로필 삭제
 	int deleteProfileOfEnterprise(int index) throws SQLException;
+	
+	// 파일 경로와 프로필 조회
+	List<Map<Object, Object>> getProfile(int index);
 
 	// 프로필 조회
 	EntCard getProfileOfEnterprise(int index) throws SQLException;

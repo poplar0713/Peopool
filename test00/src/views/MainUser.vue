@@ -5,6 +5,9 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
+        <h1>인기있는 기업 랭킹</h1>
+        <PopularCompanyList />
+        <br />
         <el-row :gutter="20">
           <el-col
             :span="12"
@@ -22,7 +25,6 @@
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer> <button @click="message">click</button> </el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -32,40 +34,27 @@ import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
+import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
-import wsocket from "@/components/utils/websocket.js";
+// import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
+// import wsocket from "@/components/utils/websocket.js";
+//기존 소켓
 
-var ws = wsocket;
 export default {
   name: "MainUser",
   components: {
     SideBarUser,
-
+    PopularCompanyList,
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
+    // NotLoginMainVue,
   },
-  created() {
-    if (ws == null) {
-      setTimeout(() => {
-        this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
-      });
-    }
-  },
+  created() {},
   mounted: function() {
-    console.log("mounted start - ", ws);
-    ws.onopen = () => {
-      console.log("loginpage - Websocket is connected!");
-      this.sendMessage({
-        id: "sessioncheck",
-      });
-    };
-    ws.onmessage = (message) => {
-      console.log("ws onmessage- ", message);
-    };
     // ws.onclose = function() {
     //   setTimeout(
     //     (this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall")),
@@ -80,6 +69,12 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    const name = decoded.name;
+    console.log("username-", name);
+    localStorage.setItem("username", name);
+
+    console.log("타입확인");
+    console.log(decoded.type);
     // 회원정보 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
@@ -126,16 +121,6 @@ export default {
     };
   },
   methods: {
-    message() {
-      this.sendMessage({
-        id: "sessioncheck",
-      });
-    },
-    sendMessage(message) {
-      var jsonMessage = JSON.stringify(message);
-      console.log("Sending message: " + jsonMessage);
-      ws.send(jsonMessage);
-    },
     uploadFile() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);

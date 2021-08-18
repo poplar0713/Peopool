@@ -1,8 +1,8 @@
 <template>
   <div style="width:80%">
-    <div class="box" style="background: #BDBDBD;">
-      <img class="profile" id="profilephoto" :src="photofilepath" />
-    </div>
+    <!-- <div>
+      <img :src="photofilepath" height="150" width="150" />
+    </div> -->
     <el-scrollbar>
       <div
         style="width:100%;"
@@ -11,60 +11,38 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
       >
-        <el-form
-          :rules="rules"
-          v-on:submit.prevent
-          enctype="multipart/form-data"
-          ref="ruleForm"
+        <el-upload
+          class="avatar-uploader"
+          :auto-upload="false"
+          :show-file-list="false"
+          :on-change="handleAvatarSuccess"
         >
-          <el-form-item label="" prop="photointro">
-            <span class="filetype">
-              <span class="file-text"></span>
-              <span class="file-btn">찾아보기</span>
-              <span class="file-select"
-                ><input
-                  type="file"
-                  class="input-file"
-                  size="1"
-                  name="photo"
-                  id="photo"
-                  ref="photo"
-                  accept="image/jpeg, image/jpg, image/png"
-                  @change="changept(this)"
-                  multiple="multiple"
-              /></span>
-            </span>
-            <!-- <input
-              multiple="multiple"
-              type="file"
-              name="photo"
-              id="photo"
-              ref="photo"
-              accept="image/jpeg, image/jpg, image/png"
-              @change="changept(this)"
-            /> -->
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+
+        <el-form-item label="">
+          <el-input
+            id="introtextarea"
+            type="textarea"
+            v-model="userintroduce"
+            maxlength="1000"
+            show-word-limit
+            :autosize="{ minRows: 8, maxRows: 10 }"
+            placeholder="자기소개를 입력해주세요\n안녕하세요 저는 리더십있는 000입니다.\n 저는 다음과 같은 역량을 가지고 있습니다!\n#1 ..."
+          ></el-input>
+        </el-form-item>
+        <div style="float:right">
+          <el-form-item>
+            <el-button
+              type="warning"
+              @click="submitForm('ruleForm')"
+              v-loading.fullscreen.lock="fullscreenLoading"
+              >Save</el-button
+            >
           </el-form-item>
-          <el-form-item label="">
-            <el-input
-              id="introtextarea"
-              type="textarea"
-              v-model="userintroduce"
-              maxlength="1000"
-              show-word-limit
-              autosize="true"
-            ></el-input>
-          </el-form-item>
-          <div style="float:right">
-            <el-form-item>
-              <el-button
-                type="warning"
-                @click="submitForm('ruleForm')"
-                v-loading.fullscreen.lock="fullscreenLoading"
-                >Save</el-button
-              >
-            </el-form-item>
-          </div>
-        </el-form>
+        </div>
+        <!-- </el-form> -->
       </div>
     </el-scrollbar>
   </div>
@@ -96,8 +74,10 @@ export default {
     return {
       loading: false,
       userindex: "",
+      imageUrl: this.photofilepath,
       userintroduce: this.introduce,
       changeprofile: false,
+      // fileList: [],
       rules: {
         Introduction: [
           {
@@ -111,6 +91,22 @@ export default {
     };
   },
   methods: {
+    filecheck() {
+      let file = document.getElementById("checkinput");
+      console.log(file);
+      console.log(file.files[0]);
+    },
+    handleAvatarSuccess(res, file) {
+      if (file != null) {
+        console.log("why?-", file);
+        console.log("file2'-", this.$refs.photo);
+        this.changeprofile = true;
+        this.imageUrl = URL.createObjectURL(file[0].raw);
+      } else {
+        console.log("why null-", file);
+      }
+    },
+    beforeAvatarUpload() {},
     changept() {
       this.changeprofile = true;
       let photoip = document.getElementById("photo");
@@ -126,16 +122,19 @@ export default {
       console.log(filedata);
     },
     submitForm() {
-      if (!this.curphoto && !this.changeprofile) {
+      console.log("submitform-", this.changeprofile);
+      if (this.curphoto == 2) {
         this.$message.error("사진을 업로드 해주세요.");
         return;
       }
       // 저장하는 방법 찾아보기
       if (this.changeprofile) {
+        let uploadinput = document.getElementsByClassName(
+          "el-upload__input"
+        )[0];
         var frm = new FormData();
-        var photodata = this.$refs.photo.files[0];
-
-        console.log("userindex : ", this.userindex);
+        var photodata = uploadinput.files[0];
+        console.log(photodata);
         // var introducedata = this.$refs[]
         frm.append("upfile", photodata);
         // frm.append("introduce", introduce.value);
@@ -145,11 +144,38 @@ export default {
             headers: { Authorization: this.token },
             params: {
               index: this.userindex,
+              introduce: this.userintroduce,
             },
           })
           .then((res) => {
             console.log(res);
+            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
             this.$emit("uploadintro");
+          })
+          .catch((err) => {
+            this.failed();
+            console.log(err.response);
+            if (err.response == 401) {
+              this.$message.error("로그인세션이 만료되었습니다");
+              localStorage.clear();
+              this.$router.push("/");
+            }
+          });
+      } else {
+        axios
+          .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
+            headers: {
+              Authorization: this.token,
+            },
+            ind_index: this.userindex,
+            ind_introduce: this.userintroduce,
+          })
+          .then((res) => {
+            console.log(res);
+            alert("adsfdg");
+            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            // this.$emit("uploadintro");
+            // this.openFullScreen2();
           })
           .catch((err) => {
             this.failed();
@@ -162,31 +188,6 @@ export default {
             }
           });
       }
-
-      axios
-        .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
-          headers: { Authorization: this.token },
-          params: {
-            ind_index: this.userindex,
-            ind_introduce: this.userintroduce,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          <el-alert title="업로드 되었습니다" type="success"></el-alert>;
-          // this.$emit("uploadintro");
-          // this.openFullScreen2();
-        })
-        .catch((err) => {
-          this.failed();
-          console.log("token error");
-          console.log(err.response);
-          if (err.response == 401) {
-            this.$message.error("로그인세션이 만료되었습니다");
-            localStorage.clear();
-            this.$router.push("/");
-          }
-        });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -216,19 +217,43 @@ export default {
 </script>
 
 <style scoped>
-.box {
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 200px;
+  display: block;
+  margin: 10px;
+  /* object-fit: cover; */
+}
+/* .box {
   width: 150px;
   height: 150px;
-  /* border-radius: 70%; */
+  border-radius: 70%;
   overflow: hidden;
-
   margin: 30px;
 }
 .profile {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .filetype {
   position: relative;
