@@ -99,15 +99,38 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import CompanyInfoDetail from "@/components/CompanyInfo/CompanyInfoDetail.vue";
-
+let wsmain = null;
 export default {
   name: "UserSugInterview",
   components: { CompanyInfoDetail },
+  created() {
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    wsmain = new WebSocket(`wss://i5d206.p.ssafy.io:8443/ws/${index}`);
+  },
   mounted() {
+    console.log("mounted start - ", wsmain);
+    wsmain.onopen = () => {
+      console.log("loginpage - Websocket is connected!");
+      this.sendMessage({
+        id: "sessioncheck",
+      });
+    };
+    wsmain.onmessage = (message) => {
+      var newmetting = JSON.parse(message.data);
+      console.log("ws onmessage- ", message);
+      if (newmetting.new == "new") {
+        console.log(newmetting);
+      } else {
+        console.log("ws onmessage- ", newmetting.connect);
+      }
+    };
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+
     // 요청받은 면접일정 가져오기
     axios
       .get(`https://i5d206.p.ssafy.io:8443/sug/${index}`, {
@@ -132,7 +155,13 @@ export default {
       search: "",
     };
   },
+  watch() {},
   methods: {
+    sendMessage(message) {
+      var jsonMessage = JSON.stringify(message);
+      console.log("Sending message: " + jsonMessage);
+      wsmain.send(jsonMessage);
+    },
     select(index, row, decision, sugindex) {
       console.log(index);
       console.log(decision);
