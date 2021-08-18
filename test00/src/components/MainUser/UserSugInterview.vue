@@ -25,20 +25,12 @@
       width="58"
     >
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name" width="100%">
-    </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
-    </el-table-column>
-    <el-table-column align="center" label="한마디" prop="sug_message">
-    </el-table-column
+    <el-table-column align="center" label="Company" prop="name" width="100%"> </el-table-column>
+    <el-table-column align="center" label="직무" prop="sug_duty" width="100%"> </el-table-column>
+    <el-table-column align="center" label="한마디" prop="sug_message"> </el-table-column
     ><el-table-column align="center" label="응답상태" prop="sug_message">
       <template #default="scope">
-        <el-popover
-          placement="top"
-          :width="100"
-          trigger="click"
-          v-if="scope.row.sug_state == 'W'"
-        >
+        <el-popover placement="top" :width="100" trigger="click" v-if="scope.row.sug_state == 'W'">
           <template #reference>
             <el-button size="mini">응답하기</el-button>
           </template>
@@ -49,23 +41,10 @@
               plain
               round
               style="margin:5px;"
-              @click="
-                select(
-                  scope.$index,
-                  scope.row,
-                  scope.row.sug_timeone,
-                  scope.row.sug_index
-                )
-              "
+              @click="select(scope.$index, scope.row, scope.row.sug_timeone, scope.row.sug_index)"
               >{{ scope.row.sug_timeone }}</el-button
             >
-            <el-button
-              v-else
-              disabled
-              size="mini"
-              plain
-              round
-              style="margin:5px;"
+            <el-button v-else disabled size="mini" plain round style="margin:5px;"
               >일정 없음</el-button
             ><br />
             <el-button
@@ -74,22 +53,9 @@
               plain
               round
               style="margin:5px"
-              @click="
-                select(
-                  scope.$index,
-                  scope.row,
-                  scope.row.sug_timetwo,
-                  scope.row.sug_index
-                )
-              "
+              @click="select(scope.$index, scope.row, scope.row.sug_timetwo, scope.row.sug_index)"
               >{{ scope.row.sug_timetwo }}</el-button
-            ><el-button
-              v-else
-              disabled
-              size="mini"
-              plain
-              round
-              style="margin:5px;"
+            ><el-button v-else disabled size="mini" plain round style="margin:5px;"
               >일정 없음</el-button
             ><br />
             <el-button
@@ -98,22 +64,9 @@
               plain
               round
               style="margin:5px"
-              @click="
-                select(
-                  scope.$index,
-                  scope.row,
-                  scope.row.sug_timethree,
-                  scope.row.sug_index
-                )
-              "
+              @click="select(scope.$index, scope.row, scope.row.sug_timethree, scope.row.sug_index)"
               >{{ scope.row.sug_timethree }}</el-button
-            ><el-button
-              v-else
-              disabled
-              size="mini"
-              plain
-              round
-              style="margin:5px;"
+            ><el-button v-else disabled size="mini" plain round style="margin:5px;"
               >일정 없음</el-button
             ><br />
             <el-button
@@ -126,15 +79,9 @@
           </div>
         </el-popover>
         <!--  -->
-        <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini"
-          >응답완료</el-text
-        >
-        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini"
-          >응답거절</el-text
-        >
-        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini"
-          >취소된 요청입니다</el-text
-        >
+        <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini">응답완료</el-text>
+        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini">응답거절</el-text>
+        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini">취소된 요청입니다</el-text>
       </template>
     </el-table-column>
     <el-table-column align="center">
@@ -171,10 +118,9 @@ export default {
         this.InterviewReq = res.data;
       })
       .catch((err) => {
-        console.log("token error");
-        console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -207,10 +153,9 @@ export default {
           location.reload();
         })
         .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }

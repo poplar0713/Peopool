@@ -1,19 +1,18 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer; height:110%"
+    style="margin:1%; cursor:pointer; height:200px; width 360px"
     @click="dialogVisible = true"
   >
     <el-row>
       <el-col :span="8">
         <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
+          <span v-if="this.userdata.photo_index"> <img :src="this.userdata.photofilepath" /> </span>
+          <span v-else> <img :src="this.nonImage" /> </span>
         </div>
       </el-col>
-      <el-col :span="16"
+      <el-col :span="2"></el-col>
+      <el-col :span="14"
         ><div>
           <div>
             <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
@@ -44,51 +43,56 @@
       <el-tabs type="border-card">
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
-            <el-col :span="12"
-              ><span> <img :src="this.userdata.photofilepath" /> </span
-            ></el-col>
+            <el-col :span="12">
+              <div>
+                <span v-if="this.userdata.photo_index">
+                  <img :src="this.userdata.photofilepath" />
+                </span>
+                <span v-else> <img :src="this.nonImage" /> </span>
+              </div>
+              ></el-col
+            >
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>
-                  직무 : {{ this.userdata.cat_name }} ({{
-                    this.userdata.car_value
-                  }})
-                </h4>
+                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
               </span></el-col
             >
             <el-divider></el-divider>
           </el-row>
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
-        </el-tab-pane>
-        <el-tab-pane label="연락처" style="padding : 2%">
-          <div style="text-align:center">
-            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
-            <h4>이메일: {{ this.userdata.ind_email }}</h4>
-          </div>
+          <el-divider></el-divider>
+          <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
+          <h4>이메일: {{ this.userdata.ind_email }}</h4>
         </el-tab-pane>
         <el-tab-pane label="이력서">
-          <webviewer :initialDoc="userdata.resumefilepath" />
+          <div v-if="userdata.resume_index == '-'" class="fileDoc">
+            등록된 이력서 및 포트폴리오가 없습니다.
+          </div>
+          <div v-else>
+            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+          </div>
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
-          <video
-            :src="userdata.videofilepath"
-            height="360"
-            width="640"
-            controls=""
-            style="width: 100%; height: 100%;"
-          ></video>
+          <div v-if="userdata.video_index == '-'">
+            소개영상이 없습니다.
+          </div>
+          <div v-else>
+            <video
+              :src="this.userdata.videofilepath"
+              height="auto"
+              width="100%"
+              controls=""
+              style="width: 100%; height: 100%;"
+            ></video>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button
-          v-if="this.follow"
-          round
-          type="danger"
-          @click="clickfollowBtn"
+        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
@@ -157,10 +161,7 @@
       ></el-input>
     </div>
     <div style="text-align:center; margin: 4%">
-      <el-button
-        @click="(dialogVisible = false), interviewrequest()"
-        type="success"
-        :plain="true"
+      <el-button @click="(dialogVisible = false), interviewrequest()" type="success" :plain="true"
         >요청 보내기</el-button
       >
     </div>
@@ -180,6 +181,7 @@ export default {
   },
   data() {
     return {
+      hasSearched: false,
       dialogVisible: false,
       innerVisible: false,
       ind_taglist: [],
@@ -191,16 +193,16 @@ export default {
         { ind_gender: "" },
         { ind_phone: "" },
         { ind_email: "" },
-        { photofilepath: "" },
-        { resume_originfile: "" },
+        { photofilepath: "string" },
+        { resume_originfile: "string" },
         { photo_index: "" },
         { resume_index: "" },
         { video_index: "" },
         { ind_index: 0 },
-        { video_originfile: "" },
-        { videofilepath: "" },
-        { photo_originfile: "" },
-        { resumefilepath: "" },
+        { video_originfile: "string" },
+        { videofilepath: "string" },
+        { photo_originfile: "string" },
+        { resumefilepath: "string" },
         { ind_switch: "" },
         { ind_introduce: "" },
         { cat_name: "" },
@@ -219,6 +221,7 @@ export default {
         { sug_timetwo: "string" },
         { sug_message: "string" },
       ],
+      nonImage: "https://i5d206.p.ssafy.io/file/thumbuser.png",
     };
   },
 
@@ -228,34 +231,43 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.companyindex = index;
+    console.log(index);
 
     axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.userindex}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        var result = res.data[0];
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].photo_savefolder +
+          "/" +
+          res.data[0].photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].resume_savefolder +
+          "/" +
+          res.data[0].resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
-        this.userdata.resume_originfile = result.resume_originfile;
-        this.userdata.photo_originfile = result.photo_originfile;
-        this.userdata.video_originfile = result.video_originfile;
-        this.userdata.ind_switch = result.ind_switch;
-        this.userdata.ind_introduce = result.ind_introduce;
-        this.userdata.photo_index = result.photo_index;
-        this.userdata.resume_index = result.resume_index;
-        this.userdata.video_index = result.resume_index;
-        this.userdata.ind_index = result.ind_index;
-        this.userdata.ind_name = result.ind_name;
-        this.userdata.ind_email = result.ind_email;
-        this.userdata.ind_phone = result.ind_phone;
-        this.userdata.ind_gender = result.ind_gender;
-        this.userdata.cat_name = result.cat_name;
-        this.userdata.car_value = result.car_value;
+          "https://i5d206.p.ssafy.io:8443/file/" +
+          res.data[0].video_savefolder +
+          "/" +
+          res.data[0].video_savefile;
+        this.userdata.resume_originfile = res.data[0].resume_originfile;
+        this.userdata.photo_originfile = res.data[0].photo_originfile;
+        this.userdata.video_originfile = res.data[0].video_originfile;
+        this.userdata.ind_switch = res.data[0].ind_switch;
+        this.userdata.ind_introduce = res.data[0].ind_introduce;
+        this.userdata.photo_index = res.data[0].photo_index;
+        this.userdata.resume_index = res.data[0].resume_index;
+        this.userdata.video_index = res.data[0].resume_index;
+        this.userdata.ind_index = res.data[0].ind_index;
+        this.userdata.ind_name = res.data[0].ind_name;
+        this.userdata.ind_email = res.data[0].ind_email;
+        this.userdata.ind_phone = res.data[0].ind_phone;
+        this.userdata.ind_gender = res.data[0].ind_gender;
+        this.userdata.cat_name = res.data[0].cat_name;
+        this.userdata.car_value = res.data[0].car_value;
       });
 
     axios
@@ -290,19 +302,13 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
       });
   },
   methods: {
-    changeFront() {
-      this.isHover = false;
-    },
-    changeBack() {
-      this.isHover = true;
-    },
     clickfollowBtn() {
       if (this.follow) {
         console.log("팔로우 해제");
@@ -320,11 +326,10 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log("token error");
-            console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
+              this.$cookies.remove("PID_AUTH");
               this.$router.push("/");
             }
           });
@@ -342,11 +347,10 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
-            console.log("token error");
-            console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
+              this.$cookies.remove("PID_AUTH");
               this.$router.push("/");
             }
           });
@@ -374,11 +378,10 @@ export default {
           });
         })
         .catch((err) => {
-          console.log("token error");
-          console.log(err.response);
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
+            this.$cookies.remove("PID_AUTH");
             this.$router.push("/");
           }
         });

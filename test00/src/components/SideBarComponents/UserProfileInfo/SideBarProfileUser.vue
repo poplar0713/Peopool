@@ -24,7 +24,7 @@ import DeleteUserAccount from "./DeleteUserAccount.vue";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 export default {
-  name:"SideBarProfileUser",
+  name: "SideBarProfileUser",
   components: {
     SideBarProfileUserInfo,
     SideBarProfileUserIntroduction,
@@ -42,8 +42,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log("asdgasdgahsdhsdsdafs");
-        console.log(res.data);
         this.userdata.photofilepath =
           "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
         this.userdata.resumefilepath =
@@ -64,7 +62,7 @@ export default {
         this.userdata.ind_phone = res.data.ind_phone;
         this.userdata.ind_gender = res.data.ind_gender;
         this.userdata.cat_name = res.data.cat_name;
-        this.userdata.ind_career = res.data.ind_career;
+        this.userdata.car_value = res.data.car_value;
       });
     return {
       tabPosition: "left",

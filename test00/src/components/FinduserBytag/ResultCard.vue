@@ -8,8 +8,11 @@
   >
     <el-row style="text-align: center;">
       <el-col :span="10">
-        <div>
-          <img :src="this.userdata.photofilepath" />
+        <div v-if="userdata.photo_index == ''">
+          <img src="https://i5d206.p.ssafy.io/file/thumbuser.png" />
+        </div>
+        <div v-else>
+          <img src="this.userdata.photofilepath" />
         </div>
       </el-col>
       <el-col :span="14">
@@ -33,10 +36,7 @@
     <el-row>
       <el-col :span="12">
         <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
+          <img :src="userdata.photofilepath" style="max-width: 100%; height: auto;" />
         </div>
       </el-col>
       <el-divider direction="vertical"></el-divider>
@@ -70,16 +70,15 @@
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
             <el-col :span="12"
-              ><span> <img :src="this.userdata.photofilepath" /> </span
-            ></el-col>
+              ><span v-if="userdata.photo_index == ''"
+                ><img src="https://i5d206.p.ssafy.io/file/thumbuser.png"
+              /></span>
+              <span v-else><img src="this.userdata.photofilepath" /> </span>
+            </el-col>
             <el-col :span="8"
               ><span>
                 <h4>성명 : {{ this.userdata.ind_name }}</h4>
-                <h4>
-                  직무 : {{ this.userdata.cat_name }} ({{
-                    this.userdata.car_value
-                  }})
-                </h4>
+                <h4>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h4>
               </span></el-col
             >
             <el-divider></el-divider>
@@ -88,32 +87,29 @@
           <div>{{ this.userdata.ind_introduce }}</div>
         </el-tab-pane>
         <el-tab-pane label="이력서">
-          <webviewer :initialDoc="userdata.resumefilepath" />
+          <div v-if="userdata.resume_index == ''" class="fileDoc">
+            등록된 이력서 및 포트폴리오가 없습니다.
+          </div>
+          <div v-else>
+            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+          </div>
         </el-tab-pane>
         <el-tab-pane label="PR 영상">
-          <video
-            :src="userdata.videofilepath"
-            height="360"
-            width="640"
-            controls=""
-            style="width: 100%; height: 100%;"
-          ></video>
+          <div v-if="userdata.video_index == ''">
+            소개영상이 없습니다.
+          </div>
+          <div v-else>
+            <span v-if="userdata.videofilepath"> <video src="userdata.videofilepath" /> </span>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button
-          v-if="this.follow"
-          plain
-          round
-          type="danger"
-          @click="clickfollowBtn"
+        <el-button v-if="this.follow" plain round type="danger" @click="clickfollowBtn"
           >팔로우 해제</el-button
         >
-        <el-button v-else type="danger" plain round @click="clickfollowBtn"
-          >팔로우</el-button
-        >
+        <el-button v-else type="danger" plain round @click="clickfollowBtn">팔로우</el-button>
         <el-button type="success" plain round @click="this.innerVisible = true"
           >면접 제안</el-button
         >
@@ -177,10 +173,7 @@
       ></el-input>
     </div>
     <div style="text-align:center; margin: 4%">
-      <el-button
-        @click="(dialogVisible = false), interviewrequest()"
-        type="success"
-        :plain="true"
+      <el-button @click="(dialogVisible = false), interviewrequest()" type="success" :plain="true"
         >요청 보내기</el-button
       >
     </div>
@@ -310,7 +303,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -340,10 +333,10 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -362,10 +355,10 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
-            console.log("token error");
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -394,10 +387,10 @@ export default {
           });
         })
         .catch((err) => {
-          console.log("token error");
           console.log(err.response);
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }

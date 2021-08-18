@@ -11,20 +11,21 @@
         <el-row :gutter="20">
           <el-col
             :span="12"
-            style="background-color:#FAFAFA; border-radius: 2em;"
+            style="background-color:#F4F6F6; border-radius: 2em;"
             ><div class="grid-content bg-purple">
               <h4 style="text-align:center">요청받은 인터뷰</h4>
               <UserSugInterview /></div
           ></el-col>
           <el-col
             :span="12"
-            style="background-color:#FAFAFA; border-radius: 2em;"
+            style="background-color:#F4F6F6; border-radius: 2em;"
             ><div class="grid-content bg-purple">
               <h4 style="text-align:center">인터뷰 일정</h4>
               <UserSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
+      <el-footer></el-footer>
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -41,7 +42,7 @@ import axios from "axios";
 import server_url from "@/server.js";
 // import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
 // import wsocket from "@/components/utils/websocket.js";
-
+//기존 소켓
 let wsmain = null;
 export default {
   name: "MainUser",
@@ -105,6 +106,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -124,7 +126,7 @@ export default {
       })
       .catch((err) => {
         if (err.response == 401) {
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");

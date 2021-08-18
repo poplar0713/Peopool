@@ -43,11 +43,9 @@
         >
         <!--  -->
         <el-menu-item index="3" @click="goToTagSearch"
-          ><span
-            ><i class="far fa-address-card" style="margin-right:10px"></i>인재
-            찾기</span
-          >
+          ><span><i class="far fa-address-card" style="margin-right:10px"></i>인재 찾기</span>
         </el-menu-item>
+
         <el-menu-item index="4">
           <i class="el-icon-right"></i>
           <i class="el-icon-user-solid"></i>
@@ -59,9 +57,9 @@
           <i class="el-icon-back"></i>
           <span><CompanyFollowers /></span>
         </el-menu-item>
-        <el-menu-item index="7">
+        <el-menu-item index="7" @click="Logout">
           <i class="el-icon-turn-off"></i>
-          <span @click="Logout">Logout</span>
+          <span>Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>
