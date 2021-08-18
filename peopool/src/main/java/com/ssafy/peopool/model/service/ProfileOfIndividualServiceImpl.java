@@ -48,7 +48,7 @@ public class ProfileOfIndividualServiceImpl implements ProfileOfIndividualServic
 	}
 
 	@Override
-	public List<Map<Object, Object>> getProfile(int index) {
+	public Map<Object, Object> getProfile(int index) {
 		// TODO Auto-generated method stub
 		return profileOfIndividualRepo.getProfile(index);
 	}

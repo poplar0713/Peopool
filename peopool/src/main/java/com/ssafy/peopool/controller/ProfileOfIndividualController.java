@@ -67,7 +67,7 @@ public class ProfileOfIndividualController {
 	
 	@ApiOperation(value = "index에 해당하는 프로필과 파일 경로를 가져온다.", response = String.class)
 	@GetMapping("/{index}")
-	public ResponseEntity<List<Map<Object, Object>>> getProfile(@PathVariable("index")int index) {
+	public ResponseEntity<Map<Object, Object>> getProfile(@PathVariable("index")int index) {
 		return new ResponseEntity<>(profileOfIndividualService.getProfile(index), HttpStatus.OK);
 
 	}
