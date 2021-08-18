@@ -39,6 +39,7 @@ import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
+// import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
 // import wsocket from "@/components/utils/websocket.js";
 
 let ws = null;
@@ -50,6 +51,7 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
+    // NotLoginMainVue,
   },
   created() {
     const token = this.$cookies.get("PID_AUTH");
@@ -82,7 +84,10 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
-    // const name = decoded.name;
+    const name = decoded.name;
+    console.log("username-", name);
+    localStorage.setItem("username", name);
+
     console.log("타입확인");
     console.log(decoded.type);
     // 회원정보 가져오기
