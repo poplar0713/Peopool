@@ -81,6 +81,7 @@ export default {
               this.ruleForm.LoginCompanyPW = "";
               if (err.response == 401) {
                 this.$message.error("로그인세션이 만료되었습니다");
+                this.$cookies.remove("PID_AUTH");
                 localStorage.clear();
                 this.$router.push("/");
               }

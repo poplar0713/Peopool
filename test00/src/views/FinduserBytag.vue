@@ -40,7 +40,8 @@
                 v-model="this.selected"
                 @change="handleCheckedChange"
               >
-                <el-checkbox style="margin:5px"
+                <el-checkbox
+                  style="margin:5px"
                   v-for="item in this.taglist"
                   :label="item.taglist_index"
                   :key="item.taglist_index"
@@ -117,7 +118,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -134,7 +135,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -151,7 +152,7 @@ export default {
         console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
-          console.log("token error");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -210,7 +211,7 @@ export default {
             console.log(err.response);
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
-              console.log("token error");
+              this.$cookies.remove("PID_AUTH");
               localStorage.clear();
               this.$router.push("/");
             }
@@ -225,7 +226,7 @@ export default {
           })
           .catch((err) => {
             if (err.response == 401) {
-              console.log("token error");
+              this.$cookies.remove("PID_AUTH");
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -278,7 +279,7 @@ export default {
           })
           .catch((err) => {
             if (err.response == 401) {
-              console.log("token error");
+              this.$cookies.remove("PID_AUTH");
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");
@@ -301,7 +302,7 @@ export default {
           })
           .catch((err) => {
             if (err.response == 401) {
-              console.log("token error");
+              this.$cookies.remove("PID_AUTH");
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
               this.$router.push("/");

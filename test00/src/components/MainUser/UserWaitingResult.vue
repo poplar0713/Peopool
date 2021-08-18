@@ -56,9 +56,9 @@ export default {
         this.pastinterview = res.data;
       })
       .catch((err) => {
-        console.log("여기서 이미 못받아옴");
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -89,9 +89,9 @@ export default {
           });
         })
         .catch((err) => {
-          console.log("token error");
           if (err.response.data.status == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
             localStorage.clear();
             this.$router.push("/");
           }

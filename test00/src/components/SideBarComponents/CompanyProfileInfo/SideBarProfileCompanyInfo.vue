@@ -18,7 +18,8 @@
             class="cprofile"
             id="cprofilephoto"
             src="https://i5d206.p.ssafy.io/file/thumbuser.png"
-            height="150" width="150"
+            height="150"
+            width="150"
           />
         </div>
         <div v-else class="box" style="background: #BDBDBD;">
@@ -27,7 +28,8 @@
             id="cprofilephoto"
             v-if="ruleForm.ent_image"
             :src="ruleForm.ent_image"
-            height="150" width="150"
+            height="150"
+            width="150"
           />
         </div>
         <!-- {{ this.ruleForm.ent_image }}<br /> -->
@@ -125,10 +127,9 @@ export default {
         console.log("axios ent_index: ", this.ruleForm.ent_image_pk);
       })
       .catch((err) => {
-        console.log("token error");
-        console.log(err.response);
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
           localStorage.clear();
           this.$router.push("/");
         }
@@ -289,10 +290,9 @@ export default {
               }, 2000);
             })
             .catch((err) => {
-              console.log("token error");
-              console.log(err.response);
               if (err.response == 401) {
                 this.$message.error("로그인세션이 만료되었습니다");
+                this.$cookies.remove("PID_AUTH");
                 localStorage.clear();
                 this.$router.push("/");
               }
@@ -326,8 +326,8 @@ export default {
 /* .box {
   width: 150px;
   height: 150px; */
-  /* border-radius: 70%; */
-  /* overflow: hidden;
+/* border-radius: 70%; */
+/* overflow: hidden;
 
   margin: 30px;
 } */
