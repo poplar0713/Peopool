@@ -24,8 +24,14 @@
       :filter-method="filterHandler"
       width="58"
     >
+      <template #default="scope">
+        <div v-if="scope.row.sug_state == 'W'">대기</div>
+        <div v-else-if="scope.row.sug_state == 'T'">확정</div>
+        <div v-else-if="scope.row.sug_state == 'F'">거절</div>
+        <div v-else-if="scope.row.sug_state == 'C'">취소</div>
+      </template>
     </el-table-column>
-    <el-table-column align="center" label="Company" prop="name" width="100%">
+    <el-table-column align="center" label="기업명" prop="name" width="100%">
     </el-table-column>
     <el-table-column align="center" label="직무" prop="sug_duty" width="100%">
     </el-table-column>
@@ -139,7 +145,7 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
+        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
       </template>
       <template #default="scope">
         <CompanyInfoDetail :companyindex="scope.row.ent_index" />

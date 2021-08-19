@@ -14,14 +14,14 @@
       </router-link>
       <el-menu background-color="#f1c40f">
         <el-menu-item index="1" onclick="location.href = '/user'">
-          <i class="fas fa-home"></i><span style="margin:10px">Home</span>
+          <i class="fas fa-home"></i><span style="margin:10px">홈</span>
         </el-menu-item>
         <!--  -->
         <router-link
           :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
           style="color: black; text-decoration: none;"
           ><el-menu-item index="2">
-            <i class="el-icon-user"></i><span>User</span></el-menu-item
+            <i class="el-icon-user"></i><span>유저프로필</span></el-menu-item
           ></router-link
         >
         <!--  -->
@@ -53,7 +53,7 @@
         </el-menu-item>
         <el-menu-item index="7" @click="Logout">
           <i class="el-icon-turn-off"></i>
-          <el-text>Logout</el-text>
+          <el-text>로그아웃</el-text>
         </el-menu-item>
         <!--  -->
       </el-menu>
