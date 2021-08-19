@@ -90,7 +90,7 @@ export default {
         .then((response) => {
           console.log(response.status);
           if (response.status == 200) {
-            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            this.$message.success("업로드 되었습니다");
             this.$emit("uploadDoc");
           }
         })

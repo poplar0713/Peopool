@@ -65,8 +65,6 @@ export default {
     this.userindex = index;
   },
   created() {
-    console.log("this.introduce created- ", this.introduce);
-    console.log("this.path created- ", this.photofilepath);
     this.userintroduce = this.introduce;
   },
 
@@ -155,7 +153,8 @@ export default {
           })
           .then((res) => {
             console.log(res);
-            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            this.$message.success("업로드 되었습니다");
+            // <el-alert title="업로드 되었습니다" type="success"></el-alert>;
             this.$emit("uploadintro");
           })
           .catch((err) => {
@@ -177,8 +176,9 @@ export default {
             ind_introduce: this.userintroduce,
           })
           .then((res) => {
-            console.log(res);
-            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            if (res.status == 200 || res.status == 204) {
+              this.$message.success("업로드 되었습니다");
+            }
             // this.$emit("uploadintro");
             // this.openFullScreen2();
           })
