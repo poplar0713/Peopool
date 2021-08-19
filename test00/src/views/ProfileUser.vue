@@ -10,7 +10,8 @@
         <h2>유저 정보 관리</h2>
         <h5>이곳에서 작성된 유저 정보가 기업들에게 보여집니다</h5>
         <el-divider />
-        <el-tabs :tab-position="tabPosition" >
+
+        <el-tabs :tab-position="tabPosition">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개">

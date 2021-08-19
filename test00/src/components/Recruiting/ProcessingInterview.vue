@@ -95,7 +95,7 @@ export default {
       )
       .then((res) => {
         console.log("interview >> ");
-        console.log(res.data);
+        
         this.InterviewDays = res.data;
       })
       .catch((err) => {

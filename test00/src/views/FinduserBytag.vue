@@ -122,7 +122,7 @@ export default {
         this.categorylist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -139,7 +139,7 @@ export default {
         this.careerlist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -156,7 +156,7 @@ export default {
         this.taglist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -215,7 +215,7 @@ export default {
             this.taglist = res.data;
           })
           .catch((err) => {
-            console.log(err.response);
+            
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               this.$cookies.remove("PID_AUTH");

@@ -134,7 +134,7 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data);
+        
         this.company_info.ent_index = res.data[0].ent_index;
         this.company_info.ent_name = res.data[0].ent_name;
         this.company_info.ent_contact = res.data[0].ent_contact;
@@ -152,7 +152,7 @@ export default {
           res.data[0].image_savefile;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -169,7 +169,7 @@ export default {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        
         this.ent_tags = res.data;
       })
       .catch((err) => {
@@ -206,7 +206,7 @@ export default {
     //팔로잉버튼
     clickfollowBtn() {
       if (this.follow) {
-        console.log("팔로우 해제");
+        
         console.log(this.user_index, this.companyindex);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
@@ -222,7 +222,7 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log(err.response);
+            
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               this.$cookies.remove("PID_AUTH");
@@ -231,7 +231,7 @@ export default {
             }
           });
       } else if (this.follow == false) {
-        console.log("팔로잉");
+        
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.$store.state.usertoken },
@@ -244,7 +244,7 @@ export default {
             this.follow = true;
           })
           .catch((err) => {
-            console.log(err.response);
+            
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               this.$cookies.remove("PID_AUTH");

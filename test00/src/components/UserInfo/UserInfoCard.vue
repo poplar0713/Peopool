@@ -305,7 +305,7 @@ export default {
         this.ind_taglist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -317,7 +317,7 @@ export default {
   methods: {
     clickfollowBtn() {
       if (this.follow) {
-        console.log("팔로우 해제");
+        
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             data: {
@@ -340,7 +340,7 @@ export default {
             }
           });
       } else if (this.follow == false) {
-        console.log("팔로잉");
+        
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.$store.state.usertoken },

@@ -85,8 +85,7 @@ export default {
                 this.$router.push("user");
               }, 3000);
             })
-            .catch((err) => {
-              console.log(err);
+            .catch(() => {
               this.ruleForm.LoginIndivID = "";
               this.ruleForm.LoginIndivPW = "";
               this.$message.error("아이디와 비밀번호를 확인해주세요");
@@ -94,7 +93,6 @@ export default {
           //
           this.$store.state.LoginDialog = false;
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

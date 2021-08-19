@@ -209,7 +209,7 @@ export default {
         .catch((err) => {
           console.log(err);
           if (err.response == 401) {
-            console.log("token error");
+            
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");

@@ -117,14 +117,14 @@ export default {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        
         this.mypart_ind = res.data.cat_index;
         this.mycareer_ind = res.data.car_index;
         this.mypart = res.data.cat_name;
         this.mycareer = res.data.car_value;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -142,7 +142,7 @@ export default {
         this.careerlist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -160,7 +160,7 @@ export default {
         this.partlist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -178,7 +178,7 @@ export default {
         this.options_user = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -263,7 +263,7 @@ export default {
           this.mycareer = res.data.car_value;
         })
         .catch((err) => {
-          console.log(err.response);
+          
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             this.$cookies.remove("PID_AUTH");

@@ -40,7 +40,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data.ind_name);
         this.username = res.data.ind_name;
         localStorage.setItem("username", res.data.ind_name);
       })
@@ -62,7 +61,6 @@ export default {
         },
       })
       .then((res) => {
-        console.log(res);
         this.mytags = res.data;
       })
       .catch((err) => {
