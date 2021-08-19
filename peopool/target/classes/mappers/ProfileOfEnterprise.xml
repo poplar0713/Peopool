@@ -9,6 +9,24 @@
 		from ent_profile p join enterprise e
 		on p.ent_index = e.ent_index
 	</select>
+	
+	<select id="getAllProfileByFollower" resultType="EntCardImage">
+		select f.*, ifnull(g.count,0) count
+			from (select a.*,b.savefolder,b.savefile,b.originfile
+					from (select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+							from ent_profile p 
+								join enterprise e
+								on p.ent_index = e.ent_index) a 
+						left outer join file_info b 
+						on a.ent_image = b.fil_index) f 
+				left outer join (select c.ent_index, count(*) count
+									from enterprise c 
+										join follow d 
+										on c.ent_index = d.follower
+									group by c.ent_index) g 
+				on f.ent_index = g.ent_index
+				order by count desc limit 10;
+	</select>
 
 
 	<update id="modifyProfileOfEnterprise" parameterType="ProfileOfEnterprise">
@@ -49,6 +67,24 @@
 		delete from ent_profile
 		where ent_index = #{index}
 	</delete>
+	
+	<insert id="modifyPhoto" parameterType="ProfileOfEnterprise">
+		insert into file_info (savefolder, originfile, savefile)
+		values
+		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+		(#{fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
+		</foreach>
+		<selectKey resultType="String" keyProperty="ent_image" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+	</insert>
+	
+	<select id="getProfile" parameterType="int" resultType="HashMap">
+		select a.*, b.ent_name, b.ent_contact, b.ent_email 
+		from (select f.savefolder image_savefolder, f.originfile image_originfile, f.savefile image_savefile, e.*
+				from file_info f left outer join ent_profile e on f.fil_index = e.ent_image) a left outer join enterprise b on a.ent_index = b.ent_index
+		where a.ent_index = #{index};	
+	</select>
 	
 	
 	
