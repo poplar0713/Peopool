@@ -215,11 +215,20 @@ export default {
         // console.log(result);
         // this.userprofiledata = result;
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.photo_savefolder +
+          "/" +
+          result.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.resume_savefolder +
+          "/" +
+          result.resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.video_savefolder +
+          "/" +
+          result.video_savefile;
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
