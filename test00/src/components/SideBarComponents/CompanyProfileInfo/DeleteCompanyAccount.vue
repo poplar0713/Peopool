@@ -3,7 +3,7 @@
   더이상 PeoPool의 서비스를 이용하실 수 없습니다.<br />
   고객님의 정보는 즉시 폐기됩니다.<br />
   탈퇴 후 재가입하신 다음 서비스를 이용하실 수 있습니다.<br />
-  <div style="text-align:center">
+  <div style="text-align:center; margin-top:30px">
     <el-button type="danger" @click="deleteaccountcompany">회원탈퇴</el-button>
   </div>
 </template>

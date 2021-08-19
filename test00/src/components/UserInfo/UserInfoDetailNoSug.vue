@@ -26,64 +26,65 @@
       <el-tabs type="border-card">
         <el-tab-pane label="소개" style="padding : 2%">
           <el-row>
-            <el-col :span="12"
-              ><div>
+            <el-col :span="12" style="text-align: center">
+              <div>
                 <span v-if="this.userdata.photo_index">
-                  <img
-                    :src="this.userdata.photofilepath"
-                    style="width:100%; heigth: auto"
-                  />
+                  <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
                 </span>
                 <span v-else>
-                  <img :src="this.nonImage" style="width:100%; heigth: auto" />
-                </span></div
-            ></el-col>
+                  <img :src="this.nonImage" style="width:70%; heigth: auto" />
+                </span>
+                <el-divider direction="vertical"></el-divider>
+              </div>
+            </el-col>
             <el-col :span="8"
               ><span>
-                <h4>
-                  성명 : {{ this.userdata.ind_name }}({{
-                    this.userdata.ind_gender
-                  }})
-                </h4>
-                <h4>직무 : {{ this.userdata.cat_name }}</h4>
-                <h4>경력 : {{ this.userdata.car_value }}</h4>
+                <h3>성명 : {{ this.userdata.ind_name }}</h3>
+                <h3>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h3>
+                <el-divider></el-divider>
+                <h3>연락처 : {{ this.userdata.ind_phone }}</h3>
+                <h3>이메일: {{ this.userdata.ind_email }}</h3>
               </span></el-col
             >
             <el-divider></el-divider>
           </el-row>
           <h3>자기소개</h3>
           <div>{{ this.userdata.ind_introduce }}</div>
-          <el-divider></el-divider>
-          <div>
-            <h4>연락처 : {{ this.userdata.ind_phone }}</h4>
-            <h4>이메일: {{ this.userdata.ind_email }}</h4>
+        </el-tab-pane>
+        <el-tab-pane label="이력서" style="text-align: center">
+          <div v-if="userdata.resume_index" class="fileDoc">
+            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+          </div>
+          <div v-else>
+            <h3>등록된 이력서 및 포트폴리오가 없습니다.</h3>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="이력서">
-          <webviewer :initialDoc="userdata.resumefilepath" />
-        </el-tab-pane>
-        <el-tab-pane label="PR 영상">
-          <video
-            :src="userdata.videofilepath"
-            height="360"
-            width="640"
-            controls=""
-            style="width: 100%; height: 100%;"
-          ></video>
+        <el-tab-pane label="PR 영상" style="text-align: center">
+          <div v-if="userdata.video_index">
+            <video
+              :src="this.userdata.videofilepath"
+              height="auto"
+              width="100%"
+              controls=""
+              style="width: 85%; height: auto;"
+            ></video>
+          </div>
+          <div v-else>
+            <h3>소개영상이 없습니다.</h3>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button
-          v-if="this.follow"
-          round
-          type="danger"
-          @click="clickfollowBtn"
+        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
           ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
+        >
+        <el-button type="success" plain round @click="this.innerVisible = true"
+          >면접 제안</el-button
         >
       </span>
     </template>

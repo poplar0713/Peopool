@@ -9,7 +9,11 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이미지 -->
       <el-form-item label="Image" prop="ent_image">
-        <div v-if="ruleForm.ent_image == ''" class="box" style="background: #BDBDBD;">
+        <!-- <div
+          v-if="ruleForm.ent_image == ''"
+          class="box"
+          style="background: #BDBDBD;"
+        >
           <img
             class="cprofile"
             id="cprofilephoto"
@@ -27,32 +31,20 @@
             height="150"
             width="150"
           />
-        </div>
-        <!-- {{ this.ruleForm.ent_image }}<br /> -->
-
-        <span class="filetype">
-          <span class="file-text"></span>
-          <span class="file-btn">찾아보기</span>
-          <span class="file-select"
-            ><input
-              type="file"
-              class="input-file"
-              size="1"
-              @change="changept(this)"
-              id="companyprofile"
-              ref="companyprofile"
-              multiple="multiple"
-              accept="image/jpeg, image/jpg, image/png"
-          /></span>
-        </span>
-        <!-- <input
-          type="file"
-          id="companyprofile"
-          ref="companyprofile"
-          @change="changept(this)"
-          accept="image/jpeg, image/jpg, image/png"
-          multiple="multiple"
-        /> -->
+        </div> -->
+        <el-upload
+          class="avatar-uploader"
+          :auto-upload="false"
+          :show-file-list="false"
+          :on-change="handleAvatarSuccess"
+        >
+          <img
+            v-if="ruleForm.ent_image"
+            :src="ruleForm.ent_image"
+            class="avatar"
+          />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
       <!-- 기업대표 -->
       <el-form-item label="CEO" prop="ent_ceo">
@@ -72,7 +64,15 @@
       </el-form-item>
 
       <el-form-item label="소개" prop="ent_introduce">
-        <el-input v-model="ruleForm.ent_introduce"></el-input>
+        <el-input
+          id="introtextarea"
+          type="textarea"
+          v-model="ruleForm.ent_introduce"
+          maxlength="1000"
+          show-word-limit
+          :autosize="{ minRows: 6, maxRows: 7 }"
+          :placeholder="phtext"
+        ></el-input>
       </el-form-item>
       <div style="float:right">
         <el-form-item>
@@ -111,7 +111,12 @@ export default {
         console.log("company info res- ", res);
         console.log("company info - ", result);
         this.ruleForm.ent_index = result.ent_index;
-        this.ruleForm.ent_image = "/file/" + result.image_savefolder + "/" + result.image_savefile;
+        this.ruleForm.ent_image =
+          "https://i5d206.p.ssafy.io/file/" +
+          result.image_savefolder +
+          "/" +
+          result.image_savefile;
+
         this.ruleForm.ent_ceo = result.ent_ceo;
         this.ruleForm.ent_history = result.ent_history;
         this.ruleForm.ent_address = result.ent_address;
@@ -142,6 +147,16 @@ export default {
       }
     };
     return {
+      phtext:
+        "자기소개를 입력해주세요" +
+        "\n" +
+        "안녕하세요 저는 리더십있는 000입니다." +
+        "\n" +
+        "저는 다음과 같은 역량을 가지고 있습니다!" +
+        "\n" +
+        " #1 " +
+        "\n" +
+        "...",
       loading: false,
       userindex: "",
       changeprofile: false,
@@ -218,98 +233,120 @@ export default {
     };
   },
   methods: {
-    changept() {
-      let photoip = document.getElementById("companyprofile");
-      let imgtag = document.getElementById("cprofilephoto");
-      imgtag.src = URL.createObjectURL(photoip.files[0]);
-      this.changeprofile = true;
-      imgtag.onload = function() {
-        URL.revokeObjectURL(imgtag.src);
-      };
-      document.getElementsByClassName("file-text")[0].innerHTML = "";
-      let filedata = photoip.files[0].name;
-      this.filename = filedata;
-      document.getElementsByClassName("file-text")[0].innerHTML = filedata;
-      console.log(filedata);
+    handleAvatarSuccess(res, file) {
+      console.log("handle-", file);
+      if (file != null) {
+        let docinput = document.getElementsByClassName("el-upload__input")[0];
+        let img = docinput.files[0];
+        console.log("img-", img);
+        const isJPEG = img.type === "image/jpeg";
+        const isPNG = img.type === "image/png";
+        const isJPG = img.type === "image/jpg";
+
+        const isLt2M = img.size / 1024 / 1024 < 2;
+
+        if (!isJPG && !isPNG && !isJPEG) {
+          this.$message.error("JPG, JPEG, PNG, JFIF 형식만 올려주세요.");
+          return;
+        }
+        if (!isLt2M) {
+          this.$message.error("2MB 이하의 사진이 필요해요.");
+          return;
+        }
+
+        this.changeprofile = true;
+        this.ruleForm.ent_image = URL.createObjectURL(img);
+      }
     },
+
     submitForm(formName) {
-      console.log("this ent_index - ", this.ruleForm.ent_image_pk);
-      console.log("this boolean ent_indx", !this.ruleForm.ent_image_pk);
-      if (!this.ruleForm.ent_image_pk && !this.changeprofile) {
+      if (this.ruleForm.ent_image_pk == 1 && !this.changeprofile) {
         this.failedprofile();
         return;
       }
 
       if (this.changeprofile) {
-        var frm = new FormData();
-        var photodata = this.$refs.companyprofile.files[0];
-        frm.append("upfile", photodata);
-        axios
-          .post(`https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`, frm, {
-            headers: { Authorization: this.token },
-          })
-          .then((res) => {
-            console.log("cphoto: ", res);
-            document.getElementsByClassName("file-text")[0].innerHTML = "";
-          })
-          .catch((err) => {
-            console.log("cerr: ", err);
-          });
-      }
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          var frm = new FormData();
-          var photodata = this.$refs.companyprofile.files[0];
-          if (this.changeprofile) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let docinput = document.getElementsByClassName(
+              "el-upload__input"
+            )[0];
+            var frm = new FormData();
+            var photodata = docinput.files[0];
             frm.append("upfile", photodata);
             axios
-              .post(`https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`, frm, {
-                headers: { Authorization: this.token },
-              })
+              .post(
+                `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
+                frm,
+                {
+                  headers: { Authorization: this.token },
+                }
+              )
               .then((res) => {
-                console.log("cphoto: ", res);
+                if (res.status == 200) {
+                  this.successmessage();
+                }
               })
               .catch((err) => {
-                console.log("cerr: ", err);
+                console.log("err: ", err);
+              });
+            axios
+              .put("https://i5d206.p.ssafy.io:8443/poe", {
+                headers: { Authorization: this.token },
+                ent_image: this.ruleForm.ent_image_pk,
+                ent_index: this.ruleForm.ent_index,
+                ent_ceo: this.ruleForm.ent_ceo,
+                ent_history: this.ruleForm.ent_history,
+                ent_address: this.ruleForm.ent_address,
+                ent_website: this.ruleForm.ent_website,
+                ent_introduce: this.ruleForm.ent_introduce,
+              })
+              .then((res) => {
+                if (res.status == 200) {
+                  console.log("OK");
+                }
+              })
+              .catch((err) => {
+                if (err.response == 401) {
+                  this.$message.error("로그인세션이 만료되었습니다");
+                  this.$cookies.remove("PID_AUTH");
+                  localStorage.clear();
+                  this.$router.push("/");
+                }
               });
           }
-
-          // 기업정보수정
-          axios
-            .put("https://i5d206.p.ssafy.io:8443/poe", {
-              headers: { Authorization: this.token },
-              ent_image: this.ruleForm.ent_image_pk,
-              ent_index: this.ruleForm.ent_index,
-              ent_ceo: this.ruleForm.ent_ceo,
-              ent_history: this.ruleForm.ent_history,
-              ent_address: this.ruleForm.ent_address,
-              ent_website: this.ruleForm.ent_website,
-              ent_introduce: this.ruleForm.ent_introduce,
-            })
-            .then((res) => {
-              console.log(res);
-              this.loading = true;
-              setTimeout(() => {
-                this.loading = false;
+        });
+      } else {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            axios
+              .put("https://i5d206.p.ssafy.io:8443/poe", {
+                headers: { Authorization: this.token },
+                ent_image: this.ruleForm.ent_image_pk,
+                ent_index: this.ruleForm.ent_index,
+                ent_ceo: this.ruleForm.ent_ceo,
+                ent_history: this.ruleForm.ent_history,
+                ent_address: this.ruleForm.ent_address,
+                ent_website: this.ruleForm.ent_website,
+                ent_introduce: this.ruleForm.ent_introduce,
+              })
+              .then((res) => {
+                console.log(res);
                 this.successmessage();
-                this.ruleForm.Password = "";
-                this.ruleForm.PasswordConfirm = "";
-              }, 2000);
-            })
-            .catch((err) => {
-              if (err.response == 401) {
-                this.$message.error("로그인세션이 만료되었습니다");
-                this.$cookies.remove("PID_AUTH");
-                localStorage.clear();
-                this.$router.push("/");
-              }
-            });
-        } else {
-          console.log("error submit!!");
-          this.failed();
-          return false;
-        }
-      });
+              })
+              .catch((err) => {
+                if (err.response == 401) {
+                  this.$message.error("로그인세션이 만료되었습니다");
+                  this.$cookies.remove("PID_AUTH");
+                  localStorage.clear();
+                  this.$router.push("/");
+                }
+              });
+          }
+        });
+      }
+
+      // 기업정보수정
     },
     // save 성공
     successmessage() {
@@ -330,78 +367,29 @@ export default {
 </script>
 
 <style scoped>
-/* .box {
-  width: 150px;
-  height: 150px; */
-/* border-radius: 70%; */
-/* overflow: hidden;
-
-  margin: 30px;
-} */
-/* .cprofile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-} */
-
-.filetype {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  *margin-right: 4px;
-}
-
-.filetype * {
-  vertical-align: middle;
-}
-
-.filetype .file-text {
-  position: relative;
-  width: 200px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-  height: 25px;
-  background-color: #ecefef;
-  margin: 0;
-  border: 1px solid #cdd3d4;
-  line-height: 20px;
-  z-index: 10;
-}
-
-.filetype .file-select {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
-  overflow: hidden;
-}
-
-.filetype .file-select .input-file {
-  width: 60px;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  height: 20px;
-}
-.summitbtn {
-  background-color: #e6a23c;
-  color: rgba(255, 255, 255, 0.74) !important;
-  border: none;
-  height: 28px;
-  font-size: 15px;
-  padding: 2px 15px 0px 15px;
-}
-.filetype .file-text + .file-btn {
-  display: inline-block;
-  background-color: #e6a23c;
-  height: 27px;
-  line-height: 22px;
-  padding: 2px 15px 0px 15px;
-  color: rgba(255, 255, 255, 0.74) !important;
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
   cursor: pointer;
-  margin-left: 5px;
-  font-size: 15px;
-  margin-right: 5px;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+  margin: 10px;
+  /* object-fit: cover; */
 }
 </style>

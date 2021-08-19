@@ -29,7 +29,7 @@
             maxlength="1000"
             show-word-limit
             :autosize="{ minRows: 8, maxRows: 10 }"
-            placeholder="자기소개를 입력해주세요\n안녕하세요 저는 리더십있는 000입니다.\n 저는 다음과 같은 역량을 가지고 있습니다!\n#1 ..."
+            :placeholder="phtext"
           ></el-input>
         </el-form-item>
         <div style="float:right">
@@ -65,13 +65,21 @@ export default {
     this.userindex = index;
   },
   created() {
-    console.log("this.introduce created- ", this.introduce);
-    console.log("this.path created- ", this.photofilepath);
     this.userintroduce = this.introduce;
   },
 
   data() {
     return {
+      phtext:
+        "자기소개를 입력해주세요" +
+        "\n" +
+        "안녕하세요 저는 리더십있는 000입니다." +
+        "\n" +
+        "저는 다음과 같은 역량을 가지고 있습니다!" +
+        "\n" +
+        " #1 " +
+        "\n" +
+        "...",
       loading: false,
       userindex: "",
       imageUrl: this.photofilepath,
@@ -91,36 +99,31 @@ export default {
     };
   },
   methods: {
-    filecheck() {
-      let file = document.getElementById("checkinput");
-      console.log(file);
-      console.log(file.files[0]);
-    },
     handleAvatarSuccess(res, file) {
       if (file != null) {
-        console.log("why?-", file);
-        console.log("file2'-", this.$refs.photo);
+        let docinput = document.getElementsByClassName("el-upload__input")[0];
+        let file = docinput.files[0];
+        const isJPEG = file.type === "image/jpeg";
+        const isPNG = file.type === "image/png";
+        const isJPG = file.type === "image/jpg";
+
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG && !isPNG && !isJPEG) {
+          this.$message.error("JPG, JPEG, PNG, JFIF 형식만 올려주세요.");
+          return;
+        }
+        if (!isLt2M) {
+          this.$message.error("2MB 이하의 사진이 필요해요.");
+          return;
+        }
+
         this.changeprofile = true;
-        this.imageUrl = URL.createObjectURL(file[0].raw);
-      } else {
-        console.log("why null-", file);
+        this.imageUrl = URL.createObjectURL(file);
       }
     },
     beforeAvatarUpload() {},
-    changept() {
-      this.changeprofile = true;
-      let photoip = document.getElementById("photo");
-      let imgtag = document.getElementById("profilephoto");
-      imgtag.src = URL.createObjectURL(photoip.files[0]);
-      imgtag.onload = function() {
-        URL.revokeObjectURL(imgtag.src);
-      };
-      document.getElementsByClassName("file-text")[0].innerHTML = "";
-      let filedata = photoip.files[0].name;
-      this.filename = filedata;
-      document.getElementsByClassName("file-text")[0].innerHTML = filedata;
-      console.log(filedata);
-    },
+
     submitForm() {
       console.log("submitform-", this.changeprofile);
       if (this.curphoto == 2) {
@@ -132,9 +135,10 @@ export default {
         let uploadinput = document.getElementsByClassName(
           "el-upload__input"
         )[0];
-        var frm = new FormData();
+
         var photodata = uploadinput.files[0];
-        console.log(photodata);
+
+        var frm = new FormData();
         // var introducedata = this.$refs[]
         frm.append("upfile", photodata);
         // frm.append("introduce", introduce.value);
@@ -149,7 +153,8 @@ export default {
           })
           .then((res) => {
             console.log(res);
-            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            this.$message.success("업로드 되었습니다");
+            // <el-alert title="업로드 되었습니다" type="success"></el-alert>;
             this.$emit("uploadintro");
           })
           .catch((err) => {
@@ -171,8 +176,9 @@ export default {
             ind_introduce: this.userintroduce,
           })
           .then((res) => {
-            console.log(res);
-            <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+            if (res.status == 200 || res.status == 204) {
+              this.$message.success("업로드 되었습니다");
+            }
             // this.$emit("uploadintro");
             // this.openFullScreen2();
           })

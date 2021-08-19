@@ -6,11 +6,11 @@
     style="text-align:center"
   >
     <!-- 개인회원 ID -->
-    <el-form-item label="ID" prop="LoginIndivID">
+    <el-form-item label="아이디" prop="LoginIndivID">
       <el-input v-model="ruleForm.LoginIndivID"></el-input>
     </el-form-item>
     <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="LoginIndivPW">
+    <el-form-item label="비밀번호" prop="LoginIndivPW">
       <el-input type="password" v-model="ruleForm.LoginIndivPW"></el-input>
     </el-form-item>
 
@@ -72,7 +72,11 @@ export default {
             .then((result) => {
               // alert("accessToken: " + result.data.accessToken);
 
-              this.$cookies.set("PID_AUTH", "Bearer" + result.data.accessToken,0);
+              this.$cookies.set(
+                "PID_AUTH",
+                "Bearer" + result.data.accessToken,
+                0
+              );
               this.$store.state.type = "0";
               this.$store.state.othertype = "1";
               this.ruleForm.LoginIndivID = "";

@@ -1,6 +1,6 @@
 <template>
   <el-button type="text" @click="dialogVisible = true" style="color:black"
-    >interview 관리</el-button
+    >면접관리</el-button
   >
 
   <el-dialog
