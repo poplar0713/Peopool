@@ -28,7 +28,7 @@
         >
       </template>
     </el-table-column>
-    <el-table-column align="center" label="종료" prop="int_duty">
+    <el-table-column #default="scope" align="center" label="종료" prop="int_duty">
       <el-popover placement="left" :width="200" trigger="click">
         <template #reference>
           <el-button type="success" plain size="mini">면접종료</el-button>
@@ -59,7 +59,7 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
+        <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
         <UserInfoDetailNoSug :userindex="scope.row.ind_index" />
@@ -122,7 +122,7 @@ export default {
     FinishInterview(row, interviewindex) {
       axios
         .put("https://i5d206.p.ssafy.io:8443/int/finish", {
-          headers: { Authorization: this.$store.state.usertoken },
+          headers: { Authorization: this.token },
           int_index: interviewindex,
         })
         .then(() => {
@@ -139,7 +139,7 @@ export default {
     Noshow(row, interviewindex) {
       axios
         .put("https://i5d206.p.ssafy.io:8443/int/show", {
-          headers: { Authorization: this.$store.state.usertoken },
+          headers: { Authorization: this.token },
           int_index: interviewindex,
         })
         .then(() => {
