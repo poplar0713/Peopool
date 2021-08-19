@@ -5,6 +5,7 @@
         <UserInfoCard :userindex="item.ind_index" />
       </el-col>
     </el-row>
+    <br>
     <div style="text-align:center">
       <el-pagination
         layout="prev, pager, next"

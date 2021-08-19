@@ -14,49 +14,48 @@
                 :data="days.interviewers"
                 :default-sort="{ prop: 'time' }"
               >
-                <el-table-column prop="int_start" label="면접시간" sortable>
+                <el-table-column prop="int_start" label="면접시간" sortable align="center">
                 </el-table-column>
-                <el-table-column prop="ind_name" label="성명">
+                <el-table-column prop="ind_name" label="성명" align="center">
                 </el-table-column>
-                <el-table-column prop="int_duty" label="직무">
+                <el-table-column prop="int_duty" label="직무" align="center">
                 </el-table-column>
-                <el-table-column label="" prop="p_name">
+                <el-table-column label="면접장" align="center">
                   <template #default="scope">
-                    <el-row>
-                      <el-col :span="12">
-                        <UserInfoDetail :userindex="scope.row.ind_index" />
-                      </el-col>
-                      <el-col :span="12">
-                        <el-button
-                          v-if="scope.row.int_show == 'W'"
-                          size="mini"
-                          type="danger"
-                          @click="
-                            GoToInteriewRoom(
-                              scope.row.ent_name,
-                              scope.row.int_roomnumber
-                            )
-                          "
-                          >Interview Room</el-button
-                        >
-                        <el-button
-                          v-else-if="scope.row.int_show == 'F'"
-                          size="mini"
-                          disabled
-                          >NoShow</el-button
-                        >
-                        <el-button
-                          v-else-if="scope.row.int_show == 'T'"
-                          size="mini"
-                          disabled
-                          >면접종료</el-button
-                        >
-                      </el-col>
-                    </el-row>
+                    <div>
+                      <el-button
+                        v-if="scope.row.int_show == 'W'"
+                        size="mini"
+                        type="danger"
+                        @click="
+                          GoToInteriewRoom(
+                            scope.row.ent_name,
+                            scope.row.int_roomnumber
+                          )
+                        "
+                        >Interview Room</el-button
+                      >
+                      <el-button
+                        v-else-if="scope.row.int_show == 'F'"
+                        size="mini"
+                        disabled
+                        >NoShow</el-button
+                      >
+                      <el-button
+                        v-else-if="scope.row.int_show == 'T'"
+                        size="mini"
+                        disabled
+                        >면접종료</el-button
+                      >
+                    </div>
                   </template>
                 </el-table-column>
-              </el-table></el-card
-            >
+                <el-table-column label="" prop="p_name" align="center">
+                  <template #default="scope">
+                    <UserInfoDetail :userindex="scope.row.ind_index" />
+                  </template>
+                </el-table-column> </el-table
+            ></el-card>
           </el-timeline-item>
         </el-timeline>
       </el-scrollbar>

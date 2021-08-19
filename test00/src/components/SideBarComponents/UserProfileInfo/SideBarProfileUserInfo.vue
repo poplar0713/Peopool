@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:80%"
+    style="width:70%"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"

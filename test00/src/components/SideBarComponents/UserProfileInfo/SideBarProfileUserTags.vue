@@ -1,5 +1,5 @@
 <template>
-  <div class="select-section" style="width:80%">
+  <div class="select-section" style="width:70%">
     <div>
       <el-divider content-position="left">직무</el-divider>
       <div style="margin-bottom:10px">나의 직무 ({{ this.mypart }})</div>

@@ -3,6 +3,7 @@
     shape="square"
     :src="this.ent_image_path"
     :size="70"
+    style="object-fit:cover"
   ></el-avatar>
 </template>
 

@@ -6,8 +6,8 @@
     >Followings</el-button
   >
 
-  <el-dialog title="Followings" v-model="dialogVisible" width="30%">
-    <h2 style="margin:0 auto; text-align:center">
+  <el-dialog title="" v-model="dialogVisible" width="30%">
+    <h2 style="margin:0 auto; text-align:center">Followings <br>
       {{ this.followingsNumber }}
     </h2>
     <!--  -->

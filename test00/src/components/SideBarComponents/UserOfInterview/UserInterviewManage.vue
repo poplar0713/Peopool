@@ -14,7 +14,7 @@
       <el-tab-pane label="받은요청"><UserSugInterview /></el-tab-pane>
       <el-tab-pane label="수락한면접"><UserSchedule /></el-tab-pane>
       <el-tab-pane label="결과대기"><UserWaitingResult /></el-tab-pane>
-      <el-tab-pane label="결과"><PassInterview/></el-tab-pane>
+      <el-tab-pane label="결과"><ResultInterview/></el-tab-pane>
     </el-tabs>
   </el-dialog>
 </template>
@@ -23,14 +23,14 @@
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserWaitingResult from "@/components/MainUser/UserWaitingResult.vue";
-import PassInterview from "@/components/MainUser/PassInterview.vue";
+import ResultInterview from "@/components/MainUser/ResultInterview.vue";
 export default {
   name: "UserInterviewManage",
   components: {
     UserSugInterview,
     UserSchedule,
     UserWaitingResult,
-    PassInterview
+    ResultInterview
   },
   data() {
     return {
