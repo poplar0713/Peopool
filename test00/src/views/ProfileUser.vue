@@ -25,7 +25,7 @@
             </div>
             <div v-else>
               <SideBarProfileUserIntroduction
-                v-if="userdata.ind_introduce && userdata.photofilepath"
+                v-if="userdata.photofilepath"
                 :photofilepath="userdata.photofilepath"
                 :introduce="userdata.ind_introduce"
                 :curphoto="true"
