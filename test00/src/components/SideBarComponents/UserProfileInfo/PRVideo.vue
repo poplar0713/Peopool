@@ -1,7 +1,7 @@
 <template>
   <div style="width:80%">
     <div>
-      <div v-if="hasVideo">
+      <div v-if="!hasVideo">
         <video
           :src="vediofilepath"
           height="360"
@@ -12,40 +12,34 @@
       </div>
       <div v-else class="videoNotFound">
         <h4>PR 동영상을 아직 업로드 하지 않았습니다</h4>
-        <h4>오른쪽 상단의 버튼을 눌러 영상을 업로드 해보세요</h4>
+        <h4>하단의 버튼을 눌러 영상을 업로드 해보세요!</h4>
       </div>
     </div>
-    <div style="float:right;">
-      <div id="formdiv">
-        <span class="filetype">
-          <span class="file-text"></span>
-          <span class="file-btn">찾아보기</span>
-          <span class="file-select"
-            ><input
-              type="file"
-              class="input-file"
-              size="1"
-              @change="uploadChange"
-              ref="file"
-              multiple="multiple"
-          /></span>
-        </span>
-        <button @click="upload" class="summitbtn">
-          Upload
-        </button>
-      </div>
-      <!-- <form v-on:submit.prevent enctype="multipart/form-data">
-        <input
-          multiple="multiple"
-          type="file"
-          name="file"
-          id="file"
-          ref="file"
-        />
-        <button @click="upload">
-          Upload
-        </button>
-      </form> -->
+    <div>
+      <el-upload
+        class="upload-demo"
+        ref="upload"
+        :auto-upload="false"
+        :on-change="handlefiletype"
+        :on-exceed="handleExceed"
+        :file-list="fileList"
+        :limit="1"
+      >
+        <template #trigger>
+          <el-button size="small" type="primary">찾아보기</el-button>
+        </template>
+        <el-button
+          style="margin-left: 10px; backgroud-color:#5f2d9a"
+          size="small"
+          @click="upload"
+          >업로드</el-button
+        >
+        <template #tip>
+          <div class="el-upload__tip">
+            500kb 이하의 MP4 파일을 선택해주세요.
+          </div>
+        </template>
+      </el-upload>
     </div>
   </div>
 </template>
@@ -58,6 +52,7 @@ export default {
   name: "PRVideo",
   props: {
     vediofilepath: String,
+    hasVideo: Boolean,
   },
   data() {
     const token = this.$cookies.get("PID_AUTH");
@@ -67,7 +62,6 @@ export default {
       mainsearch: "",
       search: "",
       username: "",
-      hasVideo: true,
       hasDoc: true,
       ind_index: index,
       indexpath: `https://i5d206.p.ssafy.io:8443/poi/video/${index}`,
@@ -76,21 +70,43 @@ export default {
     };
   },
   methods: {
-    uploadChange(file) {
-      document.getElementsByClassName("file-text")[1].innerHTML = "";
-      let filedata = file.target.files[0].name;
-      this.filename = filedata;
-      document.getElementsByClassName("file-text")[1].innerHTML = filedata;
-      console.log(filedata);
+    handlefiletype() {
+      let docinput = document.getElementsByClassName("el-upload__input")[1];
+      let videofile = docinput.files[0];
+      // video/mp4
+      console.log("handlemp4-", videofile);
+      const isMP4 = videofile.type === "video/mp4";
+      // let flag = false;
+      const isLt5K = videofile.size / 1024 / 1024 < 500000;
+
+      if (!isMP4) {
+        this.$message.error("MP4 형식만 올려주세요.");
+        // this.fileList.splice(0);
+        // flag = true;
+        // console.log("delete?-", this.fileList);
+        return;
+      }
+      if (!isLt5K) {
+        this.$message.error("500KB 이하의 영상이 필요해요.");
+        return;
+      }
+
+      return isMP4 && isLt5K;
     },
+
     upload() {
+      // console.log("upload-", this.fileList);
+      if (!this.handlefiletype()) {
+        return;
+      }
       const token = this.$cookies.get("PID_AUTH");
       const decoded = jwt_decode(token);
       const index = decoded.index;
-
+      let docinput = document.getElementsByClassName("el-upload__input")[1];
+      let videofile = docinput.files[0];
       var frm = new FormData();
-      var Filedata = this.$refs.file.files[0];
-      frm.append("upfile", Filedata);
+      // let Filedata =;
+      frm.append("upfile", videofile);
 
       axios
         .post(`https://i5d206.p.ssafy.io:8443/poi/video/${index}`, frm, {

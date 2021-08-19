@@ -5,12 +5,14 @@
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-header><h2>프로필</h2></el-header>
-      <el-main style="width:60%; text-align:center; margin:0 auto; padding: 70px 0;">
+      <el-main
+        style="width:60%; text-align:center; margin:0 auto; padding: 70px 0;"
+      >
         <el-tabs :tab-position="tabPosition" style="height: 100%;">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개">
-            <div v-if="userdata.photo_index == 1">
+            <div v-if="userimgidx">
               <SideBarProfileUserIntroduction
                 photofilepath="https://i5d206.p.ssafy.io/file/thumbuser.png"
                 :introduce="userdata.ind_introduce"
@@ -28,35 +30,41 @@
               />
             </div>
           </el-tab-pane>
-
           <el-tab-pane label="소개영상">
-            <div v-if="userdata.video_index == '0'">
-              소개영상이 없습니다.
-            </div>
-            <div v-else>
+            <!-- <div v-if="userprvidx">
+              <h4>PR 동영상을 아직 업로드 하지 않았습니다</h4>
+              <h4>오른쪽 상단의 버튼을 눌러 영상을 업로드 해보세요</h4>
+            </div> -->
+            <div>
               <PRVideo
                 v-if="userdata.videofilepath"
                 :vediofilepath="userdata.videofilepath"
                 @uploadPR="reloadPR"
+                :hasVideo="userprvidx"
               />
             </div>
           </el-tab-pane>
 
-          <el-tab-pane label="태그관리"> <SideBarProfileUserTags /></el-tab-pane>
+          <el-tab-pane label="태그관리">
+            <SideBarProfileUserTags
+          /></el-tab-pane>
           <el-tab-pane label="서류관리">
             <SideBarProfileUserDoc @uploadDoc="reloadDoc" />
 
-            <div v-if="userdata.resume_index == '0'" class="fileDoc">
+            <div v-if="userdocidx" class="fileDoc">
               등록된 이력서 및 포트폴리오가 없습니다.
             </div>
             <div v-else>
-              <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+              <webviewer
+                v-if="userdata.resumefilepath"
+                :initialDoc="userdata.resumefilepath"
+              />
             </div>
           </el-tab-pane>
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
       </el-main>
-      <Footer/>
+      <Footer />
     </el-container>
     <router-view></router-view>
   </el-container>
@@ -89,7 +97,7 @@ export default {
     SideBarProfileUserDoc,
     DeleteUserAccount,
     webviewer,
-    Footer
+    Footer,
   },
   async created() {
     await this.userdataload();
@@ -153,6 +161,10 @@ export default {
       tabPosition: "left",
       testurl: "",
       show: false,
+      userimgidx: false,
+      userdocidx: false,
+      userprvidx: false,
+      userprofiledata: {},
       userdata: [
         { ind_name: "" },
         { ind_gender: "" },
@@ -193,19 +205,30 @@ export default {
       const decoded = jwt_decode(token);
       const index = decoded.index;
       try {
-        const res = await axios.get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
-          headers: { Authorization: token },
-        });
-        var result = res.data[0];
+        const res = await axios.get(
+          `https://i5d206.p.ssafy.io:8443/poi/${index}`,
+          {
+            headers: { Authorization: token },
+          }
+        );
+        var result = await res.data;
+        // console.log(result);
+        // this.userprofiledata = result;
         this.userdata.photofilepath =
-          "https://i5d206.p.ssafy.io/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.photo_savefolder +
+          "/" +
+          result.photo_savefile;
         this.userdata.resumefilepath =
           "https://i5d206.p.ssafy.io/file/" +
           result.resume_savefolder +
           "/" +
           result.resume_savefile;
         this.userdata.videofilepath =
-          "https://i5d206.p.ssafy.io/file/" + result.video_savefolder + "/" + result.video_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          result.video_savefolder +
+          "/" +
+          result.video_savefile;
         this.userdata.resume_originfile = result.resume_originfile;
         this.userdata.photo_originfile = result.photo_originfile;
         this.userdata.video_originfile = result.video_originfile;
@@ -219,6 +242,10 @@ export default {
         this.userdata.ind_email = result.ind_email;
         this.userdata.ind_phone = result.ind_phone;
         this.userdata.ind_gender = result.ind_gender;
+
+        this.userimgidx = result.photo_index == 2;
+        this.userdocidx = result.resume_index == 0;
+        this.userprvidx = result.video_index == 0;
       } catch (error) {
         console.log(error);
       }
