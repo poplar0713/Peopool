@@ -8,18 +8,21 @@
           style="text-align:center; background-color:#F4F4EF; height:110%;"
           @click="(dialogVisible = true), getcompanydata(item.ent_index)"
         >
-          <div style="margin-bottom:60px">
-            <!-- <el-row>
-            <el-col :span="8">
-              {{ item.ent_image }}
-            </el-col>
-            <el-col :span="16">
-              <h1>{{ item.ent_name }}</h1>
-            </el-col>
-          </el-row> -->
-          </div>
-          <div id="carouselname">
-            <h1>{{ item.ent_name }}</h1>
+          <div style="">
+            <el-row>
+              <el-col :span="8">
+                <img
+                  :src="
+                    `https://i5d206.p.ssafy.io/file/${item.savefolder}/${item.savefile}`
+                  "
+                  alt=""
+                  style="width:150px; height:180px"
+                />
+              </el-col>
+              <el-col :span="16" id="carouselname">
+                <h1>{{ item.ent_name }}</h1>
+              </el-col>
+            </el-row>
           </div>
         </el-card>
       </el-carousel-item>
@@ -294,6 +297,6 @@ export default {
   font-family: "SDSamliphopangche_Basic";
   font-weight: normal;
   font-style: normal;
-  font-size: 50px;
+  font-size: 45px;
 }
 </style>
