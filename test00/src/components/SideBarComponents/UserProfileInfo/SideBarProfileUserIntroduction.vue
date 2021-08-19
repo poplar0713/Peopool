@@ -101,13 +101,10 @@ export default {
     };
   },
   methods: {
-    filecheck() {
-      let file = document.getElementById("checkinput");
-      console.log(file);
-      console.log(file.files[0]);
-    },
     handleAvatarSuccess(res, file) {
       if (file != null) {
+        let docinput = document.getElementsByClassName("el-upload__input")[0];
+        let file = docinput.files[0];
         const isJPEG = file.type === "image/jpeg";
         const isPNG = file.type === "image/png";
         const isJPG = file.type === "image/jpg";
@@ -124,24 +121,11 @@ export default {
         }
 
         this.changeprofile = true;
-        this.imageUrl = URL.createObjectURL(file[0].raw);
+        this.imageUrl = URL.createObjectURL(file);
       }
     },
     beforeAvatarUpload() {},
-    changept() {
-      this.changeprofile = true;
-      let photoip = document.getElementById("photo");
-      let imgtag = document.getElementById("profilephoto");
-      imgtag.src = URL.createObjectURL(photoip.files[0]);
-      imgtag.onload = function() {
-        URL.revokeObjectURL(imgtag.src);
-      };
-      document.getElementsByClassName("file-text")[0].innerHTML = "";
-      let filedata = photoip.files[0].name;
-      this.filename = filedata;
-      document.getElementsByClassName("file-text")[0].innerHTML = filedata;
-      console.log(filedata);
-    },
+
     submitForm() {
       console.log("submitform-", this.changeprofile);
       if (this.curphoto == 2) {
