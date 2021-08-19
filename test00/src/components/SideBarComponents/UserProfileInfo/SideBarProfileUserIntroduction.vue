@@ -132,6 +132,12 @@ export default {
         this.$message.error("사진을 업로드 해주세요.");
         return;
       }
+      let str = this.userintroduce.replace(" ", "");
+
+      if (str == "" || str == null) {
+        this.$message.error("자기소개를 써주세요.");
+        return;
+      }
       // 저장하는 방법 찾아보기
       if (this.changeprofile) {
         let uploadinput = document.getElementsByClassName(
