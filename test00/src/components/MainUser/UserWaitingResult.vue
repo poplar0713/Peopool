@@ -5,7 +5,7 @@
         (data) =>
           (!search ||
             data.ent_name.toLowerCase().includes(search.toLowerCase())) &&
-          data.int_show == 'W'
+          data.int_show == 'T'
       )
     "
     height="600"
@@ -24,7 +24,11 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="검색어를 입력해주세요"
+        />
       </template>
       <template #default="scope">
         <CompanyInfoDetail :item="scope.row.ent_index" />

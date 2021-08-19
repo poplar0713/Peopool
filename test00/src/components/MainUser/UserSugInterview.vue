@@ -145,7 +145,7 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
+        <el-input v-model="search" size="mini" placeholder="Type to search" />
       </template>
       <template #default="scope">
         <CompanyInfoDetail :companyindex="scope.row.ent_index" />
@@ -252,7 +252,7 @@ export default {
       console.log(sugindex);
       axios
         .put("https://i5d206.p.ssafy.io:8443/sug/accept", {
-          headers: { Authorization: this.$store.state.usertoken },
+          headers: { Authorization: this.token },
           sug_decision: decision,
           sug_index: sugindex,
         })
@@ -278,7 +278,7 @@ export default {
       console.log(index, row);
       axios
         .put(`https://i5d206.p.ssafy.io:8443/sug/reject?index=${sugindex}`, {
-          headers: { Authorization: this.$store.state.usertoken },
+          headers: { Authorization: this.token },
         })
         .then(() => {
           this.dialogVisible = false;

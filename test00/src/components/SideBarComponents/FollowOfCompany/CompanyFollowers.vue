@@ -16,6 +16,11 @@
       width="100%"
       height="250px"
     >
+      <el-table-column width="100%">
+        <template #default="scope">
+          <UserInfoCircleImage :userindex="scope.row.following" />
+        </template>
+      </el-table-column>
       <el-table-column align="center">
         <template #header>
           <el-input
@@ -38,18 +43,20 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import UserInfoName from "@/components/UserInfo/UserInfoName.vue";
+import UserInfoCircleImage from "@/components/UserInfo/UserInfoCircleImage.vue";
 
 export default {
   name: "CompanyFollowers",
-  components: { UserInfoName },
-  data() {
+  components: { UserInfoName, UserInfoCircleImage },
+  mounted(){
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 내정보 가져오기
     this.company_index = index;
-
+  },
+  data() {
     return {
       dialogVisible: false,
       dialogVisible_user: false,
@@ -65,11 +72,11 @@ export default {
       //팔로워정보 가져오기
       axios
         .get("https://i5d206.p.ssafy.io:8443/fol/follower", {
+          headers: { Authorization: this.$store.state.usertoken },
           params: {
             index: this.company_index,
             type: 1,
           },
-          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
@@ -87,11 +94,11 @@ export default {
       // 팔로워숫자 가져오기
       axios
         .get("https://i5d206.p.ssafy.io:8443/fol/counter", {
+          headers: { Authorization: this.$store.state.usertoken },
           params: {
             index: this.company_index,
             type: 1,
           },
-          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
