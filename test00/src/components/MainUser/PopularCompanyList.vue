@@ -39,14 +39,14 @@
             <i
               class="fas fa-heart fa-2x"
               size:7x
-              @click="clickfollowBtn"
+              @click="clickfollowBtn(this.datacompany.ent_index)"
               style="cursor:pointer"
             ></i>
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
             <i
-              @click="clickfollowBtn"
+              @click="clickfollowBtn(this.datacompany.ent_index)"
               class="far fa-heart fa-2x"
               style="cursor:pointer"
             ></i>
@@ -231,7 +231,7 @@ export default {
         });
     },
     //팔로잉버튼
-    clickfollowBtn() {
+    clickfollowBtn(companyindex) {
       if (this.follow) {
         console.log("팔로우 해제");
         console.log(this.user_index, this.item);
@@ -241,7 +241,7 @@ export default {
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.company_info.ent_index,
+              follower: companyindex,
             },
           })
           .then((res) => {
@@ -264,7 +264,7 @@ export default {
             headers: { Authorization: this.token },
             fol_type: 0,
             following: this.user_index,
-            follower: this.company_info.ent_index,
+            follower: companyindex,
           })
           .then((res) => {
             console.log(res);
