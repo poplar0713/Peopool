@@ -13,12 +13,13 @@
       align="center"
       label="면접종료일"
       prop="int_end"
-      width="160%"
     >
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="ind_name" width="100%">
+    <el-table-column align="center" label="피풀인" prop="ind_name">
     </el-table-column>
-    <el-table-column align="center" label="결과" prop="int_done" width="100%">
+    <el-table-column align="center" label="직무" prop="int_duty">
+    </el-table-column>
+    <el-table-column align="center" label="결과" prop="int_done">
     </el-table-column>
     <el-table-column align="center">
       <template #header>
