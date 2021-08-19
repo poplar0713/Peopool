@@ -25,7 +25,6 @@
           <TodayInterviewUser />
         </div>
       </el-main>
-      
     </el-container>
   </el-container>
 </template>
@@ -36,7 +35,6 @@ import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 import TodayInterviewUser from "@/components/MainCompany/TodayInterviewUser.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
-
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
