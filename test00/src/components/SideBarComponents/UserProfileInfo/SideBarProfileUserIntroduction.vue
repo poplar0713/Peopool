@@ -29,7 +29,7 @@
             maxlength="1000"
             show-word-limit
             :autosize="{ minRows: 8, maxRows: 10 }"
-            placeholder="자기소개를 입력해주세요\n안녕하세요 저는 리더십있는 000입니다.\n 저는 다음과 같은 역량을 가지고 있습니다!\n#1 ..."
+            :placeholder="phtext"
           ></el-input>
         </el-form-item>
         <div style="float:right">
@@ -72,6 +72,16 @@ export default {
 
   data() {
     return {
+      phtext:
+        "자기소개를 입력해주세요" +
+        "\n" +
+        "안녕하세요 저는 리더십있는 000입니다." +
+        "\n" +
+        "저는 다음과 같은 역량을 가지고 있습니다!" +
+        "\n" +
+        " #1 " +
+        "\n" +
+        "...",
       loading: false,
       userindex: "",
       imageUrl: this.photofilepath,
@@ -98,12 +108,23 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       if (file != null) {
-        console.log("why?-", file);
-        console.log("file2'-", this.$refs.photo);
+        const isJPEG = file.type === "image/jpeg";
+        const isPNG = file.type === "image/png";
+        const isJPG = file.type === "image/jpg";
+
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG && !isPNG && !isJPEG) {
+          this.$message.error("JPG, JPEG, PNG, JFIF 형식만 올려주세요.");
+          return;
+        }
+        if (!isLt2M) {
+          this.$message.error("2MB 이하의 사진이 필요해요.");
+          return;
+        }
+
         this.changeprofile = true;
         this.imageUrl = URL.createObjectURL(file[0].raw);
-      } else {
-        console.log("why null-", file);
       }
     },
     beforeAvatarUpload() {},
@@ -132,9 +153,10 @@ export default {
         let uploadinput = document.getElementsByClassName(
           "el-upload__input"
         )[0];
-        var frm = new FormData();
+
         var photodata = uploadinput.files[0];
-        console.log(photodata);
+
+        var frm = new FormData();
         // var introducedata = this.$refs[]
         frm.append("upfile", photodata);
         // frm.append("introduce", introduce.value);
