@@ -14,10 +14,11 @@
 	<select id="userByTag" parameterType="String" resultType="HashMap">
 		<choose>
 			<when test="type == 0">
-				select ind_index, ind_name
-				from individual i join hashtag h
-                on i.ind_index = h.tag_target
-				where i.ind_switch = 'T' and h.tag_type = #{type} and h.taglist_index = (select taglist_index
+				select a.ind_index, ind_name
+				from (select * from individual i join hashtag h
+                on i.ind_index = h.tag_target) a join ind_profile b
+                on a.ind_index = b.ind_index
+				where b.ind_switch = 'T' and a.tag_type = #{type} and a.taglist_index = (select taglist_index
 				from taglist
 				where taglist_name = #{name});
 			</when>
