@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.peopool.model.EntCard;
+import com.ssafy.peopool.model.EntCardImage;
 import com.ssafy.peopool.model.FileInfo;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 import com.ssafy.peopool.model.service.ProfileOfEnterpriseService;
@@ -56,7 +57,7 @@ public class ProfileOfEnterpriseController {
 	
 	@ApiOperation(value = "팔로워 순으로 전체 프로필을 가져온다.", response = String.class)
 	@GetMapping("/ByFollower")
-	public ResponseEntity<List<EntCard>> getAllProfileByFollower() throws SQLException{
+	public ResponseEntity<List<EntCardImage>> getAllProfileByFollower() throws SQLException{
 		return new ResponseEntity<>(profileOfEnterpriseService.getAllProfileByFollower(), HttpStatus.OK);
 		
 	}
