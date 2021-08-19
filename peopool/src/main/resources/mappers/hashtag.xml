@@ -17,7 +17,7 @@
 				select ind_index, ind_name
 				from individual i join hashtag h
                 on i.ind_index = h.tag_target
-				where h.tag_type = #{type} and h.taglist_index = (select taglist_index
+				where i.ind_switch = 'T' and h.tag_type = #{type} and h.taglist_index = (select taglist_index
 				from taglist
 				where taglist_name = #{name});
 			</when>
