@@ -26,7 +26,7 @@
           <el-row>
             <el-col :span="12"
               ><div class="grid-content bg-purple">
-                <CompanyInfoName :companydata="scope.row.follower" /></div
+                <CompanyInfoName :companyindex="scope.row.follower" /></div
             ></el-col>
             <el-col :span="12"
               ><div class="grid-content bg-purple-light">

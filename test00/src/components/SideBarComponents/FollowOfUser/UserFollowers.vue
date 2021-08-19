@@ -22,7 +22,7 @@
         </template>
         <template #default="scope">
           <div class="grid-content bg-purple">
-            <CompanyInfoName :companydata="scope.row.following" />
+            <CompanyInfoName :companyindex="scope.row.following" />
           </div>
         </template>
       </el-table-column>
