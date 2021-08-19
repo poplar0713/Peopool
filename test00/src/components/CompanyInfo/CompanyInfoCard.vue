@@ -1,20 +1,38 @@
 <template>
   <!-- 카드 -->
   <el-card
-    shadow="hover"
-    style="margin-bottom:20px; text-align:center; height:100%"
     @click="dialogVisible = true"
-    ><div v-if="this.company_info.ent_image">
-      <img
-        style="width: 100%; height: auto"
-        :src="this.company_info.ent_image_path"
-      />
+    shadow="hover"
+    style=" align-item:center; text-align:center; height:100%"
+  >
+    <div style="border: 1px solid whitesmoke; height: 15em">
+      <div v-if="this.company_info.ent_image" style="height: 100%; display: table">
+        <div style="vertical-align: middle; display: table-cell; margin: 0 auto;">
+          <el-image
+            :src="this.company_info.ent_image_path"
+            :fit="none"
+            style="width: 100%; height: auto;"
+          />
+        </div>
+      </div>
+      <div v-else>
+        <div
+          style="align-item:center; vertical-align: middle; display: table-cell; margin: 0 auto;"
+        >
+          <el-image :src="this.nonImage" :fit="fit" style="width: 100%; height: auto;" />
+        </div>
+      </div>
     </div>
-    <div v-else>
-      <img style="width: 100%; height: auto" :src="this.nonImage" />
+    <div
+      style="
+    line-height: 0.2em;
+    justify-content: space-between;
+    text-align:center;"
+    >
+      <h3>{{ this.company_info.ent_name }}</h3>
     </div>
-    <h3>{{ this.company_info.ent_name }}</h3>
   </el-card>
+
   <!-- 모달창 -->
   <el-dialog v-model="dialogVisible" class="info">
     <el-container style="text-align:center">
@@ -32,11 +50,7 @@
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
-            <i
-              @click="clickfollowBtn"
-              class="far fa-heart fa-2x"
-              style="cursor:pointer"
-            ></i>
+            <i @click="clickfollowBtn" class="far fa-heart fa-2x" style="cursor:pointer"></i>
           </span>
         </h2>
       </el-header>
@@ -48,10 +62,7 @@
               <!-- 왼쪽 사진 -->
               <el-aside width="300px"
                 ><div v-if="this.company_info.ent_image">
-                  <img
-                    style="width: 100%; height: auto"
-                    :src="this.company_info.ent_image_path"
-                  />
+                  <img style="width: 100%; height: auto" :src="this.company_info.ent_image_path" />
                 </div>
                 <div v-else>
                   <img style="width: 100%; height: auto" :src="this.nonImage" />
@@ -59,7 +70,7 @@
               </el-aside>
               <!--  -->
               <el-main>
-                <h4>기업 대표 : {{ this.company_info.ent_ceo }}</h4>
+                <h3>기업 대표 : {{ this.company_info.ent_ceo }}</h3>
                 {{ this.company_info.ent_info }}
                 <br />
                 {{ this.company_info.ent_introduce }}</el-main
