@@ -98,11 +98,11 @@
 
 #  Architecture
 
-![image-20210820054215787](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210820054215787.png)
+![image-20210820054215787](./exec/img/기술아키텍처.png)
 
 
 
-![image-20210820054256437](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210820054256437.png)
+![image-20210820054256437](./exec/img/기술스택.png)
 
 
 
@@ -173,7 +173,7 @@
 
 -  기업이 개인을 팔로우 및 팔로워 
 
-![기업이개인팔로잉](C:\Users\multicampus\Documents\카카오톡 받은 파일\[기업] 태그검색 키워드 검색 화상회의\기업이개인팔로잉.gif)
+![기업이개인팔로잉](./exec/img/기업이개인팔로잉.gif)
 
 
 
