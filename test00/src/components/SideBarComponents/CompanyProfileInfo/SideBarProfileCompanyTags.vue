@@ -188,7 +188,7 @@ export default {
       if (this.temp_index != "") {
         axios
           .delete(`https://i5d206.p.ssafy.io:8443/cla/${this.temp_index}`, {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           })
           .then(() => {})
           .catch((err) => {
@@ -197,7 +197,7 @@ export default {
       }
       axios
         .post("https://i5d206.p.ssafy.io:8443/cla", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           ent_index: this.company_index,
           //cla_index: this.value,
           list_index: this.entsize_index,
@@ -227,7 +227,7 @@ export default {
       } else {
         axios
           .post("https://i5d206.p.ssafy.io:8443/cla", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             ent_index: this.company_index,
             //cla_index: this.value,
             list_index: this.value,
@@ -250,7 +250,7 @@ export default {
     handleClose(tag_index) {
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/cla/${tag_index}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then(() => {
           this.$message.info("태그가 삭제되었습니다");

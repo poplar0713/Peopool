@@ -122,14 +122,14 @@ export default {
                 id: this.ruleForm.userid,
                 phone: this.ruleForm.userphone,
               },
-              headers: { Authorization: this.token },
+              headers: { Authorization: this.$store.state.usertoken },
             })
             .then((result) => {
               console.log(result);
               // 비밀번호 변경
               axios
                 .put("https://i5d206.p.ssafy.io:8443/ind", {
-                  headers: { Authorization: this.token },
+                  headers: { Authorization: this.$store.state.usertoken },
                   ind_birth: result.data.ind_birth,
                   ind_email: result.data.ind_email,
                   ind_gender: result.data.ind_gender,

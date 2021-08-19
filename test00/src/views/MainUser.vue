@@ -72,6 +72,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     const name = decoded.name;
+    this.$store.state.usertoken = token
     console.log("username-", name);
     localStorage.setItem("username", name);
 

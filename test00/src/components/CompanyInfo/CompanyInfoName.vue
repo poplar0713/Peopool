@@ -217,7 +217,7 @@ export default {
         console.log(this.user_index, this.companyindex);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             data: {
               fol_type: 0,
               following: this.user_index,
@@ -241,7 +241,7 @@ export default {
         console.log("팔로잉");
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             fol_type: 0,
             following: this.user_index,
             follower: this.companyindex,

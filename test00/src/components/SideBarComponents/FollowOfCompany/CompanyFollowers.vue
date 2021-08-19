@@ -69,7 +69,7 @@ export default {
             index: this.company_index,
             type: 1,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
@@ -91,7 +91,7 @@ export default {
             index: this.company_index,
             type: 1,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {

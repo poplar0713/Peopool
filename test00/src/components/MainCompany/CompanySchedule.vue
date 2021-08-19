@@ -122,7 +122,7 @@ export default {
     FinishInterview(row, interviewindex) {
       axios
         .put("https://i5d206.p.ssafy.io:8443/int/finish", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           int_index: interviewindex,
         })
         .then(() => {
@@ -139,7 +139,7 @@ export default {
     Noshow(row, interviewindex) {
       axios
         .put("https://i5d206.p.ssafy.io:8443/int/show", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           int_index: interviewindex,
         })
         .then(() => {
