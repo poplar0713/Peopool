@@ -31,7 +31,6 @@ export default {
     SideBarCompany,
     headerSearchUser,
     SearchUserTagList,
-
   },
 };
 </script>

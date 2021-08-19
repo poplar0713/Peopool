@@ -50,7 +50,6 @@ export default {
     SearchCompanyTagList,
     SearchCompanyRelatedTags,
     SearchCompanyRelatedInfo,
-
   },
 };
 </script>

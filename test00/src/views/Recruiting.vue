@@ -67,7 +67,6 @@ export default {
     RecruitingBoardRejectOfferTab,
     ProcessingInterview,
     PassUser,
-
   },
   data() {
     const token = this.$cookies.get("PID_AUTH");

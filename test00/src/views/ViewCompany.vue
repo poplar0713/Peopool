@@ -27,7 +27,6 @@ export default {
     SideBarUser,
     headerSearchCompany,
     SelectCompanyTags,
-
   },
   mounted() {},
   data() {

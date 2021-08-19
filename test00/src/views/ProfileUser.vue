@@ -95,7 +95,6 @@ export default {
     SideBarProfileUserDoc,
     DeleteUserAccount,
     webviewer,
-
   },
   async created() {
     await this.userdataload();

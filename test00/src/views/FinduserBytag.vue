@@ -197,7 +197,6 @@ export default {
     SideBarCompany,
     headerSearchUser,
     UserInfoCard,
-
   },
   computed: {
     hasResult() {

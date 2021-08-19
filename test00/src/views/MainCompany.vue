@@ -50,7 +50,6 @@ export default {
     headerSearchUser,
     CompanySugInterview,
     TodayInterviewUser,
-
   },
   mounted() {
     // 토큰가져오기

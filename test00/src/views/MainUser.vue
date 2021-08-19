@@ -53,7 +53,6 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
-
   },
   created() {},
   mounted: function() {
