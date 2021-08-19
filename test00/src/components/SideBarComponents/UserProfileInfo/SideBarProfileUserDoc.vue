@@ -7,6 +7,7 @@
       :on-change="handlefiletype"
       :on-exceed="handleExceed"
       :limit="1"
+      style=""
     >
       <template #trigger>
         <el-button size="small" type="primary">찾아보기</el-button>

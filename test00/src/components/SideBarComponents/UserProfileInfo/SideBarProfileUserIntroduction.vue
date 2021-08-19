@@ -63,6 +63,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.userindex = index;
+    this.cookietoken = token;
   },
   created() {
     this.userintroduce = this.introduce;
@@ -82,6 +83,7 @@ export default {
         "...",
       loading: false,
       userindex: "",
+      cookietoken: null,
       imageUrl: this.photofilepath,
       userintroduce: this.introduce,
       changeprofile: false,
