@@ -1,5 +1,5 @@
 <template>
-  <div style="width:80%">
+  <div style="width:70%">
     <div>
       <div v-if="!hasVideo">
         <video

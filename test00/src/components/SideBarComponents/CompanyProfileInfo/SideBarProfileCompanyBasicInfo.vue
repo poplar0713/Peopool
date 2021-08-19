@@ -8,23 +8,23 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이름 -->
-      <el-form-item label="> 회사명 : " prop="CompanyName">
+      <el-form-item label="회사명" prop="CompanyName">
         <strong>{{ this.ruleForm.CompanyName }}</strong>
       </el-form-item>
       <!-- 기업연락처 -->
-      <el-form-item label="> 회사 대표 번호 : " prop="UserTel">
+      <el-form-item label="회사 대표 번호" prop="UserTel">
         <el-input type="tel" v-model="this.ruleForm.CompanyTel"></el-input>
       </el-form-item>
       <!-- 기업이메일 -->
-      <el-form-item label="> 회사 대표 Email : " prop="UserEmail">
+      <el-form-item label="회사 대표 Email" prop="UserEmail">
         <el-input type="email" v-model="this.ruleForm.CompanyEmail"></el-input>
       </el-form-item>
       <!-- 기업회원 PW -->
-      <el-form-item label="계정 Password" prop="Password">
+      <el-form-item label="비밀번호" prop="Password">
         <el-input type="password" v-model="this.ruleForm.Password"></el-input>
       </el-form-item>
       <!-- 기업회원 PW 확인 -->
-      <el-form-item label="계정 Password 확인" prop="PasswordConfirm">
+      <el-form-item label="비밀번호" prop="PasswordConfirm">
         <el-input type="password" v-model="this.ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
       <div style="float:right">

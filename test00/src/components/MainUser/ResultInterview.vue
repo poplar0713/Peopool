@@ -3,28 +3,34 @@
     :data="
       pastinterview.filter(
         (data) =>
-          (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
-          data.int_done == 'P'
+          (!search ||
+            data.ent_name.toLowerCase().includes(search.toLowerCase()))
       )
     "
     height="600"
+    width="100"
   >
-    <el-table-column align="center" label="면접종료일" prop="int_end">
+    <el-table-column
+      align="center"
+      label="면접종료일"
+      prop="int_end"
+      width="160%"
+    >
     </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="ind_name">
+    <el-table-column align="center" label="기업명" prop="ent_name">
     </el-table-column>
-    <el-table-column align="center" label="직무" prop="int_duty">
+    <el-table-column align="center" label="결과" prop="int_done">
+      <template #default="scope">
+        <div v-if="scope.row.int_donw=='P'">합격</div>
+        <div v-if="scope.row.int_donw=='F'">불합격</div>
+      </template>
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input
-          v-model="search"
-          size="mini"
-          placeholder="검색어를 입력해주세요"
-        />
+        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
       </template>
       <template #default="scope">
-        <UserInfoDetail :userindex="scope.row.ind_index" />
+        <CompanyInfoDetail :companyindex="scope.row.ent_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -33,11 +39,11 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import UserInfoDetail from "@/components/UserInfo/UserInfoDetail.vue";
+import CompanyInfoDetail from "@/components/CompanyInfo/CompanyInfoDetail";
 
 export default {
-  name: "PassUser",
-  components: { UserInfoDetail },
+  name: "UserWaitingResult",
+  components: { CompanyInfoDetail },
   data() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -45,7 +51,7 @@ export default {
     const index = decoded.index;
     // 예전면접가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/int/ent/last/${index}`, {
+      .get(`https://i5d206.p.ssafy.io:8443/int/last/${index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
