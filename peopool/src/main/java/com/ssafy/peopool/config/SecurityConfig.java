@@ -70,14 +70,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
        	// 특정 경로 지정
         // 로그인, 로그아웃, 회원가입에서 접근 가능
-      	.antMatchers("/auth/**","/ind/**","/ent/**").permitAll()
+      	.antMatchers("/auth/**","/ind/**","/ent/**","/user/interviewroom/**").permitAll()
       	
        	// 설정한 경로 외에 모든 경로를 뜻함.
       	// 설정한 도메인 외에 JWT 체크 후 접근
-//	    .anyRequest().authenticated() // 접근 권한 수정 필요
+	    .anyRequest().authenticated() // 접근 권한 수정 필요
 
 	    // 설정한 도메인 외에 JWT 체크 없이 모두 접근 가능
-	    .anyRequest().permitAll()
+//	    .anyRequest().permitAll()
         .and().cors();
     }
 }
