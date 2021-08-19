@@ -145,7 +145,7 @@ export default {
 
         axios
           .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             params: {
               index: this.userindex,
               introduce: this.userintroduce,
@@ -170,7 +170,7 @@ export default {
         axios
           .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
             headers: {
-              Authorization: this.token,
+              Authorization: this.$store.state.usertoken,
             },
             ind_index: this.userindex,
             ind_introduce: this.userintroduce,

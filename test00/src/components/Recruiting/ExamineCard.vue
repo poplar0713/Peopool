@@ -118,7 +118,7 @@ export default {
       console.log(intindex);
       axios
         .put(`https://i5d206.p.ssafy.io:8443/int/pass?index=${intindex}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then(() => {
           this.disablecard = true;
@@ -128,7 +128,7 @@ export default {
       console.log(intindex);
       axios
         .put(`https://i5d206.p.ssafy.io:8443/int/fail?index=${intindex}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then(() => {
           this.disablecard = true;

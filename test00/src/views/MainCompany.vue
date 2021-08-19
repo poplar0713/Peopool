@@ -57,6 +57,7 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    this.$store.state.usertoken = token
     console.log("타입확인");
     console.log(decoded.type);
     //팔로잉정보 가져오기

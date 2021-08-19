@@ -252,7 +252,7 @@ export default {
       console.log(sugindex);
       axios
         .put("https://i5d206.p.ssafy.io:8443/sug/accept", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           sug_decision: decision,
           sug_index: sugindex,
         })
@@ -278,7 +278,7 @@ export default {
       console.log(index, row);
       axios
         .put(`https://i5d206.p.ssafy.io:8443/sug/reject?index=${sugindex}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then(() => {
           this.dialogVisible = false;

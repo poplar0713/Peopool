@@ -72,7 +72,7 @@ export default {
                 name: this.ruleForm.username,
                 phone: this.ruleForm.userphone,
               },
-              headers: { Authorization: this.token },
+              headers: { Authorization: this.$store.state.usertoken },
             })
             .then((result) => {
               this.foundId = result.data.ind_id;

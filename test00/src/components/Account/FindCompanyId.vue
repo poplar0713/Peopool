@@ -77,7 +77,7 @@ export default {
                 name: this.ruleForm.companyname,
                 email: this.ruleForm.companyemail,
               },
-              headers: { Authorization: this.token },
+              headers: { Authorization: this.$store.state.usertoken },
             })
             .then((result) => {
               this.foundId = result.data.ent_id;

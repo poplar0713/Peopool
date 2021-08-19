@@ -191,7 +191,7 @@ export default {
           // 회원정보 수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/ind", {
-              headers: { Authorization: this.token },
+              headers: { Authorization: this.$store.state.usertoken },
               ind_birth: this.ruleForm.UserBirth,
               ind_email: this.ruleForm.UserEmail,
               ind_gender: this.ruleForm.Gender,
@@ -223,7 +223,7 @@ export default {
           if (this.ruleForm.open == false) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOff", {
-                headers: { Authorization: this.token },
+                headers: { Authorization: this.$store.state.usertoken },
                 ind_index: this.ruleForm.UserIndex,
               })
               .then((res) => {
@@ -242,7 +242,7 @@ export default {
           if (this.ruleForm.open == true) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOn", {
-                headers: { Authorization: this.token },
+                headers: { Authorization: this.$store.state.usertoken },
                 ind_index: this.ruleForm.UserIndex,
               })
               .then((res) => {

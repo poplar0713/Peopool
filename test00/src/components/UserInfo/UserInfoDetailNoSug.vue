@@ -234,7 +234,7 @@ export default {
               following: this.companyindex,
               follower: this.userindex,
             },
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           })
           .then((res) => {
             console.log(res);
@@ -252,7 +252,7 @@ export default {
         console.log("팔로잉");
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             fol_type: 1,
             following: this.companyindex,
             follower: this.userindex,
