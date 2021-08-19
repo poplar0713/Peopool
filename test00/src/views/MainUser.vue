@@ -25,7 +25,7 @@
           ></el-col>
         </el-row>
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -36,7 +36,7 @@ import headerSearchCompany from "@/components/SideBarComponents/headerSearchComp
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
 import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
-import Footer from "@/components/Footer.vue";
+
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -53,7 +53,7 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
-    Footer
+
   },
   created() {},
   mounted: function() {

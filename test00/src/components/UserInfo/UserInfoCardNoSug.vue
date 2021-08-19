@@ -1,21 +1,25 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer; height:110%"
+    style="margin-bottom:20px; cursor:pointer; height:110%;"
     @click="dialogVisible = true"
   >
     <el-row>
       <el-col :span="8">
         <div>
           <span v-if="this.userdata.photo_index">
-            <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+            <img
+              :src="this.userdata.photofilepath"
+              style="width:100%; heigth: auto"
+            />
           </span>
           <span v-else>
             <img :src="this.nonImage" style="width:100%; heigth: auto" />
           </span>
         </div>
       </el-col>
-      <el-col :span="16"
+      <el-col :span="1"></el-col>
+      <el-col :span="15"
         ><div>
           <div>
             <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
@@ -49,7 +53,10 @@
             <el-col :span="12" style="text-align: center">
               <div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:70%; heigth: auto" />
+                  <img
+                    :src="this.userdata.photofilepath"
+                    style="width:70%; heigth: auto"
+                  />
                 </span>
                 <span v-else>
                   <img :src="this.nonImage" style="width:70%; heigth: auto" />
@@ -60,7 +67,11 @@
             <el-col :span="8"
               ><span>
                 <h3>성명 : {{ this.userdata.ind_name }}</h3>
-                <h3>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h3>
+                <h3>
+                  직무 : {{ this.userdata.cat_name }} ({{
+                    this.userdata.car_value
+                  }})
+                </h3>
                 <el-divider></el-divider>
                 <h3>연락처 : {{ this.userdata.ind_phone }}</h3>
                 <h3>이메일: {{ this.userdata.ind_email }}</h3>
@@ -73,7 +84,10 @@
         </el-tab-pane>
         <el-tab-pane label="이력서" style="text-align: center">
           <div v-if="userdata.resume_index" class="fileDoc">
-            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+            <webviewer
+              v-if="userdata.resumefilepath"
+              :initialDoc="userdata.resumefilepath"
+            />
           </div>
           <div v-else>
             <h3>등록된 이력서 및 포트폴리오가 없습니다.</h3>
@@ -97,7 +111,11 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
+        <el-button
+          v-if="this.follow"
+          round
+          type="danger"
+          @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"

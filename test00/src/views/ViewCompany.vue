@@ -8,7 +8,7 @@
         <h1>태그별 기업 찾아보기</h1>
         <SelectCompanyTags />
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -19,7 +19,7 @@ import headerSearchCompany from "@/components/SideBarComponents/headerSearchComp
 import SelectCompanyTags from "@/components/ViewCompany/SelectCompanyTags.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import Footer from "@/components/Footer.vue";
+
 
 export default {
   name: "ViewCompany",
@@ -27,7 +27,7 @@ export default {
     SideBarUser,
     headerSearchCompany,
     SelectCompanyTags,
-    Footer
+
   },
   mounted() {},
   data() {
