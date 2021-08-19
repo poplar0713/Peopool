@@ -8,7 +8,7 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이미지 -->
-      <el-form-item label="Image" prop="ent_image">
+      <el-form-item label="이미지" prop="ent_image">
         <!-- <div
           v-if="ruleForm.ent_image == ''"
           class="box"
