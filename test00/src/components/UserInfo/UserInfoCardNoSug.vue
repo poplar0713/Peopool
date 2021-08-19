@@ -103,9 +103,6 @@
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
           ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
         >
-        <el-button type="success" plain round @click="this.innerVisible = true"
-          >면접 제안</el-button
-        >
       </span>
     </template>
   </el-dialog>

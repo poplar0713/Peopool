@@ -25,7 +25,7 @@
           <TodayInterviewUser />
         </div>
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
 </template>
@@ -36,7 +36,7 @@ import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 import TodayInterviewUser from "@/components/MainCompany/TodayInterviewUser.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
-import Footer from "@/components/Footer.vue";
+
 
 
 import jwt_decode from "jwt-decode";
@@ -50,7 +50,6 @@ export default {
     headerSearchUser,
     CompanySugInterview,
     TodayInterviewUser,
-    Footer
   },
   mounted() {
     // 토큰가져오기
