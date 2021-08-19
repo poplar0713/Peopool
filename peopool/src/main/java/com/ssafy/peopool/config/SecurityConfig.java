@@ -74,10 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       	
        	// 설정한 경로 외에 모든 경로를 뜻함.
       	// 설정한 도메인 외에 JWT 체크 후 접근
-//	    .anyRequest().authenticated() // 접근 권한 수정 필요
+	    .anyRequest().authenticated() // 접근 권한 수정 필요
 
 	    // 설정한 도메인 외에 JWT 체크 없이 모두 접근 가능
-	    .anyRequest().permitAll()
+//	    .anyRequest().permitAll()
         .and().cors();
     }
 }
