@@ -101,7 +101,7 @@ export default {
       axios
         .put(
           "https://i5d206.p.ssafy.io:8443/sug/cancel",
-          { headers: { Authorization: this.token } },
+          { headers: { Authorization: this.$store.state.usertoken } },
           {
             params: {
               index: sugindex,

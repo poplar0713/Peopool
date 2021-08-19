@@ -125,9 +125,13 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
 
-    axios.get("https://i5d206.p.ssafy.io:8443/poe/ByFollower").then((res) => {
-      this.popularlist = res.data;
-    });
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/poe/ByFollower", {
+        headers: { Authorization: this.$store.state.usertoken },
+      })
+      .then((res) => {
+        this.popularlist = res.data;
+      });
     return {
       activeNames: ["1"],
       dialogVisible: false,
@@ -158,7 +162,7 @@ export default {
         let res = await axios.get(
           `https://i5d206.p.ssafy.io:8443/poe/path/${companyindex}`,
           {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           }
         );
 
@@ -184,7 +188,7 @@ export default {
       // 팔로우했는지 체크해보기
       axios
         .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           fol_type: 0,
           follower: companyindex,
           following: this.user_index,
@@ -212,7 +216,7 @@ export default {
       // 기업본인 태그목록 불러오기
       axios
         .get("https://i5d206.p.ssafy.io:8443/cla/list", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           params: {
             ent_index: companyindex,
           },
@@ -237,7 +241,7 @@ export default {
         console.log(this.user_index, this.item);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             data: {
               fol_type: 0,
               following: this.user_index,
@@ -261,7 +265,7 @@ export default {
         console.log("팔로잉");
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             fol_type: 0,
             following: this.user_index,
             follower: companyindex,

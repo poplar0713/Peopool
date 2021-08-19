@@ -293,7 +293,7 @@ export default {
       if (indexlist.length <= 0) {
         axios
           .get("https://i5d206.p.ssafy.io:8443/poe", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           })
           .then((res) => {
             console.log(res.data);
@@ -305,7 +305,7 @@ export default {
       } else {
         axios
           .get("https://i5d206.p.ssafy.io:8443/cla/case", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             params: {
               list: indexlist,
             },

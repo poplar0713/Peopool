@@ -331,7 +331,7 @@ export default {
       } else {
         axios
           .post("https://i5d206.p.ssafy.io:8443/has", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             tag_target: this.user_index,
             tag_type: 0,
             taglist_index: this.value,
@@ -356,7 +356,7 @@ export default {
       console.log(tag_index);
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then(() => {
           console.log();

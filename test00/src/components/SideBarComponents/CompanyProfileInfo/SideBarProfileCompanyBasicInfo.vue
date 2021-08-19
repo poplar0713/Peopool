@@ -153,7 +153,7 @@ export default {
           // 회원정보 수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/ent", {
-              headers: { Authorization: this.token },
+              headers: { Authorization: this.$store.state.usertoken },
               ent_email: this.ruleForm.CompanyEmail,
               ent_id: this.ruleForm.CompanyId,
               ent_index: this.ruleForm.CompanyIndex,

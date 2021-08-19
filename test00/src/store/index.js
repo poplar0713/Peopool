@@ -14,6 +14,7 @@ export default createStore({
     type: -1,
     othertype: -1,
     userindex: null,
+    usertoken:""
   },
   mutations: {
     userindexstore(index) {
