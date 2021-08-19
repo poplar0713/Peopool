@@ -11,17 +11,21 @@
 	</select>
 	
 	<select id="getAllProfileByFollower" resultType="EntCard">
-		select a.*, IFNULL(b.count,0) as count
- 		from (select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
-				from ent_profile p 
-					join enterprise e
-					on p.ent_index = e.ent_index) a
-					left outer join 
-            		(select follower ,count(*) count
-						from follow 
-						group by follower) b
-					on a.ent_index = b.follower
-		order by b.count desc;
+		select f.*, ifnull(g.count,0) count
+			from (select a.*,b.savefolder,b.savefile,b.originfile
+					from (select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+							from ent_profile p 
+								join enterprise e
+								on p.ent_index = e.ent_index) a 
+						left outer join file_info b 
+						on a.ent_image = b.fil_index) f 
+				left outer join (select c.ent_index, count(*) count
+									from enterprise c 
+										join follow d 
+										on c.ent_index = d.follower
+									group by c.ent_index) g 
+				on f.ent_index = g.ent_index
+				order by count desc limit 10;
 	</select>
 
 
