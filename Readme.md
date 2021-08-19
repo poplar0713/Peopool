@@ -84,7 +84,7 @@
 
        5. ER-Diagram
 
-          ![er다이어그램](C:\Users\multicampus\Documents\카카오톡 받은 파일\[기업] 태그검색 키워드 검색 화상회의\er다이어그램.png)
+          ![er다이어그램](.\exec\img\er다이어그램.png)
 
  2. 외부 서비스 정보 문서
     1. Kurento
