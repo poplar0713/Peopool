@@ -98,11 +98,11 @@
 
 #  Architecture
 
-![image-20210820054215787](./exec/img/기술아키텍처.png)
+![기술아키텍처](./exec/img/기술아키텍처.png)
 
 
 
-![image-20210820054256437](./exec/img/기술스택.png)
+![기술스택](./exec/img/기술스택.png)
 
 
 
