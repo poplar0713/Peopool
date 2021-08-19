@@ -115,6 +115,7 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             <el-alert title="업로드 되었습니다" type="success"></el-alert>;
+
             this.$emit("uploadPR");
           }
         })
