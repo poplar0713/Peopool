@@ -125,9 +125,13 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
 
-    axios.get("https://i5d206.p.ssafy.io:8443/poe/ByFollower").then((res) => {
-      this.popularlist = res.data;
-    });
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/poe/ByFollower", {
+        headers: { Authorization: this.$store.state.usertoken },
+      })
+      .then((res) => {
+        this.popularlist = res.data;
+      });
     return {
       activeNames: ["1"],
       dialogVisible: false,
