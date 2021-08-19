@@ -8,35 +8,35 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 개인회원이름 -->
-      <el-form-item label="Name" prop="UserName">
+      <el-form-item label="이름" prop="UserName">
         <strong>{{ this.ruleForm.UserName }}</strong>
       </el-form-item>
       <!-- 개인회원 생년월일 -->
-      <el-form-item label="Birth" prop="UserBirth">
+      <el-form-item label="생년월일" prop="UserBirth">
         <strong>{{ this.ruleForm.UserBirth }}</strong>
       </el-form-item>
       <!-- 공개여부 -->
-      <el-form-item label="Open to the public" prop="open">
+      <el-form-item label="프로필 공개여부" prop="open">
         <el-switch v-model="ruleForm.open"></el-switch>
       </el-form-item>
       <!-- 성별 -->
-      <el-form-item label="Gender" prop="Gender">
+      <el-form-item label="성별" prop="Gender">
         <strong>{{ this.ruleForm.Gender }}</strong>
       </el-form-item>
       <!-- 연락처 -->
-      <el-form-item label="Tel" prop="UserTel">
+      <el-form-item label="연락처" prop="UserTel">
         <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
       </el-form-item>
       <!-- 이메일 -->
-      <el-form-item label="Email" prop="UserEmail" v-if="ruleForm.UserEmail">
+      <el-form-item label="이메일" prop="UserEmail" v-if="ruleForm.UserEmail">
         <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
       </el-form-item>
       <!-- 개인회원 PW -->
-      <el-form-item label="Password" prop="Password">
+      <el-form-item label="비밀번호" prop="Password">
         <el-input type="password" v-model="ruleForm.Password"></el-input>
       </el-form-item>
       <!-- 개인회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
+      <el-form-item label="비밀번호확인" prop="PasswordConfirm">
         <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
       <div style="float:right">

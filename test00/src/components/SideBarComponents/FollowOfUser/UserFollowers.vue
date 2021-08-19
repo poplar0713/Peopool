@@ -1,6 +1,6 @@
 <template>
   <el-button type="text" @click="getFollowers" style="color:black"
-    >Followers</el-button
+    >팔로워</el-button
   >
 
   <el-dialog title="Followers" v-model="dialogVisible" width="30%">
@@ -18,7 +18,7 @@
     >
       <el-table-column align="center">
         <template #header>
-          <el-input v-model="search" size="mini" placeholder="Type to search" />
+          <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
         </template>
         <template #default="scope">
           <div class="grid-content bg-purple">

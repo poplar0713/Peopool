@@ -22,7 +22,7 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
+        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
       </template>
       <template #default="scope">
         <UserInfoDetail :userindex="scope.row.ind_index" />
