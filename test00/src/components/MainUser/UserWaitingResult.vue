@@ -5,7 +5,8 @@
         (data) =>
           (!search ||
             data.ent_name.toLowerCase().includes(search.toLowerCase())) &&
-          data.int_show == 'T'
+          data.int_show == 'T' &&
+          data.int_donw == 'W'
       )
     "
     height="600"
