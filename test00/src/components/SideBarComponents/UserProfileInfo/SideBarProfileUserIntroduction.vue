@@ -63,6 +63,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.userindex = index;
+    this.cookietoken = token;
   },
   created() {
     this.userintroduce = this.introduce;
@@ -82,6 +83,7 @@ export default {
         "...",
       loading: false,
       userindex: "",
+      cookietoken: null,
       imageUrl: this.photofilepath,
       userintroduce: this.introduce,
       changeprofile: false,
@@ -145,7 +147,7 @@ export default {
 
         axios
           .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.cookietoken },
             params: {
               index: this.userindex,
               introduce: this.userintroduce,
@@ -170,7 +172,7 @@ export default {
         axios
           .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
             headers: {
-              Authorization: this.token,
+              Authorization: this.cookietoken,
             },
             ind_index: this.userindex,
             ind_introduce: this.userintroduce,

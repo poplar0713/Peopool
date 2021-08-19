@@ -71,8 +71,8 @@
                 <h4>기업 대표 : {{ this.datacompany.ent_ceo }}</h4>
                 {{ this.datacompany.ent_info }}
                 <br />
-                {{ this.datacompany.ent_introduce }}</el-main
-              >
+                <div v-html="datacompany.ent_introduce"></div
+              ></el-main>
             </el-container>
           </div>
         </el-collapse-item>
