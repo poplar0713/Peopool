@@ -24,13 +24,24 @@
       :filter-method="filterHandler"
       width="60%"
     >
+      <template #default="scope">
+        <div v-if="scope.row.sug_state == 'W'">대기</div>
+        <div v-else-if="scope.row.sug_state == 'T'">확정</div>
+        <div v-else-if="scope.row.sug_state == 'F'">거절</div>
+        <div v-else-if="scope.row.sug_state == 'C'">취소</div>
+      </template>
     </el-table-column>
-    <el-table-column align="center" label="요청일" prop="sug_send" width="160%"> </el-table-column>
-    <el-table-column align="center" label="피풀인" prop="name" width="100%"> </el-table-column>
-    <el-table-column align="center" label="직무" prop="sug_duty" width="120%"> </el-table-column>
+    <el-table-column align="center" label="요청일" prop="sug_send" width="160%">
+    </el-table-column>
+    <el-table-column align="center" label="피풀인" prop="name" width="100%">
+    </el-table-column>
+    <el-table-column align="center" label="직무" prop="sug_duty" width="120%">
+    </el-table-column>
     <el-table-column align="center" label="요청상태">
       <template #default="scope">
-        <el-text v-if="scope.row.sug_state == 'W'" size="mini">응답대기</el-text>
+        <el-text v-if="scope.row.sug_state == 'W'" size="mini"
+          >응답대기</el-text
+        >
         <el-button
           v-if="scope.row.sug_state == 'W'"
           size="mini"
@@ -38,18 +49,35 @@
           @click="CancelInt(scope.row.sug_index)"
           >요청취소</el-button
         >
-        <el-text v-if="scope.row.sug_state == 'T'" disabled size="mini" style="margin-right:5px"
+        <el-text
+          v-if="scope.row.sug_state == 'T'"
+          disabled
+          size="mini"
+          style="margin-right:5px"
           >면접수락</el-text
         >
-        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini">취소된 요청</el-text>
-        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini">거절된 요청</el-text>
+        <el-text v-if="scope.row.sug_state == 'C'" disabled size="mini"
+          >취소된 요청</el-text
+        >
+        <el-text v-if="scope.row.sug_state == 'F'" disabled size="mini"
+          >거절된 요청</el-text
+        >
       </template>
     </el-table-column>
-    <el-table-column align="center" label="응답일정" prop="sug_decision" width="100%">
+    <el-table-column
+      align="center"
+      label="응답일정"
+      prop="sug_decision"
+      width="100%"
+    >
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="검색어를 입력해주세요"
+        />
       </template>
       <template #default="scope">
         <UserInfoDetailNoSug :userindex="scope.row.ind_index" />

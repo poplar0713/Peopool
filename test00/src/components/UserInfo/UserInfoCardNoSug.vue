@@ -15,7 +15,8 @@
           </span>
         </div>
       </el-col>
-      <el-col :span="16"
+      <el-col :span="2"></el-col>
+      <el-col :span="14"
         ><div>
           <div>
             <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
