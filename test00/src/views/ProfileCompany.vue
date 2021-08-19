@@ -3,10 +3,10 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-      <el-main style="width:70%">
+      <el-main style="width:70%; text-align:center">
         <SideBarProfileCompany />
       </el-main>
-      <Footer/>
+      <Footer />
     </el-container>
   </el-container>
 </template>
@@ -26,7 +26,7 @@ export default {
     SideBarCompany,
     headerSearchUser,
     SideBarProfileCompany,
-    Footer
+    Footer,
   },
   mounted() {
     // 토큰가져오기
