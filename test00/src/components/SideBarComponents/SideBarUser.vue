@@ -10,23 +10,35 @@
             <span class="f">ool</span>
           </div>
         </div>
+        <!-- onclick="location.href = '/user'" -->
       </router-link>
-      <el-menu
-        default-active="2"
-        @open="handleOpen"
-        @close="handleClose"
-        background-color="#f1c40f"
-      >
-        <!--  -->
-        <el-menu-item index="1">
-          <i class="el-icon-user"></i>
-          <span><ProfileUser /></span>
+      <el-menu background-color="#f1c40f">
+        <el-menu-item index="1" onclick="location.href = '/user'">
+          <i class="fas fa-home"></i><span style="margin:10px">홈</span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="5">
+        <router-link
+          :to="{ name: 'ProfileUser', params: { userindex: userindex } }"
+          style="color: black; text-decoration: none;"
+          ><el-menu-item index="2">
+            <i class="el-icon-user"></i><span>유저프로필</span></el-menu-item
+          ></router-link
+        >
+        <!--  -->
+        <el-menu-item index="3">
           <i class="el-icon-video-camera"></i>
           <span><UserInterviewManage /></span>
         </el-menu-item>
+        <!--  -->
+        <router-link
+          :to="{ name: 'ViewCompany' }"
+          style="color: black; text-decoration: none;"
+          ><el-menu-item index="4">
+            <span
+              ><i class="el-icon-office-building"></i>기업찾아보기</span
+            ></el-menu-item
+          ></router-link
+        >
         <!--  -->
         <el-menu-item index="5">
           <i class="el-icon-right"></i>
@@ -34,64 +46,49 @@
           <span><UserFollowings /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="5">
+        <el-menu-item index="6">
           <i class="el-icon-user-solid"></i>
           <i class="el-icon-back"></i>
           <span><UserFollowers /></span>
         </el-menu-item>
-        <!--  -->
-        <el-menu-item index="6" disabled>
-          <i class="el-icon-document"></i>
-          <span>혹시나</span>
-        </el-menu-item>
-        <!--  -->
-        <el-menu-item index="7">
-          <i class="el-icon-setting"></i>
-          <span>settings</span>
-        </el-menu-item>
-        <!--  -->
-        <el-menu-item index="7">
+        <el-menu-item index="7" @click="Logout">
           <i class="el-icon-turn-off"></i>
-          <span @click="Logout">Logout</span>
+          <el-text>로그아웃</el-text>
         </el-menu-item>
         <!--  -->
       </el-menu>
     </el-aside>
-    <router-view></router-view>
   </el-container>
+  <router-view></router-view>
 </template>
 
 <script>
-import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
+// import ProfileUser from "@/components/SideBarComponents/ProfileUser.vue";
 import UserInterviewManage from "@/components/SideBarComponents/UserOfInterview/UserInterviewManage.vue";
 import UserFollowings from "@/components/SideBarComponents/FollowOfUser/UserFollowings.vue";
 import UserFollowers from "@/components/SideBarComponents/FollowOfUser/UserFollowers.vue";
+import jwt_decode from "jwt-decode";
 export default {
+  name: "SideBarUser",
+  data() {
+    // 토큰가져오기
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    return {
+      value: [],
+      userindex: index,
+    };
+  },
   components: {
-    ProfileUser,
+    // ProfileUser,
     UserInterviewManage,
     UserFollowings,
     UserFollowers,
   },
   methods: {
-    ch(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    search(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
-    },
     // 로그아웃
     Logout() {
-      // 깔끔하게 비우기
-      localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
@@ -101,6 +98,7 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.$cookies.remove("PID_AUTH");
         this.$router.push("/");
         this.$message({
           message: "로그아웃",
@@ -109,16 +107,10 @@ export default {
       }, 2000);
     },
   },
-  data() {
-    return {
-      value: [],
-    };
-  },
 };
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,700&display=swap");
 img {
   display: block;
   margin: 0px auto;
@@ -126,12 +118,13 @@ img {
 .sidebar {
   position: fixed;
   height: 100%;
+  bottom: 0px;
   overflow: auto;
   font-size: 30px;
   z-index: 1000;
 }
 .el-menu {
-  height: 90%;
+  height: 91.91%;
 }
 .title span {
   font-family: "Work Sans", sans-serif;

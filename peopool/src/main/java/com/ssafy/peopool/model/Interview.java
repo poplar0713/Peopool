@@ -18,7 +18,9 @@ public class Interview {
 	String int_end; // 면접 종료 시간
 	String int_roomnumber; // 면접 room number
 	String int_show; // 진행 여부 (show / now show)
-
+	String int_done; // 완료 여부
+	String int_duty; // 직무
+	
 	public Interview() {
 	}
 
@@ -78,15 +80,29 @@ public class Interview {
 		this.int_show = int_show;
 	}
 
+	public String getInt_done() {
+		return int_done;
+	}
+
+	public void setInt_done(String int_done) {
+		this.int_done = int_done;
+	}
+
+	public String getInt_duty() {
+		return int_duty;
+	}
+
+	public void setInt_duty(String int_duty) {
+		this.int_duty = int_duty;
+	}
+
 	@Override
 	public String toString() {
 		return "Interview [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
 				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_roomnumber=" + int_roomnumber
-				+ ", int_show=" + int_show + "]";
+				+ ", int_show=" + int_show + ", int_done=" + int_done + ", int_duty=" + int_duty + "]";
 	}
-
 	
-
 	
 	
 }

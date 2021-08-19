@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.peopool.model.IntCard;
 import com.ssafy.peopool.model.Interview;
+import com.ssafy.peopool.model.InterviewDays;
 import com.ssafy.peopool.model.service.InterviewService;
 
 import io.swagger.annotations.ApiOperation;
@@ -87,20 +88,54 @@ public class InterviewController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-		
 	}
 	
-	@ApiOperation(value = "기업의 면접 일정 조회", response = String.class)
+	@ApiOperation(value = "면접 취소", response = String.class)
+	@PutMapping("/cancle")
+	public ResponseEntity<String> cancleInterview(@RequestBody Interview interview) throws SQLException{
+		if(interviewService.cancleInterview(interview)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "기업의 모든 면접 일정 조회", response = String.class)
 	@GetMapping("/ent/{index}")
 	public ResponseEntity<List<IntCard>> getEInterviews(@PathVariable("index")int index) throws SQLException{
 		return new ResponseEntity<>(interviewService.getEInterviews(index), HttpStatus.OK);
 		
 	}
 	
+	@ApiOperation(value = "기업의 면접 일정 날짜별로 묶어서 조회", response = String.class)
+	@GetMapping("/ent/iday/{index}")
+	public ResponseEntity<List<InterviewDays>> getEInterviewsGroupByDays(@PathVariable("index")int index) throws SQLException{
+		return new ResponseEntity<>(interviewService.getEDInterviewGroupByDays(index), HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "기업의 지난 면접 일정 조회", response = String.class)
 	@GetMapping("/ent/last/{index}")
 	public ResponseEntity<List<IntCard>> getELastInterviews(@PathVariable("index")int index) throws SQLException{
 		return new ResponseEntity<>(interviewService.getELastInterviews(index), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "면접 합격", response = String.class)
+	@PutMapping("/pass")
+	public ResponseEntity<String> modifyPass(@RequestParam("index") int index) throws SQLException{
+		if(interviewService.modifyPass(index)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		
+	}
+	
+	@ApiOperation(value = "면접 불합격", response = String.class)
+	@PutMapping("/fail")
+	public ResponseEntity<String> modifyFail(@RequestParam("index") int index) throws SQLException{
+		if(interviewService.modifyFail(index)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		
 	}
 	

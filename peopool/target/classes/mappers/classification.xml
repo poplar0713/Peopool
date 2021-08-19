@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.ssafy.peopool.model.repo.ClassificationRepo">
+
+	<insert id="registerClass" parameterType="Classification">
+		insert into classification(ent_index, list_index)
+		values(#{ent_index}, #{list_index})
+	</insert>
+	
+	<delete id="deleteClass" parameterType="int">
+		delete from classification
+		where cla_index = #{index}
+	</delete>
+	
+	<select id="getClass" parameterType="int" resultType="HashMap">
+		select list_name, cla_index, l.list_index
+		from classification c join classlist l
+		on c.list_index = l.list_index
+		where c.ent_index = #{index} 
+	</select>
+	
+	<select id="getEnt" parameterType="String" resultType="HashMap">
+		select e.ent_index, ent_name
+		from enterprise e join classification c
+		on e.ent_index = c.ent_index
+		where c.list_index = (select list_index
+		from classlist
+		where list_name = #{name});
+	</select>
+	
+	<select id="getCase" parameterType="List" resultType="HashMap">
+		select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce
+		from ent_profile p join enterprise e
+		on p.ent_index = e.ent_index
+		where e.ent_index in (select ent_index
+						from classification
+						where list_index in
+						<foreach collection="list" item="item" open="(" close=")" separator=",">
+						#{item}
+						</foreach>
+						group by ent_index
+						having count(*) = #{count});
+	</select>
+	
+</mapper>

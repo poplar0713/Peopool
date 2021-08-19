@@ -12,36 +12,54 @@
         </div>
       </router-link>
       <el-menu background-color="#f1c40f">
-        <!--  -->
-        <el-menu-item index="1" @click="dialogVisible = true">
-          <i
-            class="el-icon-office-building
-"
-          ></i>
-          <span><ProfileCompany /></span>
+        <el-menu-item index="1" onclick="location.href = '/company'">
+          <i class="fas fa-home"></i><span style="margin:10px">홈</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <!--  -->
+        <router-link
+          :to="{
+            name: 'ProfileCompany',
+            params: { companyindex: companyindex },
+          }"
+          style="text-decoration: none; color:black"
+        >
+          <el-menu-item index="2">
+            <i class="el-icon-office-building"></i>
+            회사프로필
+          </el-menu-item></router-link
+        >
+        <!--  -->
+        <router-link
+          :to="{
+            name: 'recruiting',
+            params: { companyindex: companyindex },
+          }"
+          style="text-decoration: none; color:black"
+        >
+          <el-menu-item index="4">
+            <i class="fas fa-tasks"></i>
+            <span style="margin:10px">Recruitment</span>
+          </el-menu-item></router-link
+        >
+        <!--  -->
+        <el-menu-item index="3" @click="goToTagSearch"
+          ><span><i class="far fa-address-card" style="margin-right:10px"></i>인재 찾기</span>
+        </el-menu-item>
+
+        <el-menu-item index="4">
           <i class="el-icon-right"></i>
           <i class="el-icon-user-solid"></i>
           <span><CompanyFollowings /></span>
         </el-menu-item>
         <!--  -->
-        <el-menu-item index="4">
+        <el-menu-item index="5">
           <i class="el-icon-office-building"></i>
           <i class="el-icon-back"></i>
           <span><CompanyFollowers /></span>
         </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-star-on"></i>
-          <span @click="GoToRecruit">RECRIT</span>
-        </el-menu-item>
-        <el-menu-item index="5">
-          <i class="el-icon-setting"></i>
-          <span>setting</span>
-        </el-menu-item>
-        <el-menu-item index="6">
+        <el-menu-item index="7" @click="Logout">
           <i class="el-icon-turn-off"></i>
-          <span @click="Logout">Logout</span>
+          <span>Logout</span>
         </el-menu-item>
         <!--  -->
       </el-menu>
@@ -51,23 +69,28 @@
 </template>
 
 <script>
-import ProfileCompany from "@/components/SideBarComponents/ProfileCompany.vue";
+// import ProfileCompany from "@/components/SideBarComponents/ProfileCompany.vue";
 import CompanyFollowings from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowings.vue";
 import CompanyFollowers from "@/components/SideBarComponents/FollowOfCompany/CompanyFollowers.vue";
+import jwt_decode from "jwt-decode";
 export default {
+  name: "SideBarCompany",
   components: {
     CompanyFollowers,
     CompanyFollowings,
-    ProfileCompany,
+  },
+  data() {
+    // 토큰가져오기
+    const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const index = decoded.index;
+    return {
+      value: [],
+      companyindex: index,
+    };
   },
   methods: {
-    ch(data) {
-      console.log(data);
-      this.$router.push("searchDetail");
-    },
     Logout() {
-      // 깔끔하게 비우기
-      localStorage.clear();
       // 로딩페이지
       const loading = this.$loading({
         lock: true,
@@ -77,6 +100,7 @@ export default {
       });
       setTimeout(() => {
         loading.close();
+        this.$cookies.remove("PID_AUTH");
         this.$router.push("/");
         this.$message({
           message: "로그아웃",
@@ -85,13 +109,11 @@ export default {
       }, 2000);
     },
     GoToRecruit() {
-      this.$router.push("recruiting");
+      location.href = "recruiting";
     },
-  },
-  data() {
-    return {
-      value: [],
-    };
+    goToTagSearch() {
+      location.href = "/company/findtag";
+    },
   },
 };
 </script>
@@ -106,7 +128,7 @@ export default {
   z-index: 1000;
 }
 .el-menu {
-  height: 90%;
+  height: 91.91%;
 }
 .title {
   margin: 2%;

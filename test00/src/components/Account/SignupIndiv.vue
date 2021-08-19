@@ -3,7 +3,7 @@
     <!-- 개인회원 ID -->
     <el-form-item label="ID" prop="ind_id">
       <el-input @keydown="recheck" v-model="ruleForm.ind_id"></el-input>
-      <el-button @click="checkID">중복확인</el-button>
+      <el-button @click="checkID" style="margin-top:10px">중복확인</el-button>
     </el-form-item>
     <!-- 개인회원 PW -->
     <el-form-item label="Password" prop="ind_password">
@@ -63,6 +63,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "SignupIndiv",
   // data
   data() {
     // 비밀번호 체크
@@ -81,7 +82,7 @@ export default {
       if (value === "") {
         callback(new Error("ID를 입력해주세요"));
       } else if (length.value < 5 || length.value > 10) {
-        callback(new Error("1-15자리로 설정해주세요"));
+        callback(new Error("5-10자리로 설정해주세요"));
       } else {
         callback();
       }
@@ -206,7 +207,6 @@ export default {
     SignupInd(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid && this.allowedID) {
-          console.log(this.ruleForm);
           this.openFullScreen2();
           // 데이터정보 보내기
           axios
@@ -221,18 +221,13 @@ export default {
             })
             .then((res) => {
               if (res.status == 200) {
-                console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
                   this.$store.state.SignupDialogIndiv = false;
                 }, 3000);
               }
             })
-            .catch((err) => {
-              console.log(err);
-            });
         } else if (this.allowedID == false) {
-          console.log("error submit!!");
           this.recheckid();
           return false;
         } else {
@@ -281,14 +276,12 @@ export default {
           .post("https://i5d206.p.ssafy.io:8443/ind/checkid", {
             ind_id: this.ruleForm.ind_id,
           })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             this.$message.error("이미 다른 사용자가 사용중인 아이디입니다.");
             this.ruleForm.ind_id = "";
             this.allowedID = false;
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
             this.allowedID = true;
             this.$message({
               message: "사용가능한 아이디입니다.",

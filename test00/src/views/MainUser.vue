@@ -1,90 +1,126 @@
 <template>
-  <!-- TabSchedule -->
+  <!-- UserSchedule -->
   <el-container>
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
       <el-main>
+        <h1 style="text-align:center">인기있는 기업 랭킹</h1>
+        <PopularCompanyList />
+        <br />
         <el-row :gutter="20">
-          <el-col :span="11"
+          <el-col
+            :span="12"
+            style="background-color:#F4F6F6; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">{{
-                this.username
-              }}</el-divider
-              ><MyInfo /></div
+              <h4 style="text-align:center">요청받은 인터뷰</h4>
+              <UserSugInterview /></div
           ></el-col>
-          <el-col :span="6"
+          <el-col
+            :span="12"
+            style="background-color:#F4F6F6; border-radius: 2em;"
             ><div class="grid-content bg-purple">
-              <el-divider content-position="left">요청받은 인터뷰</el-divider
-              ><TabRequiredInterview /></div
-          ></el-col>
-          <el-col :span="7"
-            ><div class="grid-content bg-purple">
-              <el-divider content-position="left">인터뷰 일정</el-divider
-              ><TabSchedule /></div
+              <h4 style="text-align:center">인터뷰 일정</h4>
+              <UserSchedule /></div
           ></el-col>
         </el-row>
       </el-main>
-      <el-footer>
-        <el-divider content-position="left">기업 정보</el-divider>
-        <CompanyList />
-        <el-divider content-position="left">관심기업 정보</el-divider>
-        <FollowingEntsList />
-      </el-footer>
+      
     </el-container>
   </el-container>
+  <router-view></router-view>
 </template>
 <script>
 import SideBarUser from "@/components/SideBarComponents/SideBarUser.vue";
-import TabRequiredInterview from "@/components/MainUser/TabRequiredInterview.vue";
-import MyInfo from "@/components/MainUser/MyInfo.vue";
-import TabSchedule from "@/components/MainUser/TabSchedule.vue";
-import CompanyList from "@/components/MainUser/CompanyList.vue";
-import FollowingEntsList from "@/components/MainUser/FollowingEntsList.vue";
 import headerSearchCompany from "@/components/SideBarComponents/headerSearchCompany.vue";
+import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
+import UserSchedule from "@/components/MainUser/UserSchedule.vue";
+import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
+
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
+// import NotLoginMainVue from "../components/MainBasic/NotLoginMain.vue";
+// import wsocket from "@/components/utils/websocket.js";
+//기존 소켓
 
 export default {
   name: "MainUser",
   components: {
     SideBarUser,
-    CompanyList,
-    FollowingEntsList,
-    TabRequiredInterview,
-    TabSchedule,
-    MyInfo,
+    PopularCompanyList,
+    UserSugInterview,
+    UserSchedule,
     headerSearchCompany,
   },
-  mounted() {
+  created() {},
+  mounted: function() {
+    // ws.onclose = function() {
+    //   setTimeout(
+    //     (this.ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall")),
+    //     300
+    //   ); // 웹소켓을 재연결하는 코드 삽입
+    // };
+
     console.log(server_url);
   },
   data() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    const name = decoded.name;
+    this.$store.state.usertoken = token
+    console.log("username-", name);
+    localStorage.setItem("username", name);
+
+    console.log("타입확인");
+    console.log(decoded.type);
     // 회원정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         console.log(res.data.ind_name);
         this.username = res.data.ind_name;
         localStorage.setItem("username", res.data.ind_name);
       })
       .catch((err) => {
-        console.log(err);
+        
+        
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
+    // 유저본인 태그목록 불러오기
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/has/tag", {
+        headers: { Authorization: token },
+        params: {
+          index: index,
+          type: 0,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.mytags = res.data;
+      })
+      .catch((err) => {
+        if (err.response == 401) {
+          this.$cookies.remove("PID_AUTH");
+          this.$message.error("로그인세션이 만료되었습니다");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     return {
-      mainsearch: "",
-      search: "",
       username: "",
-      hasVideo: true,
-      hasDoc: true,
-      videosrc: "@/assets/samplevideo.mp4",
-      fileList: [],
+      mytags: [],
     };
   },
   methods: {
@@ -100,6 +136,25 @@ export default {
     },
     beforeRemove(file) {
       return this.$confirm(`Cancel the transfert of ${file.name} ?`);
+    },
+    // 해당 태그의 기업들 검색으로
+    GetTagCompany(keyword) {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        loading.close();
+        this.$router.push({
+          name: "SearchCompany",
+          query: { keyword: keyword },
+        });
+      }, 2000);
+      setTimeout(() => {
+        location.reload();
+      }, 2001);
     },
   },
 };

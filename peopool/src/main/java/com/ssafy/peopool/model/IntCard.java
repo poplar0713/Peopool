@@ -8,8 +8,11 @@ public class IntCard {
 	String int_start; // 면접 시작 시간
 	String int_end; // 면접 종료 시간
 	String int_roomnumber; // 면접 room number
-	String int_show; // 진행 여부 (show / now show)
-	String name; // 개인  or 기업 이름
+	String int_show; // 진행 여부 (show / now show / cancle)
+	String ind_name; // 개인 이름
+	String ent_name; // 기업 이름
+	String int_done; // 면접 결과
+	String int_duty; // 면접 직무
 	
 	public IntCard() {
 		
@@ -71,26 +74,46 @@ public class IntCard {
 		this.int_show = int_show;
 	}
 
-	public String getName() {
-		return name;
+	public String getInd_name() {
+		return ind_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setInd_name(String ind_name) {
+		this.ind_name = ind_name;
+	}
+
+	public String getEnt_name() {
+		return ent_name;
+	}
+
+	public void setEnt_name(String ent_name) {
+		this.ent_name = ent_name;
+	}
+
+	public String getInt_done() {
+		return int_done;
+	}
+
+	public void setInt_done(String int_done) {
+		this.int_done = int_done;
+	}
+
+	public String getInt_duty() {
+		return int_duty;
+	}
+
+	public void setInt_duty(String int_duty) {
+		this.int_duty = int_duty;
 	}
 
 	@Override
 	public String toString() {
 		return "IntCard [int_index=" + int_index + ", ind_index=" + ind_index + ", ent_index=" + ent_index
 				+ ", int_start=" + int_start + ", int_end=" + int_end + ", int_roomnumber=" + int_roomnumber
-				+ ", int_show=" + int_show + ", name=" + name + ", getInt_index()=" + getInt_index()
-				+ ", getInd_index()=" + getInd_index() + ", getEnt_index()=" + getEnt_index() + ", getInt_start()="
-				+ getInt_start() + ", getInt_end()=" + getInt_end() + ", getInt_roomnumber()=" + getInt_roomnumber()
-				+ ", getInt_show()=" + getInt_show() + ", getName()=" + getName() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", int_show=" + int_show + ", ind_name=" + ind_name + ", ent_name=" + ent_name + ", int_done="
+				+ int_done + ", int_duty=" + int_duty + "]";
 	}
-	
-	
+
 	
 
 }

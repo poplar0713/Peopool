@@ -11,7 +11,7 @@
     >
 
     <br />
-    <el-dialog title="Login" v-model="$store.state.LoginDialog">
+    <el-dialog title="Login" v-model="$store.state.LoginDialog" width="30%">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="개인회원" name="first">
           <!-- 개인로그인 -->
@@ -35,10 +35,10 @@
             </el-dialog>
             <br /><br />
             <!-- 아이디찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findUserId = true"
-              style="color:black; margin:10px"
-              >아이디찾기</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >아이디찾기</el-text
             >
             <el-dialog
               title="아이디 찾기"
@@ -49,10 +49,10 @@
               <FindUserId />
             </el-dialog>
             <!-- 비밀번호찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findUserPw = true"
-              style="color:black; margin:10px"
-              >비밀번호 초기화</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >비밀번호 초기화</el-text
             >
             <el-dialog
               title="비밀번호 초기화"
@@ -63,11 +63,6 @@
               <ResetUserPw />
             </el-dialog>
           </div>
-          <br />
-          <!-- 카카오톡로그인 -->
-          <div style="text-align:center"><KakaoLogin /></div>
-          <!-- 구글로그인 -->
-          <!--  -->
         </el-tab-pane>
         <!-- 기업 -->
         <!--  -->
@@ -90,10 +85,10 @@
             </el-dialog>
             <br /><br />
             <!-- 아이디찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findCompanyId = true"
-              style="color:black; margin:10px"
-              >아이디찾기</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >아이디찾기</el-text
             >
             <el-dialog
               title="아이디 찾기"
@@ -104,10 +99,10 @@
               <FindCompanyId />
             </el-dialog>
             <!-- 비밀번호찾기 -->
-            <el-button
+            <el-text
               @click="$store.state.findCompanyPw = true"
-              style="color:black; margin:10px"
-              >비밀번호 초기화</el-button
+              style="color:black; margin:10px; cursor:pointer"
+              >비밀번호 초기화</el-text
             >
             <el-dialog
               title="비밀번호 초기화"
@@ -129,18 +124,17 @@ import SignupCompany from "@/components/Account/SignupCompany.vue";
 import SignupIndiv from "@/components/Account/SignupIndiv.vue";
 import LoginIndiv from "@/components/Account/LoginIndiv.vue";
 import LoginCompany from "@/components/Account/LoginCompany.vue";
-import KakaoLogin from "./KakaoLogin.vue";
 import FindUserId from "./FindUserId.vue";
 import ResetUserPw from "./ResetUserPw.vue";
 import FindCompanyId from "./FindCompanyId.vue";
 import ResetCompanyPw from "./ResetCompanyPw.vue";
 export default {
+  name: "Login",
   components: {
     SignupIndiv,
     SignupCompany,
     LoginIndiv,
     LoginCompany,
-    KakaoLogin,
     FindUserId,
     ResetUserPw,
     FindCompanyId,
@@ -166,16 +160,22 @@ export default {
   methods: {
     // 창닫기
     handleClose(done) {
-      this.$confirm("Are you sure to close this page?")
+      this.$confirm("창을 닫으시겠습니까?")
         .then(() => {
           done();
           this.dialogVisible = false;
         })
-        .catch(() => {});
+        .catch((err) => {
+          if (err.response == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
     },
     // 제출
     onSubmit() {
-      console.log("submit!");
       this.$router.push("home");
     },
     //

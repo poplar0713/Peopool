@@ -62,6 +62,16 @@ public class CallHandler extends TextWebSocketHandler {
     }
 
     switch (jsonMessage.get("id").getAsString()) {
+    case "sessioncheck":
+    	log.debug("session user: {}", user);
+    	synchronized (session) {
+			session.sendMessage(new TextMessage(user.toString()));
+		}
+    	break;
+    case "chatting":
+    	log.debug("chatting: {}", jsonMessage);
+    	chatting(jsonMessage);
+    	break;
       case "joinRoom":
         joinRoom(jsonMessage, session);
         break;
@@ -88,7 +98,13 @@ public class CallHandler extends TextWebSocketHandler {
     }
   }
 
-  @Override
+  private void chatting(JsonObject params) {
+	  final String roomName = params.get("room").getAsString();
+	  Room room = roomManager.getRoom(roomName);
+	  room.chatall(params);
+  }
+
+@Override
   public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
     UserSession user = registry.removeBySession(session);
     roomManager.getRoom(user.getRoomName()).leave(user);

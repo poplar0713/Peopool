@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:100%;"
+    style="width:30rem;"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
@@ -8,24 +8,24 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이름 -->
-      <el-form-item label="Name" prop="CompanyName">
+      <el-form-item label="회사명" prop="CompanyName">
         <strong>{{ this.ruleForm.CompanyName }}</strong>
       </el-form-item>
       <!-- 기업연락처 -->
-      <el-form-item label="Tel" prop="UserTel">
-        <el-input type="tel" v-model="ruleForm.CompanyTel"></el-input>
+      <el-form-item label="회사 대표 번호" prop="UserTel">
+        <el-input type="tel" v-model="this.ruleForm.CompanyTel"></el-input>
       </el-form-item>
       <!-- 기업이메일 -->
-      <el-form-item label="Email" prop="UserEmail">
-        <el-input type="email" v-model="ruleForm.CompanyEmail"></el-input>
+      <el-form-item label="회사 대표 Email" prop="UserEmail">
+        <el-input type="email" v-model="this.ruleForm.CompanyEmail"></el-input>
       </el-form-item>
       <!-- 기업회원 PW -->
-      <el-form-item label="Password" prop="Password">
-        <el-input type="password" v-model="ruleForm.Password"></el-input>
+      <el-form-item label="비밀번호" prop="Password">
+        <el-input type="password" v-model="this.ruleForm.Password"></el-input>
       </el-form-item>
       <!-- 기업회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
-        <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
+      <el-form-item label="비밀번호" prop="PasswordConfirm">
+        <el-input type="password" v-model="this.ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
       <div style="float:right">
         <el-form-item>
@@ -46,10 +46,11 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
+  name: "SideBarProfileCompanyBasicInfo",
   components: {},
   mounted() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 회원정보 가져오기
@@ -63,7 +64,12 @@ export default {
         this.ruleForm.CompanyIndex = res.data.ent_index;
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
   },
   data() {
@@ -147,6 +153,7 @@ export default {
           // 회원정보 수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/ent", {
+              headers: { Authorization: this.$store.state.usertoken },
               ent_email: this.ruleForm.CompanyEmail,
               ent_id: this.ruleForm.CompanyId,
               ent_index: this.ruleForm.CompanyIndex,
@@ -165,7 +172,12 @@ export default {
               }, 2000);
             })
             .catch((err) => {
-              console.log(err);
+              if (err.response == 401) {
+                this.$message.error("로그인세션이 만료되었습니다");
+                this.$cookies.remove("PID_AUTH");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
         } else {
           console.log("error submit!!");

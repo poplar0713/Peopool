@@ -1,6 +1,6 @@
 package com.ssafy.peopool.model.service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +17,15 @@ public class HashtagServiceImpl implements HashtagService {
 	HashtagRepo hashtagRepo;
 
 	@Override
-	public List<Map<String, Object>> tagByUser(int index) {
+	public List<Map<String, Object>> tagByUser(int index, int type) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.tagByUser(index);
+		return hashtagRepo.tagByUser(index, type);
 	}
 	
 	@Override
-	public List<Hashtag> userByTag(String name) {
+	public List<Map<Object, Object>> userByTag(String name, int type) {
 		// TODO Auto-generated method stub
-		return hashtagRepo.userByTag(name);
+		return hashtagRepo.userByTag(name, type);
 	}
 
 	@Override
@@ -44,6 +44,24 @@ public class HashtagServiceImpl implements HashtagService {
 	public boolean deleteHashtag(int index) {
 		// TODO Auto-generated method stub
 		return hashtagRepo.deleteHashtag(index) == 1;
+	}
+
+	@Override
+	public List<Map<Object, Object>> userTagIntersection(List<Integer> list) {
+		int count = list.size();
+		return hashtagRepo.userTagIntersection(list, count);
+	}
+
+	@Override
+	public List<Map<Object, Object>> userTagUnion(List<Integer> list) {
+		int count = list.size();
+		return hashtagRepo.userTagUnion(list, count);
+	}
+
+	@Override
+	public boolean deleteWithdraw(int index) {
+		// TODO Auto-generated method stub
+		return hashtagRepo.deleteWithdraw(index) == 1;
 	}
 
 	

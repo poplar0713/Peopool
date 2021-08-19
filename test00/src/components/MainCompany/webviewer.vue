@@ -23,6 +23,7 @@ export default {
 
 <style>
 #webviewer {
-  height: 500px;
+  height: 700px;
+  overflow: visible;
 }
 </style>

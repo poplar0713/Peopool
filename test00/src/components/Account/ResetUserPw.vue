@@ -40,6 +40,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "ResetUserPw",
   components: {},
   data() {
     const checkPWCF = (rule, value, callback) => {
@@ -121,12 +122,13 @@ export default {
                 id: this.ruleForm.userid,
                 phone: this.ruleForm.userphone,
               },
+              headers: { Authorization: this.$store.state.usertoken },
             })
             .then((result) => {
-              console.log(result);
               // 비밀번호 변경
               axios
                 .put("https://i5d206.p.ssafy.io:8443/ind", {
+                  headers: { Authorization: this.$store.state.usertoken },
                   ind_birth: result.data.ind_birth,
                   ind_email: result.data.ind_email,
                   ind_gender: result.data.ind_gender,
@@ -148,7 +150,12 @@ export default {
                   }, 3000);
                 })
                 .catch((err) => {
-                  console.log(err);
+                  if (err.response == 401) {
+                    this.$message.error("로그인세션이 만료되었습니다");
+                    this.$cookies.remove("PID_AUTH");
+                    localStorage.clear();
+                    this.$router.push("/");
+                  }
                 });
 
               setTimeout(() => {
@@ -157,11 +164,16 @@ export default {
             })
             .catch((err) => {
               alert(err);
+              if (err.response == 401) {
+                this.$message.error("로그인세션이 만료되었습니다");
+                this.$cookies.remove("PID_AUTH");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
           //
           this.$store.state.findUserPw = false;
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

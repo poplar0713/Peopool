@@ -60,4 +60,16 @@ public class FollowServiceImpl implements FollowService {
 		return followRepo.getCheck(follow);
 	}
 
+	@Override
+	public boolean deleteFollower(Follow follow) throws SQLException {
+		// TODO Auto-generated method stub
+		return followRepo.deleteFollower(follow) == 1;
+	}
+
+	@Override
+	public boolean deleteFollowing(Follow follow) throws SQLException {
+		// TODO Auto-generated method stub
+		return followRepo.deleteFollowing(follow) == 1;
+	}
+
 }

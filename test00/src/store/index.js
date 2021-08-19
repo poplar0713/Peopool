@@ -11,10 +11,16 @@ export default createStore({
     findUserPw: false,
     findCompanyId: false,
     findCompanyPw: false,
-    type: 0,
-    othertype: 0,
+    type: -1,
+    othertype: -1,
+    userindex: null,
+    usertoken:""
   },
-  mutations: {},
+  mutations: {
+    userindexstore(index) {
+      this.state.userindex = index;
+    },
+  },
   actions: {
     requestLoginind({ state }, payload) {
       console.log("requestLoginind", state, payload);

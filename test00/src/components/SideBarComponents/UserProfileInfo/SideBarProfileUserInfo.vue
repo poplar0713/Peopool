@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:100%;"
+    style="width:70%"
     v-loading="loading"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
@@ -8,35 +8,35 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 개인회원이름 -->
-      <el-form-item label="Name" prop="UserName">
+      <el-form-item label="이름" prop="UserName">
         <strong>{{ this.ruleForm.UserName }}</strong>
       </el-form-item>
       <!-- 개인회원 생년월일 -->
-      <el-form-item label="Birth" prop="UserBirth">
+      <el-form-item label="생년월일" prop="UserBirth">
         <strong>{{ this.ruleForm.UserBirth }}</strong>
       </el-form-item>
       <!-- 공개여부 -->
-      <el-form-item label="Open to the public" prop="open">
+      <el-form-item label="프로필 공개여부" prop="open">
         <el-switch v-model="ruleForm.open"></el-switch>
       </el-form-item>
       <!-- 성별 -->
-      <el-form-item label="Gender" prop="Gender">
+      <el-form-item label="성별" prop="Gender">
         <strong>{{ this.ruleForm.Gender }}</strong>
       </el-form-item>
       <!-- 연락처 -->
-      <el-form-item label="Tel" prop="UserTel">
+      <el-form-item label="연락처" prop="UserTel">
         <el-input type="tel" v-model="ruleForm.UserTel"></el-input>
       </el-form-item>
       <!-- 이메일 -->
-      <el-form-item label="Email" prop="UserEmail">
+      <el-form-item label="이메일" prop="UserEmail" v-if="ruleForm.UserEmail">
         <el-input type="email" v-model="ruleForm.UserEmail"></el-input>
       </el-form-item>
       <!-- 개인회원 PW -->
-      <el-form-item label="Password" prop="Password">
+      <el-form-item label="비밀번호" prop="Password">
         <el-input type="password" v-model="ruleForm.Password"></el-input>
       </el-form-item>
       <!-- 개인회원 PW 확인 -->
-      <el-form-item label="Password Confirmation" prop="PasswordConfirm">
+      <el-form-item label="비밀번호확인" prop="PasswordConfirm">
         <el-input type="password" v-model="ruleForm.PasswordConfirm"></el-input>
       </el-form-item>
       <div style="float:right">
@@ -58,6 +58,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 export default {
+  name: "SideBarProfileUserInfo",
   data() {
     // 비밀번호확인 체크(비어있거나 비밀번호랑 다르면)
     const checkPWCF = (rule, value, callback) => {
@@ -137,12 +138,14 @@ export default {
   },
   mounted() {
     // 토큰가져오기
-    const token = localStorage.getItem("token");
+    const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
     // 회원정보 가져오기
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/ind/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         this.ruleForm.UserName = res.data.ind_name;
         this.ruleForm.UserBirth = res.data.ind_birth;
@@ -153,11 +156,18 @@ export default {
         this.ruleForm.UserId = res.data.ind_id;
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
+          localStorage.clear();
+          this.$router.push("/");
+        }
       });
     //public 상태확인
     axios
-      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`)
+      .get(`https://i5d206.p.ssafy.io:8443/poi/${index}`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         if (res.data.ind_switch == "T") {
           this.ruleForm.open = true;
@@ -165,7 +175,14 @@ export default {
           this.ruleForm.open = false;
         }
       })
-      .catch();
+      .catch((err) => {
+        if (err.response == 401) {
+          this.$message.error("로그인세션이 만료되었습니다");
+          this.$cookies.remove("PID_AUTH");
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      });
   },
   methods: {
     submitForm(formName) {
@@ -174,6 +191,7 @@ export default {
           // 회원정보 수정
           axios
             .put("https://i5d206.p.ssafy.io:8443/ind", {
+              headers: { Authorization: this.$store.state.usertoken },
               ind_birth: this.ruleForm.UserBirth,
               ind_email: this.ruleForm.UserEmail,
               ind_gender: this.ruleForm.Gender,
@@ -194,32 +212,49 @@ export default {
               }, 2000);
             })
             .catch((err) => {
-              console.log(err);
+              if (err.response == 401) {
+                this.$message.error("로그인세션이 만료되었습니다");
+                this.$cookies.remove("PID_AUTH");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
           // switch off
           if (this.ruleForm.open == false) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOff", {
+                headers: { Authorization: this.$store.state.usertoken },
                 ind_index: this.ruleForm.UserIndex,
               })
               .then((res) => {
                 console.log(res);
               })
               .catch((err) => {
-                console.log(err);
+                if (err.response == 401) {
+                  this.$message.error("로그인세션이 만료되었습니다");
+                  this.$cookies.remove("PID_AUTH");
+                  localStorage.clear();
+                  this.$router.push("/");
+                }
               });
           }
           // switch on
           if (this.ruleForm.open == true) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poi/switchOn", {
+                headers: { Authorization: this.$store.state.usertoken },
                 ind_index: this.ruleForm.UserIndex,
               })
               .then((res) => {
                 console.log(res);
               })
               .catch((err) => {
-                console.log(err);
+                if (err.response == 401) {
+                  this.$message.error("로그인세션이 만료되었습니다");
+                  this.$cookies.remove("PID_AUTH");
+                  localStorage.clear();
+                  this.$router.push("/");
+                }
               });
           }
         } else {

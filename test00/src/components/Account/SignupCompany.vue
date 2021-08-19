@@ -7,7 +7,7 @@
     <!-- 기업회원 ID -->
     <el-form-item label="ID" prop="ent_id">
       <el-input v-model="ruleForm.ent_id" @keydown="recheck"></el-input>
-      <el-button @click="checkID">중복확인</el-button>
+      <el-button @click="checkID" style="margin-top:10px">중복확인</el-button>
     </el-form-item>
     <!-- 기업회원 PW -->
     <el-form-item label="Password" prop="ent_password">
@@ -45,6 +45,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "SignupCompany",
   data() {
     // 비밀번호 체크
     const checkPWCF = (rule, value, callback) => {
@@ -62,22 +63,11 @@ export default {
       if (value === "") {
         callback(new Error("ID를 입력해주세요"));
       } else if (length.value < 5 || length.value > 10) {
-        callback(new Error("1-15자리로 설정해주세요"));
+        callback(new Error("5-10자리로 설정해주세요"));
       } else {
         callback();
       }
     };
-    // 회사 중복 체크
-    // const validationID = (rule, value, callback) => {
-    //   // this.checkID();
-    //   if (value === "") {
-    //     callback(new Error("ID를 입력해주세요"));
-    //   } else if (length.value < 5 || length.value > 10) {
-    //     callback(new Error("1-15자리로 설정해주세요"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
     return {
       allowedID: false,
       ruleForm: {
@@ -177,7 +167,6 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogCompany = false;
-                console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
                 }, 3000);
@@ -187,7 +176,6 @@ export default {
               console.log(err);
             });
         } else if (this.allowedID == false) {
-          console.log("error submit!!");
           this.recheckid();
           return false;
         } else {

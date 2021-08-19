@@ -5,9 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "move-static": "cp -a ./node_modules/@pdftron/webviewer/public/. ./dist/public/webviewer",
-    "postinstall": "node tools/copy-webviewer-files.js"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.0.0",
@@ -16,13 +14,18 @@
     "decibel-meter": "^2.0.0",
     "element-plus": "^1.0.2-beta.55",
     "font-awesome": "^4.7.0",
+    "i": "^0.3.6",
+    "jquery": "^3.6.0",
+    "jQuery": "^1.7.4",
     "jwt-decode": "^3.1.2",
     "kurento-client": "^6.16.0",
     "kurento-utils": "^6.16.0",
     "v-calendar": "^3.0.0-alpha.5",
     "vue": "^3.1.4",
+    "vue-cookies": "^1.7.4",
     "vue-router": "^4.0.0-0",
     "vue-webrtc": "^2.0.0",
+    "vue3-cookies": "^1.0.1",
     "vuedraggable": "^4.0.3",
     "vuex": "^4.0.0-0",
     "webrtc-adapter": "^8.1.0",
@@ -39,9 +42,10 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
-    "sass": "^1.27.0",
-    "sass-loader": "^10.0.4",
-    "vue-cli-plugin-element-plus": "0.0.13"
+    "sass": "^1.37.5",
+    "sass-loader": "^10.2.0",
+    "vue-cli-plugin-element-plus": "0.0.13",
+    "webpack": "^4.46.0"
   },
   "eslintConfig": {
     "root": true,

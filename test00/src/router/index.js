@@ -1,18 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainUser from "../views/MainUser.vue";
-import SearchDetail from "../views/SearchDetail.vue";
 import Start from "../views/Start.vue";
+import MainUser from "../views/MainUser.vue";
+import ProfileUser from "../views/ProfileUser.vue";
+import ProfileCompany from "../views/ProfileCompany.vue";
+import ViewCompany from "../views/ViewCompany.vue";
 import MainCompany from "../views/MainCompany.vue";
 import InterviewRoom from "../views/InterviewRoom.vue";
 import SearchCompany from "../views/SearchCompany.vue";
 import SearchUser from "../views/SearchUser.vue";
 import Recruiting from "../views/Recruiting.vue";
-import Inyh from "@/views/Interviewyh.vue";
+import FinduserByTag from "@/views/FinduserBytag";
 const routes = [
-  {
-    path: "/meetinter",
-    component: Inyh,
-  },
   {
     path: "/",
     name: "Start",
@@ -22,49 +20,43 @@ const routes = [
     path: "/user",
     name: "MainUser",
     component: MainUser,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/profileuser/:userindex",
+    name: "ProfileUser",
+    component: ProfileUser,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/viewcompany",
+    name: "ViewCompany",
+    component: ViewCompany,
+    beforeEnter: requireAuth,
   },
   {
     path: "/company",
     name: "MainCompany",
     component: MainCompany,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
-    path: "/searchDetail",
-    name: "SearchDetail",
-    component: SearchDetail,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    path: "/profilecompany/:companyindex",
+    name: "ProfileCompany",
+    component: ProfileCompany,
+    beforeEnter: requireAuth,
   },
   {
-    path: "/searchcompany/:keyword",
+    path: "/searchcompany/",
     name: "SearchCompany",
     component: SearchCompany,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/searchuser/",
+    name: "SearchUser",
+    component: SearchUser,
+    beforeEnter: requireAuth,
   },
   {
     path: "/user/interviewroom/:company/:url",
@@ -73,40 +65,22 @@ const routes = [
     // 링크공유로 로그인안해도 들어올수있도록
   },
   {
-    path: "/searchuser/:keyword",
-    name: "searchuser",
-    component: SearchUser,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
-  },
-  {
     path: "/searchcompany",
     name: "searchcompany",
     component: SearchCompany,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
   },
   {
-    path: "/recruiting",
+    path: "/recruiting/:companyindex",
     name: "recruiting",
     component: Recruiting,
-    beforeEnter: function(to, from, next) {
-      if (localStorage.getItem("token") == null) {
-        alert("로그인이 필요한 서비스입니다");
-        return next("/");
-      }
-      next();
-    },
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/company/findtag",
+    name: "FinduserByTag",
+    component: FinduserByTag,
+    beforeEnter: requireAuth,
   },
 ];
 
@@ -114,5 +88,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+function requireAuth(to, from, next) {
+  const { $cookies } = router.app.config.globalProperties;
+  if ($cookies.get("PID_AUTH") == null) {
+    alert("로그인이 필요한 서비스입니다");
+    return next("/");
+  }
+  next();
+}
 
 export default router;

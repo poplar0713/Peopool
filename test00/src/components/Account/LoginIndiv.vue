@@ -6,11 +6,11 @@
     style="text-align:center"
   >
     <!-- 개인회원 ID -->
-    <el-form-item label="ID" prop="LoginIndivID">
+    <el-form-item label="아이디" prop="LoginIndivID">
       <el-input v-model="ruleForm.LoginIndivID"></el-input>
     </el-form-item>
     <!-- 개인회원 PW -->
-    <el-form-item label="Password" prop="LoginIndivPW">
+    <el-form-item label="비밀번호" prop="LoginIndivPW">
       <el-input type="password" v-model="ruleForm.LoginIndivPW"></el-input>
     </el-form-item>
 
@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: "LoginIndiv",
   components: {},
   data() {
     return {
@@ -70,21 +71,28 @@ export default {
             })
             .then((result) => {
               // alert("accessToken: " + result.data.accessToken);
-              localStorage.setItem("token", result.data.accessToken);
+
+              this.$cookies.set(
+                "PID_AUTH",
+                "Bearer" + result.data.accessToken,
+                0
+              );
               this.$store.state.type = "0";
               this.$store.state.othertype = "1";
+              this.ruleForm.LoginIndivID = "";
+              this.ruleForm.LoginIndivPW = "";
               setTimeout(() => {
                 this.$router.push("user");
               }, 3000);
             })
-            .catch((err) => {
-              console.log(err);
+            .catch(() => {
+              this.ruleForm.LoginIndivID = "";
+              this.ruleForm.LoginIndivPW = "";
               this.$message.error("아이디와 비밀번호를 확인해주세요");
             });
           //
           this.$store.state.LoginDialog = false;
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

@@ -26,9 +26,9 @@ public class JwtTokenUtil {
     private static String secretKey;
     private static Integer expirationTime;
 
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Bearer";
     public static final String HEADER_STRING = "Authorization";
-    public static final String ISSUER = "ssafy.com";
+    public static final String ISSUER = "peopool.com";
     
     @Autowired
 	public JwtTokenUtil(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}") Integer expirationTime) {
@@ -48,10 +48,12 @@ public class JwtTokenUtil {
                 .build();
     }
     
-    public static String getToken(String userId, int index) {
+    public static String getToken(String userId, int index, int type, String name) {
     		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
         return JWT.create()
         		.withClaim("index", index)
+        		.withClaim("type", type)
+        		.withClaim("name", name)
                 .withSubject(userId)
                 .withExpiresAt(expires)
                 .withIssuer(ISSUER)

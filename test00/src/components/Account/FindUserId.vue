@@ -29,6 +29,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "FindUserId",
   components: {},
   data() {
     return {
@@ -71,6 +72,7 @@ export default {
                 name: this.ruleForm.username,
                 phone: this.ruleForm.userphone,
               },
+              headers: { Authorization: this.$store.state.usertoken },
             })
             .then((result) => {
               this.foundId = result.data.ind_id;
@@ -82,12 +84,16 @@ export default {
               }, 3000);
             })
             .catch((err) => {
-              console.log(err);
+              if (err.response == 401) {
+                this.$message.error("로그인세션이 만료되었습니다");
+                this.$cookies.remove("PID_AUTH");
+                localStorage.clear();
+                this.$router.push("/");
+              }
             });
           //
           this.$store.state.findUserId = false;
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
