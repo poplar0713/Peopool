@@ -167,7 +167,6 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogCompany = false;
-                console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
                 }, 3000);
@@ -177,7 +176,6 @@ export default {
               console.log(err);
             });
         } else if (this.allowedID == false) {
-          console.log("error submit!!");
           this.recheckid();
           return false;
         } else {

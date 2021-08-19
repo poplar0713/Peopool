@@ -5,6 +5,7 @@
         <UserInfoCard :userindex="item.ind_index" />
       </el-col>
     </el-row>
+    <br>
     <div style="text-align:center">
       <el-pagination
         layout="prev, pager, next"
@@ -64,24 +65,24 @@ export default {
     console.log(nowPageData);
 
     function initData() {
-      console.log(1);
+      
       sliceData();
     }
 
     function handleSizeChange(val) {
-      console.log(2);
+      
       tableSize = val;
       sliceData();
     }
 
     function handleCurrentChange(val) {
-      console.log(3);
+      
       nowPage.value = val;
       sliceData();
     }
 
     function sliceData() {
-      console.log(4);
+      
       nowPageData.value = result.value.slice(
         tableSize * nowPage.value - tableSize,
         tableSize * nowPage.value

@@ -21,7 +21,10 @@
                   :noncookie="noncookie"
                 ></before-meeting>
                 <div style="text-align:center">
-                  <el-button type="warning" id="go" @click="register"
+                  <el-button type="warning" class="go" @click="copyurl"
+                    >url복사</el-button
+                  >
+                  <el-button type="warning" class="go" @click="register"
                     >입장하기</el-button
                   >
                 </div>
@@ -167,6 +170,7 @@
       </span>
     </template>
   </el-dialog> -->
+  <input type="text" id="ShareUrl" style="display:none;" />
 </template>
 <script>
 import BeforeMeeting from "./beforeMettingRoom.vue";
@@ -276,6 +280,18 @@ export default {
     };
   },
   methods: {
+    copyurl() {
+      var dummy = document.createElement("input");
+      var text = location.href;
+
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+
+      this.$message.success("URL이 복사되었습니다!");
+    },
     alaramcheck() {
       let popdiv = document.getElementsByClassName("el-popover")[0];
 
@@ -417,7 +433,7 @@ export default {
       this.options = false;
       // 로그인, 비로그인에 따라 화면push
       if (this.$cookies.get("PID_AUTH")) {
-        console.log(1);
+        
         const token = this.$cookies.get("PID_AUTH");
         const decoded = jwt_decode(token);
         const type = decoded.type;
@@ -598,8 +614,8 @@ export default {
     //       this.dialogVisible = false;
     //     })
     //     .catch((err) => {
-    //       console.log("token error");
-    //       console.log(err.response);
+    //       
+    //       
     //       if (err.response == 401) {
     //         this.$message.error("로그인세션이 만료되었습니다");
     //         localStorage.clear();
@@ -700,9 +716,9 @@ export default {
   margin-top: -5px;
   margin-right: -10px;
 }
-#go {
+.go {
   width: 200px;
-  border-radius: 100px;
+  border-radius: 150px !important;
 }
 .footer {
   background-color: whitesmoke;

@@ -44,7 +44,7 @@ export default {
       .then((res) => {
         console.log(todaydate);
         // 받아온 데이터 날짜랑 비교해주기
-        console.log(res.data);
+        
         for (var i in res.data) {
           if (todaydate == res.data[i].date) {
             console.log(res.data[i].interviewers);

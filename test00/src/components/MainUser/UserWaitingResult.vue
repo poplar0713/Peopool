@@ -18,9 +18,7 @@
       width="160%"
     >
     </el-table-column>
-    <el-table-column align="center" label="기업명" prop="ent_name" width="100%">
-    </el-table-column>
-    <el-table-column align="center" label="결과" prop="int_done" width="100%">
+    <el-table-column align="center" label="기업명" prop="ent_name">
     </el-table-column>
     <el-table-column align="center">
       <template #header>

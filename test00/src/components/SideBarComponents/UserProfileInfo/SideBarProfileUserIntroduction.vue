@@ -1,5 +1,5 @@
 <template>
-  <div style="width:80%">
+  <div style="width:70%">
     <!-- <div>
       <img :src="photofilepath" height="150" width="150" />
     </div> -->

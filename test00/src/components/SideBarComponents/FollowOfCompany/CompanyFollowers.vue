@@ -3,8 +3,8 @@
     >Followers</el-button
   >
 
-  <el-dialog title="Followers" v-model="dialogVisible" width="30%">
-    <h2 style="margin:0 auto; text-align:center">{{ this.followersNumber }}</h2>
+  <el-dialog title="" v-model="dialogVisible" width="30%">
+    <h2 style="margin:0 auto; text-align:center">Followers <br>{{ this.followersNumber }}</h2>
     <!--  -->
     <el-table
       :data="

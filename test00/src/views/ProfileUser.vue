@@ -4,9 +4,14 @@
     <el-aside width="200px"><SideBarUser /></el-aside>
     <el-container>
       <el-header><headerSearchCompany /></el-header>
-      <el-header><h2>프로필</h2></el-header>
+      <!-- <el-header><h2>프로필</h2></el-header> -->
+      <div style="text-align:center"></div>
       <el-main style="width:70%; text-align:center;">
-        <el-tabs :tab-position="tabPosition" style="height: 100%;">
+        <h2>유저 정보 관리</h2>
+        <h5>이곳에서 작성된 유저 정보가 기업들에게 보여집니다</h5>
+        <el-divider />
+
+        <el-tabs :tab-position="tabPosition">
           <el-tab-pane label="기본정보"><SideBarProfileUserInfo /></el-tab-pane>
           <!-- <el-tab-pane label="Level of Education"><SideBarProfileUserEducation/></el-tab-pane> -->
           <el-tab-pane label="프로필사진 및 소개">
@@ -62,7 +67,6 @@
           <el-tab-pane label="회원탈퇴"><DeleteUserAccount /></el-tab-pane>
         </el-tabs>
       </el-main>
-      
     </el-container>
     <router-view></router-view>
   </el-container>
@@ -80,7 +84,6 @@ import webviewer from "@/components/MainCompany/webviewer.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import server_url from "@/server.js";
-
 
 // 'https://i5d206.p.ssafy.io' -->사진 및 확인
 export default {

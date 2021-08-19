@@ -78,7 +78,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res);
         // W인 애들만..
         for (var user of res.data) {
           if (user.int_done == "W") {
