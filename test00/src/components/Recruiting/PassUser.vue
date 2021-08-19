@@ -3,7 +3,7 @@
     :data="
       pastinterview.filter(
         (data) =>
-          (!search || data.name.toLowerCase().includes(search.toLowerCase())) &&
+          (!search || data.ind_name.toLowerCase().includes(search.toLowerCase())) &&
           data.int_done == 'P'
       )
     "
@@ -38,6 +38,9 @@ import UserInfoDetail from "@/components/UserInfo/UserInfoDetail.vue";
 export default {
   name: "PassUser",
   components: { UserInfoDetail },
+  mounted() {
+    this.renewdata();
+  },
   data() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
@@ -66,6 +69,30 @@ export default {
     };
   },
   methods: {
+    renewdata() {
+      // 토큰으로 유저index 가져오기
+      const token = this.$cookies.get("PID_AUTH");
+      const decoded = jwt_decode(token);
+      const index = decoded.index;
+      // 예전면접가져오기
+      axios
+        .get(`https://i5d206.p.ssafy.io:8443/int/ent/last/${index}`, {
+          headers: { Authorization: token },
+        })
+        .then((res) => {
+          console.log(res);
+          this.pastinterview = res.data;
+        })
+        .catch((err) => {
+          if (err.response.data.status == 401) {
+            this.$message.error("로그인세션이 만료되었습니다");
+            this.$cookies.remove("PID_AUTH");
+            localStorage.clear();
+            this.$router.push("/");
+          }
+        });
+    },
+
     CancelInt(sugindex) {
       console.log(sugindex);
       axios
