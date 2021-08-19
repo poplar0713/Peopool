@@ -5,7 +5,7 @@
 
   <el-dialog title="" v-model="dialogVisible" width="30%">
     <h2 style="margin:0 auto; text-align:center">
-      Followings  {{ this.followingsNumber }}
+      Followings {{ this.followingsNumber }}
     </h2>
 
     <el-table
@@ -18,9 +18,18 @@
       width="100%"
       height="250px"
     >
+      <el-table-column width="100%">
+        <template #default="scope">
+          <CompanyInfoSquareImage :companyindex="scope.row.follower" />
+        </template>
+      </el-table-column>
       <el-table-column align="center">
         <template #header>
-          <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="검색어를 입력해주세요"
+          />
         </template>
         <template #default="scope">
           <el-row>
@@ -50,10 +59,11 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import CompanyInfoName from "@/components/CompanyInfo/CompanyInfoName.vue";
+import CompanyInfoSquareImage from "@/components/CompanyInfo/CompanyInfoSquareImage.vue";
 
 export default {
   name: "UserFollowings",
-  components: { CompanyInfoName },
+  components: { CompanyInfoName, CompanyInfoSquareImage },
   data() {
     return {
       dialogVisible: false,

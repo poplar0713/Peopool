@@ -5,15 +5,17 @@
     @click="dialogVisible = true"
   >
     <el-row>
-      <el-col :span="8">
-        <div>
-          <img
-            :src="userdata.photofilepath"
-            style="max-width: 100%; height: auto;"
-          />
+      <el-col :span="6">
+        <div style="margin:0 auto;">
+          <span v-if="this.userdata.photo_index">
+            <el-avatar :src="this.userdata.photofilepath" :size="70"></el-avatar>
+          </span>
+          <span v-else>
+            <img :src="this.nonImage" style="width:100%; heigth:auto" />
+          </span>
         </div>
       </el-col>
-      <el-col :span="16"
+      <el-col :span="18"
         ><div>
           <div>
             <h3 style="margin-top:0">
@@ -59,33 +61,41 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
 
-    axios
+ axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.item.ind_index}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        var result = res.data[0];
         this.userdata.photofilepath =
-          "/file/" + result.photo_savefolder + "/" + result.photo_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data.photo_savefolder +
+          "/" +
+          res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + result.resume_savefolder + "/" + result.resume_savefile;
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data.resume_savefolder +
+          "/" +
+          res.data.resume_savefile;
         this.userdata.videofilepath =
-          "/file/" + result.video_savefolder + "/" + result.video_savefile;
-        this.userdata.resume_originfile = result.resume_originfile;
-        this.userdata.photo_originfile = result.photo_originfile;
-        this.userdata.video_originfile = result.video_originfile;
-        this.userdata.ind_switch = result.ind_switch;
-        this.userdata.ind_introduce = result.ind_introduce;
-        this.userdata.photo_index = result.photo_index;
-        this.userdata.resume_index = result.resume_index;
-        this.userdata.video_index = result.resume_index;
-        this.userdata.ind_index = result.ind_index;
-        this.userdata.ind_name = result.ind_name;
-        this.userdata.ind_email = result.ind_email;
-        this.userdata.ind_phone = result.ind_phone;
-        this.userdata.ind_gender = result.ind_gender;
-        this.userdata.cat_name = result.cat_name;
-        this.userdata.car_value = result.car_value;
+          "https://i5d206.p.ssafy.io/file/" +
+          res.data.video_savefolder +
+          "/" +
+          res.data.video_savefile;
+        this.userdata.resume_originfile = res.data.resume_originfile;
+        this.userdata.photo_originfile = res.data.photo_originfile;
+        this.userdata.video_originfile = res.data.video_originfile;
+        this.userdata.ind_switch = res.data.ind_switch;
+        this.userdata.ind_introduce = res.data.ind_introduce;
+        this.userdata.photo_index = res.data.photo_index;
+        this.userdata.resume_index = res.data.resume_index;
+        this.userdata.video_index = res.data.resume_index;
+        this.userdata.ind_index = res.data.ind_index;
+        this.userdata.ind_name = res.data.ind_name;
+        this.userdata.ind_email = res.data.ind_email;
+        this.userdata.ind_phone = res.data.ind_phone;
+        this.userdata.ind_gender = res.data.ind_gender;
+        this.userdata.cat_name = res.data.cat_name;
+        this.userdata.car_value = res.data.car_value;
       });
     return {
       InterviewDialogVisible: false,

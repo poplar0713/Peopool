@@ -337,7 +337,6 @@ export default {
             taglist_index: this.value,
           })
           .then(() => {
-            this.$message.info("태그가 추가되었습니다");
             this.getNewArray = !this.getNewArray;
           })
           .catch((err) => {

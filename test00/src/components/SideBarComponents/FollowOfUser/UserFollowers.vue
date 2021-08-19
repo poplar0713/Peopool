@@ -16,6 +16,11 @@
       width="100%"
       height="250px"
     >
+    <el-table-column width="100%">
+        <template #default="scope">
+          <CompanyInfoSquareImage :companyindex="scope.row.following" />
+        </template>
+      </el-table-column>
       <el-table-column align="center">
         <template #header>
           <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
@@ -35,10 +40,12 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import CompanyInfoName from "@/components/CompanyInfo/CompanyInfoName.vue";
+import CompanyInfoSquareImage from "@/components/CompanyInfo/CompanyInfoSquareImage.vue";
+
 
 export default {
   name: "UserFollowers",
-  components: { CompanyInfoName },
+  components: { CompanyInfoName,CompanyInfoSquareImage },
   data() {
     return {
       dialogVisible: false,

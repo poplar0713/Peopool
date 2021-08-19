@@ -90,7 +90,7 @@
           </div>
         </div>
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
 </template>
@@ -101,7 +101,7 @@ import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vu
 import UserInfoCard from "@/components/UserInfo/UserInfoCard.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import Footer from "@/components/Footer.vue";
+
 
 const qs = require("qs");
 var token;
@@ -197,7 +197,6 @@ export default {
     SideBarCompany,
     headerSearchUser,
     UserInfoCard,
-    Footer
   },
   computed: {
     hasResult() {

@@ -6,7 +6,7 @@
       <el-main style="width:70%; text-align:center">
         <SideBarProfileCompany />
       </el-main>
-      <Footer />
+      
     </el-container>
   </el-container>
 </template>
@@ -15,7 +15,7 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 import SideBarProfileCompany from "@/components/SideBarComponents/CompanyProfileInfo/SideBarProfileCompany.vue";
-import Footer from "@/components/Footer.vue";
+
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -26,7 +26,6 @@ export default {
     SideBarCompany,
     headerSearchUser,
     SideBarProfileCompany,
-    Footer,
   },
   mounted() {
     // 토큰가져오기
