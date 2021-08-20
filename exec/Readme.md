@@ -2,99 +2,99 @@
 
 
 
-## 📖 개발 버전
+## 목차
 
-- JAVA : OpenJDK8(zulu) 1.8
-- STS : 12.17.0
-- kurento : 6.15.0
-- Tomcat : 2.5.2
-- MySQL : 8.0.26
-- Mave : 4.0
-- VUE : Vue3
-- Vuex : 4.0
-- Node : 12.17.0
-- Nginx : stable-alpine
+ 1. 배포문서
+    1. 개발 버전
+       - JAVA : OpenJDK8(zulu) 1.8
+       
+       - STS : 12.17.0
+       
+       - kurento : 6.15.0
+       
+       - Tomcat : 2.5.2
+       
+       - MySQL : 8.0.26
+       
+       - Mave : 4.0
+       
+       - VUE : Vue3
+       
+       - Vuex : 4.0
+       
+       - Node : 12.17.0
+       
+       - Nginx : stable-alpine
+       
+         
+       
+    2.  Installation with Local
+         - 로컬에서 백앤드 실행 시 명령어
+
+            ```
+            cd peopool
+            
+            #window cmd 실행
+            mvn -U clean spring-boot:run -Dspring-boot.run.jvmArguments="-Dkms.url=ws://52.79.162.52:8888/kurento" 
+            ```
+
+            - https://i5d206.p.ssafy.io:8443/swagger-ui.html 통해  swagger 확인 가능
+
+         - 로컬에서 프런트 실행 시 명령어
+
+            ```
+            cd test00
+            npm install
+            npm run serve  
+            ```
+
+    3. 데이터베이스
+
+       1. 버전
+
+          - Mysql 8.0.26
+
+       2. 접속정보
+
+          - Hostname : i5D206.p.ssafy.io:3306
+
+          - username : peopool
+
+            
+
+       3. Install
+
+          ```
+          sudo apt-get install mysql
+          ```
+
+          
+
+       4. Property (In spring - application.properties)
+
+          ```properties
+          spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+          
+          spring.datasource.url=jdbc:mysql://52.79.162.52:3306/peopool
+          
+          spring.datasource.username=peopool
+          ```
+
+          
+
+       5. ER-Diagram
+
+          ![er다이어그램](./exec/img/er다이어그램.png)
+
+ 2. 외부 서비스 정보 문서
+    1. Kurento
+          - [문서참조](https://doc-kurento.readthedocs.io/en/latest/)
 
 
-
-## 💻 Installation with Local
-
- - 로컬에서 백앤드 실행 시 명령어
-
-    ```
-    cd peopool
-    
-    #window cmd 실행
-    mvn -U clean spring-boot:run -Dspring-boot.run.jvmArguments="-Dkms.url=ws://52.79.162.52:8888/kurento" 
-    ```
-
-    - https://i5d206.p.ssafy.io:8443/swagger-ui.html 통해  swagger 확인 가능
-
-      
-
- - 로컬에서 프런트 실행 시 명령어
-
-    ```
-    cd test00
-    npm install
-    npm run serve  
-    ```
+ 3. 데이터베이스 덤프 파일
+    - [덤프 파일 최종본](./exec/dump)
 
 
-
-## 🗂 데이터베이스
-
-1. 버전
-
-   - Mysql 8.0.26
-
-2. 접속정보
-
-   - Hostname : i5D206.p.ssafy.io:3306
-
-   - username : peopool
-
-     
-
-3. Install
-
-   ```
-   sudo apt-get install mysql
-   ```
-
-   
-
-4. Property (In spring - application.properties)
-
-   ```properties
-   spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-   
-   spring.datasource.url=jdbc:mysql://52.79.162.52:3306/peopool
-   
-   spring.datasource.username=peopool
-   ```
-
-   
-
-5. ER-Diagram
-
-   ![er다이어그램](./exec/img/er다이어그램.png)
-
-6. 데이터베이스 덤프 파일
-
-- [덤프 파일 최종본](./exec/dump)
-
-
-
-## 외부 서비스 문서 참조
-
-1. Kurento
-
-   - [문서참조](https://doc-kurento.readthedocs.io/en/latest/)
-
-     
-
-     
 
 #  Architecture
 
