@@ -21,7 +21,11 @@
                   :noncookie="noncookie"
                 ></before-meeting>
                 <div style="text-align:center">
-                  <el-button type="warning" class="go" @click="copyurl"
+                  <el-button
+                    v-if="usercheck"
+                    type="warning"
+                    class="go"
+                    @click="copyurl"
                     >url복사</el-button
                   >
                   <el-button type="warning" class="go" @click="register"
@@ -187,6 +191,7 @@ export default {
   name: "InterviewRoom",
   data() {
     return {
+      usercheck: null,
       room: null,
       username: null,
       audioOn: true,
@@ -228,6 +233,14 @@ export default {
     const token = this.$cookies.get("PID_AUTH");
     if (token == null || token == "") {
       this.noncookie = true;
+    } else {
+      const decoded = jwt_decode(token);
+      const type = decoded.type; //기업 1 개인 0
+      if (type == 1) {
+        this.usercheck = true;
+      } else {
+        this.usercheck = false;
+      }
     }
   },
   mounted: function() {
