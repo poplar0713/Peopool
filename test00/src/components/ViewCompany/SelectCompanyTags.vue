@@ -164,7 +164,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        
         this.sizes = res.data.slice(0, 4);
         this.tag1 = res.data.slice(4, 14);
         this.tag2 = res.data.slice(14, 17);
@@ -179,7 +178,6 @@ export default {
         this.tag11 = res.data.slice(62, 66);
       })
       .catch((err) => {
-        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -283,7 +281,7 @@ export default {
       this.selected = tagindexlist;
       // 교집합불러오기
 
-      const indexlist = [];
+      let indexlist = [];
       for (var ind of this.selected) {
         indexlist.push(ind);
       }
@@ -296,7 +294,6 @@ export default {
             headers: { Authorization: this.$store.state.usertoken },
           })
           .then((res) => {
-            
             this.selected_list = res.data;
           })
           .catch((err) => {
@@ -314,7 +311,6 @@ export default {
             },
           })
           .then((res) => {
-            
             this.selected_list = res.data;
           })
           .catch((err) => {

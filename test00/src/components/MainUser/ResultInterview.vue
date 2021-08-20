@@ -4,7 +4,8 @@
       pastinterview.filter(
         (data) =>
           (!search ||
-            data.ent_name.toLowerCase().includes(search.toLowerCase()))
+            data.ent_name.toLowerCase().includes(search.toLowerCase())) &&
+          (data.int_done == 'P' || data.int_done == 'F')
       )
     "
     height="600"
@@ -21,13 +22,17 @@
     </el-table-column>
     <el-table-column align="center" label="결과" prop="int_done">
       <template #default="scope">
-        <div v-if="scope.row.int_donw=='P'">합격</div>
-        <div v-if="scope.row.int_donw=='F'">불합격</div>
+        <div v-if="scope.row.int_done == 'P'">합격</div>
+        <div v-if="scope.row.int_done == 'F'">불합격</div>
       </template>
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="검색어를 입력해주세요"
+        />
       </template>
       <template #default="scope">
         <CompanyInfoDetail :companyindex="scope.row.ent_index" />
