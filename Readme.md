@@ -90,11 +90,11 @@
 
 1. Kurento
 
-   - [문서참조](https://doc-kurento.readthedocs.io/en/latest/)
+   -  [문서참조](https://doc-kurento.readthedocs.io/en/latest/)
 
-     
+   
 
-     
+   
 
 #  Architecture
 
@@ -234,3 +234,7 @@
 -  개인의 입장에서는 받은요청 - 수락한 면접 - 결과 대기 - 결과 순으로 프로세스가 정해져 있으며 그동안 면접을 보았던 것도 볼 수 있습니다.
 
 ![개인면접프로세스](./exec/img/개인면접프로세스.gif)
+
+
+
+### 🙎‍♂️ 시연 스크립트
