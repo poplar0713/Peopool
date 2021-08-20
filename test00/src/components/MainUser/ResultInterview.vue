@@ -5,8 +5,7 @@
         (data) =>
           (!search ||
             data.ent_name.toLowerCase().includes(search.toLowerCase())) &&
-          data.int_show == 'T' &&
-          data.int_donw == 'W'
+          (data.int_done == 'P' || data.int_done == 'F')
       )
     "
     height="600"
@@ -21,6 +20,12 @@
     </el-table-column>
     <el-table-column align="center" label="기업명" prop="ent_name">
     </el-table-column>
+    <el-table-column align="center" label="결과" prop="int_done">
+      <template #default="scope">
+        <div v-if="scope.row.int_done == 'P'">합격</div>
+        <div v-if="scope.row.int_done == 'F'">불합격</div>
+      </template>
+    </el-table-column>
     <el-table-column align="center">
       <template #header>
         <el-input
@@ -30,7 +35,7 @@
         />
       </template>
       <template #default="scope">
-        <CompanyInfoDetail :item="scope.row.ent_index" />
+        <CompanyInfoDetail :companyindex="scope.row.ent_index" />
       </template>
     </el-table-column>
   </el-table>
@@ -39,7 +44,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import CompanyInfoDetail from "@/components/CompanyInfo/CompanyInfoDetail.vue";
+import CompanyInfoDetail from "@/components/CompanyInfo/CompanyInfoDetail";
 
 export default {
   name: "UserWaitingResult",

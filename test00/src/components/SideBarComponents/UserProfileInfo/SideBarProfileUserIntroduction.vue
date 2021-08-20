@@ -1,5 +1,5 @@
 <template>
-  <div style="width:80%">
+  <div style="width:70%">
     <!-- <div>
       <img :src="photofilepath" height="150" width="150" />
     </div> -->
@@ -63,6 +63,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     this.userindex = index;
+    this.cookietoken = token;
   },
   created() {
     this.userintroduce = this.introduce;
@@ -82,6 +83,7 @@ export default {
         "...",
       loading: false,
       userindex: "",
+      cookietoken: null,
       imageUrl: this.photofilepath,
       userintroduce: this.introduce,
       changeprofile: false,
@@ -130,6 +132,12 @@ export default {
         this.$message.error("사진을 업로드 해주세요.");
         return;
       }
+      let str = this.userintroduce.replace(" ", "");
+
+      if (str == "" || str == null) {
+        this.$message.error("자기소개를 써주세요.");
+        return;
+      }
       // 저장하는 방법 찾아보기
       if (this.changeprofile) {
         let uploadinput = document.getElementsByClassName(
@@ -145,7 +153,7 @@ export default {
 
         axios
           .post("https://i5d206.p.ssafy.io:8443/poi/photo", frm, {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             params: {
               index: this.userindex,
               introduce: this.userintroduce,
@@ -170,7 +178,7 @@ export default {
         axios
           .put("https://i5d206.p.ssafy.io:8443/poi/intro", {
             headers: {
-              Authorization: this.token,
+              Authorization: this.$store.state.usertoken,
             },
             ind_index: this.userindex,
             ind_introduce: this.userintroduce,

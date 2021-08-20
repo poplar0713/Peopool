@@ -11,7 +11,7 @@
     :default-sort="{ prop: 'int_start', order: 'ascending' }"
     height="500"
   >
-    <el-table-column align="center" label="Date" prop="int_start" sortable width="160%">
+    <el-table-column align="center" label="날짜" prop="int_start" sortable width="160%">
     </el-table-column>
     <el-table-column align="center" label="기업명" prop="ent_name"> </el-table-column>
     <el-table-column align="center" label="면접장" prop="int_duty">
@@ -28,7 +28,7 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="Type to search" />
+        <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
       </template>
       <template #default="scope">
         <CompanyInfoDetail :companyindex="scope.row.ent_index" />
@@ -59,7 +59,7 @@ export default {
         this.myinterview = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");

@@ -37,7 +37,7 @@
           </el-tabs>
         </div>
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
 </template>
@@ -56,7 +56,7 @@ import ProcessingInterview from "../components/Recruiting/ProcessingInterview.vu
 import PassUser from "../components/Recruiting/PassUser.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import Footer from "@/components/Footer.vue";
+
 
 export default {
   components: {
@@ -67,7 +67,6 @@ export default {
     RecruitingBoardRejectOfferTab,
     ProcessingInterview,
     PassUser,
-    Footer
   },
   data() {
     const token = this.$cookies.get("PID_AUTH");
@@ -79,7 +78,6 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res);
         // W인 애들만..
         for (var user of res.data) {
           if (user.int_done == "W") {

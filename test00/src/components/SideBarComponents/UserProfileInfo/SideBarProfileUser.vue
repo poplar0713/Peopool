@@ -5,7 +5,9 @@
     <el-tab-pane label="프로필사진 및 소개"
       ><SideBarProfileUserIntroduction :photofilepath="userdata.photofilepath"
     /></el-tab-pane>
-    <el-tab-pane label="소개영상"><PRVideo :vediofilepath="userdata.videofilepath"/></el-tab-pane>
+    <el-tab-pane label="소개영상"
+      ><PRVideo :vediofilepath="userdata.videofilepath"
+    /></el-tab-pane>
     <el-tab-pane label="태그관리"><SideBarProfileUserTags /></el-tab-pane>
     <el-tab-pane label="서류관리"
       ><SideBarProfileUserDoc :docfilepath="userdata.resumefilepath"
@@ -45,7 +47,10 @@ export default {
         this.userdata.photofilepath =
           "/file/" + res.data.photo_savefolder + "/" + res.data.photo_savefile;
         this.userdata.resumefilepath =
-          "/file/" + res.data.resume_savefolder + "/" + res.data.resume_savefile;
+          "/file/" +
+          res.data.resume_savefolder +
+          "/" +
+          res.data.resume_savefile;
         this.userdata.videofilepath =
           "/file/" + res.data.video_savefolder + "/" + res.data.video_savefile;
         this.userdata.resume_originfile = res.data.resume_originfile;

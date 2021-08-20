@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.peopool.model.EntCard;
+import com.ssafy.peopool.model.EntCardImage;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 import com.ssafy.peopool.model.repo.ProfileOfEnterpriseRepo;
 
@@ -30,7 +31,7 @@ public class ProfileOfEnterpriseServiceImpl implements ProfileOfEnterpriseServic
 	
 	// 전체 프로필 조회 (팔로워 순)
 	@Override
-	public List<EntCard> getAllProfileByFollower() throws SQLException {
+	public List<EntCardImage> getAllProfileByFollower() throws SQLException {
 		// TODO Auto-generated method stub
 		return profileOfEnterpriseRepo.getAllProfileByFollower();
 	}

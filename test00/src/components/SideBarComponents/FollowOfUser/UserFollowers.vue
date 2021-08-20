@@ -1,10 +1,10 @@
 <template>
   <el-button type="text" @click="getFollowers" style="color:black"
-    >Followers</el-button
+    >팔로워</el-button
   >
 
-  <el-dialog title="Followers" v-model="dialogVisible" width="30%">
-    <h2 style="margin:0 auto; text-align:center">{{ this.followersNumber }}</h2>
+  <el-dialog title="" v-model="dialogVisible" width="30%">
+    <h2 style="margin:0 auto; text-align:center">Followers <br>{{ this.followersNumber }}</h2>
 
     <el-table
       :data="
@@ -16,13 +16,18 @@
       width="100%"
       height="250px"
     >
+    <el-table-column width="100%">
+        <template #default="scope">
+          <CompanyInfoSquareImage :companyindex="scope.row.following" />
+        </template>
+      </el-table-column>
       <el-table-column align="center">
         <template #header>
-          <el-input v-model="search" size="mini" placeholder="Type to search" />
+          <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
         </template>
         <template #default="scope">
           <div class="grid-content bg-purple">
-            <CompanyInfoName :companydata="scope.row.following" />
+            <CompanyInfoName :companyindex="scope.row.following" />
           </div>
         </template>
       </el-table-column>
@@ -35,10 +40,12 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import CompanyInfoName from "@/components/CompanyInfo/CompanyInfoName.vue";
+import CompanyInfoSquareImage from "@/components/CompanyInfo/CompanyInfoSquareImage.vue";
+
 
 export default {
   name: "UserFollowers",
-  components: { CompanyInfoName },
+  components: { CompanyInfoName,CompanyInfoSquareImage },
   data() {
     return {
       dialogVisible: false,
@@ -65,7 +72,7 @@ export default {
             index: this.user_index,
             type: 0,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
@@ -87,7 +94,7 @@ export default {
             index: this.user_index,
             type: 0,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
@@ -113,7 +120,7 @@ export default {
             follower: row.follower,
             following: row.following,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then((res) => {
           console.log(res),

@@ -75,7 +75,6 @@ export default {
               }, 3000);
             })
             .catch((err) => {
-              console.log(err);
               this.$message.error("아이디와 비밀번호를 확인해주세요");
               this.ruleForm.LoginCompanyID = "";
               this.ruleForm.LoginCompanyPW = "";
@@ -89,7 +88,6 @@ export default {
           //
           this.$store.state.LoginDialog = false;
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

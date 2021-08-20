@@ -25,7 +25,6 @@
           <TodayInterviewUser />
         </div>
       </el-main>
-      <Footer/>
     </el-container>
   </el-container>
 </template>
@@ -36,8 +35,6 @@ import CompanySchedule from "@/components/MainCompany/CompanySchedule.vue";
 import CompanySugInterview from "@/components/MainCompany/CompanySugInterview.vue";
 import TodayInterviewUser from "@/components/MainCompany/TodayInterviewUser.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
-import Footer from "@/components/Footer.vue";
-
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -50,15 +47,17 @@ export default {
     headerSearchUser,
     CompanySugInterview,
     TodayInterviewUser,
-    Footer
   },
   mounted() {
     // 토큰가져오기
     const token = this.$cookies.get("PID_AUTH");
     const decoded = jwt_decode(token);
     const index = decoded.index;
+    const name = decoded.name;
+    this.$store.state.usertoken = token;
     console.log("타입확인");
     console.log(decoded.type);
+    localStorage.setItem("username", name);
     //팔로잉정보 가져오기
     axios
       .get("https://i5d206.p.ssafy.io:8443/fol/follower", {

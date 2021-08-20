@@ -8,7 +8,7 @@
   >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
       <!-- 기업이미지 -->
-      <el-form-item label="Image" prop="ent_image">
+      <el-form-item label="이미지" prop="ent_image">
         <!-- <div
           v-if="ruleForm.ent_image == ''"
           class="box"
@@ -279,7 +279,7 @@ export default {
                 `https://i5d206.p.ssafy.io:8443/poe/photo/${this.userindex}`,
                 frm,
                 {
-                  headers: { Authorization: this.token },
+                  headers: { Authorization: this.$store.state.usertoken },
                 }
               )
               .then((res) => {
@@ -292,7 +292,7 @@ export default {
               });
             axios
               .put("https://i5d206.p.ssafy.io:8443/poe", {
-                headers: { Authorization: this.token },
+                headers: { Authorization: this.$store.state.usertoken },
                 ent_image: this.ruleForm.ent_image_pk,
                 ent_index: this.ruleForm.ent_index,
                 ent_ceo: this.ruleForm.ent_ceo,
@@ -321,7 +321,7 @@ export default {
           if (valid) {
             axios
               .put("https://i5d206.p.ssafy.io:8443/poe", {
-                headers: { Authorization: this.token },
+                headers: { Authorization: this.$store.state.usertoken },
                 ent_image: this.ruleForm.ent_image_pk,
                 ent_index: this.ruleForm.ent_index,
                 ent_ceo: this.ruleForm.ent_ceo,

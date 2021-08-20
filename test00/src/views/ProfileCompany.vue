@@ -3,10 +3,10 @@
     <el-aside width="200px"><SideBarCompany /></el-aside>
     <el-container>
       <el-header><headerSearchUser /></el-header>
-      <el-main style="width:70%">
+      <el-main style="width:70%; text-align:center">
         <SideBarProfileCompany />
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
 </template>
@@ -15,7 +15,7 @@
 import SideBarCompany from "@/components/SideBarComponents/SideBarCompany.vue";
 import headerSearchUser from "@/components/SideBarComponents/headerSearchUser.vue";
 import SideBarProfileCompany from "@/components/SideBarComponents/CompanyProfileInfo/SideBarProfileCompany.vue";
-import Footer from "@/components/Footer.vue";
+
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -26,7 +26,6 @@ export default {
     SideBarCompany,
     headerSearchUser,
     SideBarProfileCompany,
-    Footer
   },
   mounted() {
     // 토큰가져오기
@@ -49,7 +48,7 @@ export default {
         this.follower = res.data;
       })
       .catch((err) => {
-        console.log("token error");
+        
         if (err.response.data.status == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");

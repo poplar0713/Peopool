@@ -28,7 +28,7 @@
         >
       </template>
     </el-table-column>
-    <el-table-column align="center" label="종료" prop="int_duty">
+    <el-table-column #default="scope" align="center" label="종료" prop="int_duty">
       <el-popover placement="left" :width="200" trigger="click">
         <template #reference>
           <el-button type="success" plain size="mini">면접종료</el-button>

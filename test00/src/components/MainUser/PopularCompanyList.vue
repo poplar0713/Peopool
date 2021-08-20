@@ -8,18 +8,21 @@
           style="text-align:center; background-color:#F4F4EF; height:110%;"
           @click="(dialogVisible = true), getcompanydata(item.ent_index)"
         >
-          <div style="margin-bottom:60px">
-            <!-- <el-row>
-            <el-col :span="8">
-              {{ item.ent_image }}
-            </el-col>
-            <el-col :span="16">
-              <h1>{{ item.ent_name }}</h1>
-            </el-col>
-          </el-row> -->
-          </div>
-          <div id="carouselname">
-            <h1>{{ item.ent_name }}</h1>
+          <div style="">
+            <el-row>
+              <el-col :span="8">
+                <img
+                  :src="
+                    `https://i5d206.p.ssafy.io/file/${item.savefolder}/${item.savefile}`
+                  "
+                  alt=""
+                  style="width:150px; height:180px"
+                />
+              </el-col>
+              <el-col :span="16" id="carouselname">
+                <h1>{{ item.ent_name }}</h1>
+              </el-col>
+            </el-row>
           </div>
         </el-card>
       </el-carousel-item>
@@ -36,14 +39,14 @@
             <i
               class="fas fa-heart fa-2x"
               size:7x
-              @click="clickfollowBtn"
+              @click="clickfollowBtn(this.datacompany.ent_index)"
               style="cursor:pointer"
             ></i>
           </span>
           <!-- 언팔로우일경우 -->
           <span v-if="follow == false" style="color: Tomato;">
             <i
-              @click="clickfollowBtn"
+              @click="clickfollowBtn(this.datacompany.ent_index)"
               class="far fa-heart fa-2x"
               style="cursor:pointer"
             ></i>
@@ -68,8 +71,8 @@
                 <h4>기업 대표 : {{ this.datacompany.ent_ceo }}</h4>
                 {{ this.datacompany.ent_info }}
                 <br />
-                {{ this.datacompany.ent_introduce }}</el-main
-              >
+                <div v-html="datacompany.ent_introduce"></div
+              ></el-main>
             </el-container>
           </div>
         </el-collapse-item>
@@ -122,9 +125,13 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
 
-    axios.get("https://i5d206.p.ssafy.io:8443/poe/ByFollower").then((res) => {
-      this.popularlist = res.data;
-    });
+    axios
+      .get("https://i5d206.p.ssafy.io:8443/poe/ByFollower", {
+        headers: { Authorization: this.$store.state.usertoken },
+      })
+      .then((res) => {
+        this.popularlist = res.data;
+      });
     return {
       activeNames: ["1"],
       dialogVisible: false,
@@ -155,7 +162,7 @@ export default {
         let res = await axios.get(
           `https://i5d206.p.ssafy.io:8443/poe/path/${companyindex}`,
           {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           }
         );
 
@@ -170,7 +177,7 @@ export default {
       } catch (err) {
         console.log(err);
         if (err.response == 401) {
-          console.log("token error");
+          
           this.$message.error("로그인세션이 만료되었습니다");
           localStorage.clear();
           this.$router.push("/");
@@ -181,7 +188,7 @@ export default {
       // 팔로우했는지 체크해보기
       axios
         .post("https://i5d206.p.ssafy.io:8443/fol/check", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           fol_type: 0,
           follower: companyindex,
           following: this.user_index,
@@ -209,7 +216,7 @@ export default {
       // 기업본인 태그목록 불러오기
       axios
         .get("https://i5d206.p.ssafy.io:8443/cla/list", {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
           params: {
             ent_index: companyindex,
           },
@@ -220,7 +227,7 @@ export default {
         })
         .catch((err) => {
           if (err.response == 401) {
-            console.log("token error");
+            
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
@@ -228,17 +235,17 @@ export default {
         });
     },
     //팔로잉버튼
-    clickfollowBtn() {
+    clickfollowBtn(companyindex) {
       if (this.follow) {
-        console.log("팔로우 해제");
+        
         console.log(this.user_index, this.item);
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             data: {
               fol_type: 0,
               following: this.user_index,
-              follower: this.company_info.ent_index,
+              follower: companyindex,
             },
           })
           .then((res) => {
@@ -246,8 +253,8 @@ export default {
             this.follow = false;
           })
           .catch((err) => {
-            console.log("token error");
-            console.log(err.response);
+            
+            
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
@@ -255,21 +262,21 @@ export default {
             }
           });
       } else if (this.follow == false) {
-        console.log("팔로잉");
+        
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             fol_type: 0,
             following: this.user_index,
-            follower: this.company_info.ent_index,
+            follower: companyindex,
           })
           .then((res) => {
             console.log(res);
             this.follow = true;
           })
           .catch((err) => {
-            console.log("token error");
-            console.log(err.response);
+            
+            
             if (err.response == 401) {
               this.$message.error("로그인세션이 만료되었습니다");
               localStorage.clear();
@@ -294,6 +301,6 @@ export default {
   font-family: "SDSamliphopangche_Basic";
   font-weight: normal;
   font-style: normal;
-  font-size: 50px;
+  font-size: 45px;
 }
 </style>

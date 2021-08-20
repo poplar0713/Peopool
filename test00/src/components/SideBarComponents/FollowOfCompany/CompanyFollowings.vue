@@ -6,8 +6,8 @@
     >Followings</el-button
   >
 
-  <el-dialog title="Followings" v-model="dialogVisible" width="30%">
-    <h2 style="margin:0 auto; text-align:center">
+  <el-dialog title="" v-model="dialogVisible" width="30%">
+    <h2 style="margin:0 auto; text-align:center">Followings <br>
       {{ this.followingsNumber }}
     </h2>
     <!--  -->
@@ -21,9 +21,14 @@
       width="100%"
       height="250px"
     >
+    <el-table-column width="100%">
+      <template #default="scope">
+        <UserInfoCircleImage :userindex="scope.row.follower"/>
+      </template>
+    </el-table-column>
       <el-table-column align="center">
         <template #header>
-          <el-input v-model="search" size="mini" placeholder="Type to search" />
+          <el-input v-model="search" size="mini" placeholder="검색어를 입력해주세요" />
         </template>
         <template #default="scope">
           <el-row>
@@ -53,6 +58,7 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import UserInfoName from "@/components/UserInfo/UserInfoName.vue";
+import UserInfoCircleImage from "@/components/UserInfo/UserInfoCircleImage.vue";
 
 export default {
   name: "CompanyFollowings",
@@ -63,7 +69,7 @@ export default {
     const index = decoded.index;
     this.company_index = index;
   },
-  components: { UserInfoName },
+  components: { UserInfoName,UserInfoCircleImage },
   data() {
     return {
       dialogVisible: false,
@@ -83,7 +89,7 @@ export default {
             index: this.company_index,
             type: 1,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
@@ -105,7 +111,7 @@ export default {
             index: this.company_index,
             type: 1,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         // 팔로워데이터 넣어주기
         .then((res) => {
@@ -131,7 +137,7 @@ export default {
             follower: row.follower,
             following: row.following,
           },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then((res) => {
           console.log(res),

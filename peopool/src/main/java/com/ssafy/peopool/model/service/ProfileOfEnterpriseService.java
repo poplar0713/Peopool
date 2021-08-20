@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.peopool.model.EntCard;
+import com.ssafy.peopool.model.EntCardImage;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 
 public interface ProfileOfEnterpriseService {
@@ -13,7 +14,7 @@ public interface ProfileOfEnterpriseService {
 	List<EntCard> getAllProfile() throws SQLException;
 	
 	// 전체 프로필 조회 (팔로워 순)
-	List<EntCard> getAllProfileByFollower() throws SQLException;
+	List<EntCardImage> getAllProfileByFollower() throws SQLException;
 
 	// 프로필 수정
 	boolean modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;

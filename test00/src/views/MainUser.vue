@@ -25,7 +25,7 @@
           ></el-col>
         </el-row>
       </el-main>
-      <Footer/>
+      
     </el-container>
   </el-container>
   <router-view></router-view>
@@ -36,7 +36,7 @@ import headerSearchCompany from "@/components/SideBarComponents/headerSearchComp
 import UserSugInterview from "@/components/MainUser/UserSugInterview.vue";
 import UserSchedule from "@/components/MainUser/UserSchedule.vue";
 import PopularCompanyList from "@/components/MainUser/PopularCompanyList.vue";
-import Footer from "@/components/Footer.vue";
+
 
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -53,7 +53,6 @@ export default {
     UserSugInterview,
     UserSchedule,
     headerSearchCompany,
-    Footer
   },
   created() {},
   mounted: function() {
@@ -72,6 +71,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
     const name = decoded.name;
+    this.$store.state.usertoken = token
     console.log("username-", name);
     localStorage.setItem("username", name);
 
@@ -88,8 +88,8 @@ export default {
         localStorage.setItem("username", res.data.ind_name);
       })
       .catch((err) => {
-        console.log("token error");
-        console.log(err.response);
+        
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");

@@ -446,7 +446,7 @@ export default {
       this.options = false;
       // 로그인, 비로그인에 따라 화면push
       if (this.$cookies.get("PID_AUTH")) {
-        console.log(1);
+        
         const token = this.$cookies.get("PID_AUTH");
         const decoded = jwt_decode(token);
         const type = decoded.type;
@@ -627,8 +627,8 @@ export default {
     //       this.dialogVisible = false;
     //     })
     //     .catch((err) => {
-    //       console.log("token error");
-    //       console.log(err.response);
+    //       
+    //       
     //       if (err.response == 401) {
     //         this.$message.error("로그인세션이 만료되었습니다");
     //         localStorage.clear();

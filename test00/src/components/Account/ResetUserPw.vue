@@ -122,14 +122,13 @@ export default {
                 id: this.ruleForm.userid,
                 phone: this.ruleForm.userphone,
               },
-              headers: { Authorization: this.token },
+              headers: { Authorization: this.$store.state.usertoken },
             })
             .then((result) => {
-              console.log(result);
               // 비밀번호 변경
               axios
                 .put("https://i5d206.p.ssafy.io:8443/ind", {
-                  headers: { Authorization: this.token },
+                  headers: { Authorization: this.$store.state.usertoken },
                   ind_birth: result.data.ind_birth,
                   ind_email: result.data.ind_email,
                   ind_gender: result.data.ind_gender,
@@ -151,8 +150,6 @@ export default {
                   }, 3000);
                 })
                 .catch((err) => {
-                  console.log("token error");
-                  console.log(err.response);
                   if (err.response == 401) {
                     this.$message.error("로그인세션이 만료되었습니다");
                     this.$cookies.remove("PID_AUTH");
@@ -177,7 +174,6 @@ export default {
           //
           this.$store.state.findUserPw = false;
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

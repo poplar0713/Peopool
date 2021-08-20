@@ -68,17 +68,6 @@ export default {
         callback();
       }
     };
-    // 회사 중복 체크
-    // const validationID = (rule, value, callback) => {
-    //   // this.checkID();
-    //   if (value === "") {
-    //     callback(new Error("ID를 입력해주세요"));
-    //   } else if (length.value < 5 || length.value > 10) {
-    //     callback(new Error("1-15자리로 설정해주세요"));
-    //   } else {
-    //     callback();
-    //   }
-    // };
     return {
       allowedID: false,
       ruleForm: {
@@ -178,7 +167,6 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.$store.state.SignupDialogCompany = false;
-                console.log(this.ruleForm);
                 setTimeout(() => {
                   this.successmessage();
                 }, 3000);
@@ -188,7 +176,6 @@ export default {
               console.log(err);
             });
         } else if (this.allowedID == false) {
-          console.log("error submit!!");
           this.recheckid();
           return false;
         } else {

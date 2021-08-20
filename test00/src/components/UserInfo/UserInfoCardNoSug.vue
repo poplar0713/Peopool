@@ -1,21 +1,25 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer; height:110%"
+    style="margin-bottom:20px; cursor:pointer; height:110%;"
     @click="dialogVisible = true"
   >
     <el-row>
       <el-col :span="8">
         <div>
           <span v-if="this.userdata.photo_index">
-            <img :src="this.userdata.photofilepath" style="width:100%; heigth: auto" />
+            <img
+              :src="this.userdata.photofilepath"
+              style="width:100%; heigth: auto"
+            />
           </span>
           <span v-else>
             <img :src="this.nonImage" style="width:100%; heigth: auto" />
           </span>
         </div>
       </el-col>
-      <el-col :span="16"
+      <el-col :span="2"></el-col>
+      <el-col :span="14"
         ><div>
           <div>
             <h3 style="margin-top:0">{{ this.userdata.ind_name }}</h3>
@@ -49,7 +53,10 @@
             <el-col :span="12" style="text-align: center">
               <div>
                 <span v-if="this.userdata.photo_index">
-                  <img :src="this.userdata.photofilepath" style="width:70%; heigth: auto" />
+                  <img
+                    :src="this.userdata.photofilepath"
+                    style="width:70%; heigth: auto"
+                  />
                 </span>
                 <span v-else>
                   <img :src="this.nonImage" style="width:70%; heigth: auto" />
@@ -60,7 +67,11 @@
             <el-col :span="8"
               ><span>
                 <h3>성명 : {{ this.userdata.ind_name }}</h3>
-                <h3>직무 : {{ this.userdata.cat_name }} ({{ this.userdata.car_value }})</h3>
+                <h3>
+                  직무 : {{ this.userdata.cat_name }} ({{
+                    this.userdata.car_value
+                  }})
+                </h3>
                 <el-divider></el-divider>
                 <h3>연락처 : {{ this.userdata.ind_phone }}</h3>
                 <h3>이메일: {{ this.userdata.ind_email }}</h3>
@@ -73,7 +84,10 @@
         </el-tab-pane>
         <el-tab-pane label="이력서" style="text-align: center">
           <div v-if="userdata.resume_index" class="fileDoc">
-            <webviewer v-if="userdata.resumefilepath" :initialDoc="userdata.resumefilepath" />
+            <webviewer
+              v-if="userdata.resumefilepath"
+              :initialDoc="userdata.resumefilepath"
+            />
           </div>
           <div v-else>
             <h3>등록된 이력서 및 포트폴리오가 없습니다.</h3>
@@ -97,14 +111,15 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button v-if="this.follow" round type="danger" @click="clickfollowBtn"
+        <el-button
+          v-if="this.follow"
+          round
+          type="danger"
+          @click="clickfollowBtn"
           ><i class="fas fa-heart"></i>&nbsp;&nbsp;팔로잉</el-button
         >
         <el-button v-else type="danger" plain round @click="clickfollowBtn"
           ><i class="far fa-heart"></i>&nbsp;&nbsp;팔로우</el-button
-        >
-        <el-button type="success" plain round @click="this.innerVisible = true"
-          >면접 제안</el-button
         >
       </span>
     </template>
@@ -241,7 +256,7 @@ export default {
         this.ind_taglist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -259,7 +274,7 @@ export default {
     },
     clickfollowBtn() {
       if (this.follow) {
-        console.log("팔로우 해제");
+        
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             data: {
@@ -267,7 +282,7 @@ export default {
               following: this.companyindex,
               follower: this.userindex,
             },
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           })
           .then((res) => {
             console.log(res);
@@ -282,10 +297,10 @@ export default {
             }
           });
       } else if (this.follow == false) {
-        console.log("팔로잉");
+        
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             fol_type: 1,
             following: this.companyindex,
             follower: this.userindex,

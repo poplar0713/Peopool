@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.peopool.model.EntCard;
+import com.ssafy.peopool.model.EntCardImage;
 import com.ssafy.peopool.model.ProfileOfEnterprise;
 
 @Repository
@@ -16,7 +17,7 @@ public interface ProfileOfEnterpriseRepo {
 	List<EntCard> getAllProfile() throws SQLException;
 	
 	// 전체 프로필 조회 (팔로워 순)
-	List<EntCard> getAllProfileByFollower() throws SQLException;
+	List<EntCardImage> getAllProfileByFollower() throws SQLException;
 	
 	// 프로필 수정
 	int modifyProfileOfEnterprise(ProfileOfEnterprise profileOfEnterprise) throws SQLException;

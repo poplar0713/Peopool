@@ -1,12 +1,14 @@
 <template>
-  <div style="background-color: #FAFAFA; border-radius: 2em;">
-    <div class="grid-content bg-purple" style="text-align:center">
+  <el-main style="background-color: #FAFAFA; border-radius: 2em;">
+    <div class="" style="text-align:center">
+      <el-divider></el-divider>
       <h3 style="padding-top:10px; margin-bottom:10px">규모</h3>
       <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
         <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{ tag.list_name }}</el-checkbox>
       </el-checkbox-group>
     </div>
-    <div class="grid-content bg-purple">
+    <el-divider></el-divider>
+    <div class="">
       <h3 style="text-align:center;">
         #tags
       </h3>
@@ -95,21 +97,41 @@
         >
       </el-tabs>
     </div>
-  </div>
-  <div style="text-align:center">
-    <el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button>
-  </div>
-  <div v-if="this.selected_tags.length == 0" style="text-align:center">
-    <h3>태그를 선택해주세요</h3>
-  </div>
-  <div style="text-align:center">
-    <h3>
-      <span v-for="tag in selected_tags" :key="tag" style="margin:5px">#{{ tag.list_name }}</span>
-    </h3>
+    <div style="text-align:center">
+      <el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button>
+    </div>
+    <el-divider></el-divider>
+  </el-main>
+  <div style="text-align : center">
+    <div v-if="this.selected_tags.length == 0">
+      <h3>태그를 선택해주세요</h3>
+    </div>
+    <div v-else>
+      <h4>선택된 태그</h4>
+      <h3>
+        <span v-for="tag in selected_tags" :key="tag" style="margin: 6px"
+          >#{{ tag.list_name }}</span
+        >
+      </h3>
+    </div>
   </div>
   <br />
   <div v-show="this.searchresult == true">
     <div v-if="this.selected_list.length > 0">
+      <el-divider></el-divider>
+      <!--<el-select
+        v-model="this.sort_standard"
+        placeholder="정렬"
+        style="width: 10%; margin-bottom: 1%; text-align: right"
+      >
+        <el-option
+          v-for="item in this.sort_options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option> </el-select
+      ><el-button @click="orderByname">정렬</el-button>-->
       <el-row :gutter="24">
         <el-col :span="4" v-for="(item, i) in selected_list" :key="i">
           <CompanyInfoCard :companyindex="item.ent_index" />
@@ -117,6 +139,7 @@
       </el-row>
     </div>
     <div v-else>
+      <el-divider></el-divider>
       조건을 충족하는 결과가 없습니다
     </div>
   </div>
@@ -141,7 +164,7 @@ export default {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res.data);
+        
         this.sizes = res.data.slice(0, 4);
         this.tag1 = res.data.slice(4, 14);
         this.tag2 = res.data.slice(14, 17);
@@ -156,7 +179,7 @@ export default {
         this.tag11 = res.data.slice(62, 66);
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -184,9 +207,50 @@ export default {
       selected_tags: [],
       selected: [],
       selected_list: [],
+      sort_standard: 0,
+      sort_options: [
+        {
+          value: 0,
+          label: "기본",
+        },
+        {
+          value: 1,
+          label: "이름순",
+        },
+        {
+          value: 2,
+          label: "이름역순",
+        },
+      ],
     };
   },
   methods: {
+    onSortbtn() {
+      if (this.sort_standard == 0) {
+        this.orderByDefalut();
+      }
+      if (this.sort_standard == 1) {
+        this.orderByname();
+      }
+      if (this.sort_standard == 2) {
+        this.reversByname();
+      }
+    },
+    orderByDefalut() {
+      this.selected_list.sort(function(x, y) {
+        return x.ent_index - y.ent_index;
+      });
+    },
+    orderByname() {
+      this.selected_list.sort(function(x, y) {
+        return x.ent_name - y.ent_name;
+      });
+    },
+    reversByname() {
+      this.selected_list.sort(function(x, y) {
+        return y.ent_name - x.ent_name;
+      });
+    },
     handleChange(val) {
       console.log(val);
     },
@@ -229,10 +293,10 @@ export default {
       if (indexlist.length <= 0) {
         axios
           .get("https://i5d206.p.ssafy.io:8443/poe", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
           })
           .then((res) => {
-            console.log(res.data);
+            
             this.selected_list = res.data;
           })
           .catch((err) => {
@@ -241,7 +305,7 @@ export default {
       } else {
         axios
           .get("https://i5d206.p.ssafy.io:8443/cla/case", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             params: {
               list: indexlist,
             },
@@ -250,7 +314,7 @@ export default {
             },
           })
           .then((res) => {
-            console.log(res.data);
+            
             this.selected_list = res.data;
           })
           .catch((err) => {

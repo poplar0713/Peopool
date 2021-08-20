@@ -10,7 +10,7 @@
 		on p.ent_index = e.ent_index
 	</select>
 	
-	<select id="getAllProfileByFollower" resultType="EntCard">
+	<select id="getAllProfileByFollower" resultType="EntCardImage">
 		select f.*, ifnull(g.count,0) count
 			from (select a.*,b.savefolder,b.savefile,b.originfile
 					from (select e.ent_index, ent_name, ent_contact, ent_email, ent_image, ent_ceo, ent_history, ent_address, ent_website, ent_introduce

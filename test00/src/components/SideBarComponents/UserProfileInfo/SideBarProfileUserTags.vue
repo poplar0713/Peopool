@@ -1,5 +1,5 @@
 <template>
-  <div class="select-section" style="width:80%">
+  <div class="select-section" style="width:70%">
     <div>
       <el-divider content-position="left">직무</el-divider>
       <div style="margin-bottom:10px">나의 직무 ({{ this.mypart }})</div>
@@ -117,14 +117,14 @@ export default {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        
         this.mypart_ind = res.data.cat_index;
         this.mycareer_ind = res.data.car_index;
         this.mypart = res.data.cat_name;
         this.mycareer = res.data.car_value;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -142,7 +142,7 @@ export default {
         this.careerlist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -160,7 +160,7 @@ export default {
         this.partlist = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -178,7 +178,7 @@ export default {
         this.options_user = res.data;
       })
       .catch((err) => {
-        console.log(err.response);
+        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -263,7 +263,7 @@ export default {
           this.mycareer = res.data.car_value;
         })
         .catch((err) => {
-          console.log(err.response);
+          
           if (err.response == 401) {
             this.$message.error("로그인세션이 만료되었습니다");
             this.$cookies.remove("PID_AUTH");
@@ -331,13 +331,12 @@ export default {
       } else {
         axios
           .post("https://i5d206.p.ssafy.io:8443/has", {
-            headers: { Authorization: this.token },
+            headers: { Authorization: this.$store.state.usertoken },
             tag_target: this.user_index,
             tag_type: 0,
             taglist_index: this.value,
           })
           .then(() => {
-            this.$message.info("태그가 추가되었습니다");
             this.getNewArray = !this.getNewArray;
           })
           .catch((err) => {
@@ -356,7 +355,7 @@ export default {
       console.log(tag_index);
       axios
         .delete(`https://i5d206.p.ssafy.io:8443/has/${tag_index}`, {
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.$store.state.usertoken },
         })
         .then(() => {
           console.log();

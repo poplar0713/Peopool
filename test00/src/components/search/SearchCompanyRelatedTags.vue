@@ -34,7 +34,7 @@ export default {
           })
           .then((res) => {
             console.log("여기");
-            console.log(res.data);
+            
             for (var tag of res.data) {
               console.log(tag);
               this.relatedtaglist.push(tag);
@@ -50,7 +50,7 @@ export default {
         })
         .then((res) => {
           console.log("여기");
-          console.log(res.data);
+          
           this.relatedtaglist = res.data;
         });
     }
