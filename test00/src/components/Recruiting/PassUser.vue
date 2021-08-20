@@ -49,7 +49,7 @@ import UserInfoDetail from "@/components/UserInfo/UserInfoDetail.vue";
 export default {
   name: "PassUser",
   components: { UserInfoDetail },
-  mounted() {},
+
   data() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
