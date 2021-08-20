@@ -151,7 +151,7 @@ export default {
     mytags() {
       this.resulttags = [];
       for (var m = 0; m < this.mytags.length; m++) {
-        if (this.mytags[m].list_index < 4) {
+        if (this.mytags[m].list_index <= 4) {
           this.entsize_index = this.mytags[m].list_index;
           this.entsize_value = this.mytags[m].list_name;
           this.temp_index = this.mytags[m].cla_index;
@@ -209,7 +209,6 @@ export default {
         .catch((err) => {
           console.log(err);
           if (err.response == 401) {
-            
             this.$message.error("로그인세션이 만료되었습니다");
             localStorage.clear();
             this.$router.push("/");
