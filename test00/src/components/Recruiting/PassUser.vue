@@ -3,7 +3,8 @@
     :data="
       pastinterview.filter(
         (data) =>
-          (!search || data.ind_name.toLowerCase().includes(search.toLowerCase())) &&
+          (!search ||
+            data.ind_name.toLowerCase().includes(search.toLowerCase())) &&
           data.int_done == 'P'
       )
     "
@@ -17,11 +18,21 @@
     </el-table-column>
     <el-table-column align="center">
       <template #header>
-        <el-input
-          v-model="search"
-          size="mini"
-          placeholder="검색어를 입력해주세요"
-        />
+        <span
+          ><el-input
+            v-model="search"
+            size="mini"
+            placeholder="검색어를 입력해주세요"
+            style="width:50%; margin-right:10px"
+          />
+          <el-button
+            icon="el-icon-refresh"
+            size="mini"
+            circle
+            @click="renewdata()"
+            >최신화</el-button
+          >
+        </span>
       </template>
       <template #default="scope">
         <UserInfoDetail :userindex="scope.row.ind_index" />
@@ -38,9 +49,7 @@ import UserInfoDetail from "@/components/UserInfo/UserInfoDetail.vue";
 export default {
   name: "PassUser",
   components: { UserInfoDetail },
-  mounted() {
-    this.renewdata();
-  },
+  mounted() {},
   data() {
     // 토큰으로 유저index 가져오기
     const token = this.$cookies.get("PID_AUTH");
