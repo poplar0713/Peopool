@@ -230,6 +230,7 @@ export default {
       this.noncookie = true;
     }
   },
+
   mounted: function() {
     console.log(adapter.browserDetails.browser);
     ws = new WebSocket("wss://i5d206.p.ssafy.io:8443/groupcall");
@@ -284,13 +285,26 @@ export default {
       var dummy = document.createElement("input");
       var text = location.href;
 
+      window.Kakao.Link.sendDefault({
+        objectType: "feed",
+        content: {
+          title: this.$route.params.company + "면접에 초대해요.😁",
+          description:
+            "피풀 비대면 면접서비스에 당신을 초대합니다. 우리 회사에 인재 빠르게 contact😃 peopool에서 경험하세요!",
+          imageUrl: "https://i5d206.p.ssafy.io/file/urlshare.png",
+          link: {
+            mobileWebUrl: text,
+            webUrl: text,
+          },
+        },
+      });
       document.body.appendChild(dummy);
       dummy.value = text;
       dummy.select();
       document.execCommand("copy");
       document.body.removeChild(dummy);
 
-      this.$message.success("URL이 복사되었습니다!");
+      this.$message.success("URL도 복사되었어요!👌");
     },
     alaramcheck() {
       let popdiv = document.getElementsByClassName("el-popover")[0];
@@ -433,7 +447,6 @@ export default {
       this.options = false;
       // 로그인, 비로그인에 따라 화면push
       if (this.$cookies.get("PID_AUTH")) {
-        
         const token = this.$cookies.get("PID_AUTH");
         const decoded = jwt_decode(token);
         const type = decoded.type;
@@ -614,8 +627,8 @@ export default {
     //       this.dialogVisible = false;
     //     })
     //     .catch((err) => {
-    //       
-    //       
+    //
+    //
     //       if (err.response == 401) {
     //         this.$message.error("로그인세션이 만료되었습니다");
     //         localStorage.clear();

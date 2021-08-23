@@ -11,13 +11,13 @@ import "./element-variables.scss";
 
 const app = createApp(App);
 installElementPlus(app);
-
+window.Kakao.init("72049fede699eb7616f97679415da8af");
 app.use(router);
 router.app = app;
 app.use(store);
 app.use(VueCooKie, {
   expireTime: "0",
-  secure:true,
+  secure: true,
 });
 // .use(AxiosPlugin)
 app.mount("#app");
