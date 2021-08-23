@@ -231,13 +231,14 @@ export default {
     }
 
     const token = this.$cookies.get("PID_AUTH");
-    const decoded = jwt_decode(token);
-    const type = decoded.type;
-    if (type == 1) {
-      this.companycheckindex = true;
-    }
     if (token == null || token == "") {
       this.noncookie = true;
+    } else {
+      const decoded = jwt_decode(token);
+      const type = decoded.type;
+      if (type == 1) {
+        this.companycheckindex = true;
+      }
     }
   },
 
