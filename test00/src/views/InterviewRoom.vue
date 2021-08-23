@@ -21,7 +21,11 @@
                   :noncookie="noncookie"
                 ></before-meeting>
                 <div style="text-align:center">
-                  <el-button type="warning" class="go" @click="copyurl"
+                  <el-button
+                    type="warning"
+                    v-if="companycheckindex"
+                    class="go"
+                    @click="copyurl"
                     >url복사</el-button
                   >
                   <el-button type="warning" class="go" @click="register"
@@ -201,6 +205,7 @@ export default {
       noncookieusername: "",
       alaram: "",
       readchat: false,
+      companycheckindex: null,
     };
   },
   watch: {
@@ -226,6 +231,11 @@ export default {
     }
 
     const token = this.$cookies.get("PID_AUTH");
+    const decoded = jwt_decode(token);
+    const type = decoded.type;
+    if (type == 1) {
+      this.companycheckindex = true;
+    }
     if (token == null || token == "") {
       this.noncookie = true;
     }
