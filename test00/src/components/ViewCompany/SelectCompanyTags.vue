@@ -4,7 +4,9 @@
       <el-divider></el-divider>
       <h3 style="padding-top:10px; margin-bottom:10px">규모</h3>
       <el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{ tag.list_name }}</el-checkbox>
+        <el-checkbox v-for="tag in sizes" :label="tag" :key="tag">{{
+          tag.list_name
+        }}</el-checkbox>
       </el-checkbox-group>
     </div>
     <el-divider></el-divider>
@@ -27,78 +29,124 @@
         >
         <el-tab-pane label="금융·은행업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag2" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag2"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="IT·정보통신업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag3" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag3"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="판매·유통업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag4" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag4"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="제조·생산·화학업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag5" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag5"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="교육업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag6" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag6"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="건설업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag7" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag7"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="의료·제약업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag8" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag8"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="미디어·광고업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag9" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag9"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="문화·예술·디자인업"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag10" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag10"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
         <el-tab-pane label="기관·협회"
           ><el-checkbox-group v-model="selected_tags" :min="0" :max="4">
-            <el-checkbox style="margin:10px" v-for="tag in tag11" :label="tag" :key="tag">{{
-              tag.list_name
-            }}</el-checkbox>
+            <el-checkbox
+              style="margin:10px"
+              v-for="tag in tag11"
+              :label="tag"
+              :key="tag"
+              >{{ tag.list_name }}</el-checkbox
+            >
           </el-checkbox-group></el-tab-pane
         >
       </el-tabs>
     </div>
     <div style="text-align:center">
-      <el-button round plain style="margin-top:10px; width:100px" @click="search()">검색</el-button>
+      <el-button
+        round
+        plain
+        style="margin-top:10px; width:100px"
+        @click="search()"
+        >검색</el-button
+      >
     </div>
     <el-divider></el-divider>
   </el-main>
@@ -268,6 +316,7 @@ export default {
       }, 1000);
     },
     search() {
+      this.selected_list = [];
       const loading = this.$loading({
         lock: true,
         text: "Loading",
