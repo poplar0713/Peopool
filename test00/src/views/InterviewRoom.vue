@@ -298,7 +298,7 @@ export default {
       window.Kakao.Link.sendDefault({
         objectType: "feed",
         content: {
-          title: this.$route.params.company + "면접에 초대해요.😁",
+          title: `'${this.$route.params.company}' 면접에 초대해요.😁`,
           description:
             "피풀 비대면 면접서비스에 당신을 초대합니다. 우리 회사에 인재 빠르게 contact😃 peopool에서 경험하세요!",
           imageUrl: "https://i5d206.p.ssafy.io/file/urlshare.png",
