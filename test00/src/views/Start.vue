@@ -18,7 +18,7 @@
           <el-row>
             <el-col :span="16">
               <h2 id="lighth2">
-                <span class="nonlight">스카웃 제의</span>
+                <span class="nonlight">스카우트 제의</span>
                 <span class="nonlight">로망이셨나요?</span>
                 <span class="light">PeoPool</span>
                 <span class="nonlight">에서 이뤄드릴께요.</span>
