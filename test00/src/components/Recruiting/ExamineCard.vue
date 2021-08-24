@@ -8,15 +8,30 @@
       <el-col :span="6">
         <div style="margin:0 auto;">
           <span v-if="this.userdata.photo_index">
-            <el-avatar :src="this.userdata.photofilepath" :size="70"></el-avatar>
+            <div
+              style="overflow:hidden;  width: 80px;
+    height: 80px; 
+    border-radius: 70%;"
+            >
+              <img
+                :src="this.userdata.photofilepath"
+                style=" object-fit: cover; height:100%; width:100%; "
+              />
+            </div>
+            <!-- <el-avatar
+              :src="this.userdata.photofilepath"
+              :size="70"
+              style="-webkit-transform:scale(1.1);"
+            ></el-avatar> -->
           </span>
+
           <span v-else>
             <img :src="this.nonImage" style="width:100%; heigth:auto" />
           </span>
         </div>
       </el-col>
       <el-col :span="18"
-        ><div>
+        ><div style=" margin-left:20px">
           <div>
             <h3 style="margin-top:0">
               <UserInfoName :userindex="item.ind_index" />
@@ -61,7 +76,7 @@ export default {
     const decoded = jwt_decode(token);
     const index = decoded.index;
 
- axios
+    axios
       .get(`https://i5d206.p.ssafy.io:8443/poi/${this.item.ind_index}`, {
         headers: { Authorization: token },
       })
