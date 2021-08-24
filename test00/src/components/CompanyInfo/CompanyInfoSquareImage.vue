@@ -1,10 +1,20 @@
 <template>
-  <el-avatar
+  <div
+    style="overflow:hidden;  width: 80px;
+    height: 80px; 
+    border-radius: 70%;"
+  >
+    <img
+      :src="this.ent_image_path"
+      style=" object-fit: cover; height:100%; width:100%; "
+    />
+  </div>
+  <!-- <el-avatar
     shape="square"
     :src="this.ent_image_path"
     :size="70"
     style="object-fit:cover"
-  ></el-avatar>
+  ></el-avatar> -->
 </template>
 
 <script>

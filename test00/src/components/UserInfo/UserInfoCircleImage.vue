@@ -1,5 +1,14 @@
 <template>
-  <el-avatar :src="this.userdata.photofilepath" :size="70"></el-avatar>
+  <div
+    style="overflow:hidden;  width: 80px;
+    height: 80px; 
+    border-radius: 70%;"
+  >
+    <img
+      :src="this.userdata.photofilepath"
+      style=" object-fit: cover; height:100%; width:100%; "
+    />
+  </div>
 </template>
 
 <script>
