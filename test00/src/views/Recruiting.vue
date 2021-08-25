@@ -37,7 +37,6 @@
           </el-tabs>
         </div>
       </el-main>
-      
     </el-container>
   </el-container>
 </template>
@@ -56,7 +55,6 @@ import ProcessingInterview from "../components/Recruiting/ProcessingInterview.vu
 import PassUser from "../components/Recruiting/PassUser.vue";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-
 
 export default {
   components: {
@@ -80,7 +78,7 @@ export default {
       .then((res) => {
         // W인 애들만..
         for (var user of res.data) {
-          if (user.int_done == "W") {
+          if (user.int_done == "W" && user.int_show == "T") {
             this.exaimining.push(user);
           }
         }
