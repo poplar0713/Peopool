@@ -1,16 +1,18 @@
 <template>
   <el-card
     shadow="hover"
-    style="margin-bottom:20px; cursor:pointer; height:110%;"
+    style="margin-bottom:20px; cursor:pointer;"
     @click="dialogVisible = true"
   >
     <el-row>
       <el-col :span="8">
-        <div>
+        <div
+          style="margin:0 auto;  width:100px; height:130px; overflow:hidden; "
+        >
           <span v-if="this.userdata.photo_index">
             <img
               :src="this.userdata.photofilepath"
-              style="width:100%; heigth: auto"
+              style="width:100%; heigth:100%;object-fit:fill;"
             />
           </span>
           <span v-else>
@@ -256,7 +258,6 @@ export default {
         this.ind_taglist = res.data;
       })
       .catch((err) => {
-        
         if (err.response == 401) {
           this.$message.error("로그인세션이 만료되었습니다");
           this.$cookies.remove("PID_AUTH");
@@ -274,7 +275,6 @@ export default {
     },
     clickfollowBtn() {
       if (this.follow) {
-        
         axios
           .delete("https://i5d206.p.ssafy.io:8443/fol", {
             data: {
@@ -297,7 +297,6 @@ export default {
             }
           });
       } else if (this.follow == false) {
-        
         axios
           .post("https://i5d206.p.ssafy.io:8443/fol", {
             headers: { Authorization: this.$store.state.usertoken },
